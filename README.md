@@ -75,8 +75,9 @@ I actively participate in Capture The Flag (CTF) competitions, design real-world
 
 - Certified Ethical Hacker (CEHv13) - EC-Council
 - Junior Penetration Tester – TryHackMe
-- CCNA: Introduction to Networks - 
-- Full-Stack Web Development Bootcamp
+- CCNA: Introduction to Networks - Cisco
+- Full-Stack Web Development Bootcamp - Udemy
+- Python & Bash for Ethical Hackers - Udemy
 
 ---
 
