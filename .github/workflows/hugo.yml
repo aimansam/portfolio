@@ -1,7 +1,7 @@
 name: Deploy Portfolio and Blog
 on:
   push:
-    branches: ["main"] # Or "master"
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -15,7 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive # Important for PaperMod theme
+          # This ensures submodules (like PaperMod) are actually downloaded
+          submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -25,21 +27,30 @@ jobs:
 
       - name: Build Hugo Blog
         run: |
-          cd blog-source
-          hugo --minify
+          # If blog-source exists, go inside. Otherwise, build from root.
+          if [ -d "blog-source" ]; then
+            cd blog-source
+            hugo --minify
+          else
+            hugo --minify
+          fi
           
-      - name: Organize Files (The Docker Logic)
+      - name: Organize Files
         run: |
-          # Create a staging area
           mkdir staging
-          # 1. Copy main portfolio files to staging root
-          cp -r index.html css/ js/ img/ staging/ 2>/dev/null || cp -r . staging/
-          # 2. Create the /blog subfolder
+          # 1. Copy root portfolio files (excluding source/git folders)
+          # This assumes your main portfolio is at the root
+          rsync -av --exclude='blog-source' --exclude='public' --exclude='.git*' --exclude='staging' ./ staging/
+          
+          # 2. Create the /blog folder
           mkdir -p staging/blog
-          # 3. Move built blog files into it
-          cp -r blog-source/public/* staging/blog/
-          # 4. Remove source files from staging so they aren't public
-          rm -rf staging/blog-source staging/.github staging/.git
+          
+          # 3. Find where the Hugo 'public' folder was generated and move it
+          if [ -d "blog-source/public" ]; then
+            cp -r blog-source/public/* staging/blog/
+          elif [ -d "public" ]; then
+            cp -r public/* staging/blog/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
