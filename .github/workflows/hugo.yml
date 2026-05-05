@@ -1,0 +1,58 @@
+name: Deploy Portfolio and Blog
+on:
+  push:
+    branches: ["main"] # Or "master"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # Important for PaperMod theme
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo Blog
+        run: |
+          cd blog-source
+          hugo --minify
+          
+      - name: Organize Files (The Docker Logic)
+        run: |
+          # Create a staging area
+          mkdir staging
+          # 1. Copy main portfolio files to staging root
+          cp -r index.html css/ js/ img/ staging/ 2>/dev/null || cp -r . staging/
+          # 2. Create the /blog subfolder
+          mkdir -p staging/blog
+          # 3. Move built blog files into it
+          cp -r blog-source/public/* staging/blog/
+          # 4. Remove source files from staging so they aren't public
+          rm -rf staging/blog-source staging/.github staging/.git
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./staging
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
