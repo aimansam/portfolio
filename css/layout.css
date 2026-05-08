@@ -21,7 +21,8 @@ body {
 /* Main Page Layout */
 
 #main-content {
-  margin: 225px 425px;
+  width: min(1180px, calc(100% - 96px));
+  margin: 225px auto 0;
   display: flex;
   flex-direction: column;
   gap: 96px;
@@ -34,7 +35,7 @@ body {
 
 #portfolio-header {
   display: flex;
-  gap: 20px;
+  gap: 48px;
   align-items: center;
 }
 
@@ -42,7 +43,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex-basis: 50%;
+  flex: 1 1 54%;
+  min-width: 0;
 }
 
 .portfolio-header-image {
@@ -55,7 +57,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 34px;
-  flex-basis: 50%;
+  flex: 1 1 46%;
+  min-width: 0;
 }
 
 .hero-badges {
@@ -84,9 +87,98 @@ body {
 }
 
 @media only screen and (max-width: 1100px) {
+  #main-content {
+    width: min(1040px, calc(100% - 72px));
+  }
+
+  #portfolio-header {
+    gap: 32px;
+  }
+
   .hero-actions {
     flex-wrap: wrap;
   }
+
+  .project-card {
+    max-width: calc((100% - 16px) / 2);
+  }
+}
+
+
+
+/* Stats Summary */
+
+#stats-summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stats-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.stats-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 34px;
+}
+
+.stats-row-compact {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stats-row::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 26px;
+  right: 26px;
+  height: 2px;
+  background: linear-gradient(90deg, #141414 0%, #626262 100%);
+}
+
+.stat-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border: 2px solid #141414;
+  border-radius: 24px;
+  background-color: white;
+  min-width: 0;
+}
+
+.stat-node::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 28px;
+  width: 2px;
+  height: 24px;
+  background-color: #141414;
+}
+
+.stat-node::after {
+  content: "";
+  position: absolute;
+  top: -32px;
+  left: 21px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background-color: #141414;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #141414;
+}
+
+.stat-node:nth-child(even) {
+  margin-top: 26px;
 }
 
 
@@ -203,50 +295,127 @@ body {
     }
 
 
-/* Extra Extra large devices (large laptops and desktops, 1200px and below) */
-@media only screen and (max-width: 1600px) {
-  #main-content {
-    margin: 225px 275px;
-  }
-}
-
 /* Extra large devices (large laptops and desktops, 1200px and below) */
 @media only screen and (max-width: 1200px) {
   #main-content {
-    margin: 225px 175px;
+    width: min(980px, calc(100% - 64px));
   }
 }
 
 /* Large devices (laptops/desktops, 1000px and below) */
 @media only screen and (max-width: 1000px) {
   #main-content {
-    margin: 225px 75px;
+    width: calc(100% - 48px);
+    gap: 80px;
+  }
+
+  #portfolio-header {
+    gap: 24px;
   }
 }
 
 /* Small devices (portrait tablets and large phones, 800px and below) */
 @media only screen and (max-width: 800px) {
   #main-content {
-    margin: 150px 50px;
+    width: calc(100% - 40px);
+    margin-top: 150px;
+    gap: 64px;
   }
 
   #portfolio-header {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  #portfolio-header-image-container,
+  #portfolio-header-text-container {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  #portfolio-header-image-container {
+    max-width: 680px;
   }
 
   .project-card {
     max-width: calc((100% - 16px) / 2);
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-top: 0;
+  }
+
+  .stats-row-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stats-row::before {
+    left: 10px;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    height: auto;
+  }
+
+  .stat-node,
+  .stat-node:nth-child(even) {
+    margin-top: 0;
+    margin-left: 30px;
+  }
+
+  .stat-node::before {
+    top: 30px;
+    left: -22px;
+    width: 22px;
+    height: 2px;
+  }
+
+  .stat-node::after {
+    top: 22px;
+    left: -30px;
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and below) */
 @media only screen and (max-width: 600px) {
   #main-content {
-    margin: 125px 20px;
+    width: calc(100% - 24px);
+    margin-top: 125px;
+    gap: 56px;
+  }
+
+  #portfolio-header {
+    gap: 22px;
+  }
+
+  #portfolio-header-text-container {
+    gap: 24px;
+  }
+
+  .hero-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .button {
+    justify-content: center;
   }
 
   .project-card {
     max-width: 100%;
+  }
+
+  .stats-diagram {
+    gap: 20px;
+  }
+
+  .stats-row,
+  .stats-row-compact {
+    grid-template-columns: 1fr;
   }
 }
 

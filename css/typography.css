@@ -32,6 +32,30 @@ body {
   font-weight: 500;
 }
 
+.stat-value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stat-note {
+  line-height: 1.55;
+}
+
+.stat-step {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .project-card-text {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -46,4 +70,34 @@ body {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+@media only screen and (max-width: 1000px) {
+  .main-title {
+    font-size: 34px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main-title {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+
+  .subheader-text {
+    font-size: 18px;
+  }
+
+  .body-text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .stat-value {
+    font-size: 26px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+  }
 }
