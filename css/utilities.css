@@ -75,6 +75,21 @@ a.button:hover {
   cursor: pointer;
 }
 
+a.button.button-contrast {
+  background-color: #141414;
+  border-color: #141414;
+  color: white;
+  box-shadow: 0 10px 24px rgba(20, 20, 20, 0.18);
+}
+
+a.button.button-contrast:hover {
+  text-decoration-color: white;
+}
+
+.button-contrast-icon {
+  filter: invert(1);
+}
+
 
 /* Footer Styling */
 
