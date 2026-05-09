@@ -144,7 +144,7 @@
       </section>
     </main>
     <script>
-      window.CMS_MANUAL_INIT = true;
+      window.CMS_MANUAL_INIT = ['localhost', '127.0.0.1'].includes(window.location.hostname);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js"></script>
@@ -170,23 +170,20 @@
         }
 
         const config = window.jsyaml.load(await response.text());
-
-        delete config.publish_mode;
-
-        if (isLocalHost) {
-        } else {
-          delete config.local_backend;
-        }
+        config.local_backend = true;
+        config.publish_mode = 'editorial_workflow';
 
         setStatus('Starting the editor interface...');
         window.initCMS({ config });
         document.body.classList.add('cms-ready');
       }
 
-      initializeAdmin().catch((error) => {
-        console.error(error);
-        setStatus('Unable to initialize the admin UI. Check the browser console for details.', 'error');
-      });
+      if (isLocalHost) {
+        initializeAdmin().catch((error) => {
+          console.error(error);
+          setStatus('Unable to initialize the admin UI. Check the browser console for details.', 'error');
+        });
+      }
     </script>
   </body>
 </html>

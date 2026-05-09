@@ -6,8 +6,6 @@ backend:
   # base_url: https://cms-auth.portfolio.aimansam.my
   # auth_endpoint: auth
 
-local_backend: true
-publish_mode: editorial_workflow
 site_url: https://portfolio.aimansam.my
 display_url: https://portfolio.aimansam.my
 logo_url: /assets/images/8443.jpg
