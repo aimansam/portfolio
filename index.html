@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="./css/utilities.css">
 
 		<script defer src="./js/script.js"></script>
+		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 	<body>
     <!-- NAVBAR -->
@@ -204,11 +205,157 @@
       <div id="about-section">
         <span class="subheader-text">My Background / About Me</span>
         <div class="about-section-content">
-          <div class="body-text">I’m a second-year Computer Science (Cybersecurity) student with a strong focus on penetration testing and ethical hacking, driven by a passion for breaking systems to better secure them. I earned my Certified Ethical Hacker (CEH) certification before the age of 20, and have since built hands-on experience in vulnerability assessment using OpenVAS and Nessus, system exploitation across Windows and Unix environments, and Active Directory attacks including privilege escalation and lateral movement.</div>
-          <div class="body-text">Beyond academics, I actively compete in CTFs, ranking in the top 1% globally on TryHackMe and placing in national competitions. I’ve also contributed as a challenge creator and technical lead, designing real-world web exploitation scenarios and deploying secure, scalable CTF infrastructures.</div>
-          <div class="body-text">While my foundation is in offensive security, I’m currently expanding into blue team domains and exploring SIEM, EDR, and detection engineering to become a well-rounded security professional.</div>
-          <div class="body-text">I’m continuously learning, building labs, and collaborating with the community, with the long-term goal of excelling as a top-tier cybersecurity competitor and practitioner.</div>
-          <div class="body-text">Let’s connect.</div>
+          <article class="about-card about-card-story">
+            <span class="about-card-eyebrow">About Me</span>
+            <h3 class="about-card-title">Foundations built through practice.</h3>
+            <div class="about-story-roles">
+              <span class="about-story-label">Looking For</span>
+              <div class="about-story-visual" aria-label="Positions I am looking for">
+                <span class="about-story-chip">Penetration Tester</span>
+                <span class="about-story-chip">Security Engineer</span>
+                <span class="about-story-chip">Blue Team Analyst</span>
+                <span class="about-story-chip">Cloud Engineer</span>
+              </div>
+            </div>
+            <div class="body-text about-copy">Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.</div>
+            <ul class="about-points body-text" aria-label="About me summary">
+              <li>Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.</li>
+              <li>System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.</li>
+              <li>Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.</li>
+              <li>Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.</li>
+              <li>Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.</li>
+              <li>Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional.</li>
+            </ul>
+          </article>
+
+          <article class="about-card">
+            <span class="about-card-eyebrow">Skills</span>
+            <h3 class="about-card-title about-card-title-compact">Applied security and development skills.</h3>
+            <div class="about-skill-filters" aria-label="Skill category filters">
+              <button class="about-skill-filter is-active" type="button" data-skill-filter="all">All</button>
+              <button class="about-skill-filter" type="button" data-skill-filter="red-team">Red Team</button>
+              <button class="about-skill-filter" type="button" data-skill-filter="blue-team">Blue Team</button>
+              <button class="about-skill-filter" type="button" data-skill-filter="web-dev">Web Dev</button>
+              <button class="about-skill-filter" type="button" data-skill-filter="cloud">Cloud</button>
+            </div>
+            <div class="about-skill-pages" aria-label="Hiring-focused skills from resume">
+              <section class="about-skill-page is-active" data-skill-page="all">
+                <div class="about-pill-list">
+                  <span class="about-pill"><i data-lucide="bug"></i>Web Exploitation</span>
+                  <span class="about-pill"><i data-lucide="shield"></i>Blue Team Mindset</span>
+                  <span class="about-pill"><i data-lucide="flask-conical"></i>Flask</span>
+                  <span class="about-pill"><i data-lucide="atom"></i>React</span>
+                  <span class="about-pill"><i data-lucide="cloud-lightning"></i>Cloud Security</span>
+                  <span class="about-pill"><i data-lucide="server"></i>Node.js</span>
+                  <span class="about-pill"><i data-lucide="code-2"></i>Python</span>
+                  <span class="about-pill"><i data-lucide="shield-check"></i>Security Engineering</span>
+                </div>
+              </section>
+              <section class="about-skill-page" data-skill-page="red-team">
+                <div class="about-pill-list">
+                  <span class="about-pill"><i data-lucide="bug"></i>Web Exploitation</span>
+                  <span class="about-pill"><i data-lucide="crosshair"></i>Penetration Testing</span>
+                  <span class="about-pill"><i data-lucide="key"></i>Active Directory Exploitation</span>
+                  <span class="about-pill"><i data-lucide="lock"></i>Access Control Testing</span>
+                  <span class="about-pill"><i data-lucide="network"></i>Network Security</span>
+                </div>
+              </section>
+              <section class="about-skill-page" data-skill-page="blue-team">
+                <div class="about-pill-list">
+                  <span class="about-pill"><i data-lucide="file-text"></i>Log Analysis</span>
+                  <span class="about-pill"><i data-lucide="bar-chart-2"></i>SIEM (Splunk)</span>
+                  <span class="about-pill"><i data-lucide="activity"></i>Wireshark</span>
+                  <span class="about-pill"><i data-lucide="shield-check"></i>System Hardening</span>
+                  <span class="about-pill"><i data-lucide="alert-triangle"></i>Threat Detection</span>
+                </div>
+              </section>
+              <section class="about-skill-page" data-skill-page="web-dev">
+                <div class="about-pill-list">
+                  <span class="about-pill"><i data-lucide="flask-conical"></i>Flask</span>
+                  <span class="about-pill"><i data-lucide="atom"></i>React</span>
+                  <span class="about-pill"><i data-lucide="triangle"></i>Next.js</span>
+                  <span class="about-pill"><i data-lucide="server"></i>Node.js</span>
+                  <span class="about-pill"><i data-lucide="database"></i>PostgreSQL</span>
+                  <span class="about-pill"><i data-lucide="layers"></i>MongoDB</span>
+                </div>
+              </section>
+              <section class="about-skill-page" data-skill-page="cloud">
+                <div class="about-pill-list">
+                  <span class="about-pill"><i data-lucide="cpu"></i>Linux Administration</span>
+                  <span class="about-pill"><i data-lucide="box"></i>Docker</span>
+                  <span class="about-pill"><i data-lucide="terminal"></i>Bash Scripting</span>
+                  <span class="about-pill"><i data-lucide="bot"></i>Python Automation</span>
+                  <span class="about-pill"><i data-lucide="wifi"></i>Network Fundamentals</span>
+                  <span class="about-pill"><i data-lucide="upload-cloud"></i>Secure Deployment</span>
+                </div>
+              </section>
+            </div>
+          </article>
+
+          <article class="about-card">
+            <span class="about-card-eyebrow">Certificates</span>
+            <h3 class="about-card-title about-card-title-compact">Recognized industry credentials.</h3>
+            <div class="about-certificate-carousel" aria-label="Certificates earned">
+              <div class="about-certificate-carousel-controls">
+                <button class="about-certificate-nav" type="button" data-certificate-nav="prev" aria-label="Previous certificate">Prev</button>
+                <button class="about-certificate-nav" type="button" data-certificate-nav="next" aria-label="Next certificate">Next</button>
+              </div>
+              <div class="about-certificate-viewport">
+                <ul class="about-certificate-list">
+                  <li class="about-certificate-item">
+                    <div class="about-certificate-body">
+                      <span class="about-certificate-name">CEHv13</span>
+                      <span class="about-certificate-note">Certified Ethical Hacker from EC-Council.</span>
+                    </div>
+                    <div class="about-certificate-media" aria-hidden="true">
+                      <span class="about-certificate-badge-code">CEH</span>
+                      <span class="about-certificate-badge-meta">EC</span>
+                    </div>
+                  </li>
+                  <li class="about-certificate-item">
+                    <div class="about-certificate-body">
+                      <span class="about-certificate-name">Junior Penetration Tester</span>
+                      <span class="about-certificate-note">TryHackMe path focused on practical offensive security fundamentals.</span>
+                    </div>
+                    <div class="about-certificate-media" aria-hidden="true">
+                      <span class="about-certificate-badge-code">JPT</span>
+                      <span class="about-certificate-badge-meta">THM</span>
+                    </div>
+                  </li>
+                  <li class="about-certificate-item">
+                    <div class="about-certificate-body">
+                      <span class="about-certificate-name">CCNA: Introduction to Networks</span>
+                      <span class="about-certificate-note">Cisco networking foundation covering infrastructure and core network concepts.</span>
+                    </div>
+                    <div class="about-certificate-media" aria-hidden="true">
+                      <span class="about-certificate-badge-code">CCNA</span>
+                      <span class="about-certificate-badge-meta">Cisco</span>
+                    </div>
+                  </li>
+                  <li class="about-certificate-item">
+                    <div class="about-certificate-body">
+                      <span class="about-certificate-name">Full-Stack Web Development Bootcamp</span>
+                      <span class="about-certificate-note">Udemy training across JavaScript, Next.js, React, PostgreSQL, and MongoDB.</span>
+                    </div>
+                    <div class="about-certificate-media" aria-hidden="true">
+                      <span class="about-certificate-badge-code">WEB</span>
+                      <span class="about-certificate-badge-meta">DEV</span>
+                    </div>
+                  </li>
+                  <li class="about-certificate-item">
+                    <div class="about-certificate-body">
+                      <span class="about-certificate-name">Python &amp; Bash for Ethical Hackers</span>
+                      <span class="about-certificate-note">Practical scripting and automation for penetration testing and security workflows.</span>
+                    </div>
+                    <div class="about-certificate-media" aria-hidden="true">
+                      <span class="about-certificate-badge-code">PY</span>
+                      <span class="about-certificate-badge-meta">ETH</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
 
