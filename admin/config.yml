@@ -10,6 +10,7 @@ local_backend: true
 publish_mode: editorial_workflow
 site_url: https://portfolio.aimansam.my
 display_url: https://portfolio.aimansam.my
+logo_url: /assets/images/8443.jpg
 media_folder: assets/images/uploads
 public_folder: /assets/images/uploads
 
@@ -17,10 +18,38 @@ collections:
   - name: portfolio
     label: Portfolio Content
     files:
+      - label: SEO
+        name: seo
+        file: content/site/seo.json
+        format: json
+        editor:
+          preview: false
+        fields:
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Site Name, name: siteName, widget: string }
+              - { label: Canonical URL, name: canonicalUrl, widget: string }
+              - { label: Social Image URL, name: image, widget: string }
+              - { label: Social Image Alt, name: imageAlt, widget: string }
+              - { label: Person Name, name: personName, widget: string }
+              - { label: Alternate Name, name: alternateName, widget: string, required: false }
+              - { label: Job Title, name: jobTitle, widget: string }
+              - { label: Email, name: email, widget: string }
+              - label: Same As Links
+                name: sameAs
+                widget: list
+                field: { label: URL, name: url, widget: string }
+
       - label: Navigation
         name: navigation
         file: content/site/navigation.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Navigation
             name: navigation
@@ -51,6 +80,8 @@ collections:
         name: hero
         file: content/site/hero.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Hero
             name: hero
@@ -92,6 +123,8 @@ collections:
         name: stats
         file: content/site/stats.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Stats Section
             name: stats
@@ -111,6 +144,8 @@ collections:
         name: about
         file: content/site/about.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: About Section
             name: about
@@ -132,6 +167,8 @@ collections:
         name: skills
         file: content/site/skills.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Skills Section
             name: skills
@@ -160,6 +197,8 @@ collections:
         name: certificates
         file: content/site/certificates.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Certificates Section
             name: certificates
@@ -179,6 +218,8 @@ collections:
         name: projects
         file: content/site/projects.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Projects Section
             name: projects
@@ -209,6 +250,8 @@ collections:
         name: blog-preview
         file: content/site/blog-preview.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Blog Preview Section
             name: blogPreview
@@ -237,6 +280,8 @@ collections:
         name: footer
         file: content/site/footer.json
         format: json
+        editor:
+          preview: false
         fields:
           - label: Footer
             name: footer
@@ -257,6 +302,7 @@ collections:
     folder: blog-source/content/posts
     create: true
     slug: "{{slug}}"
+    preview_path: "blog/posts/{{slug}}"
     extension: md
     format: frontmatter
     fields:

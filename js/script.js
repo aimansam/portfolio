@@ -117,6 +117,34 @@ const createBlogPreviewMarkup = (item) => `
   </article>
 `
 
+const createStructuredData = (seo) => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${seo.canonicalUrl}#aiman-sam`,
+      name: seo.personName,
+      alternateName: seo.alternateName,
+      url: seo.canonicalUrl,
+      image: seo.image,
+      jobTitle: seo.jobTitle,
+      description: seo.description,
+      email: seo.email,
+      sameAs: seo.sameAs,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${seo.canonicalUrl}#website`,
+      url: seo.canonicalUrl,
+      name: seo.siteName,
+      description: seo.description,
+      publisher: {
+        '@id': `${seo.canonicalUrl}#aiman-sam`,
+      },
+    },
+  ],
+}, null, 2)
+
 const applyPortfolioContent = (content) => {
   if (!content || typeof content !== 'object') {
     return
@@ -156,6 +184,77 @@ const applyPortfolioContent = (content) => {
   const blogPreviewGrid = document.getElementById('blog-preview-grid')
   const footerCopy = document.getElementById('footer-copy')
   const footerLinkList = document.getElementById('footer-link-list')
+  const seoTitle = document.getElementById('seo-title')
+  const seoDescription = document.getElementById('seo-description')
+  const seoCanonical = document.getElementById('seo-canonical')
+  const seoOgTitle = document.getElementById('seo-og-title')
+  const seoOgDescription = document.getElementById('seo-og-description')
+  const seoOgUrl = document.getElementById('seo-og-url')
+  const seoOgSiteName = document.getElementById('seo-og-site-name')
+  const seoOgImage = document.getElementById('seo-og-image')
+  const seoOgImageAlt = document.getElementById('seo-og-image-alt')
+  const seoTwitterTitle = document.getElementById('seo-twitter-title')
+  const seoTwitterDescription = document.getElementById('seo-twitter-description')
+  const seoTwitterImage = document.getElementById('seo-twitter-image')
+  const seoStructuredData = document.getElementById('seo-structured-data')
+
+  if (content.seo) {
+    if (content.seo.title && seoTitle) {
+      seoTitle.textContent = content.seo.title
+      document.title = content.seo.title
+    }
+
+    if (content.seo.description && seoDescription) {
+      seoDescription.setAttribute('content', content.seo.description)
+    }
+
+    if (content.seo.canonicalUrl && seoCanonical) {
+      seoCanonical.setAttribute('href', content.seo.canonicalUrl)
+    }
+
+    if (content.seo.title && seoOgTitle) {
+      seoOgTitle.setAttribute('content', content.seo.title)
+    }
+
+    if (content.seo.description && seoOgDescription) {
+      seoOgDescription.setAttribute('content', content.seo.description)
+    }
+
+    if (content.seo.canonicalUrl && seoOgUrl) {
+      seoOgUrl.setAttribute('content', content.seo.canonicalUrl)
+    }
+
+    if (content.seo.siteName && seoOgSiteName) {
+      seoOgSiteName.setAttribute('content', content.seo.siteName)
+    }
+
+    if (content.seo.image && seoOgImage) {
+      seoOgImage.setAttribute('content', content.seo.image)
+    }
+
+    if (content.seo.imageAlt && seoOgImageAlt) {
+      seoOgImageAlt.setAttribute('content', content.seo.imageAlt)
+    }
+
+    if (content.seo.title && seoTwitterTitle) {
+      seoTwitterTitle.setAttribute('content', content.seo.title)
+    }
+
+    if (content.seo.description && seoTwitterDescription) {
+      seoTwitterDescription.setAttribute('content', content.seo.description)
+    }
+
+    if (content.seo.image && seoTwitterImage) {
+      seoTwitterImage.setAttribute('content', content.seo.image)
+    }
+
+    if (seoStructuredData) {
+      seoStructuredData.textContent = createStructuredData({
+        ...content.seo,
+        sameAs: Array.isArray(content.seo.sameAs) ? content.seo.sameAs : [],
+      })
+    }
+  }
 
   if (content.navigation?.brand?.href && navBrandLink) {
     navBrandLink.href = content.navigation.brand.href
@@ -517,6 +616,7 @@ const initializeInteractiveSections = () => {
 }
 
 const portfolioContentFiles = [
+  './content/site/seo.json',
   './content/site/navigation.json',
   './content/site/hero.json',
   './content/site/stats.json',

@@ -118,6 +118,25 @@ backend:
 	- `/auth`: redirect the CMS login popup to GitHub OAuth
 	- `/callback`: exchange the GitHub code for an access token and post it back to the Decap popup opener
 
+This repo now includes a starter worker in `cms-auth/`:
+
+- `cms-auth/src/index.js`
+- `cms-auth/wrangler.toml`
+- `cms-auth/.dev.vars.example`
+
+Suggested deployment flow:
+
+1. Copy `cms-auth/.dev.vars.example` to `.dev.vars` for local worker testing.
+2. Install Wrangler in an environment with Node.js available.
+3. Run `npm run cms:auth:dev` to test locally.
+4. Create the production Worker secrets with:
+  - `npx wrangler secret put GITHUB_CLIENT_ID --config cms-auth/wrangler.toml`
+  - `npx wrangler secret put GITHUB_CLIENT_SECRET --config cms-auth/wrangler.toml`
+  - `npx wrangler secret put OAUTH_STATE_SECRET --config cms-auth/wrangler.toml`
+5. Deploy with `npm run cms:auth:deploy`.
+6. Bind `cms-auth.portfolio.aimansam.my` to the Worker route in Cloudflare.
+7. Uncomment `base_url` and `auth_endpoint` in `admin/config.yml` after the worker is reachable.
+
 Suggested Cloudflare secrets/config:
 
 - `GITHUB_CLIENT_ID`

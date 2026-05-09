@@ -34,6 +34,11 @@ jobs:
           else
             hugo --minify
           fi
+
+      - name: Sync Homepage SEO
+        run: |
+          chmod +x ./scripts/sync-seo.sh
+          ./scripts/sync-seo.sh ./content/site/seo.json ./index.html
           
       - name: Organize Files
         run: |

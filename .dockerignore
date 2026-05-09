@@ -11,6 +11,8 @@
 !js/**
 !content/
 !content/**
+!scripts/
+!scripts/**
 !admin/
 !admin/**
 !project-pages/

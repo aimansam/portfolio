@@ -1,0 +1,7 @@
+name = "portfolio-cms-auth"
+main = "src/index.js"
+compatibility_date = "2026-05-10"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://portfolio.aimansam.my"

@@ -2,6 +2,8 @@
   "name": "portfolio-cms-tools",
   "private": true,
   "scripts": {
-    "cms:proxy": "npx decap-server"
+    "cms:proxy": "npx decap-server",
+    "cms:auth:dev": "npx wrangler dev --config cms-auth/wrangler.toml",
+    "cms:auth:deploy": "npx wrangler deploy --config cms-auth/wrangler.toml"
   }
 }

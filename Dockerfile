@@ -1,8 +1,20 @@
+FROM alpine:3.20 AS prepare
+
+RUN apk add --no-cache jq
+
+WORKDIR /workspace
+
+COPY ./index.html ./index.html
+COPY ./content ./content
+COPY ./scripts ./scripts
+
+RUN chmod +x ./scripts/sync-seo.sh && ./scripts/sync-seo.sh ./content/site/seo.json ./index.html
+
 FROM nginx:alpine
 
 # Copy only public portfolio assets into the nginx web root.
 COPY ./CNAME /usr/share/nginx/html/CNAME
-COPY ./index.html /usr/share/nginx/html/index.html
+COPY --from=prepare /workspace/index.html /usr/share/nginx/html/index.html
 COPY ./assets /usr/share/nginx/html/assets
 COPY ./css /usr/share/nginx/html/css
 COPY ./js /usr/share/nginx/html/js

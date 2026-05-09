@@ -1,0 +1,21 @@
+{
+  "seo": {
+    "title": "Aiman Sam | Junior Pentester and Web Developer",
+    "description": "Aiman Sam is a junior penetration tester and web developer focused on web exploitation, offensive security labs, and building secure web applications.",
+    "siteName": "Aiman Sam Portfolio",
+    "canonicalUrl": "https://portfolio.aimansam.my/",
+    "image": "https://portfolio.aimansam.my/assets/images/8443.jpg",
+    "imageAlt": "Portrait of Aiman Sam",
+    "personName": "Aiman Sam",
+    "alternateName": "zx10r",
+    "jobTitle": "Junior Penetration Tester and Web Developer",
+    "email": "mailto:zx10r8443@gmail.com",
+    "sameAs": [
+      "https://github.com/aimansam",
+      "https://www.linkedin.com/in/aimansam",
+      "https://tryhackme.com/p/zx10r",
+      "https://app.hackthebox.com/users/2188751",
+      "https://portfolio.aimansam.my/blog/"
+    ]
+  }
+}
