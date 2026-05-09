@@ -291,22 +291,37 @@ function renderStandaloneError(message) {
 }
 
 function jsonResponse(payload, status, env) {
+  const allowedOrigin = getAllowedOrigin(env);
+
   return new Response(JSON.stringify(payload, null, 2), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      ...corsHeaders(env),
+      ...corsHeaders(allowedOrigin),
     },
   });
 }
 
-function corsHeaders(env) {
-  return {
-    'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+function corsHeaders(allowedOrigin) {
+  const headers = {
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     Vary: 'Origin',
   };
+
+  if (allowedOrigin) {
+    headers['Access-Control-Allow-Origin'] = allowedOrigin;
+  }
+
+  return headers;
+}
+
+function getAllowedOrigin(env) {
+  if (!env || typeof env.ALLOWED_ORIGIN !== 'string') {
+    return '';
+  }
+
+  return env.ALLOWED_ORIGIN;
 }
 
 async function signState(payload, secret) {
