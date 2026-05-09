@@ -1,0 +1,55 @@
+{
+  "stats": {
+    "heading": "Highlights / Quick Stats",
+    "items": [
+      {
+        "step": "01",
+        "value": "Top 1%",
+        "label": "TryHackMe Ranking",
+        "note": "Ranked in the top 1% globally on TryHackMe and listed 44th in Malaysia."
+      },
+      {
+        "step": "02",
+        "value": "350+",
+        "label": "TryHackMe Rooms",
+        "note": "Completed over 350 rooms covering penetration testing, web exploitation, and network exploitation."
+      },
+      {
+        "step": "03",
+        "value": "Top 3 / 50",
+        "label": "Bingo CTF 2025",
+        "note": "Placed 3rd with a 3-member team across web exploitation, cryptography, and forensics challenges."
+      },
+      {
+        "step": "04",
+        "value": "Top 10",
+        "label": "MCMC Finalist",
+        "note": "Finalist in the MCMC Intervarsity Cyber Forensics Challenge 2025 under time-constrained incident analysis."
+      },
+      {
+        "step": "05",
+        "value": "10",
+        "label": "Challenges Delivered",
+        "note": "Delivered 9 web challenges and 1 Boot2Root machine across CTF events."
+      },
+      {
+        "step": "06",
+        "value": "2",
+        "label": "Technical Talks",
+        "note": "Delivered two web exploitation sessions for DIV:IDE Academy and Hack@10 CTF preparation."
+      },
+      {
+        "step": "07",
+        "value": "5",
+        "label": "Certificates Earned",
+        "note": "Including CEHv13, CCNA Intro to Networks, Junior Penetration Tester, and web development training."
+      },
+      {
+        "step": "08",
+        "value": "3.80",
+        "label": "Current GPA",
+        "note": "Bachelor of Computer Science (Cybersecurity) student at Universiti Tenaga Nasional."
+      }
+    ]
+  }
+}

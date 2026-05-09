@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://aimansam.github.io/portfolio/blog/posts/my-first-ctf/</loc>
-    <lastmod>2026-05-06T00:34:31+08:00</lastmod>
-  </url><url>
-    <loc>https://aimansam.github.io/portfolio/blog/posts/</loc>
-    <lastmod>2026-05-06T00:34:31+08:00</lastmod>
-  </url><url>
-    <loc>https://aimansam.github.io/portfolio/blog/</loc>
-    <lastmod>2026-05-06T00:34:31+08:00</lastmod>
-  </url><url>
-    <loc>https://aimansam.github.io/portfolio/blog/categories/</loc>
-  </url><url>
-    <loc>https://aimansam.github.io/portfolio/blog/tags/</loc>
-  </url>
-</urlset>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/active-directory/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/categories/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/categories/labs/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/lateral-movement/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/posts/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/windows/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/</loc><lastmod>2026-05-09T18:40:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/ctf/</loc><lastmod>2026-05-09T11:10:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/methodology/</loc><lastmod>2026-05-09T11:10:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/categories/notes/</loc><lastmod>2026-05-09T11:10:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/web/</loc><lastmod>2026-05-09T11:10:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</loc><lastmod>2026-05-09T11:10:00+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/enumeration/</loc><lastmod>2026-05-06T00:34:31+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/posts/my-first-ctf/</loc><lastmod>2026-05-06T00:34:31+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</loc><lastmod>2026-05-06T00:34:31+08:00</lastmod></url><url><loc>https://portfolio.aimansam.my/blog/categories/writeups/</loc><lastmod>2026-05-06T00:34:31+08:00</lastmod></url></urlset>

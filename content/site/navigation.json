@@ -1,0 +1,44 @@
+{
+  "navigation": {
+    "brand": {
+      "label": "zx10r",
+      "href": "./index.html"
+    },
+    "cta": {
+      "label": "Hire Me",
+      "href": "mailto:zx10r8443@gmail.com"
+    },
+    "items": [
+      {
+        "href": "#main-content",
+        "ariaLabel": "Go to top",
+        "icon": "./assets/icons/home.svg",
+        "label": "Home"
+      },
+      {
+        "href": "#about-section",
+        "ariaLabel": "Go to about section",
+        "icon": "./assets/icons/user.svg",
+        "label": "About"
+      },
+      {
+        "href": "#my-work-section",
+        "ariaLabel": "Go to projects section",
+        "icon": "./assets/icons/briefcase.svg",
+        "label": "Projects"
+      },
+      {
+        "href": "./blog/index.html",
+        "ariaLabel": "Go to blog",
+        "icon": "./assets/icons/article.svg",
+        "label": "Blog"
+      },
+      {
+        "href": "mailto:zx10r8443@gmail.com",
+        "ariaLabel": "Email contact",
+        "icon": "./assets/icons/mail.svg",
+        "label": "Email"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "footer": {
+    "copy": "Open to internships, project collaboration, and security work.",
+    "links": [
+      {
+        "href": "mailto:zx10r8443@gmail.com",
+        "label": "Email",
+        "icon": "./assets/icons/mail.svg"
+      },
+      {
+        "href": "https://github.com/aimansam",
+        "label": "GitHub profile",
+        "icon": "./assets/icons/github.svg"
+      },
+      {
+        "href": "https://www.linkedin.com/in/aimansam",
+        "label": "LinkedIn profile",
+        "icon": "./assets/icons/linkedin.svg"
+      },
+      {
+        "href": "https://tryhackme.com/p/zx10r",
+        "label": "TryHackMe profile",
+        "icon": "./assets/icons/tryhackme.svg"
+      },
+      {
+        "href": "https://app.hackthebox.com/users/2188751",
+        "label": "Hack The Box profile",
+        "icon": "./assets/icons/hackthebox.png"
+      }
+    ]
+  }
+}

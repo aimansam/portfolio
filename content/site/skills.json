@@ -1,0 +1,69 @@
+{
+  "skills": {
+    "title": "Applied security and development skills.",
+    "filters": [
+      { "id": "all", "label": "All" },
+      { "id": "red-team", "label": "Red Team" },
+      { "id": "blue-team", "label": "Blue Team" },
+      { "id": "web-dev", "label": "Web Dev" },
+      { "id": "cloud", "label": "Cloud" }
+    ],
+    "pages": [
+      {
+        "id": "all",
+        "items": [
+          { "label": "Web Exploitation", "icon": "bug" },
+          { "label": "Blue Team Mindset", "icon": "shield" },
+          { "label": "Flask", "icon": "flask-conical" },
+          { "label": "React", "icon": "atom" },
+          { "label": "Cloud Security", "icon": "cloud-lightning" },
+          { "label": "Node.js", "icon": "server" },
+          { "label": "Python", "icon": "code-2" },
+          { "label": "Security Engineering", "icon": "shield-check" }
+        ]
+      },
+      {
+        "id": "red-team",
+        "items": [
+          { "label": "Web Exploitation", "icon": "bug" },
+          { "label": "Penetration Testing", "icon": "crosshair" },
+          { "label": "Active Directory Exploitation", "icon": "key" },
+          { "label": "Access Control Testing", "icon": "lock" },
+          { "label": "Network Security", "icon": "network" }
+        ]
+      },
+      {
+        "id": "blue-team",
+        "items": [
+          { "label": "Log Analysis", "icon": "file-text" },
+          { "label": "SIEM (Splunk)", "icon": "bar-chart-2" },
+          { "label": "Wireshark", "icon": "activity" },
+          { "label": "System Hardening", "icon": "shield-check" },
+          { "label": "Threat Detection", "icon": "alert-triangle" }
+        ]
+      },
+      {
+        "id": "web-dev",
+        "items": [
+          { "label": "Flask", "icon": "flask-conical" },
+          { "label": "React", "icon": "atom" },
+          { "label": "Next.js", "icon": "triangle" },
+          { "label": "Node.js", "icon": "server" },
+          { "label": "PostgreSQL", "icon": "database" },
+          { "label": "MongoDB", "icon": "layers" }
+        ]
+      },
+      {
+        "id": "cloud",
+        "items": [
+          { "label": "Linux Administration", "icon": "cpu" },
+          { "label": "Docker", "icon": "box" },
+          { "label": "Bash Scripting", "icon": "terminal" },
+          { "label": "Python Automation", "icon": "bot" },
+          { "label": "Network Fundamentals", "icon": "wifi" },
+          { "label": "Secure Deployment", "icon": "upload-cloud" }
+        ]
+      }
+    ]
+  }
+}

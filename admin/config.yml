@@ -1,0 +1,272 @@
+backend:
+  name: github
+  repo: aimansam/portfolio
+  branch: main
+
+local_backend: true
+publish_mode: editorial_workflow
+media_folder: assets/images/uploads
+public_folder: /assets/images/uploads
+
+collections:
+  - name: portfolio
+    label: Portfolio Content
+    files:
+      - label: Navigation
+        name: navigation
+        file: content/site/navigation.json
+        format: json
+        fields:
+          - label: Navigation
+            name: navigation
+            widget: object
+            fields:
+              - label: Brand
+                name: brand
+                widget: object
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+              - label: CTA
+                name: cta
+                widget: object
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+              - label: Nav Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Link, name: href, widget: string }
+                  - { label: ARIA Label, name: ariaLabel, widget: string }
+                  - { label: Icon Path, name: icon, widget: string }
+                  - { label: Label, name: label, widget: string }
+
+      - label: Hero
+        name: hero
+        file: content/site/hero.json
+        format: json
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Intro, name: intro, widget: text }
+              - label: Primary Action
+                name: primaryAction
+                widget: object
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+              - label: Secondary Action
+                name: secondaryAction
+                widget: object
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Link, name: href, widget: string }
+                  - { label: Download Filename, name: download, widget: string, required: false }
+              - label: Social Links
+                name: socialLinks
+                widget: list
+                fields:
+                  - { label: Link, name: href, widget: string }
+                  - { label: Label, name: label, widget: string }
+                  - { label: Icon Path, name: icon, widget: string }
+              - label: Badge Links
+                name: badges
+                widget: list
+                fields:
+                  - { label: Link, name: href, widget: string }
+                  - { label: Label, name: label, widget: string }
+                  - { label: Image URL, name: image, widget: string }
+                  - { label: Image Alt, name: alt, widget: string }
+                  - { label: CSS Class, name: className, widget: string }
+
+      - label: Stats
+        name: stats
+        file: content/site/stats.json
+        format: json
+        fields:
+          - label: Stats Section
+            name: stats
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Stat Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Step, name: step, widget: string }
+                  - { label: Value, name: value, widget: string }
+                  - { label: Label, name: label, widget: string }
+                  - { label: Note, name: note, widget: text }
+
+      - label: About
+        name: about
+        file: content/site/about.json
+        format: json
+        fields:
+          - label: About Section
+            name: about
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Looking Label, name: lookingLabel, widget: string }
+              - label: Roles
+                name: roles
+                widget: list
+                field: { label: Role, name: role, widget: string }
+              - { label: Intro, name: intro, widget: text }
+              - label: Summary Points
+                name: points
+                widget: list
+                field: { label: Point, name: point, widget: text }
+
+      - label: Skills
+        name: skills
+        file: content/site/skills.json
+        format: json
+        fields:
+          - label: Skills Section
+            name: skills
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - label: Filters
+                name: filters
+                widget: list
+                fields:
+                  - { label: Id, name: id, widget: string }
+                  - { label: Label, name: label, widget: string }
+              - label: Pages
+                name: pages
+                widget: list
+                fields:
+                  - { label: Page Id, name: id, widget: string }
+                  - label: Items
+                    name: items
+                    widget: list
+                    fields:
+                      - { label: Label, name: label, widget: string }
+                      - { label: Lucide Icon, name: icon, widget: string }
+
+      - label: Certificates
+        name: certificates
+        file: content/site/certificates.json
+        format: json
+        fields:
+          - label: Certificates Section
+            name: certificates
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - label: Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Name, name: name, widget: string }
+                  - { label: Note, name: note, widget: text }
+                  - { label: Badge Code, name: code, widget: string }
+                  - { label: Badge Meta, name: meta, widget: string }
+
+      - label: Projects
+        name: projects
+        file: content/site/projects.json
+        format: json
+        fields:
+          - label: Projects Section
+            name: projects
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Filters
+                name: filters
+                widget: list
+                fields:
+                  - { label: Id, name: id, widget: string }
+                  - { label: Label, name: label, widget: string }
+              - label: Project Items
+                name: items
+                widget: list
+                fields:
+                  - { label: Category, name: category, widget: string }
+                  - { label: Image Path, name: image, widget: string }
+                  - label: Tags
+                    name: tags
+                    widget: list
+                    field: { label: Tag, name: tag, widget: string }
+                  - { label: Title, name: title, widget: string }
+                  - { label: Description, name: description, widget: text }
+                  - { label: Project Link, name: href, widget: string }
+
+      - label: Blog Preview
+        name: blog-preview
+        file: content/site/blog-preview.json
+        format: json
+        fields:
+          - label: Blog Preview Section
+            name: blogPreview
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Intro, name: intro, widget: text }
+              - { label: View All Button Label, name: viewAllLabel, widget: string }
+              - { label: View All Link, name: viewAllHref, widget: string }
+              - label: Preview Cards
+                name: items
+                widget: list
+                fields:
+                  - { label: Accent Card, name: accent, widget: boolean, default: false }
+                  - label: Tags
+                    name: tags
+                    widget: list
+                    field: { label: Tag, name: tag, widget: string }
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+                  - { label: Meta Label, name: meta, widget: string }
+                  - { label: Button Label, name: buttonLabel, widget: string }
+                  - { label: Link, name: href, widget: string }
+
+      - label: Footer
+        name: footer
+        file: content/site/footer.json
+        format: json
+        fields:
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - { label: Copy, name: copy, widget: string }
+              - label: Footer Links
+                name: links
+                widget: list
+                fields:
+                  - { label: Link, name: href, widget: string }
+                  - { label: Label, name: label, widget: string }
+                  - { label: Icon Path, name: icon, widget: string }
+
+  - name: posts
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: blog-source/content/posts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: Summary, name: summary, widget: text, required: false }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        field: { label: Tag, name: tag, widget: string }
+      - label: Categories
+        name: categories
+        widget: list
+        required: false
+        field: { label: Category, name: category, widget: string }
+      - { label: Body, name: body, widget: markdown }

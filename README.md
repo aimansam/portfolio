@@ -1,102 +1,92 @@
-# 👨‍💻 Aiman Sam | Junior Penetration Tester
+# Portfolio
 
-🚀 Cybersecurity enthusiast specializing in **Web Exploitation**, **Penetration Testing**, and **CTF Challenges**  
-🎯 Top 1% on TryHackMe | CTF Player | Challenge Creator  
+Static portfolio homepage plus a Hugo blog, served from nginx and backed by editable content files for the homepage sections.
 
----
+## Local Development
 
-## 🧠 About Me
+Run the site with Docker:
 
-I’m a second-year Computer Science (Cybersecurity) student passionate about offensive security and ethical hacking. I earned my **Certified Ethical Hacker (CEH)** certification before the age of 20 and have hands-on experience in vulnerability assessment, system exploitation, and Active Directory attacks.
+```bash
+docker compose up -d --build
+```
 
-I actively participate in Capture The Flag (CTF) competitions, design real-world challenges, and build labs to sharpen my skills. Currently expanding into **Blue Teaming**, focusing on SIEM, EDR, and detection engineering.
+Open these routes locally:
 
----
+- `/` for the portfolio homepage
+- `/blog/` for the Hugo blog output
+- `/admin/` for the Decap CMS editor
 
-## 🛠️ Skills & Tools
+## Content Structure
 
-### 🔴 Offensive Security
-- Web Exploitation (SQLi, XSS, LFI/RFI, IDOR)
-- Active Directory Exploitation
-- Privilege Escalation & Lateral Movement
-- Vulnerability Assessment (OpenVAS, Nessus)
+Homepage content is split into JSON files under `content/site/`.
 
-### 🔵 Defensive Security (Learning)
-- SIEM & Log Analysis
-- Endpoint Detection & Response (EDR)
-- Incident Response Fundamentals
+- `navigation.json`
+- `hero.json`
+- `stats.json`
+- `about.json`
+- `skills.json`
+- `certificates.json`
+- `projects.json`
+- `blog-preview.json`
+- `footer.json`
 
-### 💻 Development
-- HTML, CSS, JavaScript, React, Next.js
-- Node.js, Flask
-- PostgreSQL, MongoDB
+The homepage fetches those files client-side in `js/script.js` and renders them into `index.html`.
 
-### ⚙️ Scripting
-- Python
-- Bash
+Blog posts live in `blog-source/content/posts/` and are built by Hugo into `blog-source/public/`.
 
----
+## CMS Editing
 
-## 🏆 Achievements
+The repo includes Decap CMS at `/admin/` with schema in `admin/config.yml`.
 
-- 🥇 **Top 1% Global Rank** on TryHackMe  
-- 🏅 **3rd Place** – Bingo CTF 2025  
-- 🎯 **Top 10 Finalist** – MCMC Intervarsity Cyber Forensics Challenge 2025  
+Local editing flow:
 
----
+1. Start the site with `docker compose up -d --build`.
+2. Start the Decap local proxy from the repo root with `npx decap-server` or `npm run cms:proxy`.
+3. Open `/admin/`.
+4. Edit homepage JSON and blog posts against the local repository.
 
-## 🧩 CTF & Projects
+Local proxy notes:
 
-### 🔐 Web Exploitation Challenges
-- Designed challenges involving:
-  - SQL Injection (SQLite)
-  - NoSQL Injection
-  - Local File Inclusion (LFI)
-  - IDOR & Logic Flaws
-  - JWT Authentication Bypass (CVE-style)
+- The default Decap proxy port is `8081`.
+- If you need a different proxy port, set `PORT=8082 npx decap-server` and update `local_backend.url` in `admin/config.yml`.
+- The admin page automatically disables `publish_mode` on `localhost` so local proxy editing does not conflict with `editorial_workflow`.
 
-### 🖥️ Infrastructure
-- Deployed CTF platforms using:
-  - Google Cloud (Cloud Run & Compute Engine)
-  - Cloudflare Tunneling
-  - CI/CD with GitHub Actions
+Production save flow:
 
----
+1. Keep `backend.name: github` in `admin/config.yml`.
+2. Configure a Decap-compatible GitHub OAuth flow for the deployed site.
+3. Set the OAuth app callback URL to your deployed `/admin/` path.
+4. Ensure the authenticated GitHub user has write access to `aimansam/portfolio`.
 
-## 🎤 Talks & Contributions
+Without GitHub OAuth, the CMS UI can load but cannot complete browser-based saves in production.
 
-- **Speaker** – *From URL to FLAG: Exploiting Your First Website*  
-- **Speaker** – *Click, Inject, Own – Web Exploitation Essentials*  
-- **Challenge Creator** – DIV:IDE CTF & Hack@10 CTF  
+This workspace does not currently include Node.js or npm, so the local proxy command must be run in an environment where those tools are installed.
 
----
+## Deployment Notes
 
-## 📚 Certifications
+Production domain:
 
-- Certified Ethical Hacker (CEHv13) - EC-Council
-- Junior Penetration Tester – TryHackMe
-- CCNA: Introduction to Networks - Cisco
-- Full-Stack Web Development Bootcamp - Udemy
-- Python & Bash for Ethical Hackers - Udemy
+- Portfolio: `https://portfolio.aimansam.my/`
+- Blog: `https://portfolio.aimansam.my/blog/`
 
----
+GitHub Pages custom domain:
 
-## 📈 Current Goals
+- The root [CNAME](/DATA/Storage/docker/portfolio/CNAME) file sets the Pages custom domain to `portfolio.aimansam.my`.
+- The Hugo blog `baseURL` is set to `https://portfolio.aimansam.my/blog/` in [blog-source/config.toml](/DATA/Storage/docker/portfolio/blog-source/config.toml).
+- In your DNS provider, point `portfolio.aimansam.my` to GitHub Pages using the record type your DNS host supports for subdomains.
+- In the GitHub Pages repository settings, set the custom domain to `portfolio.aimansam.my` and enable HTTPS after DNS resolves.
 
-- Enroll Hack The Box CPTS certification
-- Strengthen Blue Team skills (SIEM, EDR, Threat Detection)
-- Build advanced red team labs
-- Compete in international CTFs
-- Contribute to cybersecurity community
+The nginx image now copies only public site assets into the web root.
 
----
+Served paths include:
 
-## 📫 Connect With Me
+- `index.html`
+- `assets/`
+- `css/`
+- `js/`
+- `content/`
+- `admin/`
+- `project-pages/`
+- `blog/`
 
-- 📧 Email: zx10r8443@gmail.com  
-- 💼 LinkedIn: https://linkedin.com/in/aimansam  
-- 🧠 TryHackMe: https://tryhackme.com/p/zx10r  
-
----
-
-⭐ *Feel free to explore my repositories and projects!*
+Repository-only files such as `docker-compose.yml` and `blog-source/config.toml` are intentionally not published by the container.

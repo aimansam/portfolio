@@ -615,6 +615,91 @@ body {
   gap: 16px;
 }
 
+#blog-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blog-preview-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.blog-preview-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 620px;
+}
+
+.blog-preview-intro {
+  color: rgba(20, 20, 20, 0.76);
+}
+
+.blog-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.blog-preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  padding: 22px;
+  border: 2px solid #141414;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  box-shadow: 0 18px 40px rgba(20, 20, 20, 0.08);
+}
+
+.blog-preview-card-accent {
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.98) 0%, rgba(49, 49, 49, 0.98) 100%);
+  color: white;
+}
+
+.blog-preview-card-accent .project-tag {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.blog-preview-card-accent .blog-preview-text,
+.blog-preview-card-accent .blog-preview-meta {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.blog-preview-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.blog-preview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.blog-preview-title {
+  font-size: 24px;
+}
+
+.blog-preview-text {
+  color: rgba(20, 20, 20, 0.76);
+}
+
+.blog-preview-meta {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 20, 20, 0.58);
+}
+
 .project-filters {
   display: flex;
   gap: 10px;
@@ -761,6 +846,10 @@ body {
   #portfolio-header {
     gap: 24px;
   }
+
+  .blog-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 800px and below) */
@@ -804,6 +893,15 @@ body {
 
   .project-card {
     max-width: calc((100% - 16px) / 2);
+  }
+
+  .blog-preview-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .blog-preview-grid {
+    grid-template-columns: 1fr;
   }
 
   .about-section-content {
@@ -906,6 +1004,11 @@ body {
 
   .about-card {
     padding: 22px;
+    border-radius: 24px;
+  }
+
+  .blog-preview-card {
+    padding: 20px;
     border-radius: 24px;
   }
 

@@ -1,0 +1,21 @@
+{
+  "about": {
+    "title": "Foundations built through practice.",
+    "lookingLabel": "Looking For",
+    "roles": [
+      "Penetration Tester",
+      "Security Engineer",
+      "Blue Team Analyst",
+      "Cloud Engineer"
+    ],
+    "intro": "Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.",
+    "points": [
+      "Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.",
+      "System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.",
+      "Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.",
+      "Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.",
+      "Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.",
+      "Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional."
+    ]
+  }
+}

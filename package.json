@@ -1,0 +1,7 @@
+{
+  "name": "portfolio-cms-tools",
+  "private": true,
+  "scripts": {
+    "cms:proxy": "npx decap-server"
+  }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio Admin</title>
+  </head>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js"></script>
+    <script>
+      const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+      async function initializeAdmin() {
+        const response = await fetch('./config.yml');
+
+        if (!response.ok) {
+          throw new Error(`Failed to load CMS config: ${response.status}`);
+        }
+
+        const config = window.jsyaml.load(await response.text());
+
+        if (isLocalHost) {
+          delete config.publish_mode;
+        }
+
+        window.initCMS({ config });
+      }
+
+      initializeAdmin().catch((error) => {
+        console.error(error);
+        document.body.insertAdjacentHTML(
+          'beforeend',
+          '<p style="padding: 1rem; font-family: sans-serif; color: #b42318;">Unable to initialize the admin UI. Check the browser console for details.</p>'
+        );
+      });
+    </script>
+  </body>
+</html>

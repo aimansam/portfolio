@@ -34,12 +34,12 @@
             <span class="nav-menu-toggle-bar"></span>
             <span class="nav-menu-toggle-bar"></span>
           </button>
-          <a class="nav-title-link" href="./index.html">
-            <span class="nav-title">zx10r</span>
+          <a class="nav-title-link" id="nav-brand-link" href="./index.html">
+            <span class="nav-title" id="nav-brand-label">zx10r</span>
           </a>
         </div>
-        <a class="button button-contrast nav-cta" href="mailto:zx10r8443@gmail.com">
-          <span class="button-text" style="font-size: 18px;">Hire Me</span>
+        <a class="button button-contrast nav-cta" id="nav-cta-link" href="mailto:zx10r8443@gmail.com">
+          <span class="button-text" id="nav-cta-label" style="font-size: 18px;">Hire Me</span>
         </a>
       </div>
       <div class="nav-icon-box" id="mobile-nav-links" aria-label="Section links">
@@ -95,20 +95,20 @@
         <div id="portfolio-header-text-container">
             <div class="hero-top-content">
             <div class="header-text">
-              <span class="main-title">Hey, I'm @zx10r.</span>
-              <div class="body-text">I'm a junior penetration tester and web developer specializing in identifying vulnerabilities and building secure web applications.</div>
+              <span class="main-title" id="hero-title">Hey, I'm @zx10r.</span>
+              <div class="body-text" id="hero-intro">I'm a junior penetration tester and web developer specializing in identifying vulnerabilities and building secure web applications.</div>
             </div>
             <div class="hero-actions">
-              <a class="button" id="my-work-link">
-                <span class="button-text">Check out my projects</span>
+              <a class="button" id="my-work-link" href="#my-work-section">
+                <span class="button-text" id="hero-primary-action-label">Check out my projects</span>
                 <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
               </a>
-              <a class="button button-contrast" href="./assets/Resume.pdf" download="Aiman_Sam_Resume.pdf">
-                <span class="button-text">Download CV</span>
+              <a class="button button-contrast" id="hero-secondary-action-link" href="./assets/Resume.pdf" download="Aiman_Sam_Resume.pdf">
+                <span class="button-text" id="hero-secondary-action-label">Download CV</span>
                 <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon button-contrast-icon"/>
               </a>
             </div>
-            <div class="hero-socials" aria-label="Social and contact links">
+            <div class="hero-socials" id="hero-social-links" aria-label="Social and contact links">
               <a class="hero-social-link" href="mailto:zx10r8443@gmail.com" aria-label="Email">
                 <img src="./assets/icons/mail.svg" class="hero-social-icon" alt="">
               </a>
@@ -126,7 +126,7 @@
               </a>
             </div>
             </div>
-            <div class="hero-badges" aria-label="Profile badges">
+            <div class="hero-badges" id="hero-badge-links" aria-label="Profile badges">
               <a class="hero-badge-link hero-badge-link-thm" href="https://tryhackme.com/p/zx10r" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe badge">
                 <img src="https://tryhackme-badges.s3.amazonaws.com/zx10r.png?v=20260509" class="hero-badge-image" alt="TryHackMe badge for zx10r">
               </a>
@@ -138,8 +138,8 @@
       </div>
 
       <div id="stats-summary-section">
-        <span class="subheader-text">Highlights / Quick Stats</span>
-        <div class="stats-diagram">
+        <span class="subheader-text" id="stats-heading">Highlights / Quick Stats</span>
+        <div class="stats-diagram" id="stats-diagram">
           <div class="stats-row">
             <div class="stat-node">
               <span class="stat-step">01</span>
@@ -207,18 +207,18 @@
         <div class="about-section-content">
           <article class="about-card about-card-story">
             <span class="about-card-eyebrow">About Me</span>
-            <h3 class="about-card-title">Foundations built through practice.</h3>
+            <h3 class="about-card-title" id="about-title">Foundations built through practice.</h3>
             <div class="about-story-roles">
-              <span class="about-story-label">Looking For</span>
-              <div class="about-story-visual" aria-label="Positions I am looking for">
+              <span class="about-story-label" id="about-looking-label">Looking For</span>
+              <div class="about-story-visual" id="about-role-list" aria-label="Positions I am looking for">
                 <span class="about-story-chip">Penetration Tester</span>
                 <span class="about-story-chip">Security Engineer</span>
                 <span class="about-story-chip">Blue Team Analyst</span>
                 <span class="about-story-chip">Cloud Engineer</span>
               </div>
             </div>
-            <div class="body-text about-copy">Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.</div>
-            <ul class="about-points body-text" aria-label="About me summary">
+            <div class="body-text about-copy" id="about-intro">Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.</div>
+            <ul class="about-points body-text" id="about-points" aria-label="About me summary">
               <li>Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.</li>
               <li>System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.</li>
               <li>Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.</li>
@@ -230,15 +230,15 @@
 
           <article class="about-card">
             <span class="about-card-eyebrow">Skills</span>
-            <h3 class="about-card-title about-card-title-compact">Applied security and development skills.</h3>
-            <div class="about-skill-filters" aria-label="Skill category filters">
+            <h3 class="about-card-title about-card-title-compact" id="skills-title">Applied security and development skills.</h3>
+            <div class="about-skill-filters" id="skills-filter-list" aria-label="Skill category filters">
               <button class="about-skill-filter is-active" type="button" data-skill-filter="all">All</button>
               <button class="about-skill-filter" type="button" data-skill-filter="red-team">Red Team</button>
               <button class="about-skill-filter" type="button" data-skill-filter="blue-team">Blue Team</button>
               <button class="about-skill-filter" type="button" data-skill-filter="web-dev">Web Dev</button>
               <button class="about-skill-filter" type="button" data-skill-filter="cloud">Cloud</button>
             </div>
-            <div class="about-skill-pages" aria-label="Hiring-focused skills from resume">
+            <div class="about-skill-pages" id="skills-page-list" aria-label="Hiring-focused skills from resume">
               <section class="about-skill-page is-active" data-skill-page="all">
                 <div class="about-pill-list">
                   <span class="about-pill"><i data-lucide="bug"></i>Web Exploitation</span>
@@ -294,14 +294,14 @@
 
           <article class="about-card">
             <span class="about-card-eyebrow">Certificates</span>
-            <h3 class="about-card-title about-card-title-compact">Recognized industry credentials.</h3>
+            <h3 class="about-card-title about-card-title-compact" id="certificates-title">Recognized industry credentials.</h3>
             <div class="about-certificate-carousel" aria-label="Certificates earned">
               <div class="about-certificate-carousel-controls">
                 <button class="about-certificate-nav" type="button" data-certificate-nav="prev" aria-label="Previous certificate">Prev</button>
                 <button class="about-certificate-nav" type="button" data-certificate-nav="next" aria-label="Next certificate">Next</button>
               </div>
               <div class="about-certificate-viewport">
-                <ul class="about-certificate-list">
+                <ul class="about-certificate-list" id="certificate-list">
                   <li class="about-certificate-item">
                     <div class="about-certificate-body">
                       <span class="about-certificate-name">CEHv13</span>
@@ -362,16 +362,16 @@
       <!-- PROJECTS / MY WORK SECTION -->
       <div id="my-work-section">
         <!-- TODO - Change the subheader-text to whatever you want the Projects section header to say -->
-        <span class="subheader-text">My Work / My Projects</span>
+        <span class="subheader-text" id="projects-heading">My Work / My Projects</span>
 
-        <div class="project-filters" aria-label="Project filters">
+        <div class="project-filters" id="project-filter-list" aria-label="Project filters">
           <button class="filter-button is-active" type="button" data-filter="all">All</button>
           <button class="filter-button" type="button" data-filter="infrastructure">Infrastructure</button>
           <button class="filter-button" type="button" data-filter="hardware">Hardware</button>
           <button class="filter-button" type="button" data-filter="wireless">Wireless</button>
         </div>
 
-        <div class="projects-container">
+        <div class="projects-container" id="projects-container">
           <!-- 
             TODO
 
@@ -441,12 +441,75 @@
           </div>
         </div>
       </div>
+
+      <div id="blog-preview-section">
+        <div class="blog-preview-header">
+          <div class="blog-preview-heading">
+            <span class="subheader-text" id="blog-preview-heading">Writeups / Blog</span>
+            <div class="body-text blog-preview-intro" id="blog-preview-intro">Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.</div>
+          </div>
+          <a class="button button-contrast" id="blog-preview-view-all" href="./blog/index.html">
+            <span class="button-text" id="blog-preview-view-all-label">View all posts</span>
+            <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon button-contrast-icon" alt="">
+          </a>
+        </div>
+
+        <div class="blog-preview-grid" id="blog-preview-grid">
+          <article class="blog-preview-card blog-preview-card-accent">
+            <div class="blog-preview-tags">
+              <span class="project-tag">Latest Post</span>
+              <span class="project-tag">Web</span>
+            </div>
+            <div class="blog-preview-card-text">
+              <div class="subheader-text blog-preview-title">Web Exploitation Workflow</div>
+              <div class="body-text blog-preview-text">A practical workflow for approaching web targets in labs and CTFs, from surface mapping and logic flaws to clean exploit validation.</div>
+            </div>
+            <div class="blog-preview-meta">Published · May 9, 2026</div>
+            <a class="button" href="./blog/posts/web-exploitation-workflow/">
+              <span class="button-text">Read post</span>
+              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
+            </a>
+          </article>
+
+          <article class="blog-preview-card">
+            <div class="blog-preview-tags">
+              <span class="project-tag">Lab Notes</span>
+              <span class="project-tag">Active Directory</span>
+            </div>
+            <div class="blog-preview-card-text">
+              <div class="subheader-text blog-preview-title">Active Directory Lab Notes</div>
+              <div class="body-text blog-preview-text">Notes from building and attacking an Active Directory lab, with emphasis on enumeration, trust relationships, and privilege escalation paths.</div>
+            </div>
+            <div class="blog-preview-meta">Published · May 9, 2026</div>
+            <a class="button" href="./blog/posts/active-directory-lab-notes/">
+              <span class="button-text">Read post</span>
+              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
+            </a>
+          </article>
+
+          <article class="blog-preview-card">
+            <div class="blog-preview-tags">
+              <span class="project-tag">Writeup</span>
+              <span class="project-tag">CTF</span>
+            </div>
+            <div class="blog-preview-card-text">
+              <div class="subheader-text blog-preview-title">My First CTF</div>
+              <div class="body-text blog-preview-text">A short walkthrough of my first rooted CTF target, from initial enumeration to privilege escalation and the habits that made the path clear.</div>
+            </div>
+            <div class="blog-preview-meta">Published · May 6, 2026</div>
+            <a class="button" href="./blog/posts/my-first-ctf/">
+              <span class="button-text">Read post</span>
+              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
+            </a>
+          </article>
+        </div>
+      </div>
     </div>
 
     <!-- FOOTER -->
     <div id="footer">
-      <div class="footer-copy">Open to internships, project collaboration, and security work.</div>
-      <div class="footer-links">
+      <div class="footer-copy" id="footer-copy">Open to internships, project collaboration, and security work.</div>
+      <div class="footer-links" id="footer-link-list">
       <!-- 
         TODO - Change the email after "mailto" to your contact email 
       

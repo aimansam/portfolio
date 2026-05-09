@@ -1,4 +1,4 @@
-baseURL = 'https://aimansam.github.io/portfolio/blog'
+baseURL = 'https://portfolio.aimansam.my/blog/'
 locale = 'en-us'
 title = 'zx10r blog'
 theme = "PaperMod"
