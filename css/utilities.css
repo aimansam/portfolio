@@ -10,17 +10,55 @@
 .footer-icon {
   width: 20px;
   height: 20px;
+  display: block;
+  object-fit: contain;
+}
+
+.hero-social-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  object-fit: contain;
+}
+
+.hero-badge-link {
+  display: inline-flex;
+  flex: 1 1 0;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.hero-badge-link-thm {
+  flex-grow: 1;
+}
+
+.hero-badge-link-htb {
+  flex-grow: 1.1;
+}
+
+.hero-badge-image {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  display: block;
 }
 
 a.icon-link {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #141414;
+  text-decoration: none;
   transition: transform 200ms ease-in-out;
 }
 
 a.icon-link:hover {
   cursor: pointer;
-  stroke-width: 5;
-  margin: 0;
-  transform: rotate(15deg);
+  transform: translateY(-1px);
 }
 
 
@@ -90,6 +128,51 @@ a.button.button-contrast:hover {
   filter: invert(1);
 }
 
+.hero-social-link {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #141414;
+}
+
+.hero-social-link:hover {
+  transform: translateY(-1px);
+}
+
+.hero-badge-link:hover {
+  transform: translateY(-1px);
+}
+
+.filter-button {
+  padding: 8px 14px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  background-color: white;
+  color: #141414;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-button.is-active {
+  background-color: #141414;
+  color: white;
+}
+
+.project-tag {
+  padding: 4px 10px;
+  border: 1px solid #141414;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 
 /* Footer Styling */
 
@@ -97,9 +180,16 @@ a.button.button-contrast:hover {
   width: 100%;
   display: flex;
   padding: 30px 50px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 /* Link Styling */
@@ -117,5 +207,7 @@ a.no-underline:hover {
 @media only screen and (max-width: 800px) {
   #footer {
     padding: 20px 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

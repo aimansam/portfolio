@@ -34,16 +34,20 @@ body {
 /* Portfolio Header */
 
 #portfolio-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
   gap: 48px;
-  align-items: center;
+  align-items: start;
 }
 
-#portfolio-header-image-container {
+#portfolio-header-visual {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex: 1 1 54%;
+  min-width: 0;
+}
+
+#portfolio-header-image-container {
   min-width: 0;
 }
 
@@ -56,16 +60,41 @@ body {
 #portfolio-header-text-container {
   display: flex;
   flex-direction: column;
-  gap: 34px;
-  flex: 1 1 46%;
+  justify-content: space-between;
+  gap: 28px;
   min-width: 0;
+  margin-top: 135px;
+  padding-bottom: 24px;
+}
+
+.hero-top-content {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  margin-top: 0;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero-socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .hero-badges {
   display: flex;
   gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  max-width: 420px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 
@@ -92,6 +121,7 @@ body {
   }
 
   #portfolio-header {
+    grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
     gap: 32px;
   }
 
@@ -101,6 +131,16 @@ body {
 
   .project-card {
     max-width: calc((100% - 16px) / 2);
+  }
+
+  .hero-badges {
+    margin-bottom: 0;
+    margin-top: 0;
+    flex-wrap: wrap;
+  }
+
+  .hero-top-content {
+    gap: 28px;
   }
 }
 
@@ -208,6 +248,12 @@ body {
   gap: 16px;
 }
 
+.project-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .projects-container {
   display: flex;
   gap: 34px 16px;
@@ -223,10 +269,20 @@ body {
       gap: 34px;
     }
 
+    .project-card.is-hidden {
+      display: none;
+    }
+
     .project-card-text-container {
       flex-direction: column;
       display: flex;
       gap: 16px
+    }
+
+    .project-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .project-image {
@@ -323,19 +379,34 @@ body {
   }
 
   #portfolio-header {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
   }
 
-  #portfolio-header-image-container,
+  #portfolio-header-visual,
   #portfolio-header-text-container {
     width: 100%;
     flex-basis: auto;
   }
 
-  #portfolio-header-image-container {
+  #portfolio-header-text-container {
+    justify-content: flex-start;
+    gap: 24px;
+    padding-bottom: 0;
+  }
+
+  .hero-top-content {
+    gap: 24px;
+  }
+
+  #portfolio-header-visual {
     max-width: 680px;
+  }
+
+  .hero-badges {
+    flex-wrap: wrap;
   }
 
   .project-card {
@@ -395,10 +466,15 @@ body {
     gap: 24px;
   }
 
+
   .hero-actions {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero-socials {
+    gap: 10px;
   }
 
   .hero-actions .button {
@@ -416,6 +492,10 @@ body {
   .stats-row,
   .stats-row-compact {
     grid-template-columns: 1fr;
+  }
+
+  .project-filters {
+    gap: 8px;
   }
 }
 

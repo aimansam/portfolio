@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+    <link rel="icon" href="../assets/images/8443.jpg" />
+		<title>Bad USB Payload Lab</title>
+    <meta name="description" content="Case study for a Bad USB lab focused on keystroke injection, payload development, and endpoint attack simulation.">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+
+		<script defer src="../js/script.js"></script>
+	</head>
+	<body>
+    <div class="navbar">
+      <a class="nav-title-link" href="../index.html">
+        <span class="nav-title">zx10r</span>
+      </a>
+      <a class="button" href="mailto:zx10r8443@gmail.com">
+        <span class="button-text">Hire Me</span>
+      </a>
+    </div>
+
+    <div id="main-content">
+      <div id="project-header">
+        <div class="main-title">Bad USB Payload Lab</div>
+        <div class="body-text">A hardware-focused project for building and testing keystroke injection payloads that simulate real endpoint compromise scenarios, operator tradecraft, and user-assisted execution paths.</div>
+        <img class="project-header-image" src="../assets/images/rubby.jpg" alt="Bad USB payload lab setup">
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">Project Details / Background</div>
+        <div class="project-details-content">
+          <div class="body-text">This project was built to study how physical access and trusted-device assumptions can be abused during short, high-impact engagements. The focus was not just on payload execution, but on understanding how endpoint controls, user privilege levels, and execution timing affect real-world success rates.</div>
+          <div class="body-text">Using a Bad USB platform, I developed and tested payload chains that simulate operator actions such as scripted command execution, staged downloads, credential collection attempts, and rapid host configuration changes. The main objective was to observe what works reliably, what fails under defender controls, and what indicators are created on the endpoint.</div>
+        </div>
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">What I Built / Tested</div>
+        <div class="project-details-content">
+          <div class="body-text">The lab focused on keystroke injection workflows, payload reliability, execution delay tuning, and environmental checks before running sensitive actions. This made the project useful for understanding how physical attack vectors interact with user sessions, application focus, language settings, USB trust, and local security tooling.</div>
+          <div class="body-text">I used it to explore how different payload styles behave across Windows systems, including command shell launches, PowerShell-based execution, staged operator actions, and automation designed to minimize visible user disruption. Testing emphasized both exploitation logic and defensive visibility.</div>
+        </div>
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">Security Value / Takeaways</div>
+        <div class="project-details-content">
+          <div class="body-text">This project demonstrates practical understanding of physical attack vectors, endpoint assumptions, and the gap between payload theory and real execution reliability. It also reinforces the importance of device control policies, user awareness, application whitelisting, and endpoint monitoring against rapid scripted actions.</div>
+          <div class="body-text">From a defender perspective, the project helped highlight which host events and user behaviors should be watched more closely when investigating suspicious USB activity or short-lived operator actions on a workstation.</div>
+        </div>
+      </div>
+
+      <div id="project-gallery">
+        <div class="subheader-text">Gallery / Notes</div>
+        <div class="project-gallery-content">
+            <div class="gallery-image-container half-width">
+              <img src="../assets/images/rubby.jpg" class="gallery-image" alt="Bad USB hardware build">
+              <span class="image-caption">Bad USB hardware used to test rapid payload execution and operator timing.</span>
+            </div>
+            <div class="gallery-image-container half-width">
+              <img src="../assets/images/rubby.jpg" class="gallery-image" alt="Payload development workflow">
+              <span class="image-caption">Payload development emphasized reliability, staged execution, and environmental awareness before sensitive actions.</span>
+            </div>
+            <div class="gallery-image-container">
+              <img src="../assets/images/rubby.jpg" class="gallery-image" alt="Endpoint attack simulation results">
+              <span class="image-caption">Used to study how physical access can translate into endpoint compromise attempts under real workstation conditions.</span>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <a class="icon-link" href="mailto:zx10r8443@gmail.com">
+        <img src="../assets/icons/mail.svg" class="footer-icon" alt="Email">
+      </a>
+    </div>
+
+    <script>
+      document.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+      });
+    </script>
+	</body>
+</html>

@@ -17,6 +17,11 @@ body {
   font-weight: 500;
 }
 
+.footer-copy {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .main-title {
   font-size: 40px;
   font-weight: 700;

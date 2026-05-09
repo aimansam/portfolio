@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+    <link rel="icon" href="../assets/images/8443.jpg" />
+		<title>Enterprise Grade Home Lab</title>
+    <meta name="description" content="Case study for an enterprise-style cybersecurity home lab used for Active Directory, detection, and red-team practice.">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+
+		<script defer src="../js/script.js"></script>
+	</head>
+	<body>
+    <div class="navbar">
+      <a class="nav-title-link" href="../index.html">
+        <span class="nav-title">zx10r</span>
+      </a>
+      <a class="button" href="mailto:zx10r8443@gmail.com">
+        <span class="button-text">Hire Me</span>
+      </a>
+    </div>
+
+    <div id="main-content">
+      <div id="project-header">
+        <div class="main-title">Enterprise Grade Home Lab</div>
+        <div class="body-text">A segmented enterprise-style lab built for realistic penetration testing, Active Directory attack simulation, detection engineering, and incident response drills across Windows and Linux systems.</div>
+        <img class="project-header-image" src="../assets/images/homelab.jpg" alt="Enterprise home lab overview">
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">Project Details / Background</div>
+        <div class="project-details-content">
+          <div class="body-text">This home lab was built to simulate the kind of hybrid infrastructure commonly found in small and medium enterprise environments. The goal was to move beyond isolated challenge boxes and create a repeatable environment for testing attacker workflows, defensive visibility, and post-exploitation movement inside a controlled network.</div>
+          <div class="body-text">The environment includes segmented internal networks, Windows and Linux hosts, Active Directory services, logging and monitoring components, and vulnerable paths that can be used for privilege escalation and lateral movement. That lets me rehearse realistic operator tasks such as enumeration, initial foothold validation, credential abuse, persistence testing, detection tuning, and incident response walkthroughs.</div>
+          <div class="body-text">I used the lab to practice both red-team and blue-team workflows. On the offensive side, the focus was on AD abuse, web exploitation pivots, and host compromise validation. On the defensive side, the focus was on telemetry collection, SIEM visibility, alert investigation, and improving detection coverage around the exact techniques exercised in the lab.</div>
+        </div>
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">Architecture / What It Includes</div>
+        <div class="project-details-content">
+          <div class="body-text">The lab is organized around multiple virtual machines and purpose-specific roles rather than a flat sandbox. Core components include a domain controller, user workstations, Linux servers, attacker systems, logging infrastructure, and monitoring nodes. Network separation is used to imitate trust boundaries and make routing, visibility, and pivoting decisions matter during testing.</div>
+          <div class="body-text">Key focus areas include Active Directory enumeration, privilege escalation, credential access, lateral movement, log forwarding, and security event review. The lab also supports web application testing and post-exploitation chaining, so findings from one system can be used to validate how compromise would realistically spread through the environment.</div>
+        </div>
+      </div>
+
+      <div id="project-details">
+        <div class="subheader-text">What This Lab Demonstrates</div>
+        <div class="project-details-content">
+          <div class="body-text">This project demonstrates practical understanding of enterprise attack surfaces, not just single-host exploitation. It shows how I design repeatable test environments, document assumptions, validate attacker paths, and connect offensive activity to defensive outcomes.</div>
+          <div class="body-text">It also reflects a workflow mindset: build the environment, introduce or simulate vulnerable paths, test exploitation, observe telemetry, and refine detections. That loop is valuable because it mirrors how real-world security teams improve both resilience and visibility.</div>
+        </div>
+      </div>
+
+      <div id="project-gallery">
+        <div class="subheader-text">Gallery / Notes</div>
+        <div class="project-gallery-content">
+            <div class="gallery-image-container half-width">
+              <img src="../assets/images/homelab.jpg" class="gallery-image" alt="Home lab infrastructure overview">
+              <span class="image-caption">High-level view of the home lab environment used for enterprise-style testing and research.</span>
+            </div>
+            <div class="gallery-image-container half-width">
+              <img src="../assets/images/homelab.jpg" class="gallery-image" alt="Home lab segmented network view">
+              <span class="image-caption">Segmented design supports AD attack simulation, host isolation, and pivot validation across multiple trust zones.</span>
+            </div>
+            <div class="gallery-image-container">
+              <img src="../assets/images/homelab.jpg" class="gallery-image" alt="Home lab use cases summary">
+              <span class="image-caption">Used for privilege escalation practice, detection validation, incident-response drills, and end-to-end attack path rehearsal.</span>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <a class="icon-link" href="mailto:zx10r8443@gmail.com">
+        <img src="../assets/icons/mail.svg" class="footer-icon" alt="Email">
+      </a>
+    </div>
+
+    <script>
+      document.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+      });
+    </script>
+	</body>
+</html>
