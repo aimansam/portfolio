@@ -132,6 +132,53 @@ a.icon-link:focus-visible .footer-icon {
   pointer-events: auto;
 }
 
+.nav-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-menu-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.nav-menu-toggle:hover,
+.nav-menu-toggle:active,
+.nav-menu-toggle:focus-visible,
+.nav-menu-toggle[aria-expanded="true"] {
+  background-color: #141414;
+  box-shadow: 0 14px 26px rgba(20, 20, 20, 0.18);
+}
+
+.nav-menu-toggle-bar {
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background-color: #141414;
+  transition: background-color 180ms ease;
+}
+
+.nav-menu-toggle:hover .nav-menu-toggle-bar,
+.nav-menu-toggle:active .nav-menu-toggle-bar,
+.nav-menu-toggle:focus-visible .nav-menu-toggle-bar,
+.nav-menu-toggle[aria-expanded="true"] .nav-menu-toggle-bar {
+  background-color: white;
+}
+
 .nav-icon-box {
   display: flex;
   flex-direction: column;
@@ -222,20 +269,55 @@ a.icon-link:focus-visible .footer-icon {
     background-color: transparent;
   }
 
+  .nav-brand-row {
+    gap: 12px;
+  }
+
+  .nav-menu-toggle {
+    display: inline-flex;
+  }
+
   .nav-icon-box {
-    flex-direction: row;
-    gap: 8px;
-    padding: 10px 12px;
-    border-radius: 999px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-width: 180px;
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .nav-icon-box.is-open {
+    display: flex;
   }
 
   .nav-icon-link {
-    width: 46px;
+    width: 100%;
     height: 46px;
+    justify-content: flex-start;
+    padding: 0 14px;
+    gap: 12px;
   }
 
   .nav-icon-label {
-    display: none;
+    position: static;
+    transform: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: #141414;
+    font-size: 13px;
+    opacity: 1;
+    display: inline;
+    pointer-events: none;
+  }
+
+  .nav-icon-link:hover .nav-icon-label,
+  .nav-icon-link:active .nav-icon-label,
+  .nav-icon-link:focus-visible .nav-icon-label {
+    transform: none;
+    color: white;
   }
 }
 

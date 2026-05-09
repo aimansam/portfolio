@@ -4,6 +4,27 @@ if (document.getElementById('my-work-link')) {
   })
 }
 
+const navMenuToggle = document.querySelector('.nav-menu-toggle')
+const navIconBox = document.querySelector('.nav-icon-box')
+const navIconLinks = document.querySelectorAll('.nav-icon-box .nav-icon-link')
+
+if (navMenuToggle && navIconBox) {
+  navMenuToggle.addEventListener('click', () => {
+    const isOpen = navMenuToggle.getAttribute('aria-expanded') === 'true'
+    navMenuToggle.setAttribute('aria-expanded', String(!isOpen))
+    navIconBox.classList.toggle('is-open', !isOpen)
+  })
+
+  navIconLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 800) {
+        navMenuToggle.setAttribute('aria-expanded', 'false')
+        navIconBox.classList.remove('is-open')
+      }
+    })
+  })
+}
+
 const filterButtons = document.querySelectorAll('.filter-button')
 const projectCards = document.querySelectorAll('.project-card[data-category]')
 

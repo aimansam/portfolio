@@ -27,14 +27,21 @@
     <!-- NAVBAR -->
     <nav class="navbar" aria-label="Primary navigation">
       <div class="nav-header-row">
-        <a class="nav-title-link" href="./index.html">
-          <span class="nav-title">zx10r</span>
-        </a>
+        <div class="nav-brand-row">
+          <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-links" aria-label="Open navigation menu">
+            <span class="nav-menu-toggle-bar"></span>
+            <span class="nav-menu-toggle-bar"></span>
+            <span class="nav-menu-toggle-bar"></span>
+          </button>
+          <a class="nav-title-link" href="./index.html">
+            <span class="nav-title">zx10r</span>
+          </a>
+        </div>
         <a class="button button-contrast nav-cta" href="mailto:zx10r8443@gmail.com">
           <span class="button-text" style="font-size: 18px;">Hire Me</span>
         </a>
       </div>
-      <div class="nav-icon-box" aria-label="Section links">
+      <div class="nav-icon-box" id="mobile-nav-links" aria-label="Section links">
         <a class="nav-icon-link" href="#main-content" aria-label="Go to top">
           <img src="./assets/icons/home.svg" class="nav-icon" alt="">
           <span class="nav-icon-label">Home</span>
