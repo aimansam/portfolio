@@ -193,13 +193,16 @@ body {
   border-radius: 24px;
   background-color: white;
   min-width: 0;
+  z-index: 0;
   box-shadow: 0 0 0 rgba(20, 20, 20, 0);
   transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 
 .stat-node:hover,
+.stat-node:active,
 .stat-node:focus-within {
-  transform: translateY(-10px) scale(1.03);
+  z-index: 1;
+  transform: translateY(-6px);
   background-color: #f7f7f7;
   box-shadow: 0 30px 50px rgba(20, 20, 20, 0.22);
 }
@@ -212,18 +215,22 @@ body {
 }
 
 .stat-node:hover .stat-step,
+.stat-node:active .stat-step,
 .stat-node:focus-within .stat-step,
 .stat-node:hover .stat-label,
+.stat-node:active .stat-label,
 .stat-node:focus-within .stat-label {
   transform: translateX(6px);
 }
 
 .stat-node:hover .stat-value,
+.stat-node:active .stat-value,
 .stat-node:focus-within .stat-value {
   transform: scale(1.12);
 }
 
 .stat-node:hover .stat-note,
+.stat-node:active .stat-note,
 .stat-node:focus-within .stat-note {
   transform: translateY(3px);
 }
@@ -253,6 +260,7 @@ body {
 }
 
 .stat-node:hover::after,
+.stat-node:active::after,
 .stat-node:focus-within::after {
   transform: scale(1.22);
   box-shadow: 0 0 0 3px #141414;
@@ -317,6 +325,7 @@ body {
     }
 
     .project-card:hover,
+    .project-card:active,
     .project-card:focus-within {
       transform: translateY(-4px);
       border-color: #141414;
@@ -349,6 +358,7 @@ body {
     }
 
     .project-card:hover .project-image,
+    .project-card:active .project-image,
     .project-card:focus-within .project-image {
       transform: scale(1.02);
     }

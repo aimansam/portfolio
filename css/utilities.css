@@ -56,18 +56,19 @@ a.icon-link {
   text-decoration: none;
   background-color: white;
   box-shadow: 0 0 0 rgba(20, 20, 20, 0);
-  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
 a.icon-link:hover,
+a.icon-link:active,
 a.icon-link:focus-visible {
   cursor: pointer;
-  transform: translateY(-2px);
   background-color: #141414;
   box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
 }
 
 a.icon-link:hover .footer-icon,
+a.icon-link:active .footer-icon,
 a.icon-link:focus-visible .footer-icon {
   filter: invert(1);
 }
@@ -110,11 +111,13 @@ a.icon-link:focus-visible .footer-icon {
 }
 
 .nav-title-link:hover,
+.nav-title-link:active,
 .nav-title-link:focus-visible {
   opacity: 0.72;
 }
 
 .nav-title-link:hover::after,
+.nav-title-link:active::after,
 .nav-title-link:focus-visible::after {
   transform: scaleX(1);
 }
@@ -152,12 +155,12 @@ a.icon-link:focus-visible .footer-icon {
   text-decoration: none;
   background-color: white;
   box-shadow: 0 0 0 rgba(20, 20, 20, 0);
-  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
 
 .nav-icon-link:hover,
+.nav-icon-link:active,
 .nav-icon-link:focus-visible {
-  transform: translateY(-2px) scale(1.03);
   background-color: #141414;
   box-shadow: 0 14px 26px rgba(20, 20, 20, 0.18);
   color: white;
@@ -172,6 +175,7 @@ a.icon-link:focus-visible .footer-icon {
 }
 
 .nav-icon-link:hover .nav-icon,
+.nav-icon-link:active .nav-icon,
 .nav-icon-link:focus-visible .nav-icon {
   filter: invert(1);
 }
@@ -191,11 +195,11 @@ a.icon-link:focus-visible .footer-icon {
   line-height: 1;
   white-space: nowrap;
   opacity: 0;
-  pointer-events: none;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .nav-icon-link:hover .nav-icon-label,
+.nav-icon-link:active .nav-icon-label,
 .nav-icon-link:focus-visible .nav-icon-label {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
@@ -228,6 +232,7 @@ a.icon-link:focus-visible .footer-icon {
   }
 
   .nav-icon-link:hover .nav-icon-label,
+  .nav-icon-link:active .nav-icon-label,
   .nav-icon-link:focus-visible .nav-icon-label {
     transform: translateX(-50%) translateY(0);
   }
@@ -261,12 +266,24 @@ a.button:focus-visible {
   box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
+a.button:active {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
+}
+
 a.button:not(.button-contrast):hover {
   background-color: #141414;
   color: white;
 }
 
+a.button:not(.button-contrast):active {
+  background-color: #141414;
+  color: white;
+}
+
 a.button:not(.button-contrast):hover .right-arrow-icon,
+a.button:not(.button-contrast):active .right-arrow-icon,
 a.button:not(.button-contrast):focus-visible .right-arrow-icon {
   filter: invert(1);
 }
@@ -290,11 +307,18 @@ a.button.button-contrast:focus-visible {
   color: #141414;
 }
 
+a.button.button-contrast:active {
+  background-color: white;
+  border-color: #141414;
+  color: #141414;
+}
+
 .button-contrast-icon {
   filter: invert(1);
 }
 
 a.button.button-contrast:hover .button-contrast-icon,
+a.button.button-contrast:active .button-contrast-icon,
 a.button.button-contrast:focus-visible .button-contrast-icon {
   filter: none;
 }
@@ -311,17 +335,18 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
   color: #141414;
   background-color: white;
   box-shadow: 0 0 0 rgba(20, 20, 20, 0);
-  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .hero-social-link:hover,
+.hero-social-link:active,
 .hero-social-link:focus-visible {
-  transform: translateY(-2px);
   background-color: #141414;
   box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
 }
 
 .hero-social-link:hover .hero-social-icon,
+.hero-social-link:active .hero-social-icon,
 .hero-social-link:focus-visible .hero-social-icon {
   filter: invert(1);
 }
@@ -331,6 +356,7 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 }
 
 .hero-badge-link:hover,
+.hero-badge-link:active,
 .hero-badge-link:focus-visible {
   transform: translateY(-2px);
   box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
@@ -342,16 +368,23 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
   border-radius: 999px;
   background-color: white;
   color: #141414;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
   font: inherit;
   font-size: 13px;
   font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  touch-action: manipulation;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 
 .filter-button:hover,
+.filter-button:active,
 .filter-button:focus-visible {
-  transform: translateY(-2px);
   background-color: #141414;
   color: white;
   box-shadow: 0 12px 24px rgba(20, 20, 20, 0.12);
