@@ -171,8 +171,9 @@
 
         const config = window.jsyaml.load(await response.text());
 
+        delete config.publish_mode;
+
         if (isLocalHost) {
-          delete config.publish_mode;
         } else {
           delete config.local_backend;
         }
