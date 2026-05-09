@@ -2,9 +2,7 @@ backend:
   name: github
   repo: aimansam/portfolio
   branch: main
-  # After deploying an external OAuth service, uncomment these and point them to it.
-  # base_url: https://cms-auth.portfolio.aimansam.my
-  # auth_endpoint: auth
+  # Production auth settings are injected by admin/index.html.
 
 site_url: https://portfolio.aimansam.my
 display_url: https://portfolio.aimansam.my

@@ -135,7 +135,7 @@ Suggested deployment flow:
   - `npx wrangler secret put OAUTH_STATE_SECRET --config cms-auth/wrangler.toml`
 5. Deploy with `npm run cms:auth:deploy`.
 6. Bind `cms-auth.portfolio.aimansam.my` to the Worker route in Cloudflare.
-7. Uncomment `base_url` and `auth_endpoint` in `admin/config.yml` after the worker is reachable.
+7. Deploy the worker on `cms-auth.portfolio.aimansam.my`. The admin bootstrap injects `base_url` and `auth_endpoint` automatically in production.
 
 Suggested Cloudflare secrets/config:
 
