@@ -54,8 +54,8 @@ Local proxy notes:
 Production save flow:
 
 1. Keep `backend.name: github` in `admin/config.yml`.
-2. Configure a Decap-compatible GitHub OAuth flow for the deployed site.
-3. Set the OAuth app callback URL to your deployed `/admin/` path.
+2. Deploy a Decap-compatible OAuth service and set `backend.base_url` plus `backend.auth_endpoint` in `admin/config.yml`.
+3. Create a GitHub OAuth app for the deployed auth service.
 4. Ensure the authenticated GitHub user has write access to `aimansam/portfolio`.
 
 Without GitHub OAuth, the CMS UI can load but cannot complete browser-based saves in production.
@@ -90,3 +90,53 @@ Served paths include:
 - `blog/`
 
 Repository-only files such as `docker-compose.yml` and `blog-source/config.toml` are intentionally not published by the container.
+
+## Production CMS Auth
+
+For production Decap editing on `https://portfolio.aimansam.my/admin/`, you need a server-side GitHub OAuth exchange. GitHub Pages cannot do that exchange by itself.
+
+Recommended setup with Cloudflare:
+
+1. Create a small OAuth service on Cloudflare Workers or Pages Functions.
+2. Expose it on a subdomain such as `https://cms-auth.portfolio.aimansam.my`.
+3. Configure the Decap backend with:
+
+```yml
+backend:
+  name: github
+  repo: aimansam/portfolio
+  branch: main
+  base_url: https://cms-auth.portfolio.aimansam.my
+  auth_endpoint: auth
+```
+
+4. Create a GitHub OAuth App with:
+	- Homepage URL: `https://portfolio.aimansam.my`
+	- Authorization callback URL: `https://cms-auth.portfolio.aimansam.my/callback`
+5. Store the GitHub client ID and client secret in Cloudflare Worker secrets.
+6. Let the worker handle these routes:
+	- `/auth`: redirect the CMS login popup to GitHub OAuth
+	- `/callback`: exchange the GitHub code for an access token and post it back to the Decap popup opener
+
+Suggested Cloudflare secrets/config:
+
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`
+- `ALLOWED_ORIGIN=https://portfolio.aimansam.my`
+
+Suggested DNS:
+
+- `cms-auth.portfolio` as a Cloudflare-managed subdomain for the worker route
+
+GitHub token scope:
+
+- Use `public_repo` if the repository stays public.
+- Use `repo` only if the repository becomes private.
+
+Validation checklist after deployment:
+
+1. Open `https://portfolio.aimansam.my/admin/`.
+2. Click `Login with GitHub`.
+3. Confirm the popup uses your Cloudflare auth domain.
+4. Confirm login returns to the CMS instead of stopping on the GitHub approval page.
+5. Edit one JSON section or draft post and verify a commit or editorial entry appears in `aimansam/portfolio`.

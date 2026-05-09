@@ -2,9 +2,14 @@ backend:
   name: github
   repo: aimansam/portfolio
   branch: main
+  # After deploying an external OAuth service, uncomment these and point them to it.
+  # base_url: https://cms-auth.portfolio.aimansam.my
+  # auth_endpoint: auth
 
 local_backend: true
 publish_mode: editorial_workflow
+site_url: https://portfolio.aimansam.my
+display_url: https://portfolio.aimansam.my
 media_folder: assets/images/uploads
 public_folder: /assets/images/uploads
 
