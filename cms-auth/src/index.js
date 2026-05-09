@@ -20,7 +20,7 @@ async function routeRequest(request, env) {
   const url = new URL(request.url);
 
   if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: corsHeaders(env) });
+    return new Response(null, { status: 204, headers: corsHeaders(getAllowedOrigin(env)) });
   }
 
   if (url.pathname === '/health') {
