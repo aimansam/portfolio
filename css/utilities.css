@@ -87,6 +87,7 @@ a.icon-link:focus-visible .footer-icon {
   top: 0;
   left: 0;
   z-index: 20;
+  pointer-events: none;
 }
 
 .nav-title-link {
@@ -128,6 +129,7 @@ a.icon-link:focus-visible .footer-icon {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
+  pointer-events: auto;
 }
 
 .nav-icon-box {
@@ -140,6 +142,7 @@ a.icon-link:focus-visible .footer-icon {
   border-radius: 28px;
   background-color: rgba(255, 255, 255, 0.96);
   box-shadow: 0 18px 40px rgba(20, 20, 20, 0.12);
+  pointer-events: auto;
 }
 
 .nav-icon-link {
@@ -217,15 +220,6 @@ a.icon-link:focus-visible .footer-icon {
     padding: 20px 20px 0;
     gap: 14px;
     background-color: transparent;
-  }
-
-  .nav-header-row {
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-
-  .nav-cta {
-    margin-left: 0;
   }
 
   .nav-icon-box {
