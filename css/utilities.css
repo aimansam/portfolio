@@ -195,6 +195,7 @@ a.icon-link:focus-visible .footer-icon {
   line-height: 1;
   white-space: nowrap;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
@@ -272,12 +273,9 @@ a.button:active {
   box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
-a.button:not(.button-contrast):hover {
-  background-color: #141414;
-  color: white;
-}
-
-a.button:not(.button-contrast):active {
+a.button:not(.button-contrast):hover,
+a.button:not(.button-contrast):active,
+a.button:not(.button-contrast):focus-visible {
   background-color: #141414;
   color: white;
 }
@@ -393,6 +391,12 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .filter-button.is-active {
   background-color: #141414;
   color: white;
+}
+
+.filter-button.is-active:hover,
+.filter-button.is-active:active {
+  background-color: #333333;
+  box-shadow: 0 12px 24px rgba(20, 20, 20, 0.18);
 }
 
 .project-tag {

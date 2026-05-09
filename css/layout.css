@@ -320,6 +320,7 @@ body {
       border: 2px solid transparent;
       border-radius: 28px;
       background-color: white;
+      z-index: 0;
       box-shadow: 0 0 0 rgba(20, 20, 20, 0);
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
@@ -327,6 +328,7 @@ body {
     .project-card:hover,
     .project-card:active,
     .project-card:focus-within {
+      z-index: 1;
       transform: translateY(-4px);
       border-color: #141414;
       box-shadow: 0 20px 38px rgba(20, 20, 20, 0.14);
