@@ -219,6 +219,15 @@ a.icon-link:focus-visible .footer-icon {
     background-color: transparent;
   }
 
+  .nav-header-row {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .nav-cta {
+    margin-left: 0;
+  }
+
   .nav-icon-box {
     flex-direction: row;
     gap: 8px;
@@ -226,16 +235,13 @@ a.icon-link:focus-visible .footer-icon {
     border-radius: 999px;
   }
 
-  .nav-icon-label {
-    left: 50%;
-    top: calc(100% + 12px);
-    transform: translateX(-50%) translateY(-4px);
+  .nav-icon-link {
+    width: 46px;
+    height: 46px;
   }
 
-  .nav-icon-link:hover .nav-icon-label,
-  .nav-icon-link:active .nav-icon-label,
-  .nav-icon-link:focus-visible .nav-icon-label {
-    transform: translateX(-50%) translateY(0);
+  .nav-icon-label {
+    display: none;
   }
 }
 
