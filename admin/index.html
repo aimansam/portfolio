@@ -173,6 +173,8 @@
 
         if (isLocalHost) {
           delete config.publish_mode;
+        } else {
+          delete config.local_backend;
         }
 
         setStatus('Starting the editor interface...');
