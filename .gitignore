@@ -1,0 +1,6 @@
+cms-auth/.dev.vars
+cms-auth/.dev.vars.*
+!cms-auth/.dev.vars.example
+.wrangler/
+cms-auth/.wrangler/
+worker-configuration.d.ts

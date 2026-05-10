@@ -856,7 +856,7 @@ body {
 @media only screen and (max-width: 800px) {
   #main-content {
     width: calc(100% - 40px);
-    margin: 220px auto 0;
+    margin: 120px auto 0;
     gap: 64px;
   }
 
@@ -876,6 +876,7 @@ body {
   #portfolio-header-text-container {
     justify-content: flex-start;
     gap: 24px;
+    margin-top: 0;
     padding-bottom: 0;
   }
 
@@ -975,12 +976,21 @@ body {
 @media only screen and (max-width: 600px) {
   #main-content {
     width: calc(100% - 24px);
-    margin-top: 168px;
+    margin-top: 96px;
     gap: 56px;
   }
 
   #portfolio-header {
     gap: 22px;
+  }
+
+  #portfolio-header-visual {
+    max-width: none;
+  }
+
+  #portfolio-header-image-container,
+  .portfolio-header-image {
+    width: 100%;
   }
 
   #portfolio-header-text-container {
@@ -1033,8 +1043,22 @@ body {
     gap: 8px;
   }
 
+  .about-skill-filters {
+    gap: 8px 6px;
+  }
+
   .about-skill-filter {
     font-size: 11px;
+    padding: 6px 8px;
+  }
+
+  .about-certificate-item {
+    padding: 14px;
+  }
+
+  .about-certificate-name,
+  .about-certificate-note {
+    overflow-wrap: anywhere;
   }
 
   .project-card {
@@ -1048,6 +1072,18 @@ body {
   .stats-row,
   .stats-row-compact {
     grid-template-columns: 1fr;
+  }
+
+  .stats-row::before,
+  .stats-row-compact::before,
+  .stat-node::before,
+  .stat-node::after {
+    display: none;
+  }
+
+  .stat-node,
+  .stat-node:nth-child(even) {
+    margin-left: 0;
   }
 
   .project-filters {
