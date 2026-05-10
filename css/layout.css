@@ -877,6 +877,7 @@ body {
     justify-content: flex-start;
     gap: 24px;
     padding-bottom: 0;
+    margin-top: 0;
   }
 
   .hero-top-content {
@@ -975,7 +976,7 @@ body {
 @media only screen and (max-width: 600px) {
   #main-content {
     width: calc(100% - 24px);
-    margin-top: 168px;
+    margin-top: 96px;
     gap: 56px;
   }
 
