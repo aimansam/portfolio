@@ -1,0 +1,88 @@
+:root {
+  --radius: 8px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.header {
+  padding-top: 18px;
+}
+
+.logo a {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.menu a {
+  font-weight: 700;
+}
+
+.first-entry,
+.post-entry,
+.post-single {
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+}
+
+.first-entry {
+  min-height: auto;
+  margin: 28px 0 24px;
+  padding: 30px;
+}
+
+.first-entry .entry-header h1 {
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.post-entry {
+  padding: 22px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.post-entry:hover,
+.post-entry:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 38px rgba(20, 20, 20, 0.12);
+}
+
+.post-single {
+  padding: 30px;
+}
+
+.post-title {
+  line-height: 1.08;
+}
+
+.post-content h2,
+.post-content h3 {
+  scroll-margin-top: 96px;
+}
+
+.post-tags a {
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.footer {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .first-entry,
+  .post-single {
+    padding: 22px;
+  }
+
+  .first-entry .entry-header h1 {
+    font-size: 28px;
+  }
+
+  .post-entry {
+    padding: 18px;
+  }
+}

@@ -1,1 +1,68 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Tags on zx10r blog</title><link>https://portfolio.aimansam.my/blog/tags/</link><description>Recent content in Tags on zx10r blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate><atom:link href="https://portfolio.aimansam.my/blog/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>Active-Directory</title><link>https://portfolio.aimansam.my/blog/tags/active-directory/</link><pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/active-directory/</guid><description/></item><item><title>Lateral-Movement</title><link>https://portfolio.aimansam.my/blog/tags/lateral-movement/</link><pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/lateral-movement/</guid><description/></item><item><title>Windows</title><link>https://portfolio.aimansam.my/blog/tags/windows/</link><pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/windows/</guid><description/></item><item><title>Ctf</title><link>https://portfolio.aimansam.my/blog/tags/ctf/</link><pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/ctf/</guid><description/></item><item><title>Methodology</title><link>https://portfolio.aimansam.my/blog/tags/methodology/</link><pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/methodology/</guid><description/></item><item><title>Web</title><link>https://portfolio.aimansam.my/blog/tags/web/</link><pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/web/</guid><description/></item><item><title>Enumeration</title><link>https://portfolio.aimansam.my/blog/tags/enumeration/</link><pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/enumeration/</guid><description/></item><item><title>Privilege-Escalation</title><link>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</link><pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on zx10r blog</title>
+    <link>https://portfolio.aimansam.my/blog/tags/</link>
+    <description>Recent content in Tags on zx10r blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
+    <atom:link href="https://portfolio.aimansam.my/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Active-Directory</title>
+      <link>https://portfolio.aimansam.my/blog/tags/active-directory/</link>
+      <pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/active-directory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lateral-Movement</title>
+      <link>https://portfolio.aimansam.my/blog/tags/lateral-movement/</link>
+      <pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/lateral-movement/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Windows</title>
+      <link>https://portfolio.aimansam.my/blog/tags/windows/</link>
+      <pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/windows/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ctf</title>
+      <link>https://portfolio.aimansam.my/blog/tags/ctf/</link>
+      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/ctf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Methodology</title>
+      <link>https://portfolio.aimansam.my/blog/tags/methodology/</link>
+      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/methodology/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web</title>
+      <link>https://portfolio.aimansam.my/blog/tags/web/</link>
+      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/web/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Enumeration</title>
+      <link>https://portfolio.aimansam.my/blog/tags/enumeration/</link>
+      <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/enumeration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Privilege-Escalation</title>
+      <link>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</link>
+      <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

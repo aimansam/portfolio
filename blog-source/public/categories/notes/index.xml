@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Notes on zx10r blog</title><link>https://portfolio.aimansam.my/blog/categories/notes/</link><description>Recent content in Notes on zx10r blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 09 May 2026 11:10:00 +0800</lastBuildDate><atom:link href="https://portfolio.aimansam.my/blog/categories/notes/index.xml" rel="self" type="application/rss+xml"/><item><title>Web Exploitation Workflow</title><link>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</link><pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</guid><description>A practical workflow I use for approaching web targets in labs and CTFs, from surface mapping to exploit validation.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Notes on zx10r blog</title>
+    <link>https://portfolio.aimansam.my/blog/categories/notes/</link>
+    <description>Recent content in Notes on zx10r blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 May 2026 11:10:00 +0800</lastBuildDate>
+    <atom:link href="https://portfolio.aimansam.my/blog/categories/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Practical Web Exploitation Workflow for CTFs and Labs</title>
+      <link>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</link>
+      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</guid>
+      <description>A disciplined web testing workflow for mapping application behavior, finding logic flaws, and proving impact cleanly.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,8 +1,8 @@
 ---
-title: "Active Directory Lab Notes"
+title: "Active Directory Lab Notes: Enumeration, Trust Paths, and Privilege Escalation"
 date: 2026-05-09T18:40:00+08:00
 draft: false
-summary: "Notes from building and attacking an Active Directory lab, with emphasis on enumeration, trust relationships, and privilege escalation paths."
+summary: "Notes from building and attacking an Active Directory lab, focused on domain enumeration, trust paths, and escalation patterns."
 tags: ["active-directory", "windows", "lateral-movement"]
 categories: ["Labs"]
 ---

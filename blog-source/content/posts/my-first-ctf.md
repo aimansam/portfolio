@@ -1,8 +1,8 @@
 ---
-title: "My First CTF"
+title: "My First CTF: Enumeration Lessons That Made Exploitation Click"
 date: 2026-05-06T00:34:31+08:00
 draft: false
-summary: "A short walkthrough of my first rooted CTF target, from initial enumeration to privilege escalation."
+summary: "How my first rooted CTF target taught me to slow down, enumerate carefully, and turn small signals into a full attack path."
 tags: ["ctf", "enumeration", "privilege-escalation"]
 categories: ["Writeups"]
 ---

@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Labs on zx10r blog</title><link>https://portfolio.aimansam.my/blog/categories/labs/</link><description>Recent content in Labs on zx10r blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate><atom:link href="https://portfolio.aimansam.my/blog/categories/labs/index.xml" rel="self" type="application/rss+xml"/><item><title>Active Directory Lab Notes</title><link>https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/</link><pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate><guid>https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/</guid><description>Notes from building and attacking an Active Directory lab, with emphasis on enumeration, trust relationships, and privilege escalation paths.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Labs on zx10r blog</title>
+    <link>https://portfolio.aimansam.my/blog/categories/labs/</link>
+    <description>Recent content in Labs on zx10r blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
+    <atom:link href="https://portfolio.aimansam.my/blog/categories/labs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Active Directory Lab Notes: Enumeration, Trust Paths, and Privilege Escalation</title>
+      <link>https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/</link>
+      <pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/</guid>
+      <description>Notes from building and attacking an Active Directory lab, focused on domain enumeration, trust paths, and escalation patterns.</description>
+    </item>
+  </channel>
+</rss>

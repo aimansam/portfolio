@@ -2,3 +2,51 @@ baseURL = 'https://portfolio.aimansam.my/blog/'
 locale = 'en-us'
 title = 'zx10r blog'
 theme = "PaperMod"
+
+enableRobotsTXT = true
+summaryLength = 24
+
+[params]
+	author = 'Aiman Sam'
+	description = 'Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.'
+	defaultTheme = 'auto'
+	ShowReadingTime = true
+	ShowPostNavLinks = true
+	ShowBreadCrumbs = true
+	ShowCodeCopyButtons = true
+	ShowRssButtonInSectionTermList = true
+	ShowShareButtons = false
+	disableSpecial1stPost = true
+	comments = false
+
+	[params.homeInfoParams]
+		Title = 'Security notes from the lab.'
+		Content = 'CTF writeups, Active Directory lab notes, web exploitation workflows, and lessons from building practical security skills.'
+
+[[params.socialIcons]]
+	name = 'github'
+	url = 'https://github.com/aimansam'
+
+[[params.socialIcons]]
+	name = 'linkedin'
+	url = 'https://www.linkedin.com/in/aimansam'
+
+[[menu.main]]
+	name = 'Portfolio'
+	url = 'https://portfolio.aimansam.my/'
+	weight = 10
+
+[[menu.main]]
+	name = 'Posts'
+	url = '/posts/'
+	weight = 20
+
+[[menu.main]]
+	name = 'Tags'
+	url = '/tags/'
+	weight = 30
+
+[[menu.main]]
+	name = 'RSS'
+	url = '/index.xml'
+	weight = 40
