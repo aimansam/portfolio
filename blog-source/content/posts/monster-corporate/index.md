@@ -9,6 +9,8 @@ showToc: true
 TocOpen: true
 ---
 
+Monster Corporate is a boot-to-root lab that rewards careful enumeration more than exploit hunting. The path starts with an exposed SMB share, moves through WordPress admin access and plugin-based RCE, then uses a SUID `xxd` permission issue and a writable root cron script to finish the box.
+
 ## Challenge description
 
 ![Monster Corporate challenge description](monster-corporate-00.png)
@@ -609,8 +611,12 @@ root@monster:~#
 
 We now have a root shell.
 
-Claim your flag in the Discord ticket. Bye bye.
+## Lessons learned
+
+- Always check anonymous or guest-accessible SMB shares early.
+- Web credentials are worth testing against the obvious login paths before spending time on deeper fuzzing.
+- Administrator access to WordPress can become system access when plugin editing is available.
+- SUID binaries are useful even when they do not directly spawn a shell; read/write primitives can still enable lateral movement.
+- Writable scripts executed by root-owned cron jobs are high-impact privilege escalation targets.
 
 Thank you for reading.
-
-**AUTHOR: 𝓚𝓘𝓝𝓖**
