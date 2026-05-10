@@ -1,6 +1,6 @@
 baseURL = 'https://portfolio.aimansam.my/blog/'
 locale = 'en-us'
-title = 'zx10r blog'
+title = 'Aiman Sam Security Notes'
 theme = "PaperMod"
 
 enableRobotsTXT = true
@@ -18,6 +18,9 @@ summaryLength = 24
 	ShowShareButtons = false
 	disableSpecial1stPost = true
 	comments = false
+
+	[params.footer]
+		text = 'Security notes by Aiman Sam'
 
 	[params.homeInfoParams]
 		Title = 'Security notes from the lab.'
