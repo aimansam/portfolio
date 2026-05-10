@@ -15,6 +15,109 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.is-loading {
+  overflow: hidden;
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 420ms ease, visibility 420ms ease;
+}
+
+body.is-loaded .page-loader {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.page-loader-mark {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  animation: page-loader-pulse 900ms ease-in-out infinite;
+}
+
+.page-loader-mark::before,
+.page-loader-mark::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 2px solid rgba(20, 20, 20, 0.2);
+  border-radius: 999px;
+}
+
+.page-loader-mark::after {
+  inset: 34px;
+  background-color: #141414;
+  border: 0;
+}
+
+.page-loader-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background-color: #141414;
+  transform: translate(-50%, -50%) rotate(var(--loader-angle)) translateX(50px);
+  animation: page-loader-orbit 900ms ease-in-out infinite;
+}
+
+.page-loader-particle:nth-child(1) {
+  --loader-angle: 0deg;
+}
+
+.page-loader-particle:nth-child(2) {
+  --loader-angle: 90deg;
+  animation-delay: 80ms;
+}
+
+.page-loader-particle:nth-child(3) {
+  --loader-angle: 180deg;
+  animation-delay: 160ms;
+}
+
+.page-loader-particle:nth-child(4) {
+  --loader-angle: 270deg;
+  animation-delay: 240ms;
+}
+
+@keyframes page-loader-pulse {
+  0%,
+  100% {
+    transform: scale(0.94);
+    box-shadow: 0 18px 44px rgba(20, 20, 20, 0.08);
+  }
+
+  50% {
+    transform: scale(1);
+    box-shadow: 0 24px 56px rgba(20, 20, 20, 0.16);
+  }
+}
+
+@keyframes page-loader-orbit {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) rotate(var(--loader-angle)) translateX(42px) scale(0.72);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--loader-angle)) translateX(50px) scale(1);
+  }
+}
+
 
 
 
@@ -91,6 +194,19 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body.is-loading {
+    overflow: auto;
+  }
+
+  .page-loader {
+    transition: none;
+  }
+
+  .page-loader-mark,
+  .page-loader-particle {
+    animation: none;
+  }
+
   [data-scroll-reveal="true"] {
     opacity: 1;
     transform: none;

@@ -29,6 +29,24 @@ const initializeSmoothScroll = () => {
   })
 }
 
+const loadAnimationStartedAt = window.performance.now()
+
+const completePageLoadAnimation = () => {
+  const pageLoader = document.querySelector('.page-loader')
+  const remainingLoadTime = Math.max(0, 700 - (window.performance.now() - loadAnimationStartedAt))
+
+  window.setTimeout(() => {
+    document.body.classList.remove('is-loading')
+    document.body.classList.add('is-loaded')
+
+    if (pageLoader) {
+      window.setTimeout(() => {
+        pageLoader.remove()
+      }, 460)
+    }
+  }, remainingLoadTime)
+}
+
 const createTagMarkup = (tags = []) => tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')
 
 const createStatsRow = (items, compact = false) => `
@@ -841,9 +859,11 @@ Promise.all(
     const mergedContent = Object.assign({}, ...contentSections)
     applyPortfolioContent(mergedContent)
     initializeInteractiveSections()
+    completePageLoadAnimation()
   })
   .catch(() => {
     // Keep the inline HTML as the fallback when content loading is unavailable.
     initializeInteractiveSections()
+    completePageLoadAnimation()
   })
 
