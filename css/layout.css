@@ -974,10 +974,19 @@ body {
 
 /* Small devices (portrait tablets and large phones, 600px and below) */
 @media only screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+
   #main-content {
     width: calc(100% - 24px);
     margin-top: 96px;
     gap: 56px;
+  }
+
+  #main-content > * {
+    min-width: 0;
+    max-width: 100%;
   }
 
   #portfolio-header {
@@ -1008,6 +1017,17 @@ body {
     gap: 10px;
   }
 
+  .hero-badges {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-badge-link {
+    width: 100%;
+    flex: none;
+  }
+
   .hero-actions .button {
     justify-content: center;
   }
@@ -1029,6 +1049,10 @@ body {
     overflow: visible;
   }
 
+  .about-card-story::after {
+    display: none;
+  }
+
   .blog-preview-card {
     padding: 20px;
     border-radius: 24px;
@@ -1047,7 +1071,7 @@ body {
 
   .about-story-visual {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .about-pill {
@@ -1070,6 +1094,16 @@ body {
     overflow-wrap: anywhere;
   }
 
+  .about-copy,
+  .about-points {
+    font-size: 14px;
+  }
+
+  .about-points {
+    gap: 8px;
+    padding-left: 18px;
+  }
+
   .about-pill-list {
     gap: 8px;
   }
@@ -1087,13 +1121,19 @@ body {
     padding: 14px;
   }
 
+  .about-certificate-viewport {
+    max-width: 100%;
+  }
+
   .about-certificate-name,
   .about-certificate-note {
     overflow-wrap: anywhere;
   }
 
   .project-card {
+    width: 100%;
     max-width: 100%;
+    gap: 22px;
   }
 
   .stats-diagram {
@@ -1119,6 +1159,12 @@ body {
 
   .project-filters {
     gap: 8px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .about-story-visual {
+    grid-template-columns: 1fr;
   }
 }
 
