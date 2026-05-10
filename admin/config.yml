@@ -2,7 +2,8 @@ backend:
   name: github
   repo: aimansam/portfolio
   branch: main
-  # Production auth settings are injected by admin/index.html.
+  base_url: https://cms-auth-portfolio.aimansam.my
+  auth_endpoint: auth
 
 site_url: https://portfolio.aimansam.my
 display_url: https://portfolio.aimansam.my
