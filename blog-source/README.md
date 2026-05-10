@@ -7,9 +7,20 @@ Hugo source for the blog at `https://portfolio.aimansam.my/blog/`.
 - Site config: `config.toml`
 - Pages: `content/*.md`
 - Posts: `content/posts/*.md`
+- Writeup template: `archetypes/writeup.md`
 - Tags/categories metadata: `content/tags/**/_index.md` and `content/categories/**/_index.md`
 - PaperMod overrides: `layouts/` and `assets/css/extended/custom.css`
 - Static files: `static/`
+
+## New Writeup
+
+Create a draft from the writeup template:
+
+```sh
+hugo --source blog-source new content -k writeup posts/<slug>/index.md
+```
+
+This creates a page bundle source file at `blog-source/content/posts/<slug>/index.md`. Put post images in the same folder and reference them with relative paths such as `![Alt text](<slug>-00.png)`.
 
 ## Build
 
