@@ -919,8 +919,7 @@ body {
   }
 
   .about-card-story::after {
-    width: 96px;
-    height: 96px;
+    display: none;
   }
 
   .about-certificate-item {
