@@ -1039,9 +1039,9 @@ body {
   }
 
   .about-story-chip {
-    min-height: 30px;
-    padding: 0 10px;
-    font-size: 9px;
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 10px;
     letter-spacing: 0.05em;
   }
 
@@ -1059,13 +1059,20 @@ body {
   }
 
   .about-copy {
+    font-size: 13px;
     line-height: 1.55;
   }
 
   .about-points {
+    font-size: 13px;
     gap: 8px;
     padding-left: 18px;
     line-height: 1.55;
+  }
+
+  /* Show only 3 bullet points on mobile to reduce density */
+  #about-points li:nth-child(n+4) {
+    display: none;
   }
 
   .about-pill-list {
@@ -1074,6 +1081,7 @@ body {
 
   .about-skill-filter {
     font-size: 11px;
+    padding: 6px 8px;
   }
 
   .project-card {
