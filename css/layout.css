@@ -594,6 +594,24 @@ body.is-loaded .page-loader {
   max-width: none;
 }
 
+.about-profile-card {
+  width: min(190px, 48vw);
+  margin: 0;
+  padding: 8px;
+  border: 2px solid #141414;
+  border-radius: 24px;
+  background-color: white;
+  box-shadow: 0 18px 36px rgba(20, 20, 20, 0.12);
+}
+
+.about-profile-image {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
 .about-copy {
   line-height: 1.65;
 }
@@ -1159,6 +1177,10 @@ body.is-loaded .page-loader {
     font-size: 28px;
   }
 
+  .about-profile-card {
+    width: min(220px, 62vw);
+  }
+
   .about-card-story::after {
     display: none;
   }
@@ -1291,6 +1313,12 @@ body.is-loaded .page-loader {
 
   .about-card-story::after {
     display: none;
+  }
+
+  .about-profile-card {
+    width: 100%;
+    max-width: 220px;
+    align-self: center;
   }
 
   .blog-preview-card {
