@@ -1017,14 +1017,37 @@ body {
     border-radius: 24px;
   }
 
+  .about-card,
+  .about-card-story,
+  .about-card-story > *,
+  .about-section-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .about-card-story {
+    overflow: visible;
+  }
+
   .blog-preview-card {
     padding: 20px;
     border-radius: 24px;
   }
 
   .about-story-chip {
+    width: 100%;
     min-height: 32px;
+    justify-content: center;
+    padding: 8px 10px;
     font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .about-story-visual {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .about-pill {
@@ -1033,10 +1056,18 @@ body {
 
   .about-card-title {
     font-size: 24px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .about-card-title-compact {
     font-size: 22px;
+  }
+
+  .about-copy,
+  .about-points,
+  .about-points li {
+    overflow-wrap: anywhere;
   }
 
   .about-pill-list {
