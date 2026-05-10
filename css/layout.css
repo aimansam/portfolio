@@ -984,6 +984,15 @@ body {
     gap: 22px;
   }
 
+  #portfolio-header-visual {
+    max-width: none;
+  }
+
+  #portfolio-header-image-container,
+  .portfolio-header-image {
+    width: 100%;
+  }
+
   #portfolio-header-text-container {
     gap: 24px;
   }
@@ -1008,14 +1017,32 @@ body {
     border-radius: 24px;
   }
 
+  .about-card-story {
+    gap: 14px;
+  }
+
+  .about-card-story::after {
+    display: none;
+  }
+
   .blog-preview-card {
     padding: 20px;
     border-radius: 24px;
   }
 
+  .about-story-roles {
+    gap: 8px;
+  }
+
+  .about-story-visual {
+    gap: 6px;
+  }
+
   .about-story-chip {
-    min-height: 32px;
-    font-size: 10px;
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 9px;
+    letter-spacing: 0.05em;
   }
 
   .about-pill {
@@ -1023,11 +1050,22 @@ body {
   }
 
   .about-card-title {
-    font-size: 24px;
+    font-size: 22px;
+    line-height: 1.12;
   }
 
   .about-card-title-compact {
     font-size: 22px;
+  }
+
+  .about-copy {
+    line-height: 1.55;
+  }
+
+  .about-points {
+    gap: 8px;
+    padding-left: 18px;
+    line-height: 1.55;
   }
 
   .about-pill-list {
@@ -1048,6 +1086,11 @@ body {
 
   .stats-row::before,
   .stats-row-compact::before {
+    display: none;
+  }
+
+  .stat-node::before,
+  .stat-node::after {
     display: none;
   }
 
