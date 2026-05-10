@@ -2,6 +2,8 @@
 
 Hugo source for the blog at `https://portfolio.aimansam.my/blog/`.
 
+For the full post creation, Notion export, preview, publish, and verification workflow, see `../docs/blog-posting-guide.md`.
+
 ## Edit
 
 - Site config: `config.toml`

@@ -32,7 +32,9 @@ Homepage content is split into JSON files under `content/site/`.
 
 The homepage fetches those files client-side in `js/script.js` and renders them into `index.html`.
 
-Blog posts live in [blog-source/content/posts](blog-source/content/posts) and are built by Hugo into [blog-source/public](blog-source/public). The blog editing and Notion export workflow is documented in [blog-source/README.md](blog-source/README.md).
+Blog posts live in [blog-source/content/posts](blog-source/content/posts) and are built by Hugo into [blog-source/public](blog-source/public). The quick blog workflow is documented in [blog-source/README.md](blog-source/README.md), and the full posting guide is in [docs/blog-posting-guide.md](docs/blog-posting-guide.md).
+
+Project cards live in [content/site/projects.json](content/site/projects.json), with detail pages under [project-pages](project-pages). The full project workflow is documented in [docs/project-guide.md](docs/project-guide.md).
 
 ## CMS Editing
 
