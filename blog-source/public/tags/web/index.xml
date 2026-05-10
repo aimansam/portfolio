@@ -3,8 +3,7 @@
   <channel>
     <title>Web on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/web/</link>
-    <description>Recent content in Web on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Web application testing notes covering application mapping, input handling, logic flaws, and clean proof of impact.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 11:10:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/web/index.xml" rel="self" type="application/rss+xml" />

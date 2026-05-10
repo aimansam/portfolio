@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Security notes from the lab on zx10r Security Notes</title>
+    <title>zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/</link>
-    <description>Recent content in Security notes from the lab on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/index.xml" rel="self" type="application/rss+xml" />
@@ -28,20 +27,6 @@
       <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/posts/my-first-ctf/</guid>
       <description>How my first rooted CTF target taught me to slow down, enumerate carefully, and turn small signals into a full attack path.</description>
-    </item>
-    <item>
-      <title>About zx10r Security Notes</title>
-      <link>https://portfolio.aimansam.my/blog/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/about/</guid>
-      <description>A short overview of zx10r Security Notes and the kind of security work collected here.</description>
-    </item>
-    <item>
-      <title>Start Here</title>
-      <link>https://portfolio.aimansam.my/blog/start-here/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/start-here/</guid>
-      <description>A quick guide to the main areas of zx10r Security Notes.</description>
     </item>
   </channel>
 </rss>

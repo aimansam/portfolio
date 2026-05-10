@@ -3,8 +3,7 @@
   <channel>
     <title>Privilege Escalation on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</link>
-    <description>Recent content in Privilege Escalation on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Notes on moving from initial access to stronger control through misconfigurations, permissions, and environment clues.</description>
     <language>en-us</language>
     <lastBuildDate>Wed, 06 May 2026 00:34:31 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/privilege-escalation/index.xml" rel="self" type="application/rss+xml" />

@@ -3,8 +3,7 @@
   <channel>
     <title>Active Directory on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/active-directory/</link>
-    <description>Recent content in Active Directory on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Notes on Active Directory enumeration, trust-path thinking, Windows environments, and escalation practice.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/active-directory/index.xml" rel="self" type="application/rss+xml" />

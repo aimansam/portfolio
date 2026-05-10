@@ -3,8 +3,7 @@
   <channel>
     <title>CTF on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/ctf/</link>
-    <description>Recent content in CTF on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Capture-the-flag practice notes focused on enumeration, exploitation paths, and habits that transfer into labs.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 11:10:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/ctf/index.xml" rel="self" type="application/rss+xml" />

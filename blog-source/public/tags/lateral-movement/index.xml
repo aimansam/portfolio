@@ -3,8 +3,7 @@
   <channel>
     <title>Lateral Movement on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/lateral-movement/</link>
-    <description>Recent content in Lateral Movement on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Lab notes about moving through environments, validating access paths, and understanding trust relationships.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/lateral-movement/index.xml" rel="self" type="application/rss+xml" />

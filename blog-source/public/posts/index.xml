@@ -3,8 +3,7 @@
   <channel>
     <title>Posts on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/posts/</link>
-    <description>Recent content in Posts on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Security notes, lab writeups, CTF lessons, and practical methodology entries from zx10r Security Notes.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/posts/index.xml" rel="self" type="application/rss+xml" />

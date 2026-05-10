@@ -3,8 +3,7 @@
   <channel>
     <title>Windows on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/tags/windows/</link>
-    <description>Recent content in Windows on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>Windows security lab notes covering enumeration, configuration issues, and domain environment practice.</description>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/windows/index.xml" rel="self" type="application/rss+xml" />

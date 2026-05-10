@@ -3,8 +3,7 @@
   <channel>
     <title>Writeups on zx10r Security Notes</title>
     <link>https://portfolio.aimansam.my/blog/categories/writeups/</link>
-    <description>Recent content in Writeups on zx10r Security Notes</description>
-    <generator>Hugo</generator>
+    <description>CTF and lab writeups focused on attack paths, enumeration decisions, and lessons learned.</description>
     <language>en-us</language>
     <lastBuildDate>Wed, 06 May 2026 00:34:31 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/categories/writeups/index.xml" rel="self" type="application/rss+xml" />
