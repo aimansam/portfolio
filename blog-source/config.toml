@@ -1,13 +1,13 @@
 baseURL = 'https://portfolio.aimansam.my/blog/'
 locale = 'en-us'
-title = 'Aiman Sam Security Notes'
+title = 'zx10r Security Notes'
 theme = "PaperMod"
 
 enableRobotsTXT = true
 summaryLength = 24
 
 [params]
-	author = 'Aiman Sam'
+	author = 'zx10r'
 	description = 'Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.'
 	defaultTheme = 'auto'
 	ShowReadingTime = true
@@ -20,7 +20,7 @@ summaryLength = 24
 	comments = false
 
 	[params.footer]
-		text = 'Security notes by Aiman Sam'
+		text = 'Security notes by zx10r'
 
 	[params.homeInfoParams]
 		Title = 'Security notes from the lab.'
