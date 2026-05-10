@@ -43,12 +43,68 @@ body {
   transform: translateY(0);
 }
 
+.pointer-effect {
+  --pointer-x: 50vw;
+  --pointer-y: 50vh;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.pointer-effect.is-visible {
+  visibility: visible;
+}
+
+.pointer-effect-dot,
+.pointer-effect-ring {
+  position: fixed;
+  top: var(--pointer-y);
+  left: var(--pointer-x);
+  display: block;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.pointer-effect-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #141414;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.72);
+}
+
+.pointer-effect-ring {
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(20, 20, 20, 0.46);
+  background-color: rgba(20, 20, 20, 0.03);
+}
+
+.pointer-effect.is-hovering .pointer-effect-ring {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(20, 20, 20, 0.82);
+  background-color: rgba(20, 20, 20, 0.08);
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-scroll-reveal="true"] {
     opacity: 1;
     transform: none;
     transition: none;
     will-change: auto;
+  }
+
+  .pointer-effect {
+    display: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .pointer-effect {
+    display: none;
   }
 }
 

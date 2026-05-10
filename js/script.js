@@ -715,6 +715,61 @@ const initializeScrollReveal = () => {
   scheduleRevealCheck()
 }
 
+const initializePointerEffect = () => {
+  const supportsPointerEffect = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (!supportsPointerEffect || prefersReducedMotion || document.querySelector('.pointer-effect')) {
+    return
+  }
+
+  const pointerEffect = document.createElement('div')
+  const pointerDot = document.createElement('span')
+  const pointerRing = document.createElement('span')
+  const hoverSelector = [
+    'a',
+    'button',
+    '.project-card',
+    '.stat-node',
+    '.about-card',
+    '.blog-preview-card',
+    '.about-skill-filter',
+    '.about-certificate-nav',
+    '.filter-button'
+  ].join(',')
+
+  pointerEffect.className = 'pointer-effect'
+  pointerEffect.setAttribute('aria-hidden', 'true')
+  pointerDot.className = 'pointer-effect-dot'
+  pointerRing.className = 'pointer-effect-ring'
+  pointerEffect.append(pointerRing, pointerDot)
+  document.body.append(pointerEffect)
+
+  const updatePointerPosition = (event) => {
+    const hoveredElement = document.elementFromPoint(event.clientX, event.clientY)
+
+    pointerEffect.style.setProperty('--pointer-x', `${event.clientX}px`)
+    pointerEffect.style.setProperty('--pointer-y', `${event.clientY}px`)
+    pointerEffect.classList.add('is-visible')
+    pointerEffect.classList.toggle('is-hovering', Boolean(hoveredElement?.closest(hoverSelector)))
+  }
+
+  window.addEventListener('pointermove', updatePointerPosition, { passive: true })
+  window.addEventListener('pointerleave', () => {
+    pointerEffect.classList.remove('is-visible')
+  })
+
+  document.addEventListener('pointerover', (event) => {
+    pointerEffect.classList.toggle('is-hovering', Boolean(event.target.closest(hoverSelector)))
+  })
+
+  document.addEventListener('pointerout', (event) => {
+    if (!event.relatedTarget || !event.relatedTarget.closest(hoverSelector)) {
+      pointerEffect.classList.remove('is-hovering')
+    }
+  })
+}
+
 const initializeIcons = () => {
   if (typeof lucide !== 'undefined') {
     lucide.createIcons()
@@ -728,6 +783,7 @@ const initializeInteractiveSections = () => {
   initializeSkillFilters()
   initializeCertificateCarousels()
   initializeScrollReveal()
+  initializePointerEffect()
   initializeIcons()
 }
 
