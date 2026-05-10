@@ -856,7 +856,7 @@ body {
 @media only screen and (max-width: 800px) {
   #main-content {
     width: calc(100% - 40px);
-    margin: 220px auto 0;
+    margin: 120px auto 0;
     gap: 64px;
   }
 
@@ -1043,6 +1043,11 @@ body {
 
   .stats-diagram {
     gap: 20px;
+  }
+
+  .stats-row::before,
+  .stats-row-compact::before {
+    display: none;
   }
 
   .stats-row,
