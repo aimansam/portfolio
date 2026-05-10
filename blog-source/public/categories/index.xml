@@ -13,21 +13,21 @@
       <link>https://portfolio.aimansam.my/blog/categories/labs/</link>
       <pubDate>Sat, 09 May 2026 18:40:00 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/categories/labs/</guid>
-      <description></description>
+      <description>Hands-on security lab notes focused on practical workflows, environment mapping, and repeatable lessons.</description>
     </item>
     <item>
       <title>Notes</title>
       <link>https://portfolio.aimansam.my/blog/categories/notes/</link>
       <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/categories/notes/</guid>
-      <description></description>
+      <description>Short practical notes on security methodology, testing habits, and workflows worth reusing.</description>
     </item>
     <item>
       <title>Writeups</title>
       <link>https://portfolio.aimansam.my/blog/categories/writeups/</link>
       <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/categories/writeups/</guid>
-      <description></description>
+      <description>CTF and lab writeups focused on attack paths, enumeration decisions, and lessons learned.</description>
     </item>
   </channel>
 </rss>
