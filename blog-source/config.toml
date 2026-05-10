@@ -4,6 +4,7 @@ title = 'zx10r Security Notes'
 theme = "PaperMod"
 
 enableRobotsTXT = true
+disableHugoGeneratorInject = true
 summaryLength = 24
 
 [params]
