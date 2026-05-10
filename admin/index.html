@@ -144,7 +144,7 @@
       </section>
     </main>
     <script>
-      window.CMS_MANUAL_INIT = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+      window.CMS_MANUAL_INIT = true;
     </script>
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js"></script>
@@ -188,12 +188,10 @@
         document.body.classList.add('cms-ready');
       }
 
-      if (isLocalHost) {
-        initializeAdmin().catch((error) => {
-          console.error(error);
-          setStatus('Unable to initialize the admin UI. Check the browser console for details.', 'error');
-        });
-      }
+      initializeAdmin().catch((error) => {
+        console.error(error);
+        setStatus('Unable to initialize the admin UI. Check the browser console for details.', 'error');
+      });
     </script>
   </body>
 </html>
