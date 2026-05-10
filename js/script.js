@@ -724,8 +724,6 @@ const initializePointerEffect = () => {
   }
 
   const pointerEffect = document.createElement('div')
-  const pointerDot = document.createElement('span')
-  const pointerRing = document.createElement('span')
   const hoverSelector = [
     'a',
     'button',
@@ -740,33 +738,61 @@ const initializePointerEffect = () => {
 
   pointerEffect.className = 'pointer-effect'
   pointerEffect.setAttribute('aria-hidden', 'true')
-  pointerDot.className = 'pointer-effect-dot'
-  pointerRing.className = 'pointer-effect-ring'
-  pointerEffect.append(pointerRing, pointerDot)
   document.body.append(pointerEffect)
 
-  const updatePointerPosition = (event) => {
-    const hoveredElement = document.elementFromPoint(event.clientX, event.clientY)
+  let lastParticleTime = 0
+  let lastParticleX = 0
+  let lastParticleY = 0
 
-    pointerEffect.style.setProperty('--pointer-x', `${event.clientX}px`)
-    pointerEffect.style.setProperty('--pointer-y', `${event.clientY}px`)
+  const createParticle = (event) => {
+    const hoveredElement = document.elementFromPoint(event.clientX, event.clientY)
+    const isHoveringInteractive = Boolean(hoveredElement?.closest(hoverSelector))
+    const particle = document.createElement('span')
+    const particleSize = isHoveringInteractive ? 8 : 6
+    const driftAngle = Math.random() * Math.PI * 2
+    const driftDistance = isHoveringInteractive ? 22 : 16
+    const driftX = Math.cos(driftAngle) * driftDistance
+    const driftY = Math.sin(driftAngle) * driftDistance
+
+    particle.className = `pointer-particle${isHoveringInteractive ? ' pointer-particle-strong' : ''}`
+    particle.style.setProperty('--particle-x', `${event.clientX}px`)
+    particle.style.setProperty('--particle-y', `${event.clientY}px`)
+    particle.style.setProperty('--particle-size', `${particleSize}px`)
+    particle.style.setProperty('--particle-drift-x', `${driftX}px`)
+    particle.style.setProperty('--particle-drift-y', `${driftY}px`)
+
+    pointerEffect.append(particle)
+
+    window.setTimeout(() => {
+      particle.remove()
+    }, 900)
+
+    particle.addEventListener('animationend', () => {
+      particle.remove()
+    }, { once: true })
+  }
+
+  const updatePointerPosition = (event) => {
+    const now = window.performance.now()
+    const distanceFromLastParticle = Math.hypot(
+      event.clientX - lastParticleX,
+      event.clientY - lastParticleY
+    )
+
+    if (now - lastParticleTime < 18 || distanceFromLastParticle < 7) {
+      return
+    }
+
     pointerEffect.classList.add('is-visible')
-    pointerEffect.classList.toggle('is-hovering', Boolean(hoveredElement?.closest(hoverSelector)))
+    createParticle(event)
+    lastParticleTime = now
+    lastParticleX = event.clientX
+    lastParticleY = event.clientY
   }
 
   window.addEventListener('pointermove', updatePointerPosition, { passive: true })
   window.addEventListener('pointerleave', () => {
     pointerEffect.classList.remove('is-visible')
-  })
-
-  document.addEventListener('pointerover', (event) => {
-    pointerEffect.classList.toggle('is-hovering', Boolean(event.target.closest(hoverSelector)))
-  })
-
-  document.addEventListener('pointerout', (event) => {
-    if (!event.relatedTarget || !event.relatedTarget.closest(hoverSelector)) {
-      pointerEffect.classList.remove('is-hovering')
-    }
   })
 }
 

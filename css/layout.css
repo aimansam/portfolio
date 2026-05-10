@@ -44,8 +44,6 @@ body {
 }
 
 .pointer-effect {
-  --pointer-x: 50vw;
-  --pointer-y: 50vh;
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -57,36 +55,39 @@ body {
   visibility: visible;
 }
 
-.pointer-effect-dot,
-.pointer-effect-ring {
+.pointer-particle {
   position: fixed;
-  top: var(--pointer-y);
-  left: var(--pointer-x);
+  top: var(--particle-y);
+  left: var(--particle-x);
   display: block;
+  width: var(--particle-size);
+  height: var(--particle-size);
   border-radius: 999px;
   transform: translate(-50%, -50%);
+  background-color: rgba(20, 20, 20, 0.72);
+  box-shadow: 0 0 12px rgba(20, 20, 20, 0.2);
   pointer-events: none;
+  animation: pointer-particle-drift 680ms ease-out forwards;
 }
 
-.pointer-effect-dot {
-  width: 7px;
-  height: 7px;
+.pointer-particle-strong {
   background-color: #141414;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.72);
+  box-shadow: 0 0 16px rgba(20, 20, 20, 0.28);
 }
 
-.pointer-effect-ring {
-  width: 34px;
-  height: 34px;
-  border: 2px solid rgba(20, 20, 20, 0.46);
-  background-color: rgba(20, 20, 20, 0.03);
-}
+@keyframes pointer-particle-drift {
+  0% {
+    opacity: 0.86;
+    transform: translate(-50%, -50%) scale(1);
+  }
 
-.pointer-effect.is-hovering .pointer-effect-ring {
-  width: 56px;
-  height: 56px;
-  border-color: rgba(20, 20, 20, 0.82);
-  background-color: rgba(20, 20, 20, 0.08);
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--particle-drift-x)),
+      calc(-50% + var(--particle-drift-y))
+    ) scale(0.18);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
