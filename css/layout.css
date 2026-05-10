@@ -587,9 +587,9 @@ body.is-loaded .page-loader {
 
 .about-story-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(150px, 190px);
-  gap: 24px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 28px;
+  align-items: center;
 }
 
 .about-story-heading {
@@ -602,11 +602,11 @@ body.is-loaded .page-loader {
 .about-profile-card {
   width: 100%;
   margin: 0;
-  padding: 8px;
+  padding: 6px;
   border: 2px solid #141414;
-  border-radius: 24px;
+  border-radius: 22px;
   background-color: white;
-  box-shadow: 0 18px 36px rgba(20, 20, 20, 0.12);
+  box-shadow: 0 14px 28px rgba(20, 20, 20, 0.1);
   justify-self: end;
 }
 
@@ -615,7 +615,7 @@ body.is-loaded .page-loader {
   aspect-ratio: 1;
   display: block;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 16px;
 }
 
 .about-copy {
@@ -1184,7 +1184,7 @@ body.is-loaded .page-loader {
   }
 
   .about-story-header {
-    grid-template-columns: minmax(0, 1fr) minmax(150px, 220px);
+    grid-template-columns: minmax(0, 1fr) 160px;
   }
 
   .about-profile-card {
@@ -1331,7 +1331,7 @@ body.is-loaded .page-loader {
 
   .about-profile-card {
     width: 100%;
-    max-width: 220px;
+    max-width: 190px;
     align-self: center;
   }
 
