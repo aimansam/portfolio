@@ -10,6 +10,10 @@ body {
   padding-top: 18px;
 }
 
+.header-nav {
+  row-gap: 8px;
+}
+
 .logo a {
   font-size: 24px;
   font-weight: 800;
@@ -18,6 +22,7 @@ body {
 
 .menu a {
   font-weight: 700;
+  padding-inline: 2px;
 }
 
 .first-entry,
@@ -78,6 +83,34 @@ body {
 }
 
 @media (max-width: 700px) {
+  .header {
+    padding-top: 14px;
+  }
+
+  .header-nav {
+    line-height: 1.25;
+    padding-bottom: 6px;
+  }
+
+  .logo a {
+    font-size: 21px;
+  }
+
+  .menu {
+    width: 100%;
+    column-gap: 16px;
+    padding: 6px 0 2px;
+    scrollbar-width: none;
+  }
+
+  .menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu a {
+    font-size: 14px;
+  }
+
   .first-entry,
   .post-single {
     padding: 22px;

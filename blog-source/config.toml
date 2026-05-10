@@ -53,6 +53,11 @@ summaryLength = 24
 	weight = 20
 
 [[menu.main]]
+	name = 'Start Here'
+	url = '/start-here/'
+	weight = 22
+
+[[menu.main]]
 	name = 'About'
 	url = '/about/'
 	weight = 25
