@@ -1,15 +1,32 @@
 const initializeSmoothScroll = () => {
-  const myWorkLink = document.getElementById('my-work-link')
+  const anchorLinks = document.querySelectorAll('a[href^="#"]')
 
-  if (!myWorkLink || myWorkLink.dataset.initialized === 'true') {
+  if (!anchorLinks.length) {
     return
   }
 
-  myWorkLink.addEventListener('click', () => {
-    document.getElementById('my-work-section').scrollIntoView({ behavior: 'smooth' })
-  })
+  anchorLinks.forEach((link) => {
+    if (link.dataset.smoothScrollInitialized === 'true') {
+      return
+    }
 
-  myWorkLink.dataset.initialized = 'true'
+    link.addEventListener('click', (event) => {
+      const targetId = link.getAttribute('href')
+      const target = targetId === '#main-content'
+        ? document.getElementById('main-content')
+        : document.querySelector(targetId)
+
+      if (!target) {
+        return
+      }
+
+      event.preventDefault()
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      window.history.pushState(null, '', targetId)
+    })
+
+    link.dataset.smoothScrollInitialized = 'true'
+  })
 }
 
 const createTagMarkup = (tags = []) => tags.map((tag) => `<span class="project-tag">${tag}</span>`).join('')
@@ -600,6 +617,104 @@ const initializeCertificateCarousels = () => {
   })
 }
 
+const initializeScrollReveal = () => {
+  const revealElements = document.querySelectorAll([
+    '#portfolio-header-visual',
+    '#portfolio-header-text-container',
+    '#stats-heading',
+    '.stat-node',
+    '#about-section > .subheader-text',
+    '.about-card',
+    '#projects-heading',
+    '.project-filters',
+    '.project-card',
+    '.blog-preview-header',
+    '.blog-preview-card',
+    '#footer'
+  ].join(','))
+
+  if (!revealElements.length) {
+    return
+  }
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  revealElements.forEach((element, index) => {
+    element.dataset.scrollReveal = 'true'
+    element.style.setProperty('--scroll-reveal-delay', `${Math.min(index % 4, 3) * 70}ms`)
+
+    if (prefersReducedMotion) {
+      element.classList.add('is-scroll-visible')
+    }
+  })
+
+  if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
+    revealElements.forEach((element) => element.classList.add('is-scroll-visible'))
+    return
+  }
+
+  const pendingElements = new Set(revealElements)
+  let revealTimeout = null
+  let revealInterval = null
+
+  const revealElement = (element) => {
+    element.classList.add('is-scroll-visible')
+    pendingElements.delete(element)
+  }
+
+  const revealVisibleElements = () => {
+    pendingElements.forEach((element) => {
+      const rect = element.getBoundingClientRect()
+      const isVisible = rect.top < window.innerHeight * 0.88 && rect.bottom > 0
+
+      if (isVisible) {
+        revealElement(element)
+      }
+    })
+
+    if (!pendingElements.size) {
+      window.removeEventListener('scroll', scheduleRevealCheck)
+      window.removeEventListener('resize', scheduleRevealCheck)
+
+      if (revealInterval !== null) {
+        window.clearInterval(revealInterval)
+        revealInterval = null
+      }
+    }
+  }
+
+  const scheduleRevealCheck = () => {
+    if (revealTimeout !== null) {
+      return
+    }
+
+    revealTimeout = window.setTimeout(() => {
+      revealTimeout = null
+      revealVisibleElements()
+    }, 16)
+  }
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return
+      }
+
+      revealElement(entry.target)
+      observer.unobserve(entry.target)
+    })
+  }, {
+    rootMargin: '0px 0px -12% 0px',
+    threshold: 0.12
+  })
+
+  revealElements.forEach((element) => revealObserver.observe(element))
+  window.addEventListener('scroll', scheduleRevealCheck, { passive: true })
+  window.addEventListener('resize', scheduleRevealCheck)
+  revealInterval = window.setInterval(revealVisibleElements, 180)
+  scheduleRevealCheck()
+}
+
 const initializeIcons = () => {
   if (typeof lucide !== 'undefined') {
     lucide.createIcons()
@@ -612,6 +727,7 @@ const initializeInteractiveSections = () => {
   initializeProjectFilters()
   initializeSkillFilters()
   initializeCertificateCarousels()
+  initializeScrollReveal()
   initializeIcons()
 }
 
