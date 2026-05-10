@@ -6,8 +6,43 @@
     <link>https://portfolio.aimansam.my/blog/tags/</link>
     <description>Browse zx10r Security Notes by topic, including web testing, CTF practice, enumeration, Active Directory, and methodology.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CTF</title>
+      <link>https://portfolio.aimansam.my/blog/tags/ctf/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/ctf/</guid>
+      <description>Capture-the-flag practice notes focused on enumeration, exploitation paths, and habits that transfer into labs.</description>
+    </item>
+    <item>
+      <title>Privilege Escalation</title>
+      <link>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</guid>
+      <description>Notes on moving from initial access to stronger control through misconfigurations, permissions, and environment clues.</description>
+    </item>
+    <item>
+      <title>Smb</title>
+      <link>https://portfolio.aimansam.my/blog/tags/smb/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/smb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web</title>
+      <link>https://portfolio.aimansam.my/blog/tags/web/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/web/</guid>
+      <description>Web application testing notes covering application mapping, input handling, logic flaws, and clean proof of impact.</description>
+    </item>
+    <item>
+      <title>Wordpress</title>
+      <link>https://portfolio.aimansam.my/blog/tags/wordpress/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/tags/wordpress/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Active Directory</title>
       <link>https://portfolio.aimansam.my/blog/tags/active-directory/</link>
@@ -30,13 +65,6 @@
       <description>Windows security lab notes covering enumeration, configuration issues, and domain environment practice.</description>
     </item>
     <item>
-      <title>CTF</title>
-      <link>https://portfolio.aimansam.my/blog/tags/ctf/</link>
-      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/tags/ctf/</guid>
-      <description>Capture-the-flag practice notes focused on enumeration, exploitation paths, and habits that transfer into labs.</description>
-    </item>
-    <item>
       <title>Methodology</title>
       <link>https://portfolio.aimansam.my/blog/tags/methodology/</link>
       <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
@@ -44,25 +72,11 @@
       <description>Reusable security workflows, checklists, and habits for cleaner testing and clearer reporting.</description>
     </item>
     <item>
-      <title>Web</title>
-      <link>https://portfolio.aimansam.my/blog/tags/web/</link>
-      <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/tags/web/</guid>
-      <description>Web application testing notes covering application mapping, input handling, logic flaws, and clean proof of impact.</description>
-    </item>
-    <item>
       <title>Enumeration</title>
       <link>https://portfolio.aimansam.my/blog/tags/enumeration/</link>
       <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/tags/enumeration/</guid>
       <description>Notes about mapping targets carefully, collecting signals, and turning small findings into useful attack paths.</description>
-    </item>
-    <item>
-      <title>Privilege Escalation</title>
-      <link>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</link>
-      <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/tags/privilege-escalation/</guid>
-      <description>Notes on moving from initial access to stronger control through misconfigurations, permissions, and environment clues.</description>
     </item>
   </channel>
 </rss>

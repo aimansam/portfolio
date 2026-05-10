@@ -6,8 +6,15 @@
     <link>https://portfolio.aimansam.my/blog/tags/web/</link>
     <description>Web application testing notes covering application mapping, input handling, logic flaws, and clean proof of impact.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 11:10:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>B2R Monster Corporate Writeup</title>
+      <link>https://portfolio.aimansam.my/blog/posts/monster-corporate/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/posts/monster-corporate/</guid>
+      <description>A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.</description>
+    </item>
     <item>
       <title>A Practical Web Exploitation Workflow for CTFs and Labs</title>
       <link>https://portfolio.aimansam.my/blog/posts/web-exploitation-workflow/</link>

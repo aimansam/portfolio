@@ -6,8 +6,15 @@
     <link>https://portfolio.aimansam.my/blog/categories/</link>
     <description>Browse larger groups of security notes, including labs, writeups, and methodology notes.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 May 2026 18:40:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://portfolio.aimansam.my/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writeups</title>
+      <link>https://portfolio.aimansam.my/blog/categories/writeups/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0800</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/categories/writeups/</guid>
+      <description>CTF and lab writeups focused on attack paths, enumeration decisions, and lessons learned.</description>
+    </item>
     <item>
       <title>Labs</title>
       <link>https://portfolio.aimansam.my/blog/categories/labs/</link>
@@ -21,13 +28,6 @@
       <pubDate>Sat, 09 May 2026 11:10:00 +0800</pubDate>
       <guid>https://portfolio.aimansam.my/blog/categories/notes/</guid>
       <description>Short practical notes on security methodology, testing habits, and workflows worth reusing.</description>
-    </item>
-    <item>
-      <title>Writeups</title>
-      <link>https://portfolio.aimansam.my/blog/categories/writeups/</link>
-      <pubDate>Wed, 06 May 2026 00:34:31 +0800</pubDate>
-      <guid>https://portfolio.aimansam.my/blog/categories/writeups/</guid>
-      <description>CTF and lab writeups focused on attack paths, enumeration decisions, and lessons learned.</description>
     </item>
   </channel>
 </rss>
