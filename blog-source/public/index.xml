@@ -29,5 +29,12 @@
       <guid>https://portfolio.aimansam.my/blog/posts/my-first-ctf/</guid>
       <description>How my first rooted CTF target taught me to slow down, enumerate carefully, and turn small signals into a full attack path.</description>
     </item>
+    <item>
+      <title>About zx10r Security Notes</title>
+      <link>https://portfolio.aimansam.my/blog/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://portfolio.aimansam.my/blog/about/</guid>
+      <description>A short overview of zx10r Security Notes and the kind of security work collected here.</description>
+    </item>
   </channel>
 </rss>

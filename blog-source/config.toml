@@ -19,6 +19,13 @@ summaryLength = 24
 	disableSpecial1stPost = true
 	comments = false
 
+	[params.assets]
+		favicon = 'favicon.svg'
+		favicon16x16 = 'favicon.svg'
+		favicon32x32 = 'favicon.svg'
+		apple_touch_icon = 'favicon.svg'
+		safari_pinned_tab = 'favicon.svg'
+
 	[params.footer]
 		text = 'Security notes by zx10r'
 
@@ -43,6 +50,11 @@ summaryLength = 24
 	name = 'Posts'
 	url = '/posts/'
 	weight = 20
+
+[[menu.main]]
+name = 'About'
+url = '/about/'
+weight = 25
 
 [[menu.main]]
 	name = 'Tags'
