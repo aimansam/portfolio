@@ -1115,6 +1115,16 @@ body.is-loaded .page-loader {
   .blog-preview-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .about-story-header {
+    grid-template-columns: 1fr;
+  }
+
+  .about-profile-card {
+    max-width: 190px;
+    justify-self: center;
+    margin-inline: auto;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 800px and below) */
@@ -1184,11 +1194,14 @@ body.is-loaded .page-loader {
   }
 
   .about-story-header {
-    grid-template-columns: minmax(0, 1fr) 160px;
+    grid-template-columns: 1fr;
   }
 
   .about-profile-card {
     width: 100%;
+    max-width: 190px;
+    justify-self: center;
+    margin-inline: auto;
   }
 
   .about-card-story::after {
@@ -1333,6 +1346,8 @@ body.is-loaded .page-loader {
     width: 100%;
     max-width: 190px;
     align-self: center;
+    justify-self: center;
+    margin-inline: auto;
   }
 
   .blog-preview-card {
