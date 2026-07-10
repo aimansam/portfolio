@@ -2,35 +2,44 @@
   "blogPreview": {
     "heading": "Writeups / Blog",
     "intro": "Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.",
-    "viewAllLabel": "View all posts",
     "viewAllHref": "./blog/index.html",
+    "viewAllLabel": "View all posts",
     "items": [
       {
-        "accent": true,
-        "tags": ["Latest Post", "Web"],
-        "title": "Web Exploitation Workflow",
-        "text": "A practical workflow for approaching web targets in labs and CTFs, from surface mapping and logic flaws to clean exploit validation.",
-        "meta": "Published · May 9, 2026",
+        "title": "B2R Monster Corporate Writeup",
+        "text": "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.",
+        "meta": "Published · May 11, 2026",
+        "tags": [
+          "ctf",
+          "web"
+        ],
+        "href": "./blog/posts/monster-corporate/",
         "buttonLabel": "Read post",
-        "href": "./blog/posts/web-exploitation-workflow/"
+        "accent": true
       },
       {
-        "accent": false,
-        "tags": ["Lab Notes", "Active Directory"],
-        "title": "Active Directory Lab Notes",
-        "text": "Notes from building and attacking an Active Directory lab, with emphasis on enumeration, trust relationships, and privilege escalation paths.",
+        "title": "Active Directory Lab Notes: Enumeration, Trust Paths, and Privilege Escalation",
+        "text": "Notes from building and attacking an Active Directory lab, focused on domain enumeration, trust paths, and escalation patterns.",
         "meta": "Published · May 9, 2026",
+        "tags": [
+          "active-directory",
+          "windows"
+        ],
+        "href": "./blog/posts/active-directory-lab-notes/",
         "buttonLabel": "Read post",
-        "href": "./blog/posts/active-directory-lab-notes/"
+        "accent": false
       },
       {
-        "accent": false,
-        "tags": ["Writeup", "CTF"],
-        "title": "My First CTF",
-        "text": "A short walkthrough of my first rooted CTF target, from initial enumeration to privilege escalation and the habits that made the path clear.",
-        "meta": "Published · May 6, 2026",
+        "title": "A Practical Web Exploitation Workflow for CTFs and Labs",
+        "text": "A disciplined web testing workflow for mapping application behavior, finding logic flaws, and proving impact cleanly.",
+        "meta": "Published · May 9, 2026",
+        "tags": [
+          "web",
+          "ctf"
+        ],
+        "href": "./blog/posts/web-exploitation-workflow/",
         "buttonLabel": "Read post",
-        "href": "./blog/posts/my-first-ctf/"
+        "accent": false
       }
     ]
   }

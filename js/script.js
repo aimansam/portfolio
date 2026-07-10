@@ -831,6 +831,50 @@ const initializeInteractiveSections = () => {
   initializeIcons()
 }
 
+const initializeProjectPage = async () => {
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get('id');
+  if (!projectId) return;
+
+  try {
+    const response = await fetch(`../content/projects/${projectId}.json`);
+    if (!response.ok) throw new Error('Project not found');
+    const data = await response.json();
+
+    document.title = `${data.title} | zx10r`;
+    document.getElementById('project-title-tag').textContent = data.title;
+    document.getElementById('project-meta-desc').setAttribute('content', data.description);
+    document.getElementById('project-main-title').textContent = data.title;
+    document.getElementById('project-main-desc').textContent = data.description;
+    document.getElementById('project-header-image').src = data.headerImage;
+    document.getElementById('project-header-image').alt = data.title;
+
+    const detailsContainer = document.getElementById('project-details-container');
+    if (detailsContainer && data.sections) {
+      detailsContainer.innerHTML = data.sections.map(section => `
+        <div id="project-details">
+          <div class="subheader-text">${section.title}</div>
+          <div class="project-details-content">
+            ${section.content.map(para => `<div class="body-text">${para}</div>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const galleryGrid = document.getElementById('project-gallery-grid');
+    if (galleryGrid && data.gallery) {
+      galleryGrid.innerHTML = data.gallery.map(item => `
+        <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
+          <img src="${item.image}" class="gallery-image" alt="${item.caption}">
+          <span class="image-caption">${item.caption}</span>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    console.error('Error loading project page:', e);
+  }
+}
+
 const portfolioContentFiles = [
   './content/site/seo.json',
   './content/site/navigation.json',
@@ -866,4 +910,8 @@ Promise.all(
     initializeInteractiveSections()
     completePageLoadAnimation()
   })
+
+if (window.location.pathname.includes('project.html')) {
+  initializeProjectPage();
+}
 

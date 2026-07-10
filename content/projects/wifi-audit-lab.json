@@ -1,0 +1,45 @@
+{
+  "title": "Wireless Audit Lab",
+  "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
+  "headerImage": "../assets/images/pineapple.webp",
+  "sections": [
+    {
+      "title": "Project Details / Background",
+      "content": [
+        "This project was designed to explore how weak wireless configurations, poor network segmentation, and user trust in SSIDs can expose organizations to preventable compromise paths. The objective was to combine reconnaissance, packet-level observation, and attack simulation inside a controlled environment rather than treat Wi-Fi security as a checklist exercise.",
+        "The lab focused on wireless discovery, client behavior analysis, authentication weaknesses, rogue access point scenarios, and traffic manipulation opportunities. That allowed me to better understand how wireless auditing connects technical flaws with operational impact, especially when user devices interact automatically with surrounding infrastructure."
+      ]
+    },
+    {
+      "title": "Assessment Scope / Techniques",
+      "content": [
+        "Key activities included reconnaissance of nearby networks, packet capture and inspection, misconfiguration analysis, rogue AP simulation, deauthentication testing, and credential capture scenarios in a safe audit context. The emphasis was on understanding exactly when each technique is useful, noisy, or operationally risky.",
+        "The project also supported testing around encryption posture, captive portal behavior, client roaming, and how endpoints respond when moved toward hostile or impersonated wireless infrastructure. This made it useful for both red-team practice and risk communication during reporting."
+      ]
+    },
+    {
+      "title": "What This Project Demonstrates",
+      "content": [
+        "This audit lab demonstrates practical wireless security knowledge beyond tool usage alone. It shows how I approach reconnaissance, interpret packet-level behavior, assess the exploitability of network configurations, and connect wireless weaknesses to broader organizational risk.",
+        "It also highlights a reporting mindset: findings are most useful when paired with clear remediation steps around encryption, client isolation, SSID trust, monitoring, and user training. The value of the project is not just attack simulation, but understanding how to reduce real exposure."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../assets/images/pineapple.webp",
+      "caption": "Wireless assessment tooling used for reconnaissance, SSID analysis, and packet capture workflows.",
+      "width": "half"
+    },
+    {
+      "image": "../assets/images/pineapple.webp",
+      "caption": "Rogue infrastructure and user-behavior testing helped simulate realistic audit scenarios around trust and association.",
+      "width": "half"
+    },
+    {
+      "image": "../assets/images/pineapple.webp",
+      "caption": "Used to study encryption posture, deauthentication impact, traffic visibility, and wireless misconfiguration risk.",
+      "width": "full"
+    }
+  ]
+}
