@@ -334,6 +334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     else if (path.includes('certificates.html')) contentFile = 'content/site/certificates.json'
     
     const response = await fetch(contentFile)
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const content = await response.json()
     applyPortfolioContent(content)
     
@@ -357,7 +358,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error loading portfolio content:', error)
     document.body.classList.remove('is-loading')
     const loader = document.querySelector('.page-loader')
-    if (loader) loader.style.display = 'none'
+    if (loader) {
+      loader.style.opacity = '0'
+      setTimeout(() => {
+        loader.style.display = 'none'
+      }, 500)
+    }
   }
 })
 
