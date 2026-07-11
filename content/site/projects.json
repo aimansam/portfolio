@@ -14,7 +14,8 @@
         "tags": ["Infrastructure", "Active Directory"],
         "title": "Enterprise Grade Home Lab",
         "description": "A fully virtualized enterprise-style home lab designed to simulate real-world network environments for security testing and research. Built with segmented networks, Active Directory, SIEM integration, and monitoring tools, this lab enables hands-on practice in threat detection, incident response, lateral movement, and privilege escalation across Windows and Linux systems.",
-        "href": "./project-pages/project.html?id=enterprise-homelab"
+        "href": "./project-pages/project.html?id=enterprise-homelab",
+        "featured": true
       },
       {
         "category": "hardware",
@@ -22,15 +23,17 @@
         "tags": ["Hardware", "Endpoint"],
         "title": "Rubber Ducky / Bad USB",
         "description": "A custom-built Bad USB project leveraging keystroke injection techniques to simulate real-world attack scenarios. Used for developing and testing payloads that automate exploitation, credential harvesting, and system compromise, this project demonstrates practical understanding of physical attack vectors and endpoint security weaknesses.",
-        "href": "./project-pages/project.html?id=bad-usb-lab"
+        "href": "./project-pages/project.html?id=bad-usb-lab",
+        "featured": false
       },
       {
         "category": "wireless",
         "image": "./assets/images/pineapple.webp",
         "tags": ["Wireless", "Audit"],
         "title": "Bad Wifi Audit",
-        "description": "A wireless security auditing project focused on identifying vulnerabilities in Wi-Fi networks, including weak encryption, rogue access points, and misconfigurations. Utilizes penetration testing tools to perform network reconnaissance, packet analysis, and attack simulations such as deauthentication and credential capture to assess and improve wireless security posture.",
-        "href": "./project-pages/project.html?id=wifi-audit-lab"
+        "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
+        "href": "./project-pages/project.html?id=wifi-audit-lab",
+        "featured": false
       }
     ]
   }

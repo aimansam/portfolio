@@ -256,257 +256,41 @@
         </div>
       </div>
 
-      <!-- ABOUT SECTION -->
-      <!-- 
-        TODO
-
-        - Change the subheader-text to whatever header you want
-        - Add paragraphs using the <div class="body-text"></div> elements in the "about-section-content"
-      -->
+      <!-- ABOUT SECTION PREVIEW -->
       <div id="about-section">
-        <span class="subheader-text">My Background / About Me</span>
+        <span class="subheader-text">About Me</span>
         <div class="about-section-content">
           <article class="about-card about-card-story">
             <div class="about-story-header">
               <div class="about-story-heading">
-                <span class="about-card-eyebrow">About Me</span>
+                <span class="about-card-eyebrow">Introduction</span>
                 <h3 class="about-card-title" id="about-title">Foundations built through practice.</h3>
               </div>
               <figure class="about-profile-card">
                 <img src="./assets/images/mypicture.jpg" class="about-profile-image" alt="Portrait of Aiman Sam">
               </figure>
             </div>
-            <div class="about-story-roles">
-              <span class="about-story-label" id="about-looking-label">Looking For</span>
-              <div class="about-story-visual" id="about-role-list" aria-label="Positions I am looking for">
-                <span class="about-story-chip">Penetration Tester</span>
-                <span class="about-story-chip">Security Engineer</span>
-                <span class="about-story-chip">Blue Team Analyst</span>
-                <span class="about-story-chip">Cloud Engineer</span>
-              </div>
-            </div>
             <div class="body-text about-copy" id="about-intro">Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.</div>
-            <ul class="about-points body-text" id="about-points" aria-label="About me summary">
-              <li>Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.</li>
-              <li>System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.</li>
-              <li>Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.</li>
-              <li>Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.</li>
-              <li>Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.</li>
-              <li>Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional.</li>
-            </ul>
-          </article>
-
-          <article class="about-card">
-            <span class="about-card-eyebrow">Skills</span>
-            <h3 class="about-card-title about-card-title-compact" id="skills-title">Applied security and development skills.</h3>
-            <div class="about-skill-filters" id="skills-filter-list" aria-label="Skill category filters">
-              <button class="about-skill-filter is-active" type="button" data-skill-filter="all">All</button>
-              <button class="about-skill-filter" type="button" data-skill-filter="red-team">Red Team</button>
-              <button class="about-skill-filter" type="button" data-skill-filter="blue-team">Blue Team</button>
-              <button class="about-skill-filter" type="button" data-skill-filter="web-dev">Web Dev</button>
-              <button class="about-skill-filter" type="button" data-skill-filter="cloud">Cloud</button>
-            </div>
-            <div class="about-skill-pages" id="skills-page-list" aria-label="Hiring-focused skills from resume">
-              <section class="about-skill-page is-active" data-skill-page="all">
-                <div class="about-pill-list">
-                  <span class="about-pill"><i data-lucide="bug"></i>Web Exploitation</span>
-                  <span class="about-pill"><i data-lucide="shield"></i>Blue Team Mindset</span>
-                  <span class="about-pill"><i data-lucide="flask-conical"></i>Flask</span>
-                  <span class="about-pill"><i data-lucide="atom"></i>React</span>
-                  <span class="about-pill"><i data-lucide="cloud-lightning"></i>Cloud Security</span>
-                  <span class="about-pill"><i data-lucide="server"></i>Node.js</span>
-                  <span class="about-pill"><i data-lucide="code-2"></i>Python</span>
-                  <span class="about-pill"><i data-lucide="shield-check"></i>Security Engineering</span>
-                </div>
-              </section>
-              <section class="about-skill-page" data-skill-page="red-team">
-                <div class="about-pill-list">
-                  <span class="about-pill"><i data-lucide="bug"></i>Web Exploitation</span>
-                  <span class="about-pill"><i data-lucide="crosshair"></i>Penetration Testing</span>
-                  <span class="about-pill"><i data-lucide="key"></i>Active Directory Exploitation</span>
-                  <span class="about-pill"><i data-lucide="lock"></i>Access Control Testing</span>
-                  <span class="about-pill"><i data-lucide="network"></i>Network Security</span>
-                </div>
-              </section>
-              <section class="about-skill-page" data-skill-page="blue-team">
-                <div class="about-pill-list">
-                  <span class="about-pill"><i data-lucide="file-text"></i>Log Analysis</span>
-                  <span class="about-pill"><i data-lucide="bar-chart-2"></i>SIEM (Splunk)</span>
-                  <span class="about-pill"><i data-lucide="activity"></i>Wireshark</span>
-                  <span class="about-pill"><i data-lucide="shield-check"></i>System Hardening</span>
-                  <span class="about-pill"><i data-lucide="alert-triangle"></i>Threat Detection</span>
-                </div>
-              </section>
-              <section class="about-skill-page" data-skill-page="web-dev">
-                <div class="about-pill-list">
-                  <span class="about-pill"><i data-lucide="flask-conical"></i>Flask</span>
-                  <span class="about-pill"><i data-lucide="atom"></i>React</span>
-                  <span class="about-pill"><i data-lucide="triangle"></i>Next.js</span>
-                  <span class="about-pill"><i data-lucide="server"></i>Node.js</span>
-                  <span class="about-pill"><i data-lucide="database"></i>PostgreSQL</span>
-                  <span class="about-pill"><i data-lucide="layers"></i>MongoDB</span>
-                </div>
-              </section>
-              <section class="about-skill-page" data-skill-page="cloud">
-                <div class="about-pill-list">
-                  <span class="about-pill"><i data-lucide="cpu"></i>Linux Administration</span>
-                  <span class="about-pill"><i data-lucide="box"></i>Docker</span>
-                  <span class="about-pill"><i data-lucide="terminal"></i>Bash Scripting</span>
-                  <span class="about-pill"><i data-lucide="bot"></i>Python Automation</span>
-                  <span class="about-pill"><i data-lucide="wifi"></i>Network Fundamentals</span>
-                  <span class="about-pill"><i data-lucide="upload-cloud"></i>Secure Deployment</span>
-                </div>
-              </section>
-            </div>
-          </article>
-
-          <article class="about-card">
-            <span class="about-card-eyebrow">Certificates</span>
-            <h3 class="about-card-title about-card-title-compact" id="certificates-title">Recognized industry credentials.</h3>
-            <div class="about-certificate-carousel" aria-label="Certificates earned">
-              <div class="about-certificate-carousel-controls">
-                <button class="about-certificate-nav" type="button" data-certificate-nav="prev" aria-label="Previous certificate">Prev</button>
-                <button class="about-certificate-nav" type="button" data-certificate-nav="next" aria-label="Next certificate">Next</button>
-              </div>
-              <div class="about-certificate-viewport">
-                <ul class="about-certificate-list" id="certificate-list">
-                  <li class="about-certificate-item">
-                    <div class="about-certificate-body">
-                      <span class="about-certificate-name">CEHv13</span>
-                      <span class="about-certificate-note">Certified Ethical Hacker from EC-Council.</span>
-                    </div>
-                    <div class="about-certificate-media" aria-hidden="true">
-                      <span class="about-certificate-badge-code">CEH</span>
-                      <span class="about-certificate-badge-meta">EC</span>
-                    </div>
-                  </li>
-                  <li class="about-certificate-item">
-                    <div class="about-certificate-body">
-                      <span class="about-certificate-name">Junior Penetration Tester</span>
-                      <span class="about-certificate-note">TryHackMe path focused on practical offensive security fundamentals.</span>
-                    </div>
-                    <div class="about-certificate-media" aria-hidden="true">
-                      <span class="about-certificate-badge-code">JPT</span>
-                      <span class="about-certificate-badge-meta">THM</span>
-                    </div>
-                  </li>
-                  <li class="about-certificate-item">
-                    <div class="about-certificate-body">
-                      <span class="about-certificate-name">CCNA: Introduction to Networks</span>
-                      <span class="about-certificate-note">Cisco networking foundation covering infrastructure and core network concepts.</span>
-                    </div>
-                    <div class="about-certificate-media" aria-hidden="true">
-                      <span class="about-certificate-badge-code">CCNA</span>
-                      <span class="about-certificate-badge-meta">Cisco</span>
-                    </div>
-                  </li>
-                  <li class="about-certificate-item">
-                    <div class="about-certificate-body">
-                      <span class="about-certificate-name">Full-Stack Web Development Bootcamp</span>
-                      <span class="about-certificate-note">Udemy training across JavaScript, Next.js, React, PostgreSQL, and MongoDB.</span>
-                    </div>
-                    <div class="about-certificate-media" aria-hidden="true">
-                      <span class="about-certificate-badge-code">WEB</span>
-                      <span class="about-certificate-badge-meta">DEV</span>
-                    </div>
-                  </li>
-                  <li class="about-certificate-item">
-                    <div class="about-certificate-body">
-                      <span class="about-certificate-name">Python &amp; Bash for Ethical Hackers</span>
-                      <span class="about-certificate-note">Practical scripting and automation for penetration testing and security workflows.</span>
-                    </div>
-                    <div class="about-certificate-media" aria-hidden="true">
-                      <span class="about-certificate-badge-code">PY</span>
-                      <span class="about-certificate-badge-meta">ETH</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <a class="button" href="./about.html">
+              <span class="button-text">Read Full Bio</span>
+              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
+            </a>
           </article>
         </div>
       </div>
+      </div>
 
-      <!-- PROJECTS / MY WORK SECTION -->
+      <!-- PROJECTS PREVIEW -->
       <div id="my-work-section">
-        <!-- TODO - Change the subheader-text to whatever you want the Projects section header to say -->
-        <span class="subheader-text" id="projects-heading">My Work / My Projects</span>
-
-        <div class="project-filters" id="project-filter-list" aria-label="Project filters">
-          <button class="filter-button is-active" type="button" data-filter="all">All</button>
-          <button class="filter-button" type="button" data-filter="infrastructure">Infrastructure</button>
-          <button class="filter-button" type="button" data-filter="hardware">Hardware</button>
-          <button class="filter-button" type="button" data-filter="wireless">Wireless</button>
-        </div>
-
+        <span class="subheader-text">Featured Work</span>
         <div class="projects-container" id="projects-container">
-          <!-- 
-            TODO
-
-            This is where the project cards live. Here's a base level project card for you to copy:
-            <div class="project-card">
-              <img src="./assets/images/IMAGE_NAME" class="project-image">
-              <div class="project-card-text-container">
-                <div class="subheader-text project-title">PROJECT_NAME</div>
-                <div class="body-text project-card-text">SMALL_PROJECT_DESCRIPTION</div>
-              </div>
-              <a class="button" href="./project-pages/PROJECT_PAGE_NAME.html">
-                <span class="button-text">Read More</span>
-                <image src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
-              </a>
-            </div>
-
-            - To add a project to the this area, copy the above, paste it below this comment, and change the following:
-                - IMAGE_NAME: the name of the image file in assets/images
-                - PROJECT_NAME: the name of the project (keep it short, it only shows 1 line)
-                - SMALL_PROJECT_DESCRIPTION: a quick project description (max 4 lines)
-                - PROJECT_PAGE_NAME.html: the html filename for the project (must be in project-pages folder)
-          -->
-          <div class="project-card" data-category="infrastructure">
-            <img src="./assets/images/homelab.jpg" class="project-image">
-            <div class="project-card-text-container">
-              <div class="project-card-tags">
-                <span class="project-tag">Infrastructure</span>
-                <span class="project-tag">Active Directory</span>
-              </div>
-              <div class="subheader-text project-title">Enterprise Grade Home Lab</div>
-              <div class="body-text project-card-text">A fully virtualized enterprise-style home lab designed to simulate real-world network environments for security testing and research. Built with segmented networks, Active Directory, SIEM integration, and monitoring tools, this lab enables hands-on practice in threat detection, incident response, lateral movement, and privilege escalation across Windows and Linux systems.</div>
-            </div>
-            <a class="button" href="./project-pages/enterprise-homelab.html">
-              <span class="button-text">Read More</span>
-              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
-            </a>
-          </div>
-          <div class="project-card" data-category="hardware">
-            <img src="./assets/images/rubby.jpg" class="project-image">
-            <div class="project-card-text-container">
-              <div class="project-card-tags">
-                <span class="project-tag">Hardware</span>
-                <span class="project-tag">Endpoint</span>
-              </div>
-              <div class="subheader-text project-title">Rubber Ducky / Bad USB</div>
-              <div class="body-text project-card-text">A custom-built Bad USB project leveraging keystroke injection techniques to simulate real-world attack scenarios. Used for developing and testing payloads that automate exploitation, credential harvesting, and system compromise, this project demonstrates practical understanding of physical attack vectors and endpoint security weaknesses.</div>
-            </div>
-            <a class="button" href="./project-pages/bad-usb-lab.html">
-              <span class="button-text">Read More</span>
-              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
-            </a>
-          </div>
-          <div class="project-card" data-category="wireless">
-            <img src="./assets/images/pineapple.webp" class="project-image">
-            <div class="project-card-text-container">
-              <div class="project-card-tags">
-                <span class="project-tag">Wireless</span>
-                <span class="project-tag">Audit</span>
-              </div>
-              <div class="subheader-text project-title">Bad Wifi Audit</div>
-              <div class="body-text project-card-text">A wireless security auditing project focused on identifying vulnerabilities in Wi-Fi networks, including weak encryption, rogue access points, and misconfigurations. Utilizes penetration testing tools to perform network reconnaissance, packet analysis, and attack simulations such as deauthentication and credential capture to assess and improve wireless security posture.</div>
-            </div>
-            <a class="button" href="./project-pages/wifi-audit-lab.html">
-              <span class="button-text">Read More</span>
-              <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
-            </a>
-          </div>
+          <!-- Featured projects will be injected here by JS -->
+        </div>
+        <div class="projects-footer">
+          <a class="button" href="./projects.html">
+            <span class="button-text">View All Projects</span>
+            <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
+          </a>
         </div>
       </div>
 

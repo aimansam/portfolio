@@ -10,34 +10,40 @@
     },
     "items": [
       {
-        "href": "#main-content",
-        "ariaLabel": "Go to top",
-        "icon": "./assets/icons/home.svg",
-        "label": "Home"
+        "href": "./index.html",
+        "label": "Home",
+        "ariaLabel": "Go to home",
+        "icon": "./assets/icons/home.svg"
       },
       {
-        "href": "#about-section",
-        "ariaLabel": "Go to about section",
-        "icon": "./assets/icons/user.svg",
-        "label": "About"
+        "href": "./about.html",
+        "label": "About",
+        "ariaLabel": "Go to about page",
+        "icon": "./assets/icons/user.svg"
       },
       {
-        "href": "#my-work-section",
-        "ariaLabel": "Go to projects section",
-        "icon": "./assets/icons/briefcase.svg",
-        "label": "Projects"
+        "href": "./projects.html",
+        "label": "Projects",
+        "ariaLabel": "Go to projects page",
+        "icon": "./assets/icons/briefcase.svg"
+      },
+      {
+        "href": "./certificates.html",
+        "label": "Certificates",
+        "ariaLabel": "Go to certificates page",
+        "icon": "./assets/icons/shield-check.svg"
       },
       {
         "href": "./blog/index.html",
+        "label": "Blog",
         "ariaLabel": "Go to blog",
-        "icon": "./assets/icons/article.svg",
-        "label": "Blog"
+        "icon": "./assets/icons/article.svg"
       },
       {
         "href": "mailto:zx10r8443@gmail.com",
+        "label": "Email",
         "ariaLabel": "Email contact",
-        "icon": "./assets/icons/mail.svg",
-        "label": "Email"
+        "icon": "./assets/icons/mail.svg"
       }
     ]
   }
