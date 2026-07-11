@@ -379,15 +379,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.classList.remove('is-loading')
     document.body.classList.add('is-loaded')
     
-    // Hide loader by adding the loaded class (CSS handles the transition)
+    // Hide loader - CSS handles this via body.is-loaded .page-loader
+    // But we also add inline style as a fallback to ensure it hides
     const loader = document.querySelector('.page-loader')
     if (loader) {
-      // Let CSS handle the loader hide animation
-      loader.classList.add('is-hidden')
+      loader.style.opacity = '0'
+      loader.style.visibility = 'hidden'
+      setTimeout(() => {
+        loader.style.display = 'none'
+      }, 500)
     }
     
-    // Only force visibility on scroll-reveal elements that might be stuck
-    // Don't override display, opacity, or transform on layout containers
+    // Force visibility on scroll-reveal elements that might be stuck
     document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
       el.classList.add('is-scroll-visible')
     })
