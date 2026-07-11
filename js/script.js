@@ -93,7 +93,7 @@ const createCertificateMarkup = (cert) => `
 
 const createProjectMarkup = (project) => `
   <div class="project-card" data-category="${project.category}">
-    <img src="${project.image}" class="project-image">
+    <img src="${project.image}" class="project-image" loading="lazy">
     <div class="project-card-text-container">
       <div class="project-card-tags">
         ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
@@ -315,7 +315,7 @@ const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBt
       <div class="about-cert-masonry-item">
         <div class="about-cert-masonry-card">
           <div class="about-cert-image-wrapper">
-            <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-masonry-image">
+            <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-masonry-image" loading="lazy">
           </div>
           <div class="about-cert-overlay">
             <div class="about-cert-overlay-content">
@@ -358,9 +358,9 @@ const applyGalleryContent = (content) => {
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
     galleryList.innerHTML = content.gallery.items.map(item => `
       <div class="gallery-masonry-item">
-        <div class="gallery-masonry-card">
+        <div class="gallery-masonry-card" data-lightbox="${item.image || './assets/images/8443.jpg'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
           <div class="gallery-image-wrapper">
-            <img src="${item.image || './assets/images/8443.jpg'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image">
+            <img src="${item.image || './assets/images/8443.jpg'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image" loading="lazy">
           </div>
           <div class="gallery-overlay">
             <div class="gallery-overlay-content">
@@ -475,7 +475,7 @@ const applyProjectDetailContent = (content) => {
   if (Array.isArray(content.gallery) && content.gallery.length && galleryGrid) {
     galleryGrid.innerHTML = content.gallery.map(item => `
       <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
-        <img src="${item.image}" class="gallery-image" alt="${item.caption || ''}">
+        <img src="${item.image}" class="gallery-image" alt="${item.caption || ''}" loading="lazy" data-lightbox="${item.image}" data-lightbox-title="${item.caption || ''}">
         ${item.caption ? `<span class="body-text">${item.caption}</span>` : ''}
       </div>
     `).join('')
@@ -746,3 +746,159 @@ if (certNavPrev && certNavNext && certList) {
     certList.scrollTo({ left: currentScroll, behavior: 'smooth' })
   })
 }
+
+// --- Image Lightbox ---
+const initLightbox = () => {
+  const lightbox = document.createElement('div')
+  lightbox.className = 'lightbox-overlay'
+  lightbox.innerHTML = `
+    <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox-next" aria-label="Next image">&#8250;</button>
+    <div class="lightbox-content">
+      <img class="lightbox-image" src="" alt="">
+      <div class="lightbox-caption">
+        <span class="lightbox-title"></span>
+        <span class="lightbox-desc"></span>
+      </div>
+    </div>
+  `
+  document.body.appendChild(lightbox)
+
+  let lightboxItems = []
+  let lightboxIndex = 0
+
+  const openLightbox = (items, index) => {
+    lightboxItems = items
+    lightboxIndex = index
+    updateLightbox()
+    lightbox.classList.add('is-open')
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('is-open')
+    document.body.style.overflow = ''
+  }
+
+  const updateLightbox = () => {
+    const item = lightboxItems[lightboxIndex]
+    if (!item) return
+    lightbox.querySelector('.lightbox-image').src = item.src
+    lightbox.querySelector('.lightbox-title').textContent = item.title || ''
+    lightbox.querySelector('.lightbox-desc').textContent = item.desc || ''
+  }
+
+  const nextLightbox = () => {
+    lightboxIndex = (lightboxIndex + 1) % lightboxItems.length
+    updateLightbox()
+  }
+
+  const prevLightbox = () => {
+    lightboxIndex = (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length
+    updateLightbox()
+  }
+
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox)
+  lightbox.querySelector('.lightbox-next').addEventListener('click', nextLightbox)
+  lightbox.querySelector('.lightbox-prev').addEventListener('click', prevLightbox)
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox()
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return
+    if (e.key === 'Escape') closeLightbox()
+    if (e.key === 'ArrowRight') nextLightbox()
+    if (e.key === 'ArrowLeft') prevLightbox()
+  })
+
+  // Attach click handlers to gallery cards
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-lightbox]')
+    if (!card) return
+    const allCards = document.querySelectorAll('[data-lightbox]')
+    const items = Array.from(allCards).map(c => ({
+      src: c.dataset.lightbox,
+      title: c.dataset.lightboxTitle || '',
+      desc: c.dataset.lightboxDesc || ''
+    }))
+    const index = Array.from(allCards).indexOf(card)
+    openLightbox(items, index)
+  })
+}
+
+// --- Dark Mode Toggle ---
+const initDarkMode = () => {
+  const saved = localStorage.getItem('darkMode')
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  if (saved === 'true' || (!saved && prefersDark)) {
+    document.body.classList.add('dark-mode')
+  }
+
+  const toggle = document.createElement('button')
+  toggle.className = 'dark-mode-toggle'
+  toggle.setAttribute('aria-label', 'Toggle dark mode')
+  toggle.innerHTML = '<span class="dark-mode-icon"></span>'
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode')
+    const isDark = document.body.classList.contains('dark-mode')
+    localStorage.setItem('darkMode', isDark)
+    toggle.querySelector('.dark-mode-icon').textContent = isDark ? '☀️' : ''
+  })
+  document.body.appendChild(toggle)
+
+  // Update icon on load
+  if (document.body.classList.contains('dark-mode')) {
+    toggle.querySelector('.dark-mode-icon').textContent = '☀️'
+  }
+}
+
+// --- Back to Top Button ---
+const initBackToTop = () => {
+  const btn = document.createElement('button')
+  btn.className = 'back-to-top'
+  btn.setAttribute('aria-label', 'Back to top')
+  btn.innerHTML = '&#8593;'
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
+  document.body.appendChild(btn)
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn.classList.add('is-visible')
+    } else {
+      btn.classList.remove('is-visible')
+    }
+  })
+}
+
+// --- Analytics Placeholder ---
+// Replace with your actual analytics ID
+const ANALYTICS_ID = '' // e.g., 'G-XXXXXXXXXX' for Google Analytics
+
+const initAnalytics = () => {
+  if (!ANALYTICS_ID) return
+  // Google Analytics 4
+  const script = document.createElement('script')
+  script.async = true
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_ID}`
+  document.head.appendChild(script)
+  script.onload = () => {
+    window.dataLayer = window.dataLayer || []
+    function gtag() { dataLayer.push(arguments) }
+    gtag('js', new Date())
+    gtag('config', ANALYTICS_ID)
+  }
+}
+
+// --- Initialize all enhancements ---
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    initLightbox()
+    initDarkMode()
+    initBackToTop()
+    initAnalytics()
+  }, 500)
+})
