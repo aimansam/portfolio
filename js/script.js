@@ -371,10 +371,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // Force content visibility - aggressive fallback
+  const forceContentVisibility = () => {
+    // Remove loading class immediately
+    document.body.classList.remove('is-loading')
+    
+    // Hide loader
+    const loader = document.querySelector('.page-loader')
+    if (loader) {
+      loader.style.display = 'none'
+      loader.style.opacity = '0'
+      loader.style.visibility = 'hidden'
+    }
+    
+    // Force all main content sections visible
+    const sections = ['#main-content', '#about-section', '#my-work-section', '#certificates-section', '#portfolio-header', '#stats-summary-section']
+    sections.forEach(selector => {
+      const el = document.querySelector(selector)
+      if (el) {
+        el.style.opacity = '1'
+        el.style.transform = 'none'
+        el.style.display = el.style.display || 'block'
+      }
+    })
+    
+    // Force all data-scroll-reveal elements visible
+    document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
+      el.style.opacity = '1'
+      el.style.transform = 'none'
+      el.classList.add('is-scroll-visible')
+    })
+    
+    // Force navbar and footer visible
+    const navbar = document.querySelector('.navbar')
+    if (navbar) {
+      navbar.style.opacity = '1'
+      navbar.style.display = 'block'
+    }
+    const footer = document.querySelector('#footer')
+    if (footer) {
+      footer.style.opacity = '1'
+      footer.style.display = 'block'
+    }
+    
+    console.log('Content visibility forced')
+  }
+
   try {
     console.log('Initializing portfolio loading sequence...')
     console.log('Current pathname:', window.location.pathname)
     console.log('Current href:', window.location.href)
+    
+    // Force visibility early to prevent blank page
+    forceContentVisibility()
     
     // 1. Load common elements (non-blocking)
     const navData = await safeFetch('content/site/navigation.json')
@@ -434,20 +483,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize scroll reveal animations
     initScrollReveal()
     
-    // Force visibility for all content elements as a fallback
-    // This ensures content is visible even if IntersectionObserver doesn't trigger
+    // Additional visibility check after content is applied
     setTimeout(() => {
-      document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
-        el.style.opacity = '1'
-        el.style.transform = 'none'
-      })
-    }, 500)
+      forceContentVisibility()
+      console.log('Final visibility check complete')
+    }, 1000)
     
   } catch (error) {
     console.error('Critical error during initialization:', error)
-  } finally {
-    // Always hide the loader
-    hideLoader()
+    // Force visibility even on error
+    forceContentVisibility()
   }
 })
 
