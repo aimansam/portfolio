@@ -250,6 +250,7 @@ const applySkillsContent = (content) => {
 }
 
 const applyCertificatesContent = (content) => {
+  // Apply to carousel section (full-width below stats)
   const certificatesTitle = document.getElementById('certificates-title')
   if (!certificatesTitle) return
 
@@ -257,6 +258,21 @@ const applyCertificatesContent = (content) => {
   if (content.certificates?.title) certificatesTitle.textContent = content.certificates.title
   if (Array.isArray(content.certificates?.items) && content.certificates.items.length && certificateList) {
     certificateList.innerHTML = content.certificates.items.map(createCertificateMarkup).join('')
+  }
+
+  // Apply to compact card (right column below skills)
+  const certsTitle = document.getElementById('certs-title')
+  if (certsTitle && content.certificates?.title) {
+    certsTitle.textContent = content.certificates.title
+  }
+  const certList = document.getElementById('cert-list')
+  if (certList && Array.isArray(content.certificates?.items) && content.certificates.items.length) {
+    certList.innerHTML = content.certificates.items.map(cert => `
+      <div class="about-cert-item">
+        <span class="about-cert-name">${cert.name}</span>
+        <span class="about-cert-note">${cert.note}</span>
+      </div>
+    `).join('')
   }
 }
 
