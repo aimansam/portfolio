@@ -3,6 +3,9 @@
 !.dockerignore
 !CNAME
 !index.html
+!about.html
+!projects.html
+!certificates.html
 !assets/
 !assets/**
 !css/
