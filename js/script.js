@@ -253,16 +253,6 @@ let certCurrentPage = 1
 const certPerPage = 2
 
 const applyCertificatesContent = (content) => {
-  // Apply to carousel section (full-width below stats)
-  const certificatesTitle = document.getElementById('certificates-title')
-  if (!certificatesTitle) return
-
-  const certificateList = document.getElementById('certificate-list')
-  if (content.certificates?.title) certificatesTitle.textContent = content.certificates.title
-  if (Array.isArray(content.certificates?.items) && content.certificates.items.length && certificateList) {
-    certificateList.innerHTML = content.certificates.items.map(createCertificateMarkup).join('')
-  }
-
   // Apply to masonry grid with pagination (right column below skills)
   const certsTitle = document.getElementById('certs-title')
   if (certsTitle && content.certificates?.title) {
