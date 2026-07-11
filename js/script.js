@@ -250,7 +250,7 @@ const applySkillsContent = (content) => {
 
 // Certificate pagination state
 let certCurrentPage = 1
-const certPerPage = 4
+const certPerPage = 2
 
 const applyCertificatesContent = (content) => {
   // Apply to carousel section (full-width below stats)
