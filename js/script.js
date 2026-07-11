@@ -356,77 +356,97 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  // Helper to safely fetch and parse JSON
+  const safeFetch = async (url) => {
+    try {
+      const res = await fetch(url)
+      if (!res.ok) {
+        console.warn(`Fetch warning: ${url} returned ${res.status}`)
+        return null
+      }
+      return await res.json()
+    } catch (e) {
+      console.warn(`Fetch error: ${url} - ${e.message}`)
+      return null
+    }
+  }
+
   try {
     console.log('Initializing portfolio loading sequence...')
+    console.log('Current pathname:', window.location.pathname)
+    console.log('Current href:', window.location.href)
     
-    // 1. Always load common navigation and footer first to prevent blank navs
-    console.log('Fetching common elements...')
-    const [navRes, footerRes] = await Promise.all([
-      fetch('content/site/navigation.json'),
-      fetch('content/site/footer.json')
-    ])
-    
-    if (!navRes.ok || !footerRes.ok) throw new Error(`Common elements fetch failed: Nav(${navRes.status}), Footer(${footerRes.status})`)
-    
-    const navData = await navRes.json()
-    const footerData = await footerRes.json()
+    // 1. Load common elements (non-blocking)
+    const navData = await safeFetch('content/site/navigation.json')
+    const footerData = await safeFetch('content/site/footer.json')
     
     const baseContent = {
-      navigation: navData.navigation,
-      footer: footerData.footer
+      navigation: navData?.navigation || null,
+      footer: footerData?.footer || null
     }
-    console.log('Common elements loaded successfully.')
+    
+    if (navData) console.log('Navigation loaded')
+    if (footerData) console.log('Footer loaded')
 
-    // 2. Determine page-specific content file
+    // 2. Determine page-specific content file based on pathname
     const path = window.location.pathname
-    console.log('Current path:', path)
     let contentFile = 'content/site/index.json'
     
-    if (path.endsWith('about.html') || path.includes('/about.html')) contentFile = 'content/site/about.json'
-    else if (path.endsWith('projects.html') || path.includes('/projects.html')) contentFile = 'content/site/projects.json'
-    else if (path.endsWith('certificates.html') || path.includes('/certificates.html')) contentFile = 'content/site/certificates.json'
-    else if (path === '/' || path === '/index.html' || path.endsWith('index.html')) contentFile = 'content/site/index.json'
+    // Handle various path formats: /about.html, about.html, /portfolio/about.html, etc.
+    if (path.match(/about\.html$/i) || path.match(/\/about\.html/i)) {
+      contentFile = 'content/site/about.json'
+    } else if (path.match(/projects\.html$/i) || path.match(/\/projects\.html/i)) {
+      contentFile = 'content/site/projects.json'
+    } else if (path.match(/certificates\.html$/i) || path.match(/\/certificates\.html/i)) {
+      contentFile = 'content/site/certificates.json'
+    }
+    // Default to index.json for root path or index.html
+    else if (path === '/' || path === '' || path.match(/index\.html$/i)) {
+      contentFile = 'content/site/index.json'
+    }
     
     console.log('Target content file:', contentFile)
     
     // 3. Fetch page-specific content
-    try {
-      const pageRes = await fetch(contentFile)
-      if (pageRes.ok) {
-        const pageContent = await pageRes.json()
-        console.log('Page content loaded successfully.')
-        const finalContent = { ...baseContent, ...pageContent }
-        applyPortfolioContent(finalContent)
-      } else {
-        console.warn(`Could not load page content from ${contentFile} (Status: ${pageRes.status}), using base content only.`)
-        applyPortfolioContent(baseContent)
-      }
-    } catch (pageError) {
-      console.error('Network error loading page-specific content:', pageError)
-      applyPortfolioContent(baseContent)
-    }
+    const pageContent = await safeFetch(contentFile)
     
-    // Initialize Lucide icons
-    if (window.lucide) {
-      lucide.createIcons()
+    // Merge and apply content
+    const finalContent = { ...baseContent }
+    if (pageContent) {
+      console.log('Page content loaded:', contentFile)
+      Object.assign(finalContent, pageContent)
     } else {
-      console.error('Lucide library not loaded')
+      console.warn('Page content not available, using base content only')
     }
     
-    // Initialize Animations
+    applyPortfolioContent(finalContent)
+    
+    // Initialize Lucide icons after a short delay to ensure library is loaded
+    setTimeout(() => {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons()
+        console.log('Lucide icons initialized')
+      } else {
+        console.warn('Lucide library not available, icons may not render')
+      }
+    }, 100)
+    
+    // Initialize scroll reveal animations
     initScrollReveal()
     
-    // Fallback: Force visibility for elements that might be stuck in hidden state
-    // This ensures that even if the IntersectionObserver fails or window is not scrolled,
-    // the content is visible.
-    document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    });
+    // Force visibility for all content elements as a fallback
+    // This ensures content is visible even if IntersectionObserver doesn't trigger
+    setTimeout(() => {
+      document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
+        el.style.opacity = '1'
+        el.style.transform = 'none'
+      })
+    }, 500)
     
   } catch (error) {
-    console.error('Critical error loading portfolio site:', error)
+    console.error('Critical error during initialization:', error)
   } finally {
+    // Always hide the loader
     hideLoader()
   }
 })
