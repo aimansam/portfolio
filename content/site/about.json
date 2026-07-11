@@ -137,5 +137,40 @@
         "note": "Bachelor of Computer Science (Cybersecurity) student at Universiti Tenaga Nasional."
       }
     ]
+  },
+  "certificates": {
+    "title": "Recognized industry credentials.",
+    "items": [
+      {
+        "name": "CEHv13",
+        "note": "Certified Ethical Hacker from EC-Council.",
+        "code": "CEH",
+        "meta": "EC"
+      },
+      {
+        "name": "Junior Penetration Tester",
+        "note": "TryHackMe path focused on practical offensive security fundamentals.",
+        "code": "JPT",
+        "meta": "THM"
+      },
+      {
+        "name": "CCNA: Introduction to Networks",
+        "note": "Cisco networking foundation covering infrastructure and core network concepts.",
+        "code": "CCNA",
+        "meta": "Cisco"
+      },
+      {
+        "name": "Full-Stack Web Development Bootcamp",
+        "note": "Udemy training across JavaScript, Next.js, React, PostgreSQL, and MongoDB.",
+        "code": "WEB",
+        "meta": "DEV"
+      },
+      {
+        "name": "Python & Bash for Ethical Hackers",
+        "note": "Practical scripting and automation for penetration testing and security workflows.",
+        "code": "PY",
+        "meta": "ETH"
+      }
+    ]
   }
 }
