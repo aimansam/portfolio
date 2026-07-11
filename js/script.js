@@ -341,15 +341,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     lucide.createIcons()
     
     // Remove loading state
-    document.body.classList.remove('is-loading')
-    document.querySelector('.page-loader').style.opacity = '0'
-    setTimeout(() => {
-      document.querySelector('.page-loader').style.display = 'none'
-    }, 500)
+    const hideLoader = () => {
+      document.body.classList.remove('is-loading')
+      const loader = document.querySelector('.page-loader')
+      if (loader) {
+        loader.style.opacity = '0'
+        setTimeout(() => {
+          loader.style.display = 'none'
+        }, 500)
+      }
+    }
+    hideLoader()
     
   } catch (error) {
     console.error('Error loading portfolio content:', error)
     document.body.classList.remove('is-loading')
+    const loader = document.querySelector('.page-loader')
+    if (loader) loader.style.display = 'none'
   }
 })
 
