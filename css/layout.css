@@ -1612,7 +1612,7 @@ body.is-loaded .page-loader {
   text-align: center;
 }
 
-/* Gallery Masonry */
+/* Gallery Masonry with Ken Burns Effect */
 #gallery-section {
   display: flex;
   flex-direction: column;
@@ -1620,47 +1620,106 @@ body.is-loaded .page-loader {
 }
 
 .gallery-masonry {
-  column-count: 3;
-  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .gallery-masonry-item {
-  break-inside: avoid;
-  margin-bottom: 16px;
-}
-
-.gallery-masonry-card {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid #141414;
   box-shadow: 0 8px 24px rgba(20, 20, 20, 0.08);
-  transition: transform 200ms ease, box-shadow 200ms ease;
-  cursor: pointer;
+  aspect-ratio: 4/3;
+  opacity: 0;
+  animation: gallery-fade-in 0.6s ease forwards;
 }
 
-.gallery-masonry-card:hover,
-.gallery-masonry-card:active {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(20, 20, 20, 0.16);
+.gallery-masonry-item:nth-child(1) { animation-delay: 0.1s; }
+.gallery-masonry-item:nth-child(2) { animation-delay: 0.2s; }
+.gallery-masonry-item:nth-child(3) { animation-delay: 0.3s; }
+.gallery-masonry-item:nth-child(4) { animation-delay: 0.4s; }
+.gallery-masonry-item:nth-child(5) { animation-delay: 0.5s; }
+.gallery-masonry-item:nth-child(6) { animation-delay: 0.6s; }
+.gallery-masonry-item:nth-child(7) { animation-delay: 0.7s; }
+.gallery-masonry-item:nth-child(8) { animation-delay: 0.8s; }
+.gallery-masonry-item:nth-child(9) { animation-delay: 0.9s; }
+
+@keyframes gallery-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-masonry-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .gallery-image-wrapper {
   position: relative;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 .gallery-masonry-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
-  transition: transform 300ms ease;
+  transform-origin: center center;
+  animation: ken-burns 20s ease-in-out infinite alternate;
 }
 
-.gallery-masonry-card:hover .gallery-masonry-image {
-  transform: scale(1.08);
+/* Staggered Ken Burns animations for variety */
+.gallery-masonry-item:nth-child(odd) .gallery-masonry-image {
+  animation-direction: alternate;
+}
+
+.gallery-masonry-item:nth-child(even) .gallery-masonry-image {
+  animation-direction: alternate-reverse;
+}
+
+.gallery-masonry-item:nth-child(3n) .gallery-masonry-image {
+  animation-delay: -5s;
+}
+
+.gallery-masonry-item:nth-child(3n+1) .gallery-masonry-image {
+  animation-delay: -10s;
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.05) translate(-1%, -1%);
+  }
+  50% {
+    transform: scale(1.08) translate(1%, -0.5%);
+  }
+  75% {
+    transform: scale(1.05) translate(-0.5%, 1%);
+  }
+  100% {
+    transform: scale(1.1) translate(0.5%, 0.5%);
+  }
+}
+
+/* Pause animation on hover for viewing */
+.gallery-masonry-item:hover .gallery-masonry-image {
+  animation-play-state: paused;
 }
 
 .gallery-overlay {
@@ -1703,16 +1762,14 @@ body.is-loaded .page-loader {
 /* Gallery Masonry - Tablet */
 @media only screen and (max-width: 1000px) {
   .gallery-masonry {
-    column-count: 2;
-    column-gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* Gallery Masonry - Mobile */
 @media only screen and (max-width: 600px) {
   .gallery-masonry {
-    column-count: 1;
-    column-gap: 0;
+    grid-template-columns: 1fr;
   }
 
   .gallery-masonry-item {
