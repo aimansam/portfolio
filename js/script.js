@@ -324,38 +324,7 @@ const applyPortfolioContent = (content) => {
 // --- Initialization and Event Listeners ---
 
 document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    // Load content based on current page
-    const path = window.location.pathname
-    let contentFile = 'content/site/index.json' // Default
-    
-    if (path.includes('about.html')) contentFile = 'content/site/about.json'
-    else if (path.includes('projects.html')) contentFile = 'content/site/projects.json'
-    else if (path.includes('certificates.html')) contentFile = 'content/site/certificates.json'
-    
-    const response = await fetch(contentFile)
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const content = await response.json()
-    applyPortfolioContent(content)
-    
-    // Initialize Lucide icons
-    lucide.createIcons()
-    
-    // Remove loading state
-    const hideLoader = () => {
-      document.body.classList.remove('is-loading')
-      const loader = document.querySelector('.page-loader')
-      if (loader) {
-        loader.style.opacity = '0'
-        setTimeout(() => {
-          loader.style.display = 'none'
-        }, 500)
-      }
-    }
-    hideLoader()
-    
-  } catch (error) {
-    console.error('Error loading portfolio content:', error)
+  const hideLoader = () => {
     document.body.classList.remove('is-loading')
     const loader = document.querySelector('.page-loader')
     if (loader) {
@@ -364,6 +333,58 @@ document.addEventListener('DOMContentLoaded', async () => {
         loader.style.display = 'none'
       }, 500)
     }
+  }
+
+  try {
+    // 1. Always load common navigation and footer first to prevent blank navs
+    const [navRes, footerRes] = await Promise.all([
+      fetch('content/site/navigation.json'),
+      fetch('content/site/footer.json')
+    ])
+    
+    if (!navRes.ok || !footerRes.ok) throw new Error('Failed to load common site elements')
+    
+    const navData = await navRes.json()
+    const footerData = await footerRes.json()
+    
+    // Merge common data into a base content object
+    const baseContent = {
+      navigation: navData.navigation,
+      footer: footerData.footer
+    }
+
+    // 2. Determine page-specific content file
+    const path = window.location.pathname
+    let contentFile = 'content/site/index.json'
+    
+    if (path.includes('about.html')) contentFile = 'content/site/about.json'
+    else if (path.includes('projects.html')) contentFile = 'content/site/projects.json'
+    else if (path.includes('certificates.html')) contentFile = 'content/site/certificates.json'
+    
+    // 3. Fetch page-specific content
+    try {
+      const pageRes = await fetch(contentFile)
+      if (pageRes.ok) {
+        const pageContent = await pageRes.json()
+        // Merge page content with base common content
+        const finalContent = { ...baseContent, ...pageContent }
+        applyPortfolioContent(finalContent)
+      } else {
+        console.warn(`Could not load page content from ${contentFile}, using base content only.`)
+        applyPortfolioContent(baseContent)
+      }
+    } catch (pageError) {
+      console.error('Error loading page-specific content:', pageError)
+      applyPortfolioContent(baseContent)
+    }
+    
+    // Initialize Lucide icons
+    lucide.createIcons()
+    
+  } catch (error) {
+    console.error('Critical error loading portfolio site:', error)
+  } finally {
+    hideLoader()
   }
 })
 
