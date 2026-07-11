@@ -335,52 +335,94 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // Initialize Scroll Reveal Observer
+  const initScrollReveal = () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-scroll-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, observerOptions)
+
+    document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
+      observer.observe(el)
+    })
+  }
+
   try {
+    console.log('Initializing portfolio loading sequence...')
+    
     // 1. Always load common navigation and footer first to prevent blank navs
+    console.log('Fetching common elements...')
     const [navRes, footerRes] = await Promise.all([
       fetch('content/site/navigation.json'),
       fetch('content/site/footer.json')
     ])
     
-    if (!navRes.ok || !footerRes.ok) throw new Error('Failed to load common site elements')
+    if (!navRes.ok || !footerRes.ok) throw new Error(`Common elements fetch failed: Nav(${navRes.status}), Footer(${footerRes.status})`)
     
     const navData = await navRes.json()
     const footerData = await footerRes.json()
     
-    // Merge common data into a base content object
     const baseContent = {
       navigation: navData.navigation,
       footer: footerData.footer
     }
+    console.log('Common elements loaded successfully.')
 
     // 2. Determine page-specific content file
-    // Use pathname and handle potential leading slashes or different environment paths
     const path = window.location.pathname
+    console.log('Current path:', path)
     let contentFile = 'content/site/index.json'
     
     if (path.endsWith('about.html') || path.includes('/about.html')) contentFile = 'content/site/about.json'
     else if (path.endsWith('projects.html') || path.includes('/projects.html')) contentFile = 'content/site/projects.json'
     else if (path.endsWith('certificates.html') || path.includes('/certificates.html')) contentFile = 'content/site/certificates.json'
+    else if (path === '/' || path === '/index.html' || path.endsWith('index.html')) contentFile = 'content/site/index.json'
+    
+    console.log('Target content file:', contentFile)
     
     // 3. Fetch page-specific content
     try {
       const pageRes = await fetch(contentFile)
       if (pageRes.ok) {
         const pageContent = await pageRes.json()
-        // Merge page content with base common content
+        console.log('Page content loaded successfully.')
         const finalContent = { ...baseContent, ...pageContent }
         applyPortfolioContent(finalContent)
       } else {
-        console.warn(`Could not load page content from ${contentFile}, using base content only.`)
+        console.warn(`Could not load page content from ${contentFile} (Status: ${pageRes.status}), using base content only.`)
         applyPortfolioContent(baseContent)
       }
     } catch (pageError) {
-      console.error('Error loading page-specific content:', pageError)
+      console.error('Network error loading page-specific content:', pageError)
       applyPortfolioContent(baseContent)
     }
     
     // Initialize Lucide icons
-    lucide.createIcons()
+    if (window.lucide) {
+      lucide.createIcons()
+    } else {
+      console.error('Lucide library not loaded')
+    }
+    
+    // Initialize Animations
+    initScrollReveal()
+    
+    // Fallback: Force visibility for elements that might be stuck in hidden state
+    // This ensures that even if the IntersectionObserver fails or window is not scrolled,
+    // the content is visible.
+    document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
     
   } catch (error) {
     console.error('Critical error loading portfolio site:', error)
