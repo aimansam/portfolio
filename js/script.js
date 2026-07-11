@@ -354,12 +354,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 2. Determine page-specific content file
+    // Use pathname and handle potential leading slashes or different environment paths
     const path = window.location.pathname
     let contentFile = 'content/site/index.json'
     
-    if (path.includes('about.html')) contentFile = 'content/site/about.json'
-    else if (path.includes('projects.html')) contentFile = 'content/site/projects.json'
-    else if (path.includes('certificates.html')) contentFile = 'content/site/certificates.json'
+    if (path.endsWith('about.html') || path.includes('/about.html')) contentFile = 'content/site/about.json'
+    else if (path.endsWith('projects.html') || path.includes('/projects.html')) contentFile = 'content/site/projects.json'
+    else if (path.endsWith('certificates.html') || path.includes('/certificates.html')) contentFile = 'content/site/certificates.json'
     
     // 3. Fetch page-specific content
     try {
