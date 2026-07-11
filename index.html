@@ -65,10 +65,25 @@
     <link rel="stylesheet" href="./css/typography.css">
     <link rel="stylesheet" href="./css/utilities.css">
 
+    <script>
+      (function() {
+        var saved = localStorage.getItem('darkMode');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'true' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark-mode-pending');
+        }
+      })();
+    </script>
     <script defer src="https://unpkg.com/lucide@latest"></script>
     <script defer src="./js/script.js"></script>
   </head>
   <body class="is-loading">
+    <script>
+      if (document.documentElement.classList.contains('dark-mode-pending')) {
+        document.body.classList.add('dark-mode');
+      }
+    </script>
+    <a class="skip-to-content" href="#main-content">Skip to main content</a>
     <div class="page-loader" aria-hidden="true">
       <div class="page-loader-content">
         <div class="page-loader-mark">
@@ -99,41 +114,30 @@
             <span class="nav-title" id="nav-brand-label">zx10r</span>
           </a>
         </div>
-        <a class="button button-contrast nav-cta" id="nav-cta-link" href="mailto:zx10r8443@gmail.com">
-          <span class="button-text" id="nav-cta-label" style="font-size: 18px;">Hire Me</span>
-        </a>
-      </div>
+          <a class="button button-contrast nav-cta" id="nav-cta-link" href="mailto:zx10r8443@gmail.com">
+            <span class="button-text" id="nav-cta-label" style="font-size: 18px;">Hire Me</span>
+          </a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+            <span class="theme-toggle-icon">🌙</span>
+          </button>
+        </div>
       <div class="nav-icon-box" id="mobile-nav-links" aria-label="Section links">
         <!-- This content is dynamically populated by js/script.js from navigation.json -->
       </div>
     </nav>
 
     <!-- MAIN PAGE CONTENT -->
-    <div id="main-content">
+    <div id="main-content" aria-live="polite">
 
       <!-- PORTFOLIO HEADER -->
       <div id="portfolio-header">
         <div id="portfolio-header-visual">
         <div id="portfolio-header-image-container">
-          <!-- 
-            TODO
-
-            - Change the img "src" attribute to point to the Unemployable image you uploaded (or whatever image).
-            - Change the number to point to your Unemployable & replace the OpenSea link with your own
-            - If you aren't using an Unemployable as your image, remove the entire "a" element
-          -->
-          <img src="./assets/images/8443.jpg" class="portfolio-header-image">
+          <img src="./assets/images/8443.jpg" class="portfolio-header-image" alt="Profile image">
         </div>
           <span class="image-caption hero-image-caption">Unemployables #8443</span>
         </div>
 
-          <!-- 
-            TODO
-
-            - Change the main-title to whatver you want
-            - Change the body-text after that to a quick introduction to what you do
-            - Edit the button text if you feel like it. It will link to the projects section below.
-          -->
         <div id="portfolio-header-text-container">
             <div class="hero-top-content">
             <div class="header-text">
@@ -187,32 +191,8 @@
     <div id="footer">
       <div class="footer-copy" id="footer-copy">Open to internships, project collaboration, and security work.</div>
       <div class="footer-links" id="footer-link-list">
-      <!-- 
-        TODO - Change the email after "mailto" to your contact email 
-      
-        This should be the same across all pages.
-      -->
-      <a class="icon-link" href="mailto:zx10r8443@gmail.com">
-        <img src="./assets/icons/mail.svg" class="footer-icon" alt="Email"/>
-      </a>
-      <a class="icon-link" href="https://github.com/aimansam" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
-        <img src="./assets/icons/github.svg" class="footer-icon" alt="GitHub"/>
-      </a>
-      <a class="icon-link" href="https://www.linkedin.com/in/aimansam" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-        <img src="./assets/icons/linkedin.svg" class="footer-icon" alt="LinkedIn"/>
-      </a>
-      <a class="icon-link" href="https://tryhackme.com/p/zx10r" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe profile">
-        <img src="./assets/icons/tryhackme.svg" class="footer-icon" alt="TryHackMe"/>
-      </a>
-      <a class="icon-link" href="https://app.hackthebox.com/users/2188751" target="_blank" rel="noopener noreferrer" aria-label="Hack The Box profile">
-        <img src="./assets/icons/hackthebox.png" class="footer-icon" alt="Hack The Box"/>
-      </a>
+        <!-- Links injected by script.js from footer.json -->
       </div>
     </div>
-    <script>
-      document.addEventListener('contextmenu', (event) => {
-        event.preventDefault();
-      });
-    </script>
 	</body>
 </html>

@@ -5,15 +5,45 @@
 		<link rel="icon" href="./assets/images/8443.jpg" />
 		<title id="page-title">About Me | zx10r</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Learn about Aiman Sam's background, skills, certifications, and experience in penetration testing and web development." />
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Aiman Sam" />
+		<meta name="theme-color" content="#0f172a" />
+		<link rel="canonical" href="https://portfolio.aimansam.my/about.html" />
+		<meta property="og:type" content="profile" />
+		<meta property="og:title" content="About Me | Aiman Sam" />
+		<meta property="og:description" content="Learn about Aiman Sam's background, skills, certifications, and experience in penetration testing and web development." />
+		<meta property="og:url" content="https://portfolio.aimansam.my/about.html" />
+		<meta property="og:site_name" content="Aiman Sam Portfolio" />
+		<meta property="og:image" content="https://portfolio.aimansam.my/assets/images/mypicture.jpg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="About Me | Aiman Sam" />
+		<meta name="twitter:description" content="Learn about Aiman Sam's background, skills, certifications, and experience in penetration testing and web development." />
+		<meta name="twitter:image" content="https://portfolio.aimansam.my/assets/images/mypicture.jpg" />
 
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="./css/typography.css">
 		<link rel="stylesheet" href="./css/utilities.css">
 
+		<script>
+			(function() {
+				var saved = localStorage.getItem('darkMode');
+				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				if (saved === 'true' || (!saved && prefersDark)) {
+					document.documentElement.classList.add('dark-mode-pending');
+				}
+			})();
+		</script>
 		<script defer src="https://unpkg.com/lucide@latest"></script>
 		<script defer src="./js/script.js"></script>
 	</head>
 	<body class="is-loading">
+		<script>
+			if (document.documentElement.classList.contains('dark-mode-pending')) {
+				document.body.classList.add('dark-mode');
+			}
+		</script>
+		<a class="skip-to-content" href="#main-content">Skip to main content</a>
 		<div class="page-loader" aria-hidden="true">
 			<div class="page-loader-content">
 				<div class="page-loader-mark">
@@ -47,13 +77,16 @@
 				<a class="button button-contrast nav-cta" id="nav-cta-link" href="mailto:zx10r8443@gmail.com">
 					<span class="button-text" id="nav-cta-label" style="font-size: 18px;">Hire Me</span>
 				</a>
+				<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+					<span class="theme-toggle-icon">🌙</span>
+				</button>
 			</div>
 			<div class="nav-icon-box" id="mobile-nav-links" aria-label="Section links">
 				<!-- Links injected by script.js -->
 			</div>
 		</nav>
 
-		<div id="main-content">
+		<div id="main-content" aria-live="polite">
 			<div id="about-section">
 				<span class="subheader-text">My Background / About Me</span>
 				<div class="about-section-content">
@@ -122,14 +155,9 @@
 		<div id="footer">
 			<div class="footer-copy" id="footer-copy">Loading...</div>
 			<div class="footer-links" id="footer-link-list">
-				<!-- Links injected by script.js -->
+				<!-- Links injected by script.js from footer.json -->
 			</div>
 		</div>
 
-		<script>
-			document.addEventListener('contextmenu', (event) => {
-				event.preventDefault();
-			});
-		</script>
 	</body>
 </html>

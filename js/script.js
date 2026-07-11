@@ -3,12 +3,8 @@
  * Handles dynamic content loading and UI interactions
  */
 
-// Early debug log to confirm script is loading
-console.log('script.js loaded - waiting for DOMContentLoaded...')
-
 // Fallback: Force visibility on window load in case DOMContentLoaded already fired
 window.addEventListener('load', () => {
-  console.log('Window loaded - forcing visibility as fallback...')
   const loader = document.querySelector('.page-loader')
   if (loader) {
     loader.style.opacity = '0'
@@ -23,22 +19,91 @@ window.addEventListener('load', () => {
 
 // --- Utility Functions ---
 
-const createNavItemMarkup = (item, currentPath) => {
-  const isActive = currentPath.includes(item.href.replace('./', '')) || 
-                   (item.href === './index.html' && (currentPath === '/' || currentPath === '' || currentPath.includes('index.html')))
+// Escape HTML special characters to prevent XSS when injecting JSON data into innerHTML.
+const escapeHtml = (str) => {
+  if (typeof str !== 'string') return ''
+  return str
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, '&#39;')
+}
+
+// Resolve shared content from the portfolio root, even when the current page is
+// nested (for example, /project-pages/project.html).
+const portfolioRootUrl = new URL('../', document.currentScript?.src || window.location.href)
+
+const resolvePortfolioUrl = (value) => {
+  if (!value) return ''
+
+  try {
+    return new URL(value, portfolioRootUrl).href
+  } catch {
+    return value
+  }
+}
+
+const normalizePathname = (pathname) => {
+  const normalized = pathname.replace(/\/index\.html$/i, '/')
+  return normalized.length > 1 ? normalized.replace(/\/$/, '') : normalized
+}
+
+const isNavItemActive = (item) => {
+  if (!item?.href || !/^https?:/i.test(resolvePortfolioUrl(item.href))) return false
+
+  const targetUrl = new URL(resolvePortfolioUrl(item.href))
+  if (targetUrl.origin !== window.location.origin) return false
+
+  const currentPath = normalizePathname(window.location.pathname)
+  const targetPath = normalizePathname(targetUrl.pathname)
+  const rootPath = normalizePathname(portfolioRootUrl.pathname)
+
+  // Home must match exactly; otherwise every route below the site root would
+  // incorrectly activate it.
+  if (targetPath === rootPath) return currentPath === rootPath
+
+  // Project detail pages belong to the Projects navigation section.
+  if (/\/projects\.html$/i.test(targetUrl.pathname)) {
+    const projectPagesPath = `${portfolioRootUrl.pathname.replace(/\/$/, '')}/project-pages/`
+    return currentPath === targetPath || window.location.pathname.startsWith(projectPagesPath)
+  }
+
+  // Treat directory index links (notably /blog/index.html) as their section so
+  // posts beneath that directory retain the active state when this nav is used.
+  if (/\/index\.html$/i.test(targetUrl.pathname)) {
+    return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)
+  }
+
+  return currentPath === targetPath
+}
+
+const createNavItemMarkup = (item) => {
+  const isActive = isNavItemActive(item)
+  const targetAttributes = item.target
+    ? ` target="${escapeHtml(item.target)}" rel="noopener noreferrer"`
+    : ''
+  const label = escapeHtml(item.label)
+  const ariaLabel = escapeHtml(item.ariaLabel || item.label)
+
   return `
-  <a class="nav-icon-link${isActive ? ' is-active' : ''}" href="${item.href}" aria-label="${item.label}">
-    <img src="${item.icon}" class="nav-icon" alt="">
-    <span class="nav-icon-label">${item.label}</span>
+  <a class="nav-icon-link${isActive ? ' is-active' : ''}" href="${resolvePortfolioUrl(item.href)}" aria-label="${ariaLabel}"${isActive ? ' aria-current="page"' : ''}${targetAttributes}>
+    <img src="${resolvePortfolioUrl(item.icon)}" class="nav-icon" alt="">
+    <span class="nav-icon-label">${label}</span>
   </a>
 `
 }
 
-const createFooterLinkMarkup = (item) => `
-  <a class="icon-link" href="${item.href}" ${item.target ? `target="${item.target}" rel="noopener noreferrer"` : ''} aria-label="${item.label}">
-    <img src="${item.icon}" class="footer-icon" alt="${item.label}"/>
+const createFooterLinkMarkup = (item) => {
+  const label = escapeHtml(item.label)
+  const ariaLabel = escapeHtml(item.ariaLabel || item.label)
+  const targetAttr = item.target ? `target="${escapeHtml(item.target)}" rel="noopener noreferrer"` : ''
+  return `
+  <a class="icon-link" href="${resolvePortfolioUrl(item.href)}" ${targetAttr} aria-label="${ariaLabel}">
+    <img src="${resolvePortfolioUrl(item.icon)}" class="footer-icon" alt="${label}"/>
   </a>
-`;
+`
+};
 
 const createHeroSocialMarkup = (item) => `
   <a class="hero-social-link" href="${item.href}" ${item.target ? `target="${item.target}" rel="noopener noreferrer"` : ''} aria-label="${item.label}">
@@ -92,14 +157,14 @@ const createCertificateMarkup = (cert) => `
 `;
 
 const createProjectMarkup = (project) => `
-  <div class="project-card" data-category="${project.category}">
+  <div class="project-card" data-category="${escapeHtml(project.category)}">
     <img src="${project.image}" class="project-image" loading="lazy">
     <div class="project-card-text-container">
       <div class="project-card-tags">
-        ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+        ${project.tags.map(tag => `<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}
       </div>
-      <div class="subheader-text project-title">${project.title}</div>
-      <div class="body-text project-card-text">${project.description}</div>
+      <div class="subheader-text project-title">${escapeHtml(project.title)}</div>
+      <div class="body-text project-card-text">${escapeHtml(project.description)}</div>
     </div>
     <a class="button" href="${project.href || './project-pages/project.html?id=' + project.id}">
       <span class="button-text">Read More</span>
@@ -111,13 +176,13 @@ const createProjectMarkup = (project) => `
 const createBlogPreviewMarkup = (post) => `
   <article class="blog-preview-card ${post.accent ? 'blog-preview-card-accent' : ''}">
     <div class="blog-preview-tags">
-      ${post.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+      ${post.tags.map(tag => `<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}
     </div>
     <div class="blog-preview-card-text">
-      <div class="subheader-text blog-preview-title">${post.title}</div>
-      <div class="body-text blog-preview-text">${post.description}</div>
+      <div class="subheader-text blog-preview-title">${escapeHtml(post.title)}</div>
+      <div class="body-text blog-preview-text">${escapeHtml(post.description)}</div>
     </div>
-    <div class="blog-preview-meta">Published · ${post.date}</div>
+    <div class="blog-preview-meta">Published · ${escapeHtml(post.date)}</div>
     <a class="button" href="${post.url}">
       <span class="button-text">Read post</span>
       <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
@@ -156,13 +221,12 @@ const applyCommonContent = (content) => {
   const footerCopy = document.getElementById('footer-copy')
   const footerLinkList = document.getElementById('footer-link-list')
 
-  if (content.navigation?.brand?.href && navBrandLink) navBrandLink.href = content.navigation.brand.href
+  if (content.navigation?.brand?.href && navBrandLink) navBrandLink.href = resolvePortfolioUrl(content.navigation.brand.href)
   if (content.navigation?.brand?.label && navBrandLabel) navBrandLabel.textContent = content.navigation.brand.label
-  if (content.navigation?.cta?.href && navCtaLink) navCtaLink.href = content.navigation.cta.href
+  if (content.navigation?.cta?.href && navCtaLink) navCtaLink.href = resolvePortfolioUrl(content.navigation.cta.href)
   if (content.navigation?.cta?.label && navCtaLabel) navCtaLabel.textContent = content.navigation.cta.label
   if (Array.isArray(content.navigation?.items) && content.navigation.items.length && mobileNavLinks) {
-    const currentPath = window.location.pathname
-    mobileNavLinks.innerHTML = content.navigation.items.map(item => createNavItemMarkup(item, currentPath)).join('')
+    mobileNavLinks.innerHTML = content.navigation.items.map(createNavItemMarkup).join('')
   }
   if (content.footer?.copy && footerCopy) footerCopy.textContent = content.footer.copy
   if (Array.isArray(content.footer?.links) && content.footer.links.length && footerLinkList) {
@@ -319,8 +383,8 @@ const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBt
           </div>
           <div class="about-cert-overlay">
             <div class="about-cert-overlay-content">
-              <span class="about-cert-overlay-name">${cert.name}</span>
-              <span class="about-cert-overlay-note">${cert.note}</span>
+              <span class="about-cert-overlay-name">${escapeHtml(cert.name)}</span>
+              <span class="about-cert-overlay-note">${escapeHtml(cert.note)}</span>
             </div>
           </div>
         </div>
@@ -358,14 +422,14 @@ const applyGalleryContent = (content) => {
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
     galleryList.innerHTML = content.gallery.items.map(item => `
       <div class="gallery-masonry-item">
-        <div class="gallery-masonry-card" data-lightbox="${item.image || './assets/images/8443.jpg'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
+        <div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${item.title || 'image'} in lightbox" data-lightbox="${item.image || './assets/images/8443.jpg'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
           <div class="gallery-image-wrapper">
             <img src="${item.image || './assets/images/8443.jpg'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image" loading="lazy">
           </div>
           <div class="gallery-overlay">
             <div class="gallery-overlay-content">
-              <span class="gallery-overlay-title">${item.title || 'Untitled'}</span>
-              <span class="gallery-overlay-description">${item.description || ''}</span>
+              <span class="gallery-overlay-title">${escapeHtml(item.title || 'Untitled')}</span>
+              <span class="gallery-overlay-description">${escapeHtml(item.description || '')}</span>
             </div>
           </div>
         </div>
@@ -385,8 +449,7 @@ const applyProjectsContent = (content) => {
     projectFilterList.innerHTML = content.projects.filters.map((f, i) => `<button class="filter-button${i === 0 ? ' is-active' : ''}" type="button" data-filter="${f.id}">${f.label}</button>`).join('')
   }
   if (Array.isArray(content.projects?.items) && content.projects.items.length && projectsContainer) {
-    const sortedItems = [...content.projects.items].sort((a, b) => (a.featured === b.featured ? 0 : a.featured ? -1 : 1));
-    projectsContainer.innerHTML = sortedItems.map(createProjectMarkup).join('')
+    projectsContainer.innerHTML = content.projects.items.map(createProjectMarkup).join('')
   }
 }
 
@@ -453,32 +516,47 @@ const applyProjectDetailContent = (content) => {
   if (content.title) {
     projectTitle.textContent = content.title
     if (projectTitleTag) projectTitleTag.textContent = content.title + ' | zx10r'
+    const projectOgTitle = document.getElementById('project-og-title')
+    const projectTwitterTitle = document.getElementById('project-twitter-title')
+    if (projectOgTitle) projectOgTitle.setAttribute('content', content.title + ' | Aiman Sam')
+    if (projectTwitterTitle) projectTwitterTitle.setAttribute('content', content.title + ' | Aiman Sam')
   }
   if (content.description) {
     projectDesc.textContent = content.description
     if (projectMetaDesc) projectMetaDesc.setAttribute('content', content.description)
+    const projectOgDesc = document.getElementById('project-og-desc')
+    const projectTwitterDesc = document.getElementById('project-twitter-desc')
+    if (projectOgDesc) projectOgDesc.setAttribute('content', content.description)
+    if (projectTwitterDesc) projectTwitterDesc.setAttribute('content', content.description)
   }
   if (content.headerImage && projectImage) {
     projectImage.src = content.headerImage
     projectImage.alt = content.title || 'Project header'
+    const projectOgImage = document.getElementById('project-og-image')
+    const projectTwitterImage = document.getElementById('project-twitter-image')
+    const resolvedImage = resolvePortfolioUrl(content.headerImage)
+    if (projectOgImage) projectOgImage.setAttribute('content', resolvedImage)
+    if (projectTwitterImage) projectTwitterImage.setAttribute('content', resolvedImage)
   }
 
   if (Array.isArray(content.sections) && content.sections.length && detailsContainer) {
     detailsContainer.innerHTML = content.sections.map(section => `
       <div class="project-details-content">
-        <div class="subheader-text">${section.title}</div>
-        ${section.content.map(p => `<p class="body-text">${p}</p>`).join('')}
+        <div class="subheader-text">${escapeHtml(section.title)}</div>
+        ${section.content.map(p => `<p class="body-text">${escapeHtml(p)}</p>`).join('')}
       </div>
     `).join('')
   }
 
   if (Array.isArray(content.gallery) && content.gallery.length && galleryGrid) {
-    galleryGrid.innerHTML = content.gallery.map(item => `
+    galleryGrid.innerHTML = content.gallery.map(item => {
+      const caption = escapeHtml(item.caption || '')
+      return `
       <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
-        <img src="${item.image}" class="gallery-image" alt="${item.caption || ''}" loading="lazy" data-lightbox="${item.image}" data-lightbox-title="${item.caption || ''}">
-        ${item.caption ? `<span class="body-text">${item.caption}</span>` : ''}
+        <img src="${item.image}" class="gallery-image" alt="${caption}" loading="lazy" role="button" tabindex="0" aria-label="View ${caption || 'image'} in lightbox" data-lightbox="${item.image}" data-lightbox-title="${caption}">
+        ${item.caption ? `<span class="body-text">${caption}</span>` : ''}
       </div>
-    `).join('')
+    `}).join('')
   }
 }
 
@@ -547,23 +625,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Helper to safely fetch and parse JSON
   const safeFetch = async (url) => {
+    const resolvedUrl = resolvePortfolioUrl(url)
     try {
-      const res = await fetch(url)
+      const res = await fetch(resolvedUrl)
       if (!res.ok) {
-        console.warn(`Fetch warning: ${url} returned ${res.status}`)
+        console.warn(`Fetch warning: ${resolvedUrl} returned ${res.status}`)
         return null
       }
       return await res.json()
     } catch (e) {
-      console.warn(`Fetch error: ${url} - ${e.message}`)
+      console.warn(`Fetch error: ${resolvedUrl} - ${e.message}`)
       return null
     }
   }
 
   // Force content visibility - minimal fallback that doesn't break CSS
   const forceContentVisibility = () => {
-    console.log('Forcing content visibility...')
-    
     // Remove loading class to allow normal CSS to take over
     document.body.classList.remove('is-loading')
     document.body.classList.add('is-loaded')
@@ -584,14 +661,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       el.classList.add('is-scroll-visible')
     })
     
-    console.log('Content visibility forced complete')
   }
 
   try {
-    console.log('Initializing portfolio loading sequence...')
-    console.log('Current pathname:', window.location.pathname)
-    console.log('Current href:', window.location.href)
-    
     // Force visibility early to prevent blank page
     forceContentVisibility()
     
@@ -604,8 +676,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       footer: footerData?.footer || null
     }
     
-    if (navData) console.log('Navigation loaded')
-    if (footerData) console.log('Footer loaded')
 
     // 2. Determine page-specific content file based on pathname
     const path = window.location.pathname
@@ -637,15 +707,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       contentFile = 'content/site/index.json'
     }
     
-    console.log('Target content file:', contentFile)
-    
     // 3. Fetch page-specific content
     const pageContent = await safeFetch(contentFile)
     
     // Merge and apply content
     const finalContent = { ...baseContent }
     if (pageContent) {
-      console.log('Page content loaded:', contentFile)
       Object.assign(finalContent, pageContent)
     } else {
       console.warn('Page content not available, using base content only')
@@ -657,9 +724,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => {
       if (window.lucide && typeof lucide.createIcons === 'function') {
         lucide.createIcons()
-        console.log('Lucide icons initialized')
-      } else {
-        console.warn('Lucide library not available, icons may not render')
       }
     }, 100)
     
@@ -669,7 +733,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Additional visibility check after content is applied
     setTimeout(() => {
       forceContentVisibility()
-      console.log('Final visibility check complete')
     }, 1000)
     
   } catch (error) {
@@ -751,8 +814,11 @@ if (certNavPrev && certNavNext && certList) {
 const initLightbox = () => {
   const lightbox = document.createElement('div')
   lightbox.className = 'lightbox-overlay'
+  lightbox.setAttribute('role', 'dialog')
+  lightbox.setAttribute('aria-modal', 'true')
+  lightbox.setAttribute('aria-label', 'Image viewer')
   lightbox.innerHTML = `
-    <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
     <button class="lightbox-prev" aria-label="Previous image">&#8249;</button>
     <button class="lightbox-next" aria-label="Next image">&#8250;</button>
     <div class="lightbox-content">
@@ -767,24 +833,59 @@ const initLightbox = () => {
 
   let lightboxItems = []
   let lightboxIndex = 0
+  let lastFocusedElement = null
 
-  const openLightbox = (items, index) => {
+  const getFocusableElements = () =>
+    [...lightbox.querySelectorAll('button')]
+      .filter(el => !el.disabled && el.offsetParent !== null)
+
+  const trapFocus = (e) => {
+    if (e.key !== 'Tab') return
+    const focusable = getFocusableElements()
+    if (focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+  }
+
+  const openLightbox = (items, index, trigger) => {
     lightboxItems = items
     lightboxIndex = index
+    lastFocusedElement = trigger || document.activeElement
     updateLightbox()
     lightbox.classList.add('is-open')
     document.body.style.overflow = 'hidden'
+    lightbox.addEventListener('keydown', trapFocus)
+    const closeBtn = lightbox.querySelector('.lightbox-close')
+    if (closeBtn) closeBtn.focus()
   }
 
   const closeLightbox = () => {
     lightbox.classList.remove('is-open')
     document.body.style.overflow = ''
+    lightbox.removeEventListener('keydown', trapFocus)
+    if (lastFocusedElement) {
+      lastFocusedElement.focus()
+      lastFocusedElement = null
+    }
   }
 
   const updateLightbox = () => {
     const item = lightboxItems[lightboxIndex]
     if (!item) return
-    lightbox.querySelector('.lightbox-image').src = item.src
+    const img = lightbox.querySelector('.lightbox-image')
+    img.src = item.src
+    img.alt = item.title || 'Gallery image'
     lightbox.querySelector('.lightbox-title').textContent = item.title || ''
     lightbox.querySelector('.lightbox-desc').textContent = item.desc || ''
   }
@@ -808,9 +909,9 @@ const initLightbox = () => {
 
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('is-open')) return
-    if (e.key === 'Escape') closeLightbox()
-    if (e.key === 'ArrowRight') nextLightbox()
-    if (e.key === 'ArrowLeft') prevLightbox()
+    if (e.key === 'Escape') { e.preventDefault(); closeLightbox() }
+    if (e.key === 'ArrowRight') { e.preventDefault(); nextLightbox() }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevLightbox() }
   })
 
   // Attach click handlers to gallery cards
@@ -824,34 +925,59 @@ const initLightbox = () => {
       desc: c.dataset.lightboxDesc || ''
     }))
     const index = Array.from(allCards).indexOf(card)
-    openLightbox(items, index)
+    openLightbox(items, index, card)
+  })
+
+  // Keyboard activation for gallery cards (Enter/Space)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    const card = e.target.closest('[data-lightbox]')
+    if (!card) return
+    e.preventDefault()
+    const allCards = document.querySelectorAll('[data-lightbox]')
+    const items = Array.from(allCards).map(c => ({
+      src: c.dataset.lightbox,
+      title: c.dataset.lightboxTitle || '',
+      desc: c.dataset.lightboxDesc || ''
+    }))
+    const index = Array.from(allCards).indexOf(card)
+    openLightbox(items, index, card)
   })
 }
 
 // --- Dark Mode Toggle ---
+// Theme is applied before first paint via an inline <script> in each HTML file.
+// This function only binds the toggle button and updates its icon.
 const initDarkMode = () => {
-  const saved = localStorage.getItem('darkMode')
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  if (saved === 'true' || (!saved && prefersDark)) {
-    document.body.classList.add('dark-mode')
+  const toggle = document.getElementById('theme-toggle')
+  if (!toggle) return
+
+  const updateToggleIcon = () => {
+    const isDark = document.body.classList.contains('dark-mode')
+    toggle.setAttribute('aria-pressed', String(isDark))
+    toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode')
+    toggle.querySelector('.theme-toggle-icon').textContent = isDark ? '☀️' : '🌙'
   }
 
-  const toggle = document.createElement('button')
-  toggle.className = 'dark-mode-toggle'
-  toggle.setAttribute('aria-label', 'Toggle dark mode')
-  toggle.innerHTML = '<span class="dark-mode-icon"></span>'
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode')
     const isDark = document.body.classList.contains('dark-mode')
     localStorage.setItem('darkMode', isDark)
-    toggle.querySelector('.dark-mode-icon').textContent = isDark ? '☀️' : ''
+    updateToggleIcon()
   })
-  document.body.appendChild(toggle)
 
-  // Update icon on load
-  if (document.body.classList.contains('dark-mode')) {
-    toggle.querySelector('.dark-mode-icon').textContent = '☀️'
-  }
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (localStorage.getItem('darkMode') !== null) return
+    if (e.matches) {
+      document.body.classList.add('dark-mode')
+    } else {
+      document.body.classList.remove('dark-mode')
+    }
+    updateToggleIcon()
+  })
+
+  updateToggleIcon()
 }
 
 // --- Back to Top Button ---
