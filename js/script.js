@@ -345,6 +345,31 @@ const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBt
   }, 200)
 }
 
+const applyGalleryContent = (content) => {
+  const galleryTitle = document.getElementById('gallery-title')
+  if (!galleryTitle) return
+
+  const galleryList = document.getElementById('gallery-list')
+  if (content.gallery?.title) galleryTitle.textContent = content.gallery.title
+  if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
+    galleryList.innerHTML = content.gallery.items.map(item => `
+      <div class="gallery-masonry-item">
+        <div class="gallery-masonry-card">
+          <div class="gallery-image-wrapper">
+            <img src="${item.image || './assets/images/8443.jpg'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-content">
+              <span class="gallery-overlay-title">${item.title || 'Untitled'}</span>
+              <span class="gallery-overlay-description">${item.description || ''}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('')
+  }
+}
+
 const applyProjectsContent = (content) => {
   const projectsHeading = document.getElementById('projects-heading')
   if (!projectsHeading) return
@@ -419,6 +444,7 @@ const applyPortfolioContent = (content) => {
   applyAboutContent(content)
   applySkillsContent(content)
   applyCertificatesContent(content)
+  applyGalleryContent(content)
   applyProjectsContent(content)
   applyBlogPreviewContent(content)
   applySEOContent(content)
@@ -530,6 +556,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       contentFile = 'content/site/about.json'
     } else if (path.match(/projects\.html$/i) || path.match(/\/projects\.html/i)) {
       contentFile = 'content/site/projects.json'
+    } else if (path.match(/gallery\.html$/i) || path.match(/\/gallery\.html/i)) {
+      contentFile = 'content/site/gallery.json'
     } else if (path.match(/certificates\.html$/i) || path.match(/\/certificates\.html/i)) {
       contentFile = 'content/site/certificates.json'
     }

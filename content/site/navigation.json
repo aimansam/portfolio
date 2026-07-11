@@ -28,10 +28,10 @@
         "icon": "./assets/icons/briefcase.svg"
       },
       {
-        "href": "./certificates.html",
-        "label": "Certificates",
-        "ariaLabel": "Go to certificates page",
-        "icon": "./assets/icons/shield-check.svg"
+        "href": "./gallery.html",
+        "label": "Gallery",
+        "ariaLabel": "Go to image gallery",
+        "icon": "./assets/icons/article.svg"
       },
       {
         "href": "./blog/index.html",
