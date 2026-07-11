@@ -1564,6 +1564,53 @@ body.is-loaded .page-loader {
   }
 }
 
+/* Certificate Pagination */
+.about-cert-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 20, 20, 0.1);
+}
+
+.about-cert-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  background-color: white;
+  color: #141414;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.about-cert-nav-btn:hover:not(:disabled),
+.about-cert-nav-btn:active:not(:disabled) {
+  background-color: #141414;
+  color: white;
+  box-shadow: 0 8px 16px rgba(20, 20, 20, 0.12);
+}
+
+.about-cert-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.about-cert-counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(20, 20, 20, 0.68);
+  min-width: 120px;
+  text-align: center;
+}
+
 /* Certificate Masonry - Mobile */
 @media only screen and (max-width: 600px) {
   .about-cert-masonry {
@@ -1573,6 +1620,20 @@ body.is-loaded .page-loader {
 
   .about-cert-masonry-item {
     margin-bottom: 10px;
+  }
+
+  .about-cert-pagination {
+    gap: 10px;
+  }
+
+  .about-cert-nav-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .about-cert-counter {
+    font-size: 12px;
+    min-width: 100px;
   }
 }
 

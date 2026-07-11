@@ -248,6 +248,10 @@ const applySkillsContent = (content) => {
   }
 }
 
+// Certificate pagination state
+let certCurrentPage = 1
+const certPerPage = 4
+
 const applyCertificatesContent = (content) => {
   // Apply to carousel section (full-width below stats)
   const certificatesTitle = document.getElementById('certificates-title')
@@ -259,14 +263,61 @@ const applyCertificatesContent = (content) => {
     certificateList.innerHTML = content.certificates.items.map(createCertificateMarkup).join('')
   }
 
-  // Apply to compact card (right column below skills)
+  // Apply to masonry grid with pagination (right column below skills)
   const certsTitle = document.getElementById('certs-title')
   if (certsTitle && content.certificates?.title) {
     certsTitle.textContent = content.certificates.title
   }
+  
   const certList = document.getElementById('cert-list')
+  const certCounter = document.getElementById('cert-counter')
+  const certPrevBtn = document.querySelector('[data-cert-prev]')
+  const certNextBtn = document.querySelector('[data-cert-next]')
+  
   if (certList && Array.isArray(content.certificates?.items) && content.certificates.items.length) {
-    certList.innerHTML = content.certificates.items.map(cert => `
+    const allCerts = content.certificates.items
+    const totalPages = Math.ceil(allCerts.length / certPerPage)
+    
+    // Store all certs on the element for pagination
+    certList.dataset.totalCerts = allCerts.length
+    certList.dataset.totalPages = totalPages
+    
+    // Render current page
+    renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
+    
+    // Setup pagination event listeners
+    if (certPrevBtn) {
+      certPrevBtn.addEventListener('click', () => {
+        if (certCurrentPage > 1) {
+          certCurrentPage--
+          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
+        }
+      })
+    }
+    
+    if (certNextBtn) {
+      certNextBtn.addEventListener('click', () => {
+        if (certCurrentPage < totalPages) {
+          certCurrentPage++
+          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
+        }
+      })
+    }
+  }
+}
+
+const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBtn) => {
+  const totalPages = Math.ceil(allCerts.length / certPerPage)
+  const startIdx = (certCurrentPage - 1) * certPerPage
+  const endIdx = Math.min(startIdx + certPerPage, allCerts.length)
+  const pageCerts = allCerts.slice(startIdx, endIdx)
+  
+  // Render certificates with fade animation
+  certList.style.opacity = '0'
+  certList.style.transition = 'opacity 200ms ease'
+  
+  setTimeout(() => {
+    certList.innerHTML = pageCerts.map(cert => `
       <div class="about-cert-masonry-item">
         <div class="about-cert-masonry-card">
           <div class="about-cert-image-wrapper">
@@ -281,7 +332,27 @@ const applyCertificatesContent = (content) => {
         </div>
       </div>
     `).join('')
-  }
+    
+    certList.style.opacity = '1'
+    
+    // Update counter
+    if (certCounter) {
+      certCounter.textContent = `${allCerts.length} certificate${allCerts.length !== 1 ? 's' : ''} · Page ${certCurrentPage} of ${totalPages}`
+    }
+    
+    // Update button states
+    if (certPrevBtn) {
+      certPrevBtn.disabled = certCurrentPage === 1
+      certPrevBtn.style.opacity = certCurrentPage === 1 ? '0.5' : '1'
+      certPrevBtn.style.cursor = certCurrentPage === 1 ? 'not-allowed' : 'pointer'
+    }
+    
+    if (certNextBtn) {
+      certNextBtn.disabled = certCurrentPage === totalPages
+      certNextBtn.style.opacity = certCurrentPage === totalPages ? '0.5' : '1'
+      certNextBtn.style.cursor = certCurrentPage === totalPages ? 'not-allowed' : 'pointer'
+    }
+  }, 200)
 }
 
 const applyProjectsContent = (content) => {
