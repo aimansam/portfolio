@@ -373,6 +373,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Force content visibility - aggressive fallback
   const forceContentVisibility = () => {
+    console.log('Forcing content visibility...')
+    
     // Remove loading class immediately
     document.body.classList.remove('is-loading')
     
@@ -392,6 +394,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         el.style.opacity = '1'
         el.style.transform = 'none'
         el.style.display = el.style.display || 'block'
+        console.log('Section visible:', selector)
+      } else {
+        console.warn('Section not found:', selector)
+      }
+    })
+    
+    // Force hero section elements visible
+    const heroElements = [
+      '#portfolio-header',
+      '#portfolio-header-visual',
+      '#portfolio-header-text-container',
+      '#hero-title',
+      '#hero-intro',
+      '#hero-social-links',
+      '#hero-badge-links',
+      '.hero-top-content',
+      '.hero-actions',
+      '.hero-socials',
+      '.hero-badges'
+    ]
+    heroElements.forEach(selector => {
+      const el = document.querySelector(selector)
+      if (el) {
+        el.style.opacity = '1'
+        el.style.transform = 'none'
+        el.style.display = el.style.display || 'flex'
+        el.style.visibility = 'visible'
+        console.log('Hero element visible:', selector)
+      } else {
+        console.warn('Hero element not found:', selector)
       }
     })
     
@@ -414,7 +446,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       footer.style.display = 'block'
     }
     
-    console.log('Content visibility forced')
+    console.log('Content visibility forced complete')
   }
 
   try {
