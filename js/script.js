@@ -3,6 +3,24 @@
  * Handles dynamic content loading and UI interactions
  */
 
+// Early debug log to confirm script is loading
+console.log('script.js loaded - waiting for DOMContentLoaded...')
+
+// Fallback: Force visibility on window load in case DOMContentLoaded already fired
+window.addEventListener('load', () => {
+  console.log('Window loaded - forcing visibility as fallback...')
+  const loader = document.querySelector('.page-loader')
+  if (loader) {
+    loader.style.opacity = '0'
+    loader.style.visibility = 'hidden'
+    setTimeout(() => {
+      loader.style.display = 'none'
+    }, 300)
+  }
+  document.body.classList.remove('is-loading')
+  document.body.classList.add('is-loaded')
+})
+
 // --- Utility Functions ---
 
 const createNavItemMarkup = (item) => `
