@@ -267,11 +267,17 @@ const applyCertificatesContent = (content) => {
   const certList = document.getElementById('cert-list')
   if (certList && Array.isArray(content.certificates?.items) && content.certificates.items.length) {
     certList.innerHTML = content.certificates.items.map(cert => `
-      <div class="about-cert-item">
-        <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-image">
-        <div class="about-cert-info">
-          <span class="about-cert-name">${cert.name}</span>
-          <span class="about-cert-note">${cert.note}</span>
+      <div class="about-cert-masonry-item">
+        <div class="about-cert-masonry-card">
+          <div class="about-cert-image-wrapper">
+            <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-masonry-image">
+          </div>
+          <div class="about-cert-overlay">
+            <div class="about-cert-overlay-content">
+              <span class="about-cert-overlay-name">${cert.name}</span>
+              <span class="about-cert-overlay-note">${cert.note}</span>
+            </div>
+          </div>
         </div>
       </div>
     `).join('')
