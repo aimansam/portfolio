@@ -371,80 +371,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Force content visibility - aggressive fallback
+  // Force content visibility - minimal fallback that doesn't break CSS
   const forceContentVisibility = () => {
     console.log('Forcing content visibility...')
     
-    // Remove loading class immediately
+    // Remove loading class to allow normal CSS to take over
     document.body.classList.remove('is-loading')
+    document.body.classList.add('is-loaded')
     
-    // Hide loader
+    // Hide loader by adding the loaded class (CSS handles the transition)
     const loader = document.querySelector('.page-loader')
     if (loader) {
-      loader.style.display = 'none'
-      loader.style.opacity = '0'
-      loader.style.visibility = 'hidden'
+      // Let CSS handle the loader hide animation
+      loader.classList.add('is-hidden')
     }
     
-    // Force all main content sections visible
-    const sections = ['#main-content', '#about-section', '#my-work-section', '#certificates-section', '#portfolio-header', '#stats-summary-section']
-    sections.forEach(selector => {
-      const el = document.querySelector(selector)
-      if (el) {
-        el.style.opacity = '1'
-        el.style.transform = 'none'
-        el.style.display = el.style.display || 'block'
-        console.log('Section visible:', selector)
-      } else {
-        console.warn('Section not found:', selector)
-      }
-    })
-    
-    // Force hero section elements visible
-    const heroElements = [
-      '#portfolio-header',
-      '#portfolio-header-visual',
-      '#portfolio-header-text-container',
-      '#hero-title',
-      '#hero-intro',
-      '#hero-social-links',
-      '#hero-badge-links',
-      '.hero-top-content',
-      '.hero-actions',
-      '.hero-socials',
-      '.hero-badges'
-    ]
-    heroElements.forEach(selector => {
-      const el = document.querySelector(selector)
-      if (el) {
-        el.style.opacity = '1'
-        el.style.transform = 'none'
-        el.style.display = el.style.display || 'flex'
-        el.style.visibility = 'visible'
-        console.log('Hero element visible:', selector)
-      } else {
-        console.warn('Hero element not found:', selector)
-      }
-    })
-    
-    // Force all data-scroll-reveal elements visible
+    // Only force visibility on scroll-reveal elements that might be stuck
+    // Don't override display, opacity, or transform on layout containers
     document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
-      el.style.opacity = '1'
-      el.style.transform = 'none'
       el.classList.add('is-scroll-visible')
     })
-    
-    // Force navbar and footer visible
-    const navbar = document.querySelector('.navbar')
-    if (navbar) {
-      navbar.style.opacity = '1'
-      navbar.style.display = 'block'
-    }
-    const footer = document.querySelector('#footer')
-    if (footer) {
-      footer.style.opacity = '1'
-      footer.style.display = 'block'
-    }
     
     console.log('Content visibility forced complete')
   }
