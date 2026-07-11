@@ -77,13 +77,12 @@ const createSkillPageMarkup = (page, isActive) => `
 
 const createCertificateMarkup = (cert) => `
   <li class="about-certificate-item">
+    <div class="about-certificate-image-wrapper">
+      <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-certificate-image">
+    </div>
     <div class="about-certificate-body">
       <span class="about-certificate-name">${cert.name}</span>
       <span class="about-certificate-note">${cert.note}</span>
-    </div>
-    <div class="about-certificate-media" aria-hidden="true">
-      <span class="about-certificate-badge-code">${cert.code}</span>
-      <span class="about-certificate-badge-meta">${cert.meta}</span>
     </div>
   </li>
 `;
@@ -269,8 +268,11 @@ const applyCertificatesContent = (content) => {
   if (certList && Array.isArray(content.certificates?.items) && content.certificates.items.length) {
     certList.innerHTML = content.certificates.items.map(cert => `
       <div class="about-cert-item">
-        <span class="about-cert-name">${cert.name}</span>
-        <span class="about-cert-note">${cert.note}</span>
+        <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-image">
+        <div class="about-cert-info">
+          <span class="about-cert-name">${cert.name}</span>
+          <span class="about-cert-note">${cert.note}</span>
+        </div>
       </div>
     `).join('')
   }

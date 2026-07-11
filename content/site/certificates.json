@@ -6,31 +6,36 @@
         "name": "CEHv13",
         "note": "Certified Ethical Hacker from EC-Council.",
         "code": "CEH",
-        "meta": "EC"
+        "meta": "EC",
+        "image": ""
       },
       {
         "name": "Junior Penetration Tester",
         "note": "TryHackMe path focused on practical offensive security fundamentals.",
         "code": "JPT",
-        "meta": "THM"
+        "meta": "THM",
+        "image": ""
       },
       {
         "name": "CCNA: Introduction to Networks",
         "note": "Cisco networking foundation covering infrastructure and core network concepts.",
         "code": "CCNA",
-        "meta": "Cisco"
+        "meta": "Cisco",
+        "image": ""
       },
       {
         "name": "Full-Stack Web Development Bootcamp",
         "note": "Udemy training across JavaScript, Next.js, React, PostgreSQL, and MongoDB.",
         "code": "WEB",
-        "meta": "DEV"
+        "meta": "DEV",
+        "image": ""
       },
       {
         "name": "Python & Bash for Ethical Hackers",
         "note": "Practical scripting and automation for penetration testing and security workflows.",
         "code": "PY",
-        "meta": "ETH"
+        "meta": "ETH",
+        "image": ""
       }
     ]
   }
