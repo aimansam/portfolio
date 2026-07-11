@@ -90,7 +90,7 @@ const createCertificateMarkup = (cert) => `
 const createProjectMarkup = (project) => `
   <div class="project-card" data-category="${project.category}">
     ${project.featured ? '<div class="project-featured-badge">Featured</div>' : ''}
-    <img src="./assets/images/${project.image}" class="project-image">
+    <img src="${project.image}" class="project-image">
     <div class="project-card-text-container">
       <div class="project-card-tags">
         ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
@@ -98,7 +98,7 @@ const createProjectMarkup = (project) => `
       <div class="subheader-text project-title">${project.title}</div>
       <div class="body-text project-card-text">${project.description}</div>
     </div>
-    <a class="button" href="./project-pages/${project.page}">
+    <a class="button" href="${project.href || './project-pages/project.html?id=' + project.id}">
       <span class="button-text">Read More</span>
       <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon"/>
     </a>
@@ -435,19 +435,75 @@ const applySEOContent = (content) => {
   if (seoStructuredData) seoStructuredData.textContent = createStructuredData(content.seo);
 }
 
+const applyProjectDetailContent = (content) => {
+  const projectTitle = document.getElementById('project-main-title')
+  if (!projectTitle) return
+
+  const projectDesc = document.getElementById('project-main-desc')
+  const projectImage = document.getElementById('project-header-image')
+  const projectTitleTag = document.getElementById('project-title-tag')
+  const projectMetaDesc = document.getElementById('project-meta-desc')
+  const detailsContainer = document.getElementById('project-details-container')
+  const galleryGrid = document.getElementById('project-gallery-grid')
+
+  if (content.title) {
+    projectTitle.textContent = content.title
+    if (projectTitleTag) projectTitleTag.textContent = content.title + ' | zx10r'
+  }
+  if (content.description) {
+    projectDesc.textContent = content.description
+    if (projectMetaDesc) projectMetaDesc.setAttribute('content', content.description)
+  }
+  if (content.headerImage && projectImage) {
+    projectImage.src = content.headerImage
+    projectImage.alt = content.title || 'Project header'
+  }
+
+  if (Array.isArray(content.sections) && content.sections.length && detailsContainer) {
+    detailsContainer.innerHTML = content.sections.map(section => `
+      <div class="project-details-content">
+        <div class="subheader-text">${section.title}</div>
+        ${section.content.map(p => `<p class="body-text">${p}</p>`).join('')}
+      </div>
+    `).join('')
+  }
+
+  if (Array.isArray(content.gallery) && content.gallery.length && galleryGrid) {
+    galleryGrid.innerHTML = content.gallery.map(item => `
+      <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
+        <img src="${item.image}" class="gallery-image" alt="${item.caption || ''}">
+        ${item.caption ? `<span class="body-text">${item.caption}</span>` : ''}
+      </div>
+    `).join('')
+  }
+}
+
 const applyPortfolioContent = (content) => {
   if (!content || typeof content !== 'object') return
   
-  applyCommonContent(content)
-  applyHeroContent(content)
-  applyStatsContent(content)
-  applyAboutContent(content)
-  applySkillsContent(content)
-  applyCertificatesContent(content)
-  applyGalleryContent(content)
-  applyProjectsContent(content)
-  applyBlogPreviewContent(content)
-  applySEOContent(content)
+  // Check if this is a project detail page
+  const path = window.location.pathname
+  const urlParams = new URLSearchParams(window.location.search)
+  const projectId = urlParams.get('id')
+  
+  if (path.match(/project\.html$/i) || path.match(/\/project\.html/i)) {
+    // Project detail page - apply project-specific content
+    applyCommonContent(content)
+    applyProjectDetailContent(content)
+    applySEOContent(content)
+  } else {
+    // Regular pages
+    applyCommonContent(content)
+    applyHeroContent(content)
+    applyStatsContent(content)
+    applyAboutContent(content)
+    applySkillsContent(content)
+    applyCertificatesContent(content)
+    applyGalleryContent(content)
+    applyProjectsContent(content)
+    applyBlogPreviewContent(content)
+    applySEOContent(content)
+  }
 }
 
 // --- Initialization and Event Listeners ---
@@ -551,8 +607,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const path = window.location.pathname
     let contentFile = 'content/site/index.json'
     
+    // Handle project detail page with ?id= parameter
+    const urlParams = new URLSearchParams(window.location.search)
+    const projectId = urlParams.get('id')
+    
+    if (path.match(/project\.html$/i) || path.match(/\/project\.html/i)) {
+      if (projectId) {
+        contentFile = `content/projects/${projectId}.json`
+      } else {
+        contentFile = 'content/site/projects.json'
+      }
+    }
     // Handle various path formats: /about.html, about.html, /portfolio/about.html, etc.
-    if (path.match(/about\.html$/i) || path.match(/\/about\.html/i)) {
+    else if (path.match(/about\.html$/i) || path.match(/\/about\.html/i)) {
       contentFile = 'content/site/about.json'
     } else if (path.match(/projects\.html$/i) || path.match(/\/projects\.html/i)) {
       contentFile = 'content/site/projects.json'
