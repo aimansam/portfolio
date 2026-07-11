@@ -857,6 +857,7 @@ body.is-loaded .page-loader {
 .about-cert-masonry {
   column-count: 2;
   column-gap: 12px;
+  min-height: 420px;
 }
 
 .about-cert-masonry-item {
