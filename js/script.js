@@ -23,12 +23,16 @@ window.addEventListener('load', () => {
 
 // --- Utility Functions ---
 
-const createNavItemMarkup = (item) => `
-  <a class="nav-icon-link" href="${item.href}" aria-label="${item.label}">
+const createNavItemMarkup = (item, currentPath) => {
+  const isActive = currentPath.includes(item.href.replace('./', '')) || 
+                   (item.href === './index.html' && (currentPath === '/' || currentPath === '' || currentPath.includes('index.html')))
+  return `
+  <a class="nav-icon-link${isActive ? ' is-active' : ''}" href="${item.href}" aria-label="${item.label}">
     <img src="${item.icon}" class="nav-icon" alt="">
     <span class="nav-icon-label">${item.label}</span>
   </a>
-`;
+`
+}
 
 const createFooterLinkMarkup = (item) => `
   <a class="icon-link" href="${item.href}" ${item.target ? `target="${item.target}" rel="noopener noreferrer"` : ''} aria-label="${item.label}">
@@ -89,7 +93,6 @@ const createCertificateMarkup = (cert) => `
 
 const createProjectMarkup = (project) => `
   <div class="project-card" data-category="${project.category}">
-    ${project.featured ? '<div class="project-featured-badge">Featured</div>' : ''}
     <img src="${project.image}" class="project-image">
     <div class="project-card-text-container">
       <div class="project-card-tags">
@@ -158,7 +161,8 @@ const applyCommonContent = (content) => {
   if (content.navigation?.cta?.href && navCtaLink) navCtaLink.href = content.navigation.cta.href
   if (content.navigation?.cta?.label && navCtaLabel) navCtaLabel.textContent = content.navigation.cta.label
   if (Array.isArray(content.navigation?.items) && content.navigation.items.length && mobileNavLinks) {
-    mobileNavLinks.innerHTML = content.navigation.items.map(createNavItemMarkup).join('')
+    const currentPath = window.location.pathname
+    mobileNavLinks.innerHTML = content.navigation.items.map(item => createNavItemMarkup(item, currentPath)).join('')
   }
   if (content.footer?.copy && footerCopy) footerCopy.textContent = content.footer.copy
   if (Array.isArray(content.footer?.links) && content.footer.links.length && footerLinkList) {

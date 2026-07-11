@@ -256,6 +256,20 @@ a.icon-link:focus-visible .footer-icon {
   transform: translateY(-50%) translateX(0);
 }
 
+.nav-icon-link.is-active {
+  background-color: #141414;
+  color: white;
+}
+
+.nav-icon-link.is-active .nav-icon {
+  filter: invert(1);
+}
+
+.nav-icon-link.is-active .nav-icon-label {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
 .nav-cta {
   margin-left: 1px;
 }
