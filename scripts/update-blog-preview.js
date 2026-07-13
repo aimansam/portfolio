@@ -80,11 +80,10 @@ function updatePreview() {
   // We only want a few for the preview grid (e.g., top 3)
   const previewItems = posts.slice(0, 3).map((post, index) => ({
     title: post.title,
-    text: post.summary,
-    meta: `Published · ${new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`,
-    tags: post.tags.slice(0, 2),
-    href: post.href,
-    buttonLabel: 'Read post',
+    description: post.summary,
+    date: new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+    tags: Array.isArray(post.tags) ? post.tags.slice(0, 2) : [],
+    url: post.href,
     accent: index === 0 // First post is accent
   }));
 

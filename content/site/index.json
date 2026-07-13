@@ -116,38 +116,35 @@
     "items": [
       {
         "title": "B2R Monster Corporate Writeup",
-        "text": "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.",
-        "meta": "Published · May 11, 2026",
+        "description": "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation.",
+        "date": "May 11, 2026",
         "tags": [
           "ctf",
           "web"
         ],
-        "href": "./blog/posts/monster-corporate/",
-        "buttonLabel": "Read post",
+        "url": "./blog/posts/monster-corporate/",
         "accent": true
       },
       {
         "title": "Active Directory Lab Notes: Enumeration, Trust Paths, and Privilege Escalation",
-        "text": "Notes from building and attacking an Active Directory lab, focused on domain enumeration, trust paths, and escalation patterns.",
-        "meta": "Published · May 9, 2026",
+        "description": "Notes from building and attacking an Active Directory lab, focused on domain enumeration, trust paths, and escalation patterns.",
+        "date": "May 9, 2026",
         "tags": [
           "active-directory",
           "windows"
         ],
-        "href": "./blog/posts/active-directory-lab-notes/",
-        "buttonLabel": "Read post",
+        "url": "./blog/posts/active-directory-lab-notes/",
         "accent": false
       },
       {
         "title": "A Practical Web Exploitation Workflow for CTFs and Labs",
-        "text": "A disciplined web testing workflow for mapping application behavior, finding logic flaws, and proving impact cleanly.",
-        "meta": "Published · May 9, 2026",
+        "description": "A disciplined web testing workflow for mapping application behavior, finding logic flaws, and proving impact cleanly.",
+        "date": "May 9, 2026",
         "tags": [
           "web",
           "ctf"
         ],
-        "href": "./blog/posts/web-exploitation-workflow/",
-        "buttonLabel": "Read post",
+        "url": "./blog/posts/web-exploitation-workflow/",
         "accent": false
       }
     ]
