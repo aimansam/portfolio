@@ -945,41 +945,6 @@ const initLightbox = () => {
   })
 }
 
-// --- Dark Mode Toggle ---
-// Theme is applied before first paint via an inline <script> in each HTML file.
-// This function only binds the toggle button and updates its icon.
-const initDarkMode = () => {
-  const toggle = document.getElementById('theme-toggle')
-  if (!toggle) return
-
-  const updateToggleIcon = () => {
-    const isDark = document.body.classList.contains('dark-mode')
-    toggle.setAttribute('aria-pressed', String(isDark))
-    toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode')
-    toggle.querySelector('.theme-toggle-icon').textContent = isDark ? '☀️' : '🌙'
-  }
-
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode')
-    const isDark = document.body.classList.contains('dark-mode')
-    localStorage.setItem('darkMode', isDark)
-    updateToggleIcon()
-  })
-
-  // Listen for system theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (localStorage.getItem('darkMode') !== null) return
-    if (e.matches) {
-      document.body.classList.add('dark-mode')
-    } else {
-      document.body.classList.remove('dark-mode')
-    }
-    updateToggleIcon()
-  })
-
-  updateToggleIcon()
-}
-
 // --- Back to Top Button ---
 const initBackToTop = () => {
   const btn = document.createElement('button')
@@ -1023,7 +988,6 @@ const initAnalytics = () => {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     initLightbox()
-    initDarkMode()
     initBackToTop()
     initAnalytics()
   }, 500)

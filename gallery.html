@@ -30,7 +30,6 @@
 				var saved = localStorage.getItem('darkMode');
 				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				if (saved === 'true' || (!saved && prefersDark)) {
-					document.documentElement.classList.add('dark-mode-pending');
 				}
 			})();
 		</script>
@@ -39,8 +38,6 @@
 	</head>
 	<body class="is-loading">
 		<script>
-			if (document.documentElement.classList.contains('dark-mode-pending')) {
-				document.body.classList.add('dark-mode');
 			}
 		</script>
 		<a class="skip-to-content" href="#main-content">Skip to main content</a>
@@ -77,8 +74,6 @@
 				<a class="button button-contrast nav-cta" id="nav-cta-link" href="mailto:zx10r8443@gmail.com">
 					<span class="button-text" id="nav-cta-label" style="font-size: 18px;">Hire Me</span>
 				</a>
-				<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-					<span class="theme-toggle-icon">🌙</span>
 				</button>
 			</div>
 			<div class="nav-icon-box" id="mobile-nav-links" aria-label="Section links">
