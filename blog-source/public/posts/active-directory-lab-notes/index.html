@@ -112,8 +112,8 @@
   "keywords": [
     "active-directory", "windows", "lateral-movement"
   ],
-  "articleBody": "This lab was built to practice the part of offensive security that is harder to fake in isolated challenge boxes: working through trust relationships, user context, and Windows misconfigurations across a domain environment.\nLab goals Practice AD enumeration without relying entirely on automation. Understand how low-privilege access turns into useful domain knowledge. Build repeatable notes for privilege escalation and lateral movement. Workflow that helped most I split the lab into three phases.\n1. Enumerate the environment The first step was not exploitation. It was understanding the domain: hosts, users, groups, shares, policies, and where the interesting trust boundaries existed. BloodHound was useful, but I treated it as a visual aid rather than the entire workflow.\n2. Validate attack paths manually Once a possible path appeared, I tried to confirm it with smaller, targeted checks. That prevented me from over-trusting one tool result and forced me to understand why a path actually worked.\n3. Record escalation patterns Every successful step went into notes: weak permissions, reusable credentials, service misconfigurations, and pivots that made later movement easier. That note-taking matters because AD work becomes much clearer when repeated patterns start to stand out.\nMain takeaway The value of an AD lab is not just learning one attack. It is learning how domain structure, user behavior, and small configuration weaknesses connect into a full compromise path.\nThat is the part I want to keep improving: not just executing the technique, but recognizing the chain early.\n",
-  "wordCount" : "242",
+  "articleBody": "This lab was built to practice the part of offensive security that is harder to fake in isolated challenge boxes: working through trust relationships, user context, and Windows misconfigurations across a domain environment.\nScope note: these notes come from an authorized lab environment built for practice, validation, and defensive learning.\nLab goals Practice AD enumeration without relying entirely on automation. Understand how low-privilege access turns into useful domain knowledge. Build repeatable notes for privilege escalation and lateral movement. Workflow that helped most I split the lab into three phases.\n1. Enumerate the environment The first step was not exploitation. It was understanding the domain: hosts, users, groups, shares, policies, and where the interesting trust boundaries existed. BloodHound was useful, but I treated it as a visual aid rather than the entire workflow.\n2. Validate attack paths manually Once a possible path appeared, I tried to confirm it with smaller, targeted checks. That prevented me from over-trusting one tool result and forced me to understand why a path actually worked.\n3. Record escalation patterns Every successful step went into notes: weak permissions, reusable credentials, service misconfigurations, and pivots that made later movement easier. That note-taking matters because AD work becomes much clearer when repeated patterns start to stand out.\nSkills demonstrated Active Directory enumeration Trust-path analysis Manual validation of tool findings Privilege escalation pattern tracking Translating offensive observations into defensive priorities Main takeaway The value of an AD lab is not just learning one attack. It is learning how domain structure, user behavior, and small configuration weaknesses connect into a full compromise path.\nThat is the part I want to keep improving: not just executing the technique, but recognizing the chain early.\n",
+  "wordCount" : "281",
   "inLanguage": "en",
   "datePublished": "2026-05-09T18:40:00+08:00",
   "dateModified": "2026-05-09T18:40:00+08:00",
@@ -235,6 +235,9 @@
 </div>
   </header> 
   <div class="post-content md-content"><p>This lab was built to practice the part of offensive security that is harder to fake in isolated challenge boxes: working through trust relationships, user context, and Windows misconfigurations across a domain environment.</p>
+<blockquote>
+<p>Scope note: these notes come from an authorized lab environment built for practice, validation, and defensive learning.</p>
+</blockquote>
 <h2 id="lab-goals">Lab goals<a hidden class="anchor" aria-hidden="true" href="#lab-goals">#</a></h2>
 <ul>
 <li>Practice AD enumeration without relying entirely on automation.</li>
@@ -249,6 +252,14 @@
 <p>Once a possible path appeared, I tried to confirm it with smaller, targeted checks. That prevented me from over-trusting one tool result and forced me to understand why a path actually worked.</p>
 <h3 id="3-record-escalation-patterns">3. Record escalation patterns<a hidden class="anchor" aria-hidden="true" href="#3-record-escalation-patterns">#</a></h3>
 <p>Every successful step went into notes: weak permissions, reusable credentials, service misconfigurations, and pivots that made later movement easier. That note-taking matters because AD work becomes much clearer when repeated patterns start to stand out.</p>
+<h2 id="skills-demonstrated">Skills demonstrated<a hidden class="anchor" aria-hidden="true" href="#skills-demonstrated">#</a></h2>
+<ul>
+<li>Active Directory enumeration</li>
+<li>Trust-path analysis</li>
+<li>Manual validation of tool findings</li>
+<li>Privilege escalation pattern tracking</li>
+<li>Translating offensive observations into defensive priorities</li>
+</ul>
 <h2 id="main-takeaway">Main takeaway<a hidden class="anchor" aria-hidden="true" href="#main-takeaway">#</a></h2>
 <p>The value of an AD lab is not just learning one attack. It is learning how domain structure, user behavior, and small configuration weaknesses connect into a full compromise path.</p>
 <p>That is the part I want to keep improving: not just executing the technique, but recognizing the chain early.</p>

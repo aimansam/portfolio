@@ -9,6 +9,8 @@ categories: ["Labs"]
 
 This lab was built to practice the part of offensive security that is harder to fake in isolated challenge boxes: working through trust relationships, user context, and Windows misconfigurations across a domain environment.
 
+> Scope note: these notes come from an authorized lab environment built for practice, validation, and defensive learning.
+
 ## Lab goals
 
 - Practice AD enumeration without relying entirely on automation.
@@ -30,6 +32,14 @@ Once a possible path appeared, I tried to confirm it with smaller, targeted chec
 ### 3. Record escalation patterns
 
 Every successful step went into notes: weak permissions, reusable credentials, service misconfigurations, and pivots that made later movement easier. That note-taking matters because AD work becomes much clearer when repeated patterns start to stand out.
+
+## Skills demonstrated
+
+- Active Directory enumeration
+- Trust-path analysis
+- Manual validation of tool findings
+- Privilege escalation pattern tracking
+- Translating offensive observations into defensive priorities
 
 ## Main takeaway
 

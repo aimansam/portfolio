@@ -9,6 +9,8 @@ categories: ["Writeups"]
 
 My first rooted CTF machine was where a lot of disconnected concepts finally started to feel practical. Instead of solving isolated challenge boxes, I had to think through a full attack path: enumerate, identify the weak point, gain a foothold, and then escalate privileges without guessing.
 
+> Scope note: this is a sanitized reflection from an authorized CTF/lab environment. I keep the target details light here because the useful part is the workflow habit, not the specific box.
+
 ## What I focused on
 
 - Enumerating services before touching exploitation.
@@ -20,6 +22,14 @@ My first rooted CTF machine was where a lot of disconnected concepts finally sta
 The initial foothold came from basic web enumeration. A directory I almost ignored exposed functionality that behaved differently depending on input, which led to the first working access path. The lesson there was simple: slow enumeration beats clever guessing.
 
 Once I had user-level access, the rest of the machine became a privilege escalation exercise. I checked scheduled tasks, SUID permissions, readable configs, and anything that looked like it might connect one user context to another. The escalation path was not especially advanced, but it reinforced a habit that matters in almost every box: understand the environment before firing tools blindly.
+
+## Skills demonstrated
+
+- Service enumeration before exploitation
+- Web route and parameter mapping
+- Privilege escalation checklist discipline
+- Evidence-driven note-taking
+- Turning a loose attack path into repeatable methodology
 
 ## What I learned
 

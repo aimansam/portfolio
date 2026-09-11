@@ -7,9 +7,15 @@ tags: ["ctf", "web", "wordpress", "smb", "privilege-escalation"]
 categories: ["Writeups"]
 showToc: true
 TocOpen: true
+cover:
+  image: "monster-corporate-00.png"
+  alt: "Monster Corporate boot-to-root challenge description"
+  relative: true
 ---
 
 Monster Corporate is a boot-to-root lab that rewards careful enumeration more than exploit hunting. The path starts with an exposed SMB share, moves through WordPress admin access and plugin-based RCE, then uses a SUID `xxd` permission issue and a writable root cron script to finish the box.
+
+> Scope note: this writeup documents an authorized CTF/lab target. The commands and payloads are included for defensive learning, reproducibility, and reporting practice.
 
 ## Challenge description
 
@@ -28,6 +34,16 @@ Find an active SUID bit on `xxd`, write an SSH key for `boboyot`, and log in as 
 ### Privilege escalation
 
 Find a root cron job running a backup script, confirm `boboyot` can write to that script, and use it to gain a root shell.
+
+## Skills demonstrated
+
+- SMB enumeration and guest-share validation
+- WordPress admin access validation and plugin-based RCE
+- Linux post-exploitation enumeration
+- SUID binary abuse with `xxd`
+- SSH key-based lateral movement
+- Root cron job privilege escalation
+- Evidence capture for repeatable reporting
 
 ## VM setup
 

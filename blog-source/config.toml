@@ -32,7 +32,7 @@ summaryLength = 24
 
 	[params.homeInfoParams]
 		Title = 'Security notes from the lab.'
-		Content = 'CTF writeups, Active Directory lab notes, web exploitation workflows, and lessons from building practical security skills.'
+		Content = 'Hands-on security writeups covering CTFs, Active Directory labs, web exploitation, privilege escalation, and defensive lessons from offensive practice.'
 
 [[params.socialIcons]]
 	name = 'github'
