@@ -16,7 +16,8 @@ summaryLength = 24
 [params]
 	author = 'zx10r'
 	description = 'Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.'
-	defaultTheme = 'auto'
+	defaultTheme = 'light'
+	disableThemeToggle = true
 	ShowReadingTime = true
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
