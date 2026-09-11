@@ -53,8 +53,8 @@ summaryLength = 24
 	url = 'https://www.linkedin.com/in/aimansam'
 
 [[menu.main]]
-	name = 'Portfolio'
-	url = 'https://portfolio.aimansam.my/'
+	name = 'Posts'
+	url = '/posts/'
 	weight = 10
 
 [[menu.main]]
@@ -71,6 +71,11 @@ summaryLength = 24
 	name = 'Notes'
 	url = '/categories/notes/'
 	weight = 40
+
+[[menu.main]]
+	name = 'Tags'
+	url = '/tags/'
+	weight = 45
 
 [[menu.main]]
 	name = 'About'
