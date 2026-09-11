@@ -23,6 +23,16 @@ body {
 .menu a {
   font-weight: 650;
   padding-inline: 0;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 2px;
+}
+
+.menu a:hover span,
+.menu a:focus-visible span,
+.menu .active {
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 2px;
 }
 
 .blog-portfolio-nav {
@@ -106,8 +116,7 @@ body {
 
 .blog-portfolio-nav .nav-icon-link:hover .nav-icon-label,
 .blog-portfolio-nav .nav-icon-link:active .nav-icon-label,
-.blog-portfolio-nav .nav-icon-link:focus-visible .nav-icon-label,
-.blog-portfolio-nav .nav-icon-link.is-active .nav-icon-label {
+.blog-portfolio-nav .nav-icon-link:focus-visible .nav-icon-label {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
@@ -124,7 +133,7 @@ body {
 }
 
 .first-entry .entry-header h1 {
-  font-size: 36px;
+  font-size: 34px;
   line-height: 1.05;
 }
 
@@ -138,6 +147,28 @@ body {
 .post-entry:hover,
 .post-entry:focus-within {
   opacity: 0.78;
+}
+
+.post-entry .entry-cover {
+  max-height: 360px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--code-bg);
+}
+
+.post-entry .entry-cover img {
+  width: 100%;
+  height: clamp(220px, 38vw, 360px);
+  object-fit: cover;
+  object-position: top center;
+}
+
+.post-entry .entry-footer {
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .post-single {
