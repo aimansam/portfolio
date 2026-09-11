@@ -28,19 +28,6 @@
         "icon": "./assets/icons/briefcase.svg"
       },
       {
-        "href": "./gallery.html",
-        "label": "Gallery",
-        "ariaLabel": "Go to image gallery",
-        "icon": "./assets/icons/article.svg"
-      },
-      {
-        "href": "./blog/index.xml",
-        "label": "RSS",
-        "ariaLabel": "Subscribe to RSS feed",
-        "icon": "./assets/icons/article.svg",
-        "target": "_blank"
-      },
-      {
         "href": "./blog/index.html",
         "label": "Blog",
         "ariaLabel": "Go to blog",
