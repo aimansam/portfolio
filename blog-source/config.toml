@@ -7,6 +7,12 @@ enableRobotsTXT = true
 disableHugoGeneratorInject = true
 summaryLength = 24
 
+[outputs]
+	home = ["HTML"]
+	section = ["HTML"]
+	taxonomy = ["HTML"]
+	term = ["HTML"]
+
 [params]
 	author = 'zx10r'
 	description = 'Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.'
@@ -15,7 +21,7 @@ summaryLength = 24
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
 	ShowCodeCopyButtons = true
-	ShowRssButtonInSectionTermList = true
+	ShowRssButtonInSectionTermList = false
 	ShowShareButtons = false
 	disableSpecial1stPost = true
 	comments = false
@@ -66,13 +72,3 @@ summaryLength = 24
 	name = 'Tags'
 	url = '/tags/'
 	weight = 30
-
-[[menu.main]]
-	name = 'Categories'
-	url = '/categories/'
-	weight = 35
-
-[[menu.main]]
-	name = 'RSS'
-	url = '/index.xml'
-	weight = 40
