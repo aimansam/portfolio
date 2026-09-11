@@ -41,6 +41,9 @@ summaryLength = 24
 		Title = 'Security notes from the lab.'
 		Content = 'Hands-on security writeups covering CTFs, Active Directory labs, web exploitation, privilege escalation, and defensive lessons from offensive practice.'
 
+	[params.label]
+		text = 'zx10r'
+
 [[params.socialIcons]]
 	name = 'github'
 	url = 'https://github.com/aimansam'

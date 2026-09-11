@@ -1,0 +1,41 @@
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" -}}
+{{- $latest := index $pages 0 -}}
+{{- with site.Params.homeInfoParams }}
+<section class="blog-hero" aria-labelledby="blog-hero-title">
+    <div class="blog-hero-copy">
+        <div class="blog-hero-kicker">Security Notes</div>
+        <header class="entry-header">
+            <h1 id="blog-hero-title">{{ .Title | markdownify }}</h1>
+        </header>
+        <div class="entry-content md-content">
+            {{ $opts := dict "display" "block" }}
+            {{ .Content | $.Page.RenderString $opts }}
+        </div>
+        <div class="blog-hero-actions" aria-label="Blog actions">
+            <a class="blog-button blog-button-primary" href="{{ "posts/" | absLangURL }}">
+                <span>Start reading</span>
+                <img src="/assets/icons/arrow-right.svg" alt="" class="blog-button-icon">
+            </a>
+            <a class="blog-button" href="{{ "categories/writeups/" | absLangURL }}">
+                <span>Browse writeups</span>
+                <img src="/assets/icons/arrow-right.svg" alt="" class="blog-button-icon">
+            </a>
+        </div>
+        <footer class="entry-footer">
+            {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+        </footer>
+    </div>
+
+    {{- with $latest }}
+    <a class="blog-hero-feature" href="{{ .Permalink }}" aria-label="Read latest post: {{ .Title | plainify }}">
+        <span class="blog-hero-feature-eyebrow">Latest Writeup</span>
+        <span class="blog-hero-feature-title">{{ .Title }}</span>
+        {{- if (ne (.Param "hideSummary") true) }}
+        <span class="blog-hero-feature-summary">{{ .Summary | plainify | htmlUnescape }}</span>
+        {{- end }}
+        <span class="blog-hero-feature-meta">{{ partial "post_meta.html" . }}</span>
+    </a>
+    {{- end }}
+</section>
+{{- end -}}
