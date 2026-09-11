@@ -49,26 +49,26 @@ summaryLength = 24
 	url = 'https://www.linkedin.com/in/aimansam'
 
 [[menu.main]]
-	name = 'Portfolio'
+	name = 'Home'
 	url = 'https://portfolio.aimansam.my/'
 	weight = 10
 
 [[menu.main]]
-	name = 'Posts'
-	url = '/posts/'
+	name = 'About'
+	url = 'https://portfolio.aimansam.my/about.html'
 	weight = 20
 
 [[menu.main]]
-	name = 'Start Here'
-	url = '/start-here/'
-	weight = 22
-
-[[menu.main]]
-	name = 'About'
-	url = '/about/'
-	weight = 25
-
-[[menu.main]]
-	name = 'Tags'
-	url = '/tags/'
+	name = 'Projects'
+	url = 'https://portfolio.aimansam.my/projects.html'
 	weight = 30
+
+[[menu.main]]
+	name = 'Blog'
+	url = '/posts/'
+	weight = 40
+
+[[menu.main]]
+	name = 'Email'
+	url = 'mailto:zx10r8443@gmail.com'
+	weight = 50
