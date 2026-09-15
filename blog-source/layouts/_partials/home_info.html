@@ -35,6 +35,10 @@
         <span class="blog-hero-feature-summary">{{ .Summary | plainify | htmlUnescape }}</span>
         {{- end }}
         <span class="blog-hero-feature-meta">{{ partial "post_meta.html" . }}</span>
+        <span class="blog-hero-feature-action">
+            <span>Read latest</span>
+            <img src="/assets/icons/arrow-right.svg" alt="" class="blog-button-icon">
+        </span>
     </a>
     {{- end }}
 </section>
