@@ -268,10 +268,9 @@ collections:
                     widget: list
                     field: { label: Tag, name: tag, widget: string }
                   - { label: Title, name: title, widget: string }
-                  - { label: Text, name: text, widget: text }
-                  - { label: Meta Label, name: meta, widget: string }
-                  - { label: Button Label, name: buttonLabel, widget: string }
-                  - { label: Link, name: href, widget: string }
+                  - { label: Description, name: description, widget: text }
+                  - { label: Date Label, name: date, widget: string }
+                  - { label: Link, name: url, widget: string }
 
       - label: Footer
         name: site_footer
@@ -296,39 +295,35 @@ collections:
   - name: blog_posts
     label: Blog Posts
     label_singular: Blog Post
-    files:
-      - label: Blog Posts
-        name: blog_posts_json
-        file: content/blog/posts.json
-        format: json
-        editor:
-          preview: false
+    folder: content/blog/posts
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    preview_path: "blog/posts/{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Slug, name: slug, widget: string }
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Summary, name: summary, widget: text }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        field: { label: Tag, name: tag, widget: string }
+      - label: Categories
+        name: categories
+        widget: list
+        required: false
+        field: { label: Category, name: category, widget: string }
+      - label: Cover
+        name: cover
+        widget: object
+        required: false
         fields:
-          - label: Posts
-            name: posts
-            widget: list
-            summary: "{{fields.title}}"
-            fields:
-              - { label: Slug, name: slug, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Publish Date, name: date, widget: datetime }
-              - { label: Draft, name: draft, widget: boolean, default: false, required: false }
-              - { label: Summary, name: summary, widget: text }
-              - label: Tags
-                name: tags
-                widget: list
-                required: false
-                field: { label: Tag, name: tag, widget: string }
-              - label: Categories
-                name: categories
-                widget: list
-                required: false
-                field: { label: Category, name: category, widget: string }
-              - label: Cover
-                name: cover
-                widget: object
-                required: false
-                fields:
-                  - { label: Image Path, name: image, widget: string, required: false }
-                  - { label: Alt Text, name: alt, widget: string, required: false }
-              - { label: Body, name: body, widget: markdown }
+          - { label: Image Path, name: image, widget: string, required: false }
+          - { label: Alt Text, name: alt, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }

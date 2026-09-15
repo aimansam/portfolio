@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
+const BLOG_POSTS_DIR = path.join(ROOT, 'content/blog/posts');
 const BLOG_DATA = path.join(ROOT, 'content/blog/posts.json');
 const BLOG_DIR = path.join(ROOT, 'blog');
 const PREVIEW_FILE = path.join(ROOT, 'content/site/blog-preview.json');
@@ -80,9 +81,21 @@ function slugify(value) {
 }
 
 function readPosts() {
-  return JSON.parse(fs.readFileSync(BLOG_DATA, 'utf8')).posts
+  const posts = fs.readdirSync(BLOG_POSTS_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
+    .map((entry) => {
+      const filePath = path.join(BLOG_POSTS_DIR, entry.name);
+      const post = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      return {
+        ...post,
+        slug: post.slug || entry.name.replace(/\.json$/u, '')
+      };
+    })
     .filter((post) => !post.draft)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  fs.writeFileSync(BLOG_DATA, `${JSON.stringify({ posts }, null, 2)}\n`);
+  return posts;
 }
 
 function writeShell(route) {

@@ -2,12 +2,13 @@
 
 This guide explains how to add, preview, publish, and verify posts for `zx10r Security Notes`.
 
-The blog source lives in `content/blog/posts.json`. The generated route shells live in `blog/` and are produced by `scripts/build-blog.js`.
+The blog source lives in one JSON file per post under `content/blog/posts/`. The combined frontend feed is generated at `content/blog/posts.json`, and route shells are generated into `blog/` by `scripts/build-blog.js`.
 
 ## Quick Path
 
-1. Open `content/blog/posts.json`.
-2. Add a new object to the `posts` array.
+1. Open `/admin/`.
+2. Choose `Blog Posts`.
+3. Click `New Blog Post`.
 3. Put images for the post under `blog/posts/<slug>/`.
 4. Reference images with absolute paths such as `/blog/posts/<slug>/<image>.png`.
 5. Run:
@@ -18,6 +19,12 @@ docker compose up -d --build
 ```
 
 ## Post Shape
+
+Each post is stored as:
+
+```text
+content/blog/posts/<slug>.json
+```
 
 Use this structure:
 
@@ -70,7 +77,7 @@ git diff --stat
 Commit the JSON source, generated route files, and images:
 
 ```sh
-git add content/blog/posts.json content/site/blog-preview.json blog
+git add content/blog/posts content/blog/posts.json content/site/blog-preview.json blog
 git commit -m "Publish <post title>"
 git push origin main
 ```
