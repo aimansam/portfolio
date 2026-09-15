@@ -2,7 +2,7 @@
   "blogPreview": {
     "heading": "Writeups / Blog",
     "intro": "Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.",
-    "viewAllHref": "./blog/index.html",
+    "viewAllHref": "./blog/",
     "viewAllLabel": "View all posts",
     "items": [
       {

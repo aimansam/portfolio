@@ -20,6 +20,5 @@
 !admin/**
 !project-pages/
 !project-pages/**
-!blog-source/
-!blog-source/public/
-!blog-source/public/**
+!blog/
+!blog/**

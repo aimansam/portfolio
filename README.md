@@ -1,6 +1,6 @@
 # Portfolio
 
-Static portfolio homepage plus a Hugo blog, served from nginx and backed by editable content files for the homepage sections.
+Static portfolio homepage plus a JSON-driven blog, served from nginx and backed by editable content files.
 
 ## Local Development
 
@@ -13,7 +13,7 @@ docker compose up -d --build
 Open these routes locally:
 
 - `/` for the portfolio homepage
-- `/blog/` for the Hugo blog output
+- `/blog/` for the JSON blog
 - `/admin/` for the Decap CMS editor
 
 ## Content Structure
@@ -32,7 +32,7 @@ Homepage content is split into JSON files under `content/site/`.
 
 The homepage fetches those files client-side in `js/script.js` and renders them into `index.html`.
 
-Blog posts live in [blog-source/content/posts](blog-source/content/posts) and are built by Hugo into [blog-source/public](blog-source/public). The quick blog workflow is documented in [blog-source/README.md](blog-source/README.md), and the full posting guide is in [docs/blog-posting-guide.md](docs/blog-posting-guide.md).
+Blog posts live in [content/blog/posts.json](content/blog/posts.json). The blog shell and route files are generated into [blog](blog) by [scripts/build-blog.js](scripts/build-blog.js). The full posting guide is in [docs/blog-posting-guide.md](docs/blog-posting-guide.md).
 
 Project cards live in [content/site/projects.json](content/site/projects.json), with detail pages under [project-pages](project-pages). The full project workflow is documented in [docs/project-guide.md](docs/project-guide.md).
 
@@ -74,7 +74,7 @@ Production domain:
 GitHub Pages custom domain:
 
 - The root [CNAME](/DATA/Storage/docker/portfolio/CNAME) file sets the Pages custom domain to `portfolio.aimansam.my`.
-- The Hugo blog `baseURL` is set to `https://portfolio.aimansam.my/blog/` in [blog-source/config.toml](/DATA/Storage/docker/portfolio/blog-source/config.toml).
+- The blog is generated from JSON and served under `https://portfolio.aimansam.my/blog/`.
 - In your DNS provider, point `portfolio.aimansam.my` to GitHub Pages using the record type your DNS host supports for subdomains.
 - In the GitHub Pages repository settings, set the custom domain to `portfolio.aimansam.my` and enable HTTPS after DNS resolves.
 
@@ -91,7 +91,7 @@ Served paths include:
 - `project-pages/`
 - `blog/`
 
-Repository-only files such as `docker-compose.yml` and `blog-source/config.toml` are intentionally not published by the container.
+Repository-only files such as `docker-compose.yml` are intentionally not published by the container.
 
 ## Production CMS Auth
 

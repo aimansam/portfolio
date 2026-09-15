@@ -296,25 +296,39 @@ collections:
   - name: blog_posts
     label: Blog Posts
     label_singular: Blog Post
-    folder: blog-source/content/posts
-    create: true
-    slug: "{{slug}}"
-    preview_path: "blog/posts/{{slug}}"
-    extension: md
-    format: frontmatter
-    fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Publish Date, name: date, widget: datetime }
-      - { label: Draft, name: draft, widget: boolean, default: false }
-      - { label: Summary, name: summary, widget: text, required: false }
-      - label: Tags
-        name: tags
-        widget: list
-        required: false
-        field: { label: Tag, name: tag, widget: string }
-      - label: Categories
-        name: categories
-        widget: list
-        required: false
-        field: { label: Category, name: category, widget: string }
-      - { label: Body, name: body, widget: markdown }
+    files:
+      - label: Blog Posts
+        name: blog_posts_json
+        file: content/blog/posts.json
+        format: json
+        editor:
+          preview: false
+        fields:
+          - label: Posts
+            name: posts
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Slug, name: slug, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Publish Date, name: date, widget: datetime }
+              - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+              - { label: Summary, name: summary, widget: text }
+              - label: Tags
+                name: tags
+                widget: list
+                required: false
+                field: { label: Tag, name: tag, widget: string }
+              - label: Categories
+                name: categories
+                widget: list
+                required: false
+                field: { label: Category, name: category, widget: string }
+              - label: Cover
+                name: cover
+                widget: object
+                required: false
+                fields:
+                  - { label: Image Path, name: image, widget: string, required: false }
+                  - { label: Alt Text, name: alt, widget: string, required: false }
+              - { label: Body, name: body, widget: markdown }

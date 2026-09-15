@@ -14,26 +14,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # This ensures submodules (like PaperMod) are actually downloaded
-          submodules: recursive
-          fetch-depth: 0
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          hugo-version: 'latest'
-          extended: true
+          node-version: '22'
 
-      - name: Build Hugo Blog
-        run: |
-          # If blog-source exists, go inside. Otherwise, build from root.
-          if [ -d "blog-source" ]; then
-            cd blog-source
-            hugo --minify
-          else
-            hugo --minify
-          fi
+      - name: Build JSON blog and homepage data
+        run: npm run build
 
       - name: Sync Homepage SEO
         run: |
@@ -46,16 +34,6 @@ jobs:
           # 1. Copy root portfolio files (excluding source/git folders)
           # This assumes your main portfolio is at the root
           rsync -av --exclude='blog-source' --exclude='public' --exclude='.git*' --exclude='staging' ./ staging/
-          
-          # 2. Create the /blog folder
-          mkdir -p staging/blog
-          
-          # 3. Find where the Hugo 'public' folder was generated and move it
-          if [ -d "blog-source/public" ]; then
-            cp -r blog-source/public/* staging/blog/
-          elif [ -d "public" ]; then
-            cp -r public/* staging/blog/
-          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
