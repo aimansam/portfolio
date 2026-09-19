@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const safeFetch = async (url) => {
     const resolvedUrl = resolvePortfolioUrl(url)
     try {
-      const res = await fetch(resolvedUrl)
+      const res = await fetch(resolvedUrl, { cache: 'no-store' })
       if (!res.ok) {
         console.warn(`Fetch warning: ${resolvedUrl} returned ${res.status}`)
         return null
@@ -709,6 +709,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 3. Fetch page-specific content
     const pageContent = await safeFetch(contentFile)
+    const certificatesContent = path.match(/about\.html$/i) || path.match(/\/about\.html/i)
+      ? await safeFetch('content/site/certificates.json')
+      : null
     
     // Merge and apply content
     const finalContent = { ...baseContent }
@@ -716,6 +719,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       Object.assign(finalContent, pageContent)
     } else {
       console.warn('Page content not available, using base content only')
+    }
+    if (certificatesContent?.certificates) {
+      finalContent.certificates = certificatesContent.certificates
     }
     
     applyPortfolioContent(finalContent)
