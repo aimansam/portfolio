@@ -1,0 +1,37 @@
+{
+  "title": "Web Vulnerability Scanner",
+  "category": "Web Security / Python",
+  "focus": ["Authorized Assessment", "Crawler Design", "Security Reporting"],
+  "facts": [
+    { "label": "Interface", "value": "Python CLI" },
+    { "label": "Coverage", "value": "Discovery and common web checks" },
+    { "label": "Output", "value": "Structured assessment reports" },
+    { "label": "Scope", "value": "Authorized targets only" }
+  ],
+  "githubUrl": "https://github.com/aimansam/web-vuln-scanner",
+  "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
+  "headerImage": "../blog/posts/monster-corporate/monster-corporate-00.png",
+  "sections": [
+    {
+      "title": "What I Built",
+      "content": [
+        "The scanner is organized as a CLI-driven toolkit with separate crawler, session, scanner, model, and reporting components. This structure keeps discovery and assessment logic modular instead of coupling everything to one command.",
+        "The repository covers SQL injection, reflected XSS, path traversal, sensitive-file discovery, session handling, and report generation for controlled testing environments."
+      ]
+    },
+    {
+      "title": "Security Value",
+      "content": [
+        "The project demonstrates how I translate manual web-testing workflows into repeatable tooling while keeping scope, authorization, and reporting in mind.",
+        "Its next maturity step is adding fixture applications, reproducible test cases, clearer severity logic, and sanitized output examples that show how findings become useful remediation work."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../blog/posts/monster-corporate/monster-corporate-00.png",
+      "caption": "Related web-exploitation evidence from the Monster Corporate writeup.",
+      "width": "full"
+    }
+  ]
+}

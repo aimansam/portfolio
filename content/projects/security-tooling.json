@@ -1,0 +1,37 @@
+{
+  "title": "Security Tooling Collection",
+  "category": "Defensive Security / Python",
+  "focus": ["Log Analysis", "Network Visibility", "Security Automation"],
+  "facts": [
+    { "label": "Projects", "value": "SIEM-lite, phishing, packet, port, password tools" },
+    { "label": "Interface", "value": "Small modular Python CLIs" },
+    { "label": "Output", "value": "Alerts, reports, and analysis results" },
+    { "label": "Scope", "value": "Learning and authorized analysis" }
+  ],
+  "githubUrl": "https://github.com/aimansam/siem-lite",
+  "description": "A collection of focused Python tools for SIEM-style log analysis, phishing triage, packet analysis, port discovery, and password auditing.",
+  "headerImage": "../assets/images/zx10r/zx10r.jpg",
+  "sections": [
+    {
+      "title": "Collection Overview",
+      "content": [
+        "This collection turns individual security concepts into small, understandable tools. It includes SIEM-lite for parsing logs and generating alerts, phishing-toolkit for email triage, packet-capture for traffic analysis, port-scanner for service discovery, and password-auditor for password-pattern analysis.",
+        "Together, the repositories show a progression from protocol and input handling to detection logic, reporting, and user-facing command-line design."
+      ]
+    },
+    {
+      "title": "Why It Matters",
+      "content": [
+        "The value is not only in the individual scripts. The collection demonstrates an engineering habit of breaking security workflows into testable modules with clear inputs, outputs, and limitations.",
+        "These tools also provide supporting components for the homelab and cyber-drill projects, where logs, network behavior, and simulated findings need to become observable evidence."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../assets/images/zx10r/zx10r.jpg",
+      "caption": "Security tooling collection overview; repository links provide the implementation details.",
+      "width": "full"
+    }
+  ]
+}

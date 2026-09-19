@@ -1,0 +1,43 @@
+{
+  "title": "BABY-C2 Detection Study",
+  "category": "Security Research / Authorized Lab",
+  "focus": ["Command-Channel Abuse", "Detection Engineering", "Packaging Analysis"],
+  "facts": [
+    { "label": "Environment", "value": "Controlled authorized lab only" },
+    { "label": "Focus", "value": "Telemetry and defensive visibility" },
+    { "label": "Study", "value": "Packaging and analysis trade-offs" },
+    { "label": "Portfolio Lens", "value": "Threat modeling and mitigation" }
+  ],
+  "githubUrl": "https://github.com/aimansam/BABY-C2",
+  "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
+  "headerImage": "../assets/images/zx10r/zx10r.jpg",
+  "sections": [
+    {
+      "title": "Responsible Scope",
+      "content": [
+        "This project is presented only as authorized security research. The portfolio focuses on threat modeling, endpoint telemetry, packaging limitations, and detection lessons rather than operational deployment instructions.",
+        "Any testing must remain inside systems owned or explicitly authorized by the operator, with isolated credentials, clear cleanup procedures, and no uncontrolled targets."
+      ]
+    },
+    {
+      "title": "What It Demonstrates",
+      "content": [
+        "The study examines how command-channel behavior can be analyzed from both attacker and defender perspectives. It highlights the difference between static evasion claims and what dynamic analysis, endpoint controls, and behavioral telemetry can still reveal.",
+        "The strongest portfolio value is the defensive conclusion: packaging changes do not replace authorization, isolation, monitoring, or incident-response readiness."
+      ]
+    },
+    {
+      "title": "Next Evidence to Add",
+      "content": [
+        "A future case study should include only sanitized lab diagrams, detection ideas, and high-level observations. Secrets, tokens, live endpoints, persistence steps, and deployment instructions should never be published."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../assets/images/zx10r/zx10r.jpg",
+      "caption": "Authorized research case study; implementation details remain scoped to the repository and isolated lab context.",
+      "width": "full"
+    }
+  ]
+}

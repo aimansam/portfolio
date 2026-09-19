@@ -5,10 +5,14 @@
       { "id": "all", "label": "All" },
       { "id": "infrastructure", "label": "Infrastructure" },
       { "id": "hardware", "label": "Hardware" },
-      { "id": "wireless", "label": "Wireless" }
+      { "id": "wireless", "label": "Wireless" },
+      { "id": "web", "label": "Web Security" },
+      { "id": "defensive", "label": "Defensive" },
+      { "id": "research", "label": "Security Research" }
     ],
     "items": [
       {
+        "id": "enterprise-homelab",
         "category": "infrastructure",
         "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
         "tags": ["Infrastructure", "Active Directory"],
@@ -18,6 +22,7 @@
         "featured": true
       },
       {
+        "id": "bad-usb-lab",
         "category": "hardware",
         "image": "./assets/images/projects/bad-usb-lab/rubby.jpg",
         "tags": ["Hardware", "Endpoint"],
@@ -27,12 +32,63 @@
         "featured": false
       },
       {
+        "id": "wifi-audit-lab",
         "category": "wireless",
         "image": "./assets/images/projects/wifi-audit-lab/pineapple.webp",
         "tags": ["Wireless", "Audit"],
         "title": "Bad Wifi Audit",
         "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
         "href": "./project-pages/project.html?id=wifi-audit-lab",
+        "featured": false
+      },
+      {
+        "id": "oxblood-drill",
+        "category": "infrastructure",
+        "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
+        "tags": ["Cyber Range", "Proxmox", "Blue Team"],
+        "title": "div:ide Cyber Drill Platform",
+        "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenarios, telemetry, and operational reporting.",
+        "href": "./project-pages/project.html?id=oxblood-drill",
+        "featured": true
+      },
+      {
+        "id": "web-vuln-scanner",
+        "category": "web",
+        "image": "./blog/posts/monster-corporate/monster-corporate-00.png",
+        "tags": ["Web Security", "Python", "CLI"],
+        "title": "Web Vulnerability Scanner",
+        "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
+        "href": "./project-pages/project.html?id=web-vuln-scanner",
+        "featured": false
+      },
+      {
+        "id": "security-tooling",
+        "category": "defensive",
+        "image": "./assets/images/zx10r/zx10r.jpg",
+        "tags": ["Security Tooling", "Python", "Automation"],
+        "title": "Security Tooling Collection",
+        "description": "A collection of focused Python tools for SIEM-style log analysis, phishing triage, packet analysis, port discovery, and password auditing.",
+        "href": "./project-pages/project.html?id=security-tooling",
+        "featured": false
+      },
+      {
+        "id": "divide-ctf-recipe",
+        "category": "web",
+        "image": "./assets/images/zx10r/zx10r.jpg",
+        "tags": ["Web Engineering", "Cloudflare", "CTF"],
+        "title": "divideCTF Recipe Challenge",
+        "description": "A public web challenge combining a static frontend, Cloudflare Pages Functions, API behavior, and a client-side access-control lesson.",
+        "href": "./project-pages/project.html?id=divide-ctf-recipe",
+        "featured": false
+      },
+      {
+        "id": "baby-c2",
+        "category": "research",
+        "image": "./assets/images/zx10r/zx10r.jpg",
+        "tags": ["Authorized Research", "Detection", "Python"],
+        "title": "BABY-C2 Detection Study",
+        "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
+        "href": "./project-pages/project.html?id=baby-c2",
         "featured": false
       }
     ]

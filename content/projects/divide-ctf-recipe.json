@@ -1,0 +1,37 @@
+{
+  "title": "divideCTF Recipe Challenge",
+  "category": "Web Engineering / CTF",
+  "focus": ["Cloudflare Pages", "API Behavior", "Client-Side Trust"],
+  "facts": [
+    { "label": "Frontend", "value": "Static HTML, CSS, and JavaScript" },
+    { "label": "Backend", "value": "Cloudflare Pages Function API" },
+    { "label": "Deployment", "value": "Cloudflare Pages and Docker parity" },
+    { "label": "Theme", "value": "Learning through controlled challenge design" }
+  ],
+  "githubUrl": "https://github.com/aimansam/divideCTF-recipe",
+  "description": "A public web challenge combining a static frontend, Cloudflare Pages Functions, API behavior, and a client-side access-control lesson.",
+  "headerImage": "../assets/images/zx10r/zx10r.jpg",
+  "sections": [
+    {
+      "title": "What I Built",
+      "content": [
+        "The project combines a static recipe interface with a server-side API that returns content by challenge day. It is deployed as a small Cloudflare application and also keeps a Docker-based local development path for parity.",
+        "The challenge design demonstrates how a polished user interface can coexist with an intentionally testable trust boundary between client-side presentation and server-side responses."
+      ]
+    },
+    {
+      "title": "Web Security Lesson",
+      "content": [
+        "The main lesson is that client-side overlays are not access control. Sensitive decisions must be enforced by the server-side function, and the API behavior should be tested independently of what the browser displays.",
+        "This project adds a practical web-engineering example to the portfolio alongside the offensive testing work."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../assets/images/zx10r/zx10r.jpg",
+      "caption": "Web challenge project; visit the repository for the live application structure and API implementation.",
+      "width": "full"
+    }
+  ]
+}

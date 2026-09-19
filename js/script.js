@@ -513,6 +513,7 @@ const applyProjectDetailContent = (content) => {
   const projectCategory = document.getElementById('project-category')
   const projectFocusList = document.getElementById('project-focus-list')
   const projectFactGrid = document.getElementById('project-fact-grid')
+  const projectLinkList = document.getElementById('project-link-list')
   const detailsContainer = document.getElementById('project-details-container')
   const galleryGrid = document.getElementById('project-gallery-grid')
 
@@ -535,6 +536,9 @@ const applyProjectDetailContent = (content) => {
         <span class="project-fact-value">${escapeHtml(fact.value)}</span>
       </div>
     `).join('')
+  }
+  if (projectLinkList && content.githubUrl) {
+    projectLinkList.innerHTML = `<a class="button" href="${escapeHtml(content.githubUrl)}" target="_blank" rel="noopener noreferrer"><span class="button-text">View source on GitHub</span><img src="../assets/icons/arrow-right.svg" class="right-arrow-icon" alt=""></a>`
   }
   if (content.description) {
     projectDesc.textContent = content.description

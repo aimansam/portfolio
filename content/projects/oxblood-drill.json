@@ -1,0 +1,43 @@
+{
+  "title": "div:ide Cyber Drill Platform",
+  "category": "Infrastructure / Cyber Range",
+  "focus": ["Proxmox Operations", "Red Team / Blue Team", "Scenario Management"],
+  "facts": [
+    { "label": "Platform", "value": "Dockerized Flask and API services" },
+    { "label": "Infrastructure", "value": "Proxmox VE integration" },
+    { "label": "Visibility", "value": "Prometheus and Grafana telemetry" },
+    { "label": "Scope", "value": "Repeatable authorized cyber drills" }
+  ],
+  "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
+  "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenario definitions, telemetry, and operational reporting.",
+  "headerImage": "../assets/images/projects/enterprise-homelab/homelab.jpg",
+  "sections": [
+    {
+      "title": "What I Built",
+      "content": [
+        "This project turns a security lab into a repeatable exercise platform. It combines a web portal, API services, scenario schemas, database migrations, deployment configuration, and Proxmox integration into one operational workflow.",
+        "The platform is designed around controlled exercises rather than isolated demonstrations, making it possible to define scenarios, run drills, observe outcomes, and improve the next iteration."
+      ]
+    },
+    {
+      "title": "Engineering and Security Value",
+      "content": [
+        "The repository demonstrates full-stack security engineering across Docker, Flask, PostgreSQL, Proxmox, Prometheus, Grafana, CI, and API documentation.",
+        "Its strongest portfolio value is the connection between infrastructure and learning outcomes: offensive actions can be exercised inside a controlled environment while defensive teams measure visibility, response, and operational readiness."
+      ]
+    },
+    {
+      "title": "Next Evidence to Add",
+      "content": [
+        "The case study should eventually include an architecture diagram, a sanitized exercise flow, and a screenshot of the drill dashboard. Sensitive infrastructure credentials and live host details should remain excluded."
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "image": "../assets/images/projects/enterprise-homelab/homelab.jpg",
+      "caption": "Related lab infrastructure used to contextualize the cyber-drill platform.",
+      "width": "full"
+    }
+  ]
+}

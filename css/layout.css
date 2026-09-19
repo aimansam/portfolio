@@ -1400,6 +1400,13 @@ body.is-loaded .page-loader {
   line-height: 1.35;
 }
 
+.project-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
 .project-header-image {
   width: 100%;
   height: auto;
