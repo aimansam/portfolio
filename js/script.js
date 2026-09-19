@@ -23,10 +23,10 @@ window.addEventListener('load', () => {
 const escapeHtml = (str) => {
   if (typeof str !== 'string') return ''
   return str
-    .replace(/&/g, '&')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/"/g, '"')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
 }
 
@@ -158,7 +158,7 @@ const createCertificateMarkup = (cert) => `
 
 const createProjectMarkup = (project) => `
   <div class="project-card" data-category="${escapeHtml(project.category)}">
-    <img src="${project.image}" class="project-image" loading="lazy">
+    <img src="${escapeHtml(project.image)}" class="project-image" loading="lazy" alt="${escapeHtml(project.title)} project image">
     <div class="project-card-text-container">
       <div class="project-card-tags">
         ${project.tags.map(tag => `<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}
@@ -510,6 +510,9 @@ const applyProjectDetailContent = (content) => {
   const projectImage = document.getElementById('project-header-image')
   const projectTitleTag = document.getElementById('project-title-tag')
   const projectMetaDesc = document.getElementById('project-meta-desc')
+  const projectCategory = document.getElementById('project-category')
+  const projectFocusList = document.getElementById('project-focus-list')
+  const projectFactGrid = document.getElementById('project-fact-grid')
   const detailsContainer = document.getElementById('project-details-container')
   const galleryGrid = document.getElementById('project-gallery-grid')
 
@@ -520,6 +523,18 @@ const applyProjectDetailContent = (content) => {
     const projectTwitterTitle = document.getElementById('project-twitter-title')
     if (projectOgTitle) projectOgTitle.setAttribute('content', content.title + ' | Aiman Sam')
     if (projectTwitterTitle) projectTwitterTitle.setAttribute('content', content.title + ' | Aiman Sam')
+  }
+  if (projectCategory) projectCategory.textContent = content.category || 'Security project'
+  if (projectFocusList && Array.isArray(content.focus)) {
+    projectFocusList.innerHTML = content.focus.map(item => `<span class="project-tag">${escapeHtml(item)}</span>`).join('')
+  }
+  if (projectFactGrid && Array.isArray(content.facts)) {
+    projectFactGrid.innerHTML = content.facts.map(fact => `
+      <div class="project-fact">
+        <span class="project-fact-label">${escapeHtml(fact.label)}</span>
+        <span class="project-fact-value">${escapeHtml(fact.value)}</span>
+      </div>
+    `).join('')
   }
   if (content.description) {
     projectDesc.textContent = content.description
@@ -539,10 +554,19 @@ const applyProjectDetailContent = (content) => {
     if (projectTwitterImage) projectTwitterImage.setAttribute('content', resolvedImage)
   }
 
+  const projectId = new URLSearchParams(window.location.search).get('id')
+  const projectUrl = new URL(window.location.href)
+  projectUrl.hash = ''
+  if (projectId) projectUrl.search = `?id=${encodeURIComponent(projectId)}`
+  const projectCanonical = document.getElementById('project-canonical')
+  const projectOgUrl = document.getElementById('project-og-url')
+  if (projectCanonical) projectCanonical.setAttribute('href', projectUrl.href)
+  if (projectOgUrl) projectOgUrl.setAttribute('content', projectUrl.href)
+
   if (Array.isArray(content.sections) && content.sections.length && detailsContainer) {
     detailsContainer.innerHTML = content.sections.map(section => `
       <div class="project-details-content">
-        <div class="subheader-text">${escapeHtml(section.title)}</div>
+        <h2 class="subheader-text">${escapeHtml(section.title)}</h2>
         ${section.content.map(p => `<p class="body-text">${escapeHtml(p)}</p>`).join('')}
       </div>
     `).join('')
@@ -553,7 +577,7 @@ const applyProjectDetailContent = (content) => {
       const caption = escapeHtml(item.caption || '')
       return `
       <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
-        <img src="${item.image}" class="gallery-image" alt="${caption}" loading="lazy" role="button" tabindex="0" aria-label="View ${caption || 'image'} in lightbox" data-lightbox="${item.image}" data-lightbox-title="${caption}">
+        <img src="${escapeHtml(item.image)}" class="gallery-image" alt="${caption || 'Project image'}" loading="lazy" role="button" tabindex="0" aria-label="View ${caption || 'image'} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${caption}">
         ${item.caption ? `<span class="body-text">${caption}</span>` : ''}
       </div>
     `}).join('')

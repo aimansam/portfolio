@@ -1,5 +1,13 @@
 {
   "title": "Wireless Audit Lab",
+  "category": "Wireless Security / Assessment",
+  "focus": ["Wireless Reconnaissance", "Rogue Infrastructure", "Packet Analysis"],
+  "facts": [
+    { "label": "Environment", "value": "Controlled wireless audit lab" },
+    { "label": "Focus", "value": "Client behavior and trust boundaries" },
+    { "label": "Scope", "value": "Authorized network assessment scenarios" },
+    { "label": "Approach", "value": "Technical findings tied to remediation" }
+  ],
   "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
   "headerImage": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
   "sections": [

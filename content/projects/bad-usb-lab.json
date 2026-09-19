@@ -1,5 +1,13 @@
 {
   "title": "Bad USB Payload Lab",
+  "category": "Endpoint Security / Hardware",
+  "focus": ["Physical Access", "Payload Reliability", "Endpoint Visibility"],
+  "facts": [
+    { "label": "Environment", "value": "Controlled Windows workstation lab" },
+    { "label": "Focus", "value": "Keystroke injection and timing" },
+    { "label": "Scope", "value": "Authorized hardware and endpoint testing" },
+    { "label": "Approach", "value": "Offensive simulation with defender lens" }
+  ],
   "description": "A hardware-focused project for building and testing keystroke injection payloads that simulate real endpoint compromise scenarios, operator tradecraft, and user-assisted execution paths.",
   "headerImage": "../assets/images/projects/bad-usb-lab/rubby.jpg",
   "sections": [

@@ -1,5 +1,13 @@
 {
   "title": "Enterprise Grade Home Lab",
+  "category": "Infrastructure / Active Directory",
+  "focus": ["Active Directory", "Detection Engineering", "Incident Response"],
+  "facts": [
+    { "label": "Environment", "value": "Segmented Windows and Linux lab" },
+    { "label": "Focus", "value": "Attack paths and defensive visibility" },
+    { "label": "Scope", "value": "Controlled enterprise-style environment" },
+    { "label": "Approach", "value": "Offensive testing linked to response" }
+  ],
   "description": "A segmented enterprise-style lab built for realistic penetration testing, Active Directory attack simulation, detection engineering, and incident response drills across Windows and Linux systems.",
   "headerImage": "../assets/images/projects/enterprise-homelab/homelab.jpg",
   "sections": [
