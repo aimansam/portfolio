@@ -8,7 +8,7 @@
     },
     "secondaryAction": {
       "label": "Download CV",
-      "href": "./assets/Resume.pdf",
+      "href": "./assets/resume/Resume.pdf",
       "download": "Aiman_Sam_Resume.pdf"
     },
     "socialLinks": [

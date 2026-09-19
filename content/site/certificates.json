@@ -7,7 +7,14 @@
         "note": "Certified Ethical Hacker from EC-Council.",
         "code": "CEH",
         "meta": "EC",
-        "image": ""
+        "image": "./assets/images/certificates/CEH.jpg"
+      },
+      {
+        "name": "Certified Penetration Testing Specialist",
+        "note": "Hack The Box certification focused on practical penetration testing methodology and execution.",
+        "code": "CPTS",
+        "meta": "HTB",
+        "image": "./assets/images/certificates/CPTS.jpg"
       },
       {
         "name": "Junior Penetration Tester",
@@ -21,7 +28,7 @@
         "note": "Cisco networking foundation covering infrastructure and core network concepts.",
         "code": "CCNA",
         "meta": "Cisco",
-        "image": ""
+        "image": "./assets/images/certificates/CCNA1.jpg"
       },
       {
         "name": "Full-Stack Web Development Bootcamp",
