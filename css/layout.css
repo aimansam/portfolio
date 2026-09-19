@@ -371,8 +371,8 @@ body.is-loaded .page-loader {
     flex-wrap: wrap;
   }
 
-  .project-card {
-    max-width: calc((100% - 16px) / 2);
+  .projects-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #project-header {
@@ -1250,15 +1250,16 @@ body.is-loaded .page-loader {
 }
 
 .projects-container {
-  display: flex;
-  gap: 34px 16px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
 }
 
     /* Project Cards */
 
     .project-card {
-      max-width: calc((100% - 32px) / 3);
+      max-width: none;
       display: flex;
       flex-direction: column;
       gap: 34px;
@@ -1269,6 +1270,10 @@ body.is-loaded .page-loader {
       z-index: 0;
       box-shadow: 0 0 0 rgba(20, 20, 20, 0);
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .project-card:first-child {
+      grid-column: span 2;
     }
 
     .project-card:hover,
@@ -1600,8 +1605,8 @@ body.is-loaded .page-loader {
     flex-wrap: wrap;
   }
 
-  .project-card {
-    max-width: calc((100% - 16px) / 2);
+  .projects-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .blog-preview-header {
@@ -1896,6 +1901,14 @@ body.is-loaded .page-loader {
   .about-certificate-name,
   .about-certificate-note {
     overflow-wrap: anywhere;
+  }
+
+  .projects-container {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card:first-child {
+    grid-column: auto;
   }
 
   .project-card {
