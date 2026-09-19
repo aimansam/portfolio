@@ -1276,6 +1276,10 @@ body.is-loaded .page-loader {
       grid-column: span 2;
     }
 
+    .project-card:nth-child(4) {
+      grid-column: span 2;
+    }
+
     .project-card:hover,
     .project-card:active,
     .project-card:focus-within {
@@ -1908,6 +1912,10 @@ body.is-loaded .page-loader {
   }
 
   .project-card:first-child {
+    grid-column: auto;
+  }
+
+  .project-card:nth-child(4) {
     grid-column: auto;
   }
 
