@@ -130,6 +130,22 @@ const createStatsRow = (items, isCompact) => `
   </div>
 `;
 
+const createCareerTimelineMarkup = (items) => `
+  <div class="career-timeline">
+    ${items.map((item, index) => `
+      <div class="career-timeline-item">
+        <span class="career-timeline-step">${escapeHtml(item.step)}</span>
+        <div class="career-timeline-marker" aria-hidden="true"></div>
+        <div class="career-timeline-copy">
+          <strong>${escapeHtml(item.value)}</strong>
+          <span>${escapeHtml(item.label)}</span>
+          <small>${escapeHtml(item.note)}</small>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+`;
+
 const createSkillFilterMarkup = (filter, isActive) => `
   <button class="about-skill-filter${isActive ? ' is-active' : ''}" type="button" data-skill-filter="${filter.id}">${filter.label}</button>
 `;
@@ -300,6 +316,10 @@ const applyStatsContent = (content) => {
   const statsDiagram = document.getElementById('stats-diagram')
   if (content.stats?.heading) statsHeading.textContent = content.stats.heading
   if (Array.isArray(content.stats?.items) && content.stats.items.length && statsDiagram) {
+    if (content.stats.type === 'timeline') {
+      statsDiagram.innerHTML = createCareerTimelineMarkup(content.stats.items)
+      return
+    }
     const groups = []
     for (let index = 0; index < content.stats.items.length; index += 4) {
       groups.push(content.stats.items.slice(index, index + 4))
