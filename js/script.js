@@ -183,27 +183,24 @@ const projectToolIconMap = {
 const getProjectToolIcon = (tool) => projectToolIconMap[tool.toLowerCase()] || 'cpu'
 
 const createProjectMarkup = (project) => `
-  <article class="project-card${project.featured ? ' project-card-featured' : ''}" data-category="${escapeHtml(project.category)}">
-    <div class="project-image-frame">
-      <img src="${escapeHtml(project.image)}" class="project-image" loading="lazy" alt="${escapeHtml(project.title)} project image">
-      ${project.featured ? '<span class="project-featured-badge">Featured</span>' : ''}
-    </div>
+  <div class="project-card" data-category="${escapeHtml(project.category)}">
+    <img src="${escapeHtml(project.image)}" class="project-image" loading="lazy" alt="${escapeHtml(project.title)} project image">
     <div class="project-card-text-container">
       <div class="project-card-tags">
         ${project.tags.map(tag => `<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}
       </div>
-      <h2 class="subheader-text project-title">${escapeHtml(project.title)}</h2>
-      <p class="body-text project-card-text">${escapeHtml(project.summary || project.description)}</p>
+      <div class="subheader-text project-title">${escapeHtml(project.title)}</div>
+      <div class="body-text project-card-text">${escapeHtml(project.summary || project.description)}</div>
       ${Array.isArray(project.tools) && project.tools.length ? `<div class="project-card-tools" aria-label="Technology stack">${project.tools.map(tool => `<span class="project-tool-chip"><i data-lucide="${getProjectToolIcon(tool)}" aria-hidden="true"></i><span>${escapeHtml(tool)}</span></span>`).join('')}</div>` : ''}
     </div>
     <div class="project-card-actions">
       <a class="button" href="${project.href || './project-pages/project.html?id=' + project.id}">
-        <span class="button-text">View case study</span>
+        <span class="button-text">Read More</span>
         <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
       </a>
       ${project.githubUrl ? `<a class="project-github-link" href="${escapeHtml(project.githubUrl)}" target="_blank" rel="noopener noreferrer" aria-label="View ${escapeHtml(project.title)} on GitHub"><img src="./assets/icons/github.svg" alt=""></a>` : ''}
     </div>
-  </article>
+  </div>
 `;
 
 const createBlogPreviewMarkup = (post) => `
