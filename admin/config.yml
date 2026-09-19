@@ -7,7 +7,7 @@ backend:
 
 site_url: https://portfolio.aimansam.my
 display_url: https://portfolio.aimansam.my
-logo_url: /assets/images/8443.jpg
+logo_url: /assets/images/zx10r/zx10r.jpg
 media_folder: assets/images/uploads
 public_folder: /assets/images/uploads
 

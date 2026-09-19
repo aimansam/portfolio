@@ -1,7 +1,7 @@
 {
   "title": "Bad USB Payload Lab",
   "description": "A hardware-focused project for building and testing keystroke injection payloads that simulate real endpoint compromise scenarios, operator tradecraft, and user-assisted execution paths.",
-  "headerImage": "../assets/images/rubby.jpg",
+  "headerImage": "../assets/images/projects/bad-usb-lab/rubby.jpg",
   "sections": [
     {
       "title": "Project Details / Background",
@@ -27,17 +27,17 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/rubby.jpg",
+      "image": "../assets/images/projects/bad-usb-lab/rubby.jpg",
       "caption": "Bad USB hardware used to test rapid payload execution and operator timing.",
       "width": "half"
     },
     {
-      "image": "../assets/images/rubby.jpg",
+      "image": "../assets/images/projects/bad-usb-lab/rubby.jpg",
       "caption": "Payload development emphasized reliability, staged execution, and environmental awareness before sensitive actions.",
       "width": "half"
     },
     {
-      "image": "../assets/images/rubby.jpg",
+      "image": "../assets/images/projects/bad-usb-lab/rubby.jpg",
       "caption": "Used to study how physical access can translate into endpoint compromise attempts under real workstation conditions.",
       "width": "full"
     }

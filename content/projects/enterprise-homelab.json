@@ -1,7 +1,7 @@
 {
   "title": "Enterprise Grade Home Lab",
   "description": "A segmented enterprise-style lab built for realistic penetration testing, Active Directory attack simulation, detection engineering, and incident response drills across Windows and Linux systems.",
-  "headerImage": "../assets/images/homelab.jpg",
+  "headerImage": "../assets/images/projects/enterprise-homelab/homelab.jpg",
   "sections": [
     {
       "title": "Project Details / Background",
@@ -28,17 +28,17 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/homelab.jpg",
+      "image": "../assets/images/projects/enterprise-homelab/homelab.jpg",
       "caption": "High-level view of the home lab environment used for enterprise-style testing and research.",
       "width": "half"
     },
     {
-      "image": "../assets/images/homelab.jpg",
+      "image": "../assets/images/projects/enterprise-homelab/homelab.jpg",
       "caption": "Segmented design supports AD attack simulation, host isolation, and pivot validation across multiple trust zones.",
       "width": "half"
     },
     {
-      "image": "../assets/images/homelab.jpg",
+      "image": "../assets/images/projects/enterprise-homelab/homelab.jpg",
       "caption": "Used for privilege escalation practice, detection validation, incident-response drills, and end-to-end attack path rehearsal.",
       "width": "full"
     }

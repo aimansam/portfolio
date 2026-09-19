@@ -147,7 +147,7 @@ const createSkillPageMarkup = (page, isActive) => `
 const createCertificateMarkup = (cert) => `
   <li class="about-certificate-item">
     <div class="about-certificate-image-wrapper">
-      <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-certificate-image">
+      <img src="${cert.image || './assets/images/me/aimansamformal.jpg'}" alt="${cert.name}" class="about-certificate-image">
     </div>
     <div class="about-certificate-body">
       <span class="about-certificate-name">${cert.name}</span>
@@ -379,7 +379,7 @@ const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBt
       <div class="about-cert-masonry-item">
         <div class="about-cert-masonry-card">
           <div class="about-cert-image-wrapper">
-            <img src="${cert.image || './assets/images/8443.jpg'}" alt="${cert.name}" class="about-cert-masonry-image" loading="lazy">
+            <img src="${cert.image || './assets/images/me/aimansamformal.jpg'}" alt="${cert.name}" class="about-cert-masonry-image" loading="lazy">
           </div>
           <div class="about-cert-overlay">
             <div class="about-cert-overlay-content">
@@ -422,9 +422,9 @@ const applyGalleryContent = (content) => {
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
     galleryList.innerHTML = content.gallery.items.map(item => `
       <div class="gallery-masonry-item">
-        <div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${item.title || 'image'} in lightbox" data-lightbox="${item.image || './assets/images/8443.jpg'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
+        <div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${item.title || 'image'} in lightbox" data-lightbox="${item.image || './assets/images/me/aimansamwinner.png'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
           <div class="gallery-image-wrapper">
-            <img src="${item.image || './assets/images/8443.jpg'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image" loading="lazy">
+            <img src="${item.image || './assets/images/me/aimansamwinner.png'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image" loading="lazy">
           </div>
           <div class="gallery-overlay">
             <div class="gallery-overlay-content">

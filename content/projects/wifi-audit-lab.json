@@ -1,7 +1,7 @@
 {
   "title": "Wireless Audit Lab",
   "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
-  "headerImage": "../assets/images/pineapple.webp",
+  "headerImage": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
   "sections": [
     {
       "title": "Project Details / Background",
@@ -27,17 +27,17 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/pineapple.webp",
+      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
       "caption": "Wireless assessment tooling used for reconnaissance, SSID analysis, and packet capture workflows.",
       "width": "half"
     },
     {
-      "image": "../assets/images/pineapple.webp",
+      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
       "caption": "Rogue infrastructure and user-behavior testing helped simulate realistic audit scenarios around trust and association.",
       "width": "half"
     },
     {
-      "image": "../assets/images/pineapple.webp",
+      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
       "caption": "Used to study encryption posture, deauthentication impact, traffic visibility, and wireless misconfiguration risk.",
       "width": "full"
     }
