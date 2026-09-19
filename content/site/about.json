@@ -1,6 +1,6 @@
 {
   "about": {
-    "title": "I compete, build, and explain offensive security.",
+    "title": "I learn how systems fail—and build better ways to defend them.",
     "lookingLabel": "Looking For",
     "roles": [
       "Penetration Tester",
@@ -8,7 +8,7 @@
       "Blue Team Analyst",
       "Cloud Engineer"
     ],
-    "intro": "Jr penetration tester focused on web security, Active Directory, and attack-defense operations. I placed 2nd at the UM Cybersecurity Summit CTF and 3rd out of 50 teams at Bingo CTF, while building cloud-hosted challenges and teaching web exploitation.",
+    "intro": "I focus on web security, Active Directory, and attack-defense operations through competition, challenge development, and practical security work.",
     "points": [
       "Top 1% globally on TryHackMe with 350+ completed rooms.",
       "Built 9 web challenges and 1 Boot2Root machine using GCP, Cloudflare, and GitHub CI/CD.",
