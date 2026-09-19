@@ -17,6 +17,8 @@
         "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
         "tags": ["Infrastructure", "Active Directory"],
         "title": "Enterprise Grade Home Lab",
+        "summary": "Segmented lab validates AD attacks and detection.",
+        "tools": ["Windows", "Linux", "Active Directory", "SIEM"],
         "description": "A fully virtualized enterprise-style home lab designed to simulate real-world network environments for security testing and research. Built with segmented networks, Active Directory, SIEM integration, and monitoring tools, this lab enables hands-on practice in threat detection, incident response, lateral movement, and privilege escalation across Windows and Linux systems.",
         "href": "./project-pages/project.html?id=enterprise-homelab",
         "featured": true
@@ -27,6 +29,8 @@
         "image": "./assets/images/projects/bad-usb-lab/rubby.jpg",
         "tags": ["Hardware", "Endpoint"],
         "title": "Rubber Ducky / Bad USB",
+        "summary": "Studies physical-access payloads and endpoint detection visibility.",
+        "tools": ["Bad USB", "Windows", "Endpoint monitoring"],
         "description": "A custom-built Bad USB project leveraging keystroke injection techniques to simulate real-world attack scenarios. Used for developing and testing payloads that automate exploitation, credential harvesting, and system compromise, this project demonstrates practical understanding of physical attack vectors and endpoint security weaknesses.",
         "href": "./project-pages/project.html?id=bad-usb-lab",
         "featured": false
@@ -37,6 +41,8 @@
         "image": "./assets/images/projects/wifi-audit-lab/pineapple.webp",
         "tags": ["Wireless", "Audit"],
         "title": "Bad Wifi Audit",
+        "summary": "Audits wireless trust, traffic, and rogue infrastructure.",
+        "tools": ["Wi-Fi auditing", "Packet capture", "Rogue AP simulation"],
         "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
         "href": "./project-pages/project.html?id=wifi-audit-lab",
         "featured": false
@@ -47,6 +53,9 @@
         "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
         "tags": ["Cyber Range", "Proxmox", "Blue Team"],
         "title": "div:ide Cyber Drill Platform",
+        "summary": "Runs repeatable red-blue drills on Proxmox infrastructure.",
+        "tools": ["Proxmox", "Docker", "Grafana"],
+        "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
         "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenarios, telemetry, and operational reporting.",
         "href": "./project-pages/project.html?id=oxblood-drill",
         "featured": true
@@ -57,6 +66,9 @@
         "image": "./blog/posts/monster-corporate/monster-corporate-00.png",
         "tags": ["Web Security", "Python", "CLI"],
         "title": "Web Vulnerability Scanner",
+        "summary": "Scans authorized web targets and generates reports.",
+        "tools": ["Python", "Crawler", "Reporting"],
+        "githubUrl": "https://github.com/aimansam/web-vuln-scanner",
         "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
         "href": "./project-pages/project.html?id=web-vuln-scanner",
         "featured": false
@@ -67,6 +79,9 @@
         "image": "./assets/images/zx10r/zx10r.jpg",
         "tags": ["Security Tooling", "Python", "Automation"],
         "title": "Security Tooling Collection",
+        "summary": "Builds focused Python tools for security analysis.",
+        "tools": ["Python", "CLI", "Detection"],
+        "githubUrl": "https://github.com/aimansam/siem-lite",
         "description": "A collection of focused Python tools for SIEM-style log analysis, phishing triage, packet analysis, port discovery, and password auditing.",
         "href": "./project-pages/project.html?id=security-tooling",
         "featured": false
@@ -77,6 +92,9 @@
         "image": "./assets/images/zx10r/zx10r.jpg",
         "tags": ["Web Engineering", "Cloudflare", "CTF"],
         "title": "divideCTF Recipe Challenge",
+        "summary": "Challenges client trust with server-side API validation.",
+        "tools": ["JavaScript", "Cloudflare Pages", "Docker"],
+        "githubUrl": "https://github.com/aimansam/divideCTF-recipe",
         "description": "A public web challenge combining a static frontend, Cloudflare Pages Functions, API behavior, and a client-side access-control lesson.",
         "href": "./project-pages/project.html?id=divide-ctf-recipe",
         "featured": false
@@ -87,6 +105,9 @@
         "image": "./assets/images/zx10r/zx10r.jpg",
         "tags": ["Authorized Research", "Detection", "Python"],
         "title": "BABY-C2 Detection Study",
+        "summary": "Studies command channels through authorized defensive research.",
+        "tools": ["Python", "Threat modeling", "Telemetry"],
+        "githubUrl": "https://github.com/aimansam/BABY-C2",
         "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
         "href": "./project-pages/project.html?id=baby-c2",
         "featured": false
