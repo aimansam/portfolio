@@ -1272,11 +1272,11 @@ body.is-loaded .page-loader {
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
 
-    .project-card:first-child {
+    .project-card:nth-child(4n + 1) {
       grid-column: span 2;
     }
 
-    .project-card:nth-child(4) {
+    .project-card:nth-child(4n + 4) {
       grid-column: span 2;
     }
 
@@ -1911,11 +1911,11 @@ body.is-loaded .page-loader {
     grid-template-columns: 1fr;
   }
 
-  .project-card:first-child {
+  .project-card:nth-child(4n + 1) {
     grid-column: auto;
   }
 
-  .project-card:nth-child(4) {
+  .project-card:nth-child(4n + 4) {
     grid-column: auto;
   }
 
