@@ -532,7 +532,13 @@ body.is-loaded .page-loader {
 
 .about-section-content {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 18px;
+}
+
+.about-lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
   gap: 18px;
 }
 
@@ -549,8 +555,6 @@ body.is-loaded .page-loader {
 
 .about-card-story {
   position: relative;
-  grid-row: span 2;
-  min-height: 100%;
   overflow: hidden;
 }
 
@@ -623,7 +627,54 @@ body.is-loaded .page-loader {
 }
 
 .about-card-certificates {
+  min-width: 0;
+}
+
+.about-card-skills {
   grid-column: 1 / -1;
+}
+
+.about-card-contribution {
+  min-width: 0;
+}
+
+.about-contribution-list {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.about-contribution-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border: 1.5px solid rgba(20, 20, 20, 0.16);
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.about-contribution-item svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.about-contribution-item span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.about-contribution-item strong {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.about-contribution-item small {
+  color: rgba(20, 20, 20, 0.62);
+  font-size: 11px;
+  line-height: 1.3;
 }
 
 .about-card-story::before {
@@ -1706,6 +1757,14 @@ body.is-loaded .page-loader {
 
   .about-section-content {
     grid-template-columns: 1fr;
+  }
+
+  .about-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card-skills {
+    grid-column: auto;
   }
 
   .about-card-story {

@@ -1,6 +1,6 @@
 {
   "about": {
-    "title": "Foundations built through practice.",
+    "title": "I compete, build, and explain offensive security.",
     "lookingLabel": "Looking For",
     "roles": [
       "Penetration Tester",
@@ -8,14 +8,11 @@
       "Blue Team Analyst",
       "Cloud Engineer"
     ],
-    "intro": "Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.",
+    "intro": "Jr penetration tester focused on web security, Active Directory, and attack-defense operations. I placed 2nd at the UM Cybersecurity Summit CTF and 3rd out of 50 teams at Bingo CTF, while building cloud-hosted challenges and teaching web exploitation.",
     "points": [
-      "Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.",
-      "System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.",
-      "Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.",
-      "Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.",
-      "Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.",
-      "Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional."
+      "Top 1% globally on TryHackMe with 350+ completed rooms.",
+      "Built 9 web challenges and 1 Boot2Root machine using GCP, Cloudflare, and GitHub CI/CD.",
+      "Earned CEH and CPTS certifications while maintaining a 3.80 GPA."
     ]
   },
   "skills": {
