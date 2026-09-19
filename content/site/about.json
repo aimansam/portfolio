@@ -1,6 +1,6 @@
 {
   "about": {
-    "title": "I learn how systems fail—and build better ways to defend them.",
+    "title": "I turn attack paths into stronger defenses.",
     "lookingLabel": "Looking For",
     "roles": [
       "Penetration Tester",
@@ -8,7 +8,7 @@
       "Blue Team Analyst",
       "Cloud Engineer"
     ],
-    "intro": "I focus on web security, Active Directory, and attack-defense operations through competition, challenge development, and practical security work.",
+    "intro": "I compete, build, and teach across web security, Active Directory, and attack-defense operations.",
     "points": [
       "Top 1% globally on TryHackMe with 350+ completed rooms.",
       "Built 9 web challenges and 1 Boot2Root machine using GCP, Cloudflare, and GitHub CI/CD.",
