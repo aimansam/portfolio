@@ -1,1 +1,34 @@
-Ϋ}΄ηNοnψλ®ιΞ½ιύΡ®tλφο~ιξµιΝ΄οNοnψλ®ιΞ½ιύ΄λΞιήΉοNµλΎΉΫNϋλήψλΝ΄λ]΄α®wαώΩήΈοn½ο®Ήιν΄λnιώ»ΩΝ΄ο~ΉοnϊλΈΫNΊοnιέ΄ιξ»λήοΝ΄λ^λ΄λnµλ~›λΈΫN¶οέ΄λΈλήψλ^¶ιΞΉΫN·ιώοΉιξψΫNΊλήλχΩνΡ®[Ϋ^[γΎ½ο<ο¶ΫNtλ^»λχεέΌλΞψοτο}ΪΩύλήλ½ο~ΌλήΉιΞΈο}λήΩώ¶λ^ΈλΎΉΩώ;λήψγΞωλmΉίmτηNµλΎΉο}ί]τίMτίMτέώιώ»ιύέλΎ½οΌο¶Ϋή]ΫΞΌοψοNχέ­Ωώτλ^»λχΩξ»λήψλΞωλmλ~ιέΫέε½µεΎλΎ½ιξόεέΌλΞψοτο}ΪΩύλήλ½ο~ΌλήΉιΞΈο}λήΩώ¶λ^ΈλΎΉΩώλΎ½ιξόΩέτίMύί­χίέίιΞλΎέήλΎ½ιξόΫή]ΫΞΌοψοNχέ­ΩώλΎ½ιξόΩξοn»Ωύ½Ρ®[Ϋ^[αΞ½λ~ΉιξχλΪΫNγήxεέΌλΞψοτο}ΪΩύλήλ½ο~ΌλήΉιΞΈο}λήΩώ¶λ^ΈλΎΉΩώλή·λο~ΉΩήγήxΩή»οnΉλΩξχο®»Ϋή]ΫΞγή7γη~9ΫέΡ­·Ϋ}΄ηΎΌλ^ψΫN=ο΄γήχΡ­γ]΄ο~ψλ^ψλή·ΫNτιώφοΊιώλήΫNχλήψλ΄οΎ½οΌΫNµΫN7αήwΩήλή›λ΄λnιώ»ΫNΉιξ»λήλ΄{o4χ΄λ~ιξψλο΄ιΞ½ο®Ήο}΄λήΫNη~αν΄λ®½ιΞΉο}ΫNψλΞΉΫNΊοnιξψλλ΄οnΉιξΈλφο}΄λ®φιώΫNψλΞΉιέΫNµιξΈΫNλΎ½ιξόΫNχλφο®Ήο}΄οΌλ΄οΎΌιώλ΄οΌλήλ½ΫNιύ΄λµοµλnµο~ΉΩΝ΄ιξΫN¶ο½ιΞΈΫNχοΉοMΫNιύ΄λ®φλ^λϋιώφι½΄ιΞλ~›Ωή½ινΡ­Ϋ}·ΫNuο½λ~›ο~ψλ^φοΡ®΄λN΄λnµο~ΌΡ®»λήψΫN·ιΞιξΉΫNΌοψοNχέ­Ωώ»λήψλΞωλmλ~ιέλ^½ιήµιξχλ^ΩώτιώφοΊιώλήΩξ»λήψΡ®·λ΄οNοnψλ®ιΞ½ιύλλ~›λφΫN·ιώοNο~ΉΫNωοM΄ΩήΈΡ­·ΫNzλήχλήψΫNΌοψοMΪΩύιΞλ~µιΞΌιώχοΪίΝτίΝτΡ®΄λN΄Ρ­Ϋ}·ΫNwοφο·οωοnΉΡ­Ωέ΄Ω­η~ψλ^ψλή·ΫNΌιώλτλ^»λΩ­΄{o4χ΄οNοnψλ®ιΞ½ιύ΄λ~ιξψλοΫNµλnοψΩΝ΄οNφιώλ·οχΩνΩέ΄Ω­α®wαώΩήΈοn½ο®Ήιν΄λnιώ»Ω­ΫG¶σOxΫNϋοn½οΉΫNτιώχοχΫNµο}΄α®wαώΩΝ΄οnΉιξΈλφλΈΫNµο΄οnΉο^ωλχο΄ο½ιήΉΩνΩέ΄Ω­ιξ»λήοΝΩ­΄{o4χ΄ο~ΉοnϊλχΫNχοµο½λ}΄λ^χο~ΉοχΫM›ΫNτοnοΞ½λχΫNψλΞΉΫN¶ιΞλ½΄γ^tγέΡ­ΫMΩ®7αήwΫNµλλήΩ­ΫG¶σOxΫNιώ»λήΫNϋλήψλΝ΄γΎ½ο<ο¶ΫNγ^ωοΌΩΝ΄λΈλήψΫN·ιώοΉιξψΫN½ιν΄οΌλ΄λnφιώϋο~ΉοmΡ­Ϋ}·ΫNιώ·λ^ΫN8λϊλιώτιήΉιξψΡ­λN΄λN¶λ^χλΝΫ}΄γΈλήψΫN·ιώοΉιξψΫG¶σOxΫNη~αν΄λ®½ιΞΉο}΄ιΞ½ο®ΉΫN½ιν΄λ~ιξψλοΡ®Έιώ·ιΎΉοm΄λ~ιήτιώχλ΄λόλ·ΫNµοNτΫNτοήψλΞιν΄ιήµιξµλΎΉΩξτοέ΄λnωλήλΫ}΄γ^Έιή½ιν΄οNµιξΉιΝΪΫNΌοψοMΪΩύιΞλ~µιΞΌιώχοΪίΝτίΝτΩώµλλήΩύλN΄λMΡ­·Ϋ}΄γΉοNιώύιήΉιξψΡ­ηΌλ΄οnΉοNΫN½ο}΄ο~Ήο΄οτΫNΊιώφΫN;λήψγΞωλm΄ηNµλΎΉο}΄ιώφΫNµιξύΫNλΎ½ιξόΫNΌιώχοΫNwλΉΫN΄λΉοNιώύΩώ΄ΫNΊιώφΫNψλΞΉΫNλΎ½ιξόΫN·ιώλ®½λ½΄λ^λ΄λλ~›λφΫN·ιώοNο~ΉΫNΊλήλΡ­Ϋ}·ΫNλή·λο~ΉΡ­αή=η΄{o4χ΄ο~Ήλ΄εΎγή7γη~9εέΌαΞ=γ~9αξwγ½Ων
+# Portfolio
+
+Personal portfolio homepage with a JSON-driven blog, served from nginx and backed by editable content files.
+
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-100000?logo=github)](https://pages.github.com/)
+[![nginx](https://img.shields.io/badge/nginx-009639?logo=nginx)](https://nginx.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+## What It Is
+
+A static portfolio site with a CMS-like blog engine β€” content lives in JSON files, the frontend renders from them, and nginx serves the whole thing. No database, no build step, no framework lock-in.
+
+## Quickstart
+
+
+
+## Structure
+
+- **Static homepage** β€” portfolio content, about, projects.
+- **JSON-driven blog** β€” write posts as JSON, rendered at request time.
+- **nginx** β€” serves static assets + proxies the blog API.
+- **CMS admin** β€” login with GitHub OAuth, edit content in the browser.
+
+## Local Development
+
+
+
+## Deployment
+
+The repo is set up for GitHub Pages or any nginx host. See deploy/ for the nginx config and docker compose file.
+
+## License
+
+MIT β€” see [LICENSE](LICENSE).
