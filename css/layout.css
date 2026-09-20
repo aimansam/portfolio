@@ -2215,6 +2215,59 @@ body.is-loaded .page-loader {
   }
 }
 
+/* About evidence sections */
+.about-lower-grid {
+  grid-template-columns: 1fr;
+}
+
+.about-card-skills,
+.about-card-certificates {
+  grid-column: auto;
+}
+
+.about-card-skills {
+  border-top: 3px solid #2563eb;
+}
+
+.about-card-skills .about-skill-page {
+  padding: 4px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.about-card-skills .about-pill {
+  border-color: #d9dee7;
+  background: #f8fafc;
+}
+
+.about-card-certificates {
+  border-top: 3px solid #0f172a;
+}
+
+.about-card-certificates .about-cert-masonry {
+  column-count: 3;
+  column-gap: 16px;
+}
+
+.about-card-certificates .about-cert-masonry-card {
+  border-color: #d9dee7;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+@media only screen and (max-width: 1000px) {
+  .about-card-certificates .about-cert-masonry {
+    column-count: 3;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .about-card-certificates .about-cert-masonry {
+    column-count: 1;
+  }
+}
+
 /* Certificate Masonry - Tablet */
 @media only screen and (max-width: 1000px) {
   .about-cert-masonry {

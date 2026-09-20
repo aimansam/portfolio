@@ -368,7 +368,7 @@ const applySkillsContent = (content) => {
 
 // Certificate pagination state
 let certCurrentPage = 1
-const certPerPage = 2
+const certPerPage = 3
 
 const applyCertificatesContent = (content) => {
   // Apply to masonry grid with pagination (right column below skills)
