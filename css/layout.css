@@ -2651,30 +2651,6 @@ body.is-loaded .page-loader {
   .story-chapter-list::before { left: 17px; }
   .story-chapter { grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
   .story-chapter-number { margin-left: 0; }
-
-  .about-credentials {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about-credentials-heading {
-    grid-column: 1 / -1;
-    min-height: 54px;
-    padding-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .about-credentials-heading span {
-    padding: 0;
-  }
-
-  .about-credential-item {
-    min-height: 64px;
-  }
-
-  .about-credential-item:nth-child(even) {
-    border-right: 0;
-  }
 }
 
 /* About hero impact pass */
@@ -2710,59 +2686,6 @@ body.is-loaded .page-loader {
   color: #0f172a;
   box-shadow: none;
 }
-
-.about-credentials {
-  display: grid;
-  grid-template-columns: minmax(140px, 1.3fr) repeat(5, minmax(100px, 1fr));
-  margin-top: 22px;
-  border-top: 1px solid #cbd5e1;
-  border-bottom: 1px solid #cbd5e1;
-}
-
-.about-credentials-heading,
-.about-credential-item {
-  min-height: 76px;
-  padding: 14px 16px;
-  border-right: 1px solid #e2e8f0;
-}
-
-.about-credentials-heading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  padding-left: 0;
-}
-
-.about-credentials-heading span {
-  color: #0f172a;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.about-credentials-heading small,
-.about-credential-item small {
-  color: #64748b;
-  font-size: 10px;
-  line-height: 1.25;
-}
-
-.about-credential-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-}
-
-.about-credential-item strong {
-  color: #2563eb;
-  font-size: 18px;
-  letter-spacing: -0.02em;
-}
-
-.about-credential-item:last-child { border-right: 0; }
 
 .story-chapters {
   display: flex;
@@ -2929,33 +2852,7 @@ body.is-loaded .page-loader {
     gap: 14px;
   }
 
-  .about-credentials { gap: 10px 0; }
-  .about-credentials span { padding: 0 12px; }
-  .about-credentials span:nth-child(3) { padding-left: 0; border-right: 0; }
   .story-chapter-list::before { left: 17px; }
   .story-chapter { grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
   .story-chapter-number { margin-left: 0; }
-}
-
-@media only screen and (max-width: 600px) {
-  .about-credentials {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .about-credentials-heading {
-    grid-column: 1 / -1;
-    min-height: 54px;
-    padding-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .about-credential-item {
-    min-height: 64px;
-  }
-
-  .about-credential-item:nth-child(odd) {
-    border-right: 0;
-  }
 }
