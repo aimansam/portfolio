@@ -2598,6 +2598,30 @@ body.is-loaded .page-loader {
   .story-chapter-list::before { left: 17px; }
   .story-chapter { grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
   .story-chapter-number { margin-left: 0; }
+
+  .about-credentials {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-credentials-heading {
+    grid-column: 1 / -1;
+    min-height: 54px;
+    padding-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .about-credentials-heading span {
+    padding: 0;
+  }
+
+  .about-credential-item {
+    min-height: 64px;
+  }
+
+  .about-credential-item:nth-child(even) {
+    border-right: 0;
+  }
 }
 
 /* About hero impact pass */
@@ -2635,27 +2659,57 @@ body.is-loaded .page-loader {
 }
 
 .about-credentials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  margin-top: 20px;
-  padding: 16px 0;
-  border-top: 1px solid #d9dee7;
-  border-bottom: 1px solid #d9dee7;
+  display: grid;
+  grid-template-columns: minmax(140px, 1.3fr) repeat(5, minmax(100px, 1fr));
+  margin-top: 22px;
+  border-top: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
 }
 
-.about-credentials span {
-  padding: 0 18px;
-  border-right: 1px solid #cbd5e1;
-  color: #334155;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+.about-credentials-heading,
+.about-credential-item {
+  min-height: 76px;
+  padding: 14px 16px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.about-credentials-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding-left: 0;
+}
+
+.about-credentials-heading span {
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.about-credentials span:first-child { padding-left: 0; }
-.about-credentials span:last-child { border-right: 0; }
+.about-credentials-heading small,
+.about-credential-item small {
+  color: #64748b;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.about-credential-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.about-credential-item strong {
+  color: #2563eb;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.about-credential-item:last-child { border-right: 0; }
 
 .story-chapters {
   display: flex;
@@ -2828,4 +2882,27 @@ body.is-loaded .page-loader {
   .story-chapter-list::before { left: 17px; }
   .story-chapter { grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
   .story-chapter-number { margin-left: 0; }
+}
+
+@media only screen and (max-width: 600px) {
+  .about-credentials {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .about-credentials-heading {
+    grid-column: 1 / -1;
+    min-height: 54px;
+    padding-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .about-credential-item {
+    min-height: 64px;
+  }
+
+  .about-credential-item:nth-child(odd) {
+    border-right: 0;
+  }
 }
