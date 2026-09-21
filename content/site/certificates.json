@@ -28,21 +28,21 @@
         "note": "TryHackMe path focused on practical offensive security fundamentals.",
         "code": "JPT",
         "meta": "THM",
-        "image": ""
+        "image": "./assets/images/certificates/JR-PENTESTER.jpg"
       },
       {
         "name": "Full-Stack Web Development Bootcamp",
         "note": "Udemy training across JavaScript, Next.js, React, PostgreSQL, and MongoDB.",
         "code": "WEB",
         "meta": "DEV",
-        "image": ""
+        "image": "./assets/images/certificates/FULLSTACK-BOOTCAMP.jpg"
       },
       {
         "name": "Python & Bash for Ethical Hackers",
         "note": "Practical scripting and automation for penetration testing and security workflows.",
         "code": "PY",
         "meta": "ETH",
-        "image": ""
+        "image": "./assets/images/certificates/PYTHON-BASH.jpg"
       }
     ]
   }
