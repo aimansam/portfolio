@@ -2472,6 +2472,68 @@ body.is-loaded .page-loader {
   background: #0f172a;
 }
 
+/* Gallery bento layout */
+.gallery-masonry {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 150px;
+  grid-auto-flow: dense;
+}
+
+.gallery-masonry-item {
+  aspect-ratio: auto;
+  min-height: 150px;
+}
+
+.gallery-masonry-item:nth-child(1),
+.gallery-masonry-item:nth-child(10n + 1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery-masonry-item:nth-child(4n + 2),
+.gallery-masonry-item:nth-child(4n + 3) {
+  grid-row: span 2;
+}
+
+.gallery-masonry-item-video {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-color: #2563eb;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.18);
+}
+
+@media only screen and (max-width: 800px) {
+  .gallery-masonry {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 140px;
+  }
+
+  .gallery-masonry-item {
+    min-height: 140px;
+  }
+
+  .gallery-masonry-item:nth-child(4n + 2),
+  .gallery-masonry-item:nth-child(4n + 3) {
+    grid-row: span 1;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .gallery-masonry {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+
+  .gallery-masonry-item,
+  .gallery-masonry-item:nth-child(1),
+  .gallery-masonry-item:nth-child(10n + 1),
+  .gallery-masonry-item-video {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 220px;
+  }
+}
+
 /* Staggered Ken Burns animations for variety */
 .gallery-masonry-item:nth-child(odd) .gallery-masonry-image {
   animation-direction: alternate;

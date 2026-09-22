@@ -529,7 +529,7 @@ const applyGalleryContent = (content) => {
         : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View image in lightbox" data-lightbox="${escapeHtml(item.image)}">
             <div class="gallery-image-wrapper"><img src="${escapeHtml(item.image)}" alt="Gallery image" class="gallery-masonry-image" loading="lazy"></div>
           </div>`
-      return `<div class="gallery-masonry-item">${media}</div>`
+      return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}">${media}</div>`
     }).join('')
   }
 }
