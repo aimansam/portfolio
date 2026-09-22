@@ -334,7 +334,7 @@ const applyAboutContent = (content) => {
   const aboutRoleList = document.getElementById('about-role-list')
   const aboutIntro = document.getElementById('about-intro')
   const aboutPoints = document.getElementById('about-points')
-  if (content.about?.title) aboutTitle.textContent = content.about.title
+  if (content.about?.title && aboutTitle) aboutTitle.textContent = content.about.title
   if (content.about?.lookingLabel && aboutLookingLabel) aboutLookingLabel.textContent = content.about.lookingLabel
   if (Array.isArray(content.about?.roles) && aboutRoleList) {
     aboutRoleList.replaceChildren(...content.about.roles.map(role => {
