@@ -26,7 +26,7 @@
       {
         "id": "bad-usb-lab",
         "category": "hardware",
-        "image": "./assets/images/projects/bad-usb-lab/rubby.jpg",
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.jpg",
         "tags": ["Hardware", "Endpoint"],
         "title": "Rubber Ducky / Bad USB",
         "summary": "Studies physical-access payloads and endpoint detection visibility.",
