@@ -16,7 +16,7 @@
           "2nd Place · UM Attack & Defense CTF",
           "3rd / 50 · Bingo CTF"
         ],
-        "image": "",
+        "image": "./assets/images/me/aimansamwinner.png,
         "imageAlt": "Competition achievement"
       },
       {
@@ -26,7 +26,7 @@
           "9 Web Challenges · 1 Boot2Root",
           "GCP · Cloudflare · GitHub CI/CD"
         ],
-        "image": "",
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.jpg",
         "imageAlt": "Challenge development and lab infrastructure"
       },
       {
@@ -46,7 +46,7 @@
           "Web Security · Active Directory · Forensics",
           "Penetration Testing → Detection Engineering"
         ],
-        "image": "",
+        "image": "./assets/images/certificates/CPTS.jpg",
         "imageAlt": "Current security direction"
       }
     ],
