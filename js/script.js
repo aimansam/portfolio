@@ -381,6 +381,11 @@ const applyAboutContent = (content) => {
       media.setAttribute('aria-label', story.imageAlt || 'Story image placeholder')
       if (!story.image) {
         delete media.dataset.imageLabel
+        media.removeAttribute('data-lightbox')
+        media.removeAttribute('data-lightbox-title')
+        media.removeAttribute('data-lightbox-desc')
+        media.removeAttribute('tabindex')
+        media.setAttribute('role', 'img')
         return
       }
 
@@ -390,8 +395,13 @@ const applyAboutContent = (content) => {
       image.loading = 'lazy'
       media.replaceChildren(image)
       media.dataset.imageLabel = `${String(storyIndex + 1).padStart(2, '0')} / STORY IMAGE`
+      media.dataset.lightbox = image.src
+      media.dataset.lightboxTitle = story.title || story.imageAlt || 'Story image'
+      media.dataset.lightboxDesc = story.imageAlt || ''
+      media.setAttribute('aria-label', `Open ${story.title || 'story'} image`)
+      media.setAttribute('role', 'button')
+      media.setAttribute('tabindex', '0')
       media.classList.add('has-image')
-      media.removeAttribute('role')
     })
   }
 }

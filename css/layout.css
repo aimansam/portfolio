@@ -2985,6 +2985,30 @@ body.is-loaded .page-loader {
   min-height: 126px;
   border-style: solid;
   background: #e2e8f0;
+  cursor: zoom-in;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.story-chapter-media.has-image:hover,
+.story-chapter-media.has-image:focus-visible {
+  box-shadow: 14px 16px 0 rgba(219, 234, 254, 0.82);
+  outline: none;
+  transform: rotate(-4deg) translateY(-3px);
+}
+
+.story-chapter:nth-child(2) .story-chapter-media.has-image:hover,
+.story-chapter:nth-child(2) .story-chapter-media.has-image:focus-visible {
+  transform: rotate(3deg) translateY(-3px);
+}
+
+.story-chapter:nth-child(3) .story-chapter-media.has-image:hover,
+.story-chapter:nth-child(3) .story-chapter-media.has-image:focus-visible {
+  transform: rotate(-2deg) translateY(-3px);
+}
+
+.story-chapter:nth-child(4) .story-chapter-media.has-image:hover,
+.story-chapter:nth-child(4) .story-chapter-media.has-image:focus-visible {
+  transform: rotate(4deg) translateY(-3px);
 }
 
 .story-chapter-media.has-image img {
