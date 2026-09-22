@@ -3,9 +3,6 @@
     "title": "",
     "items": [
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-21.jpg"
-      },
-      {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-47.jpg"
       },
       {
@@ -110,6 +107,21 @@
       {
         "type": "video",
         "video": "./assets/images/gallery/dump/video_2026-09-22_14-02-22.mp4"
+      },
+      {
+        "image": "./assets/images/gallery/workshop/workshop1.jpg"
+      },
+      {
+        "image": "./assets/images/gallery/workshop/workshop2.jpg"
+      },
+      {
+        "image": "./assets/images/gallery/workshop/workshop3.jpg"
+      },
+      {
+        "image": "./assets/images/gallery/workshop/workshop4.jpg"
+      },
+      {
+        "image": "./assets/images/gallery/workshop/workshop5.jpg"
       }
     ]
   }
