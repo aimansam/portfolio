@@ -379,13 +379,17 @@ const applyAboutContent = (content) => {
       if (!story) return
 
       media.setAttribute('aria-label', story.imageAlt || 'Story image placeholder')
-      if (!story.image) return
+      if (!story.image) {
+        delete media.dataset.imageLabel
+        return
+      }
 
       const image = document.createElement('img')
       image.src = resolvePortfolioUrl(story.image)
       image.alt = story.imageAlt || 'Story image'
       image.loading = 'lazy'
       media.replaceChildren(image)
+      media.dataset.imageLabel = `${String(storyIndex + 1).padStart(2, '0')} / STORY IMAGE`
       media.classList.add('has-image')
       media.removeAttribute('role')
     })

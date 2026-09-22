@@ -2991,12 +2991,18 @@ body.is-loaded .page-loader {
   display: block;
   width: 100%;
   height: 126px;
+  padding: 8px;
   border-radius: inherit;
-  object-fit: cover;
+  background: #ffffff;
+  object-fit: contain;
 }
 
 .story-chapter-media.has-image span {
   display: none;
+}
+
+.story-chapter .story-chapter-media.has-image::before {
+  content: attr(data-image-label);
 }
 
 .story-chapter:nth-child(2) .story-chapter-media {
