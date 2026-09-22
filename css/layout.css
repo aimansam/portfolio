@@ -2981,6 +2981,24 @@ body.is-loaded .page-loader {
   background: rgba(255, 255, 255, 0.72);
 }
 
+.story-chapter-media.has-image {
+  min-height: 126px;
+  border-style: solid;
+  background: #e2e8f0;
+}
+
+.story-chapter-media.has-image img {
+  display: block;
+  width: 100%;
+  height: 126px;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.story-chapter-media.has-image span {
+  display: none;
+}
+
 .story-chapter:nth-child(2) .story-chapter-media {
   transform: rotate(3deg);
 }

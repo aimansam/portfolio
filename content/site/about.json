@@ -8,6 +8,48 @@
       "Blue Team Analyst",
       "Cloud Engineer"
     ],
+    "story": [
+      {
+        "title": "I started by competing.",
+        "description": "CTFs taught me to work under pressure and think through web, cryptography, and forensics problems with a team.",
+        "highlights": [
+          "2nd Place · UM Attack & Defense CTF",
+          "3rd / 50 · Bingo CTF"
+        ],
+        "image": "",
+        "imageAlt": "Competition achievement"
+      },
+      {
+        "title": "Then I started building.",
+        "description": "I moved from solving challenges to creating realistic environments for others to solve.",
+        "highlights": [
+          "9 Web Challenges · 1 Boot2Root",
+          "GCP · Cloudflare · GitHub CI/CD"
+        ],
+        "image": "",
+        "imageAlt": "Challenge development and lab infrastructure"
+      },
+      {
+        "title": "Then I started teaching.",
+        "description": "Security knowledge becomes more valuable when it can be explained clearly and applied by someone else.",
+        "highlights": [
+          "Two practical web-exploitation workshops",
+          "DIV:IDE Academy · Hack@10 CTF"
+        ],
+        "image": "",
+        "imageAlt": "Security workshop"
+      },
+      {
+        "title": "Now I am expanding.",
+        "description": "I am carrying offensive security practice into detection engineering and defensive capability.",
+        "highlights": [
+          "Web Security · Active Directory · Forensics",
+          "Penetration Testing → Detection Engineering"
+        ],
+        "image": "",
+        "imageAlt": "Current security direction"
+      }
+    ],
     "intro": "I compete, build, and teach across web security, Active Directory, and attack-defense operations.",
     "points": [
       "Top 1% globally on TryHackMe with 350+ completed rooms.",

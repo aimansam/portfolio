@@ -330,8 +330,6 @@ const applyStatsContent = (content) => {
 
 const applyAboutContent = (content) => {
   const aboutTitle = document.getElementById('about-title')
-  if (!aboutTitle) return
-
   const aboutLookingLabel = document.getElementById('about-looking-label')
   const aboutRoleList = document.getElementById('about-role-list')
   const aboutIntro = document.getElementById('about-intro')
@@ -348,6 +346,49 @@ const applyAboutContent = (content) => {
     aboutPoints.replaceChildren(...content.about.points.map(point => {
       const item = document.createElement('li'); item.textContent = point; return item;
     }))
+  }
+
+  const storyContent = document.querySelectorAll('[data-story-content]')
+  if (Array.isArray(content.about?.story) && storyContent.length) {
+    storyContent.forEach(container => {
+      const storyIndex = Number(container.dataset.storyContent)
+      const story = content.about.story[storyIndex]
+      if (!story) return
+
+      const title = document.createElement('h2')
+      title.textContent = story.title || ''
+      const description = document.createElement('p')
+      description.textContent = story.description || ''
+      container.replaceChildren(title, description)
+
+      if (Array.isArray(story.highlights)) {
+        story.highlights.forEach(highlight => {
+          const item = document.createElement('strong')
+          item.textContent = highlight
+          container.appendChild(item)
+        })
+      }
+    })
+  }
+
+  const storyMedia = document.querySelectorAll('[data-story-media]')
+  if (Array.isArray(content.about?.story) && storyMedia.length) {
+    storyMedia.forEach(media => {
+      const storyIndex = Number(media.dataset.storyMedia)
+      const story = content.about.story[storyIndex]
+      if (!story) return
+
+      media.setAttribute('aria-label', story.imageAlt || 'Story image placeholder')
+      if (!story.image) return
+
+      const image = document.createElement('img')
+      image.src = resolvePortfolioUrl(story.image)
+      image.alt = story.imageAlt || 'Story image'
+      image.loading = 'lazy'
+      media.replaceChildren(image)
+      media.classList.add('has-image')
+      media.removeAttribute('role')
+    })
   }
 }
 
