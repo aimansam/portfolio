@@ -833,6 +833,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 3. Fetch page-specific content
     const pageContent = await safeFetch(contentFile)
+    const isHomePage = path === '/' || path === '' || path.match(/index\.html$/i)
+    const heroContent = isHomePage ? await safeFetch('content/site/hero.json') : null
     const certificatesContent = path.match(/about\.html$/i) || path.match(/\/about\.html/i)
       ? await safeFetch('content/site/certificates.json')
       : null
@@ -843,6 +845,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       Object.assign(finalContent, pageContent)
     } else {
       console.warn('Page content not available, using base content only')
+    }
+    if (heroContent?.hero) {
+      finalContent.hero = heroContent.hero
     }
     if (certificatesContent?.certificates) {
       finalContent.certificates = certificatesContent.certificates
