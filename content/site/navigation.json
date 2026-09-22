@@ -28,6 +28,12 @@
         "icon": "./assets/icons/briefcase.svg"
       },
       {
+        "href": "./gallery.html",
+        "label": "Gallery",
+        "ariaLabel": "Go to gallery",
+        "icon": "./assets/icons/gallery.svg"
+      },
+      {
         "href": "./blog/index.html",
         "label": "Blog",
         "ariaLabel": "Go to blog",
