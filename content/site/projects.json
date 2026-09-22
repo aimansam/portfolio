@@ -51,12 +51,12 @@
       {
         "id": "web-vuln-scanner",
         "category": "web",
-        "image": "./blog/posts/monster-corporate/monster-corporate-00.png",
+        "image": "./assets/images/projects/durian/durian.png",
         "tags": ["Web Security", "Python", "CLI"],
-        "title": "Web Vulnerability Scanner",
+        "title": "Durian: A Web Vulnerability Scanner",
         "summary": "Scans authorized web targets and generates reports.",
         "tools": ["Python", "Crawler", "Reporting"],
-        "githubUrl": "https://github.com/aimansam/web-vuln-scanner",
+        "githubUrl": "https://github.com/aimansam/durian",
         "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
         "href": "./project-pages/project.html?id=web-vuln-scanner",
         "featured": false
