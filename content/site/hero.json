@@ -1,7 +1,7 @@
 {
   "hero": {
-    "title": "Hello, I'm @Aiman.",
-    "intro": "I'm a junior penetration tester and web developer specializing in identifying vulnerabilities and building secure web applications.",
+    "title": "Hello, I'm @Aiman Sam.",
+    "intro": "Security focused developer building Red Team tooling, EDR evasion research, web security, CTF.",
     "primaryAction": {
       "label": "Check out my projects",
       "href": "#my-work-section"
