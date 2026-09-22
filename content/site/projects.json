@@ -12,18 +12,6 @@
     ],
     "items": [
       {
-        "id": "enterprise-homelab",
-        "category": "infrastructure",
-        "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
-        "tags": ["Infrastructure", "Active Directory"],
-        "title": "Enterprise Grade Home Lab",
-        "summary": "Segmented lab validates AD attacks and detection.",
-        "tools": ["Windows", "Linux", "Active Directory", "SIEM"],
-        "description": "A fully virtualized enterprise-style home lab designed to simulate real-world network environments for security testing and research. Built with segmented networks, Active Directory, SIEM integration, and monitoring tools, this lab enables hands-on practice in threat detection, incident response, lateral movement, and privilege escalation across Windows and Linux systems.",
-        "href": "./project-pages/project.html?id=enterprise-homelab",
-        "featured": true
-      },
-      {
         "id": "bad-usb-lab",
         "category": "hardware",
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.jpg",
