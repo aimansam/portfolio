@@ -62,19 +62,6 @@
         "featured": false
       },
       {
-        "id": "security-tooling",
-        "category": "defensive",
-        "image": "./assets/images/zx10r/zx10r.jpg",
-        "tags": ["Security Tooling", "Python", "Automation"],
-        "title": "Security Tooling Collection",
-        "summary": "Builds focused Python tools for security analysis.",
-        "tools": ["Python", "CLI", "Detection"],
-        "githubUrl": "https://github.com/aimansam/siem-lite",
-        "description": "A collection of focused Python tools for SIEM-style log analysis, phishing triage, packet analysis, port discovery, and password auditing.",
-        "href": "./project-pages/project.html?id=security-tooling",
-        "featured": false
-      },
-      {
         "id": "divide-ctf-recipe",
         "category": "web",
         "image": "./assets/images/projects/DIVIDE/DIVIDE.png",
