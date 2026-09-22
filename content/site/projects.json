@@ -90,7 +90,7 @@
       {
         "id": "baby-c2",
         "category": "research",
-        "image": "./assets/images/zx10r/zx10r.jpg",
+        "image": "./assets/images/projects/jebat/jebat.png",
         "tags": ["Authorized Research", "Detection", "Python"],
         "title": "Jebat: A C2 Agent",
         "summary": "Studies command channels through authorized defensive research.",
