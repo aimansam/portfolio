@@ -520,26 +520,17 @@ const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBt
 
 const applyGalleryContent = (content) => {
   const galleryTitle = document.getElementById('gallery-title')
-  if (!galleryTitle) return
-
   const galleryList = document.getElementById('gallery-list')
-  if (content.gallery?.title) galleryTitle.textContent = content.gallery.title
+  if (content.gallery?.title && galleryTitle) galleryTitle.textContent = content.gallery.title
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
-    galleryList.innerHTML = content.gallery.items.map(item => `
-      <div class="gallery-masonry-item">
-        <div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${item.title || 'image'} in lightbox" data-lightbox="${item.image || './assets/images/me/aimansamwinner.png'}" data-lightbox-title="${item.title || ''}" data-lightbox-desc="${item.description || ''}">
-          <div class="gallery-image-wrapper">
-            <img src="${item.image || './assets/images/me/aimansamwinner.png'}" alt="${item.title || 'Gallery image'}" class="gallery-masonry-image" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <span class="gallery-overlay-title">${escapeHtml(item.title || 'Untitled')}</span>
-              <span class="gallery-overlay-description">${escapeHtml(item.description || '')}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('')
+    galleryList.innerHTML = content.gallery.items.map(item => {
+      const media = item.type === 'video'
+        ? `<video class="gallery-masonry-video" controls preload="metadata" playsinline aria-label="Gallery video"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
+        : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View image in lightbox" data-lightbox="${escapeHtml(item.image)}">
+            <div class="gallery-image-wrapper"><img src="${escapeHtml(item.image)}" alt="Gallery image" class="gallery-masonry-image" loading="lazy"></div>
+          </div>`
+      return `<div class="gallery-masonry-item">${media}</div>`
+    }).join('')
   }
 }
 
