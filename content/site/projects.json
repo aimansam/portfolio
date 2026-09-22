@@ -38,7 +38,7 @@
       {
         "id": "oxblood-drill",
         "category": "infrastructure",
-        "image": "./assets/images/projects/enterprise-homelab/homelab.jpg",
+        "image": "./assets/images/projects/oxblood/oxblood.png",
         "tags": ["Cyber Range", "Proxmox", "Blue Team"],
         "title": "OxBlood: A Cyber Drill Platform",
         "summary": "Runs repeatable red-blue drills on Proxmox infrastructure.",
