@@ -2927,3 +2927,115 @@ body.is-loaded .page-loader {
   .story-chapter { grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
   .story-chapter-number { margin-left: 0; }
 }
+
+/* Story image holders: editorial cards that can be replaced with real images. */
+.story-chapter-list {
+  max-width: 1180px;
+}
+
+.story-chapter {
+  grid-template-columns: 96px minmax(0, 1fr) 220px;
+  align-items: center;
+  gap: 28px;
+}
+
+.story-chapter-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 190px;
+  min-height: 126px;
+  justify-self: end;
+  overflow: visible;
+  border: 1px dashed #93c5fd;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(239, 246, 255, 0.92), rgba(248, 250, 252, 0.98)),
+    repeating-linear-gradient(135deg, transparent 0 10px, rgba(37, 99, 235, 0.07) 10px 11px);
+  box-shadow: 10px 12px 0 rgba(219, 234, 254, 0.75);
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  transform: rotate(-4deg);
+}
+
+.story-chapter-media::before {
+  content: "01 / IMAGE SLOT";
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  padding: 4px 7px;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2563eb;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.story-chapter-media span {
+  padding: 8px 10px;
+  border: 1px solid rgba(37, 99, 235, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.story-chapter:nth-child(2) .story-chapter-media {
+  transform: rotate(3deg);
+}
+
+.story-chapter:nth-child(2) .story-chapter-media::before {
+  content: "02 / IMAGE SLOT";
+  left: auto;
+  right: 14px;
+}
+
+.story-chapter:nth-child(3) .story-chapter-media {
+  transform: rotate(-2deg);
+}
+
+.story-chapter:nth-child(3) .story-chapter-media::before {
+  content: "03 / IMAGE SLOT";
+}
+
+.story-chapter:nth-child(4) .story-chapter-media {
+  border-color: #2563eb;
+  background:
+    linear-gradient(135deg, rgba(219, 234, 254, 0.96), rgba(239, 246, 255, 0.98)),
+    repeating-linear-gradient(135deg, transparent 0 10px, rgba(37, 99, 235, 0.1) 10px 11px);
+  transform: rotate(4deg);
+}
+
+.story-chapter:nth-child(4) .story-chapter-media::before {
+  content: "04 / IMAGE SLOT";
+  left: auto;
+  right: 14px;
+}
+
+@media only screen and (max-width: 900px) {
+  .story-chapter {
+    grid-template-columns: 72px minmax(0, 1fr) 170px;
+    gap: 18px;
+  }
+
+  .story-chapter-media {
+    width: 150px;
+    min-height: 108px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .story-chapter {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .story-chapter-media {
+    grid-column: 2;
+    width: min(190px, 78vw);
+    min-height: 132px;
+    margin-top: 10px;
+    justify-self: start;
+  }
+}
