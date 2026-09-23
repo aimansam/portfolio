@@ -525,9 +525,9 @@ const applyGalleryContent = (content) => {
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
     galleryList.innerHTML = content.gallery.items.map(item => {
       const media = item.type === 'video'
-        ? `<video class="gallery-masonry-video" controls preload="metadata" playsinline aria-label="Gallery video"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
-        : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View image in lightbox" data-lightbox="${escapeHtml(item.image)}">
-            <div class="gallery-image-wrapper"><img src="${escapeHtml(item.image)}" alt="Gallery image" class="gallery-masonry-image" loading="lazy"></div>
+        ? `<video class="gallery-masonry-video" controls preload="metadata" playsinline aria-label="${escapeHtml(item.alt || 'Gallery video')}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
+        : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${escapeHtml(item.alt || 'image')} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${escapeHtml(item.alt || '')}">
+            <div class="gallery-image-wrapper"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.alt || 'Gallery image')}" class="gallery-masonry-image" loading="lazy"></div>
           </div>`
       return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}">${media}</div>`
     }).join('')

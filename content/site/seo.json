@@ -1,14 +1,14 @@
 {
   "seo": {
-    "title": "Aiman Sam | Junior Pentester and Web Developer",
-    "description": "Aiman Sam is a junior penetration tester and web developer focused on web exploitation, offensive security labs, and building secure web applications.",
+    "title": "Aiman Sam | Penetration Tester and CTF Creator",
+    "description": "Aiman Sam is a junior penetration tester focused on web security, Active Directory, CTF creation, and practical attack-defense environments.",
     "siteName": "Aiman Sam Portfolio",
     "canonicalUrl": "https://portfolio.aimansam.my/",
     "image": "https://portfolio.aimansam.my/assets/images/me/aimansamwinner.png",
     "imageAlt": "Portrait of Aiman Sam",
     "personName": "Aiman Sam",
     "alternateName": "zx10r",
-    "jobTitle": "Junior Penetration Tester and Web Developer",
+    "jobTitle": "Junior Penetration Tester and CTF Creator",
     "email": "mailto:zx10r8443@gmail.com",
     "sameAs": [
       "https://github.com/aimansam",

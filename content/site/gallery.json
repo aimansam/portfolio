@@ -3,122 +3,161 @@
     "title": "",
     "items": [
       {
-        "image": "./assets/images/gallery/workshop/workshop2.jpg"
+        "image": "./assets/images/gallery/workshop/workshop2.jpg",
+        "alt": "Security workshop photo 1"
       },
       {
-        "image": "./assets/images/gallery/workshop/workshop3.jpg"
+        "image": "./assets/images/gallery/workshop/workshop3.jpg",
+        "alt": "Security workshop photo 2"
       },
       {
-        "image": "./assets/images/gallery/workshop/workshop1.jpg"
+        "image": "./assets/images/gallery/workshop/workshop1.jpg",
+        "alt": "Security workshop photo 3"
       },
       {
-        "image": "./assets/images/gallery/workshop/workshop5.jpg"
+        "image": "./assets/images/gallery/workshop/workshop5.jpg",
+        "alt": "Security workshop photo 4"
       },
       {
-        "image": "./assets/images/gallery/workshop/workshop4.jpg"
+        "image": "./assets/images/gallery/workshop/workshop4.jpg",
+        "alt": "Security workshop photo 5"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-47.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-47.jpg",
+        "alt": "Security portfolio photo 6"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-51.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-51.jpg",
+        "alt": "Security portfolio photo 7"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53.jpg",
+        "alt": "Security portfolio photo 8"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-55.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-55.jpg",
+        "alt": "Security portfolio photo 9"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-57.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-57.jpg",
+        "alt": "Security portfolio photo 10"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-58.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-58.jpg",
+        "alt": "Security portfolio photo 11"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-00.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-00.jpg",
+        "alt": "Security portfolio photo 12"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-01.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-01.jpg",
+        "alt": "Security portfolio photo 13"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-05.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-05.jpg",
+        "alt": "Security portfolio photo 14"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-07.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-07.jpg",
+        "alt": "Security portfolio photo 15"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-11.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-11.jpg",
+        "alt": "Security portfolio photo 16"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.jpg",
+        "alt": "Security portfolio photo 17"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-15.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-15.jpg",
+        "alt": "Security portfolio photo 18"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-17.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-17.jpg",
+        "alt": "Security portfolio photo 19"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-19.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-19.jpg",
+        "alt": "Security portfolio photo 20"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-21.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-21.jpg",
+        "alt": "Security portfolio photo 21"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-23.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-23.jpg",
+        "alt": "Security portfolio photo 22"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-24.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-24.jpg",
+        "alt": "Security portfolio photo 23"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-27.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-27.jpg",
+        "alt": "Security portfolio photo 24"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-30.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-30.jpg",
+        "alt": "Security portfolio photo 25"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-34.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-34.jpg",
+        "alt": "Security portfolio photo 26"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-37.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-37.jpg",
+        "alt": "Security portfolio photo 27"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-39.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-39.jpg",
+        "alt": "Security portfolio photo 28"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.jpg",
+        "alt": "Security portfolio photo 29"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-42.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-42.jpg",
+        "alt": "Security portfolio photo 30"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-51.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-51.jpg",
+        "alt": "Security portfolio photo 31"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-54.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-54.jpg",
+        "alt": "Security portfolio photo 32"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-57.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-57.jpg",
+        "alt": "Security portfolio photo 33"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-08.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-08.jpg",
+        "alt": "Security portfolio photo 34"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-16.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-16.jpg",
+        "alt": "Security portfolio photo 35"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00.jpg",
+        "alt": "Security portfolio photo 36"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02.jpg",
+        "alt": "Security portfolio photo 37"
       },
       {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-05.jpg"
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-05.jpg",
+        "alt": "Security portfolio photo 38"
       },
       {
         "type": "video",
-        "video": "./assets/images/gallery/dump/video_2026-09-22_14-02-22.mp4"
+        "video": "./assets/images/gallery/dump/video_2026-09-22_14-02-22.mp4",
+        "alt": "Security portfolio video from September 2026"
       }
     ]
   }
