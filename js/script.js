@@ -394,7 +394,7 @@ const applyAboutContent = (content) => {
       image.alt = story.imageAlt || 'Story image'
       image.loading = 'lazy'
       media.replaceChildren(image)
-      media.dataset.imageLabel = `${String(storyIndex + 1).padStart(2, '0')} / STORY IMAGE`
+      media.dataset.imageLabel = `${String(storyIndex + 1).padStart(2, '0')} / WINNING`
       media.dataset.lightbox = image.src
       media.dataset.lightboxTitle = story.title || story.imageAlt || 'Story image'
       media.dataset.lightboxDesc = story.imageAlt || ''
