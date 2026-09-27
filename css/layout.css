@@ -3031,7 +3031,7 @@ body.is-loaded .page-loader {
 }
 
 .story-chapter-media::before {
-  content: "01 / IMAGE SLOT";
+  content: "01 / WINNING";
   position: absolute;
   top: -10px;
   left: 14px;
@@ -3104,7 +3104,7 @@ body.is-loaded .page-loader {
 }
 
 .story-chapter:nth-child(2) .story-chapter-media::before {
-  content: "02 / IMAGE SLOT";
+  content: "02 / BUILDING";
   left: auto;
   right: 14px;
 }
@@ -3114,7 +3114,7 @@ body.is-loaded .page-loader {
 }
 
 .story-chapter:nth-child(3) .story-chapter-media::before {
-  content: "03 / IMAGE SLOT";
+  content: "03 / TEACHING";
 }
 
 .story-chapter:nth-child(4) .story-chapter-media {
@@ -3126,7 +3126,7 @@ body.is-loaded .page-loader {
 }
 
 .story-chapter:nth-child(4) .story-chapter-media::before {
-  content: "04 / IMAGE SLOT";
+  content: "04 / EXPANDING";
   left: auto;
   right: 14px;
 }
