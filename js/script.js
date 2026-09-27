@@ -728,6 +728,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Initialize Scroll Reveal Observer
   const initScrollReveal = () => {
+    const revealTargets = document.querySelectorAll([
+      '#main-content > *',
+      '#main-content .story-chapter',
+      '#main-content .about-card',
+      '#main-content .project-card',
+      '#main-content .gallery-masonry-item',
+      '#main-content .blog-preview-card'
+    ].join(','))
+
+    revealTargets.forEach((element, index) => {
+      if (element.dataset.scrollReveal !== 'true') {
+        element.dataset.scrollReveal = 'true'
+      }
+      element.style.setProperty('--scroll-reveal-delay', `${Math.min((index % 6) * 70, 350)}ms`)
+    })
+
+    if (!('IntersectionObserver' in window)) {
+      revealTargets.forEach(element => element.classList.add('is-scroll-visible'))
+      return
+    }
+
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -780,10 +801,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 500)
     }
     
-    // Force visibility on scroll-reveal elements that might be stuck
-    document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
-      el.classList.add('is-scroll-visible')
-    })
+    // Only reveal content automatically when the browser lacks observer support.
+    // Otherwise, off-screen sections should wait for their scroll intersection.
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
+        el.classList.add('is-scroll-visible')
+      })
+    }
     
   }
 
