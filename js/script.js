@@ -750,17 +750,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.16,
+      rootMargin: '0px 0px -18% 0px'
     }
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-scroll-visible')
-          observer.unobserve(entry.target)
-        }
-      })
+      entries
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach((entry, entryIndex) => {
+          if (entry.isIntersecting) {
+            entry.target.style.setProperty('--scroll-reveal-delay', `${Math.min(entryIndex * 90, 360)}ms`)
+            entry.target.classList.add('is-scroll-visible')
+            observer.unobserve(entry.target)
+          }
+        })
     }, observerOptions)
 
     document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
