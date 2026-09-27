@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Initialize Scroll Reveal Observer
   const initScrollReveal = () => {
     const revealTargets = document.querySelectorAll([
-      '#main-content > *',
+      '#main-content > *:not(.story-chapters)',
       '#main-content .story-chapter',
       '#main-content .about-card',
       '#main-content .project-card',
@@ -741,7 +741,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (element.dataset.scrollReveal !== 'true') {
         element.dataset.scrollReveal = 'true'
       }
-      element.style.setProperty('--scroll-reveal-delay', `${Math.min((index % 6) * 70, 350)}ms`)
+      const delay = element.classList.contains('story-chapter') ? 0 : Math.min((index % 6) * 70, 350)
+      element.style.setProperty('--scroll-reveal-delay', `${delay}ms`)
     })
 
     if (!('IntersectionObserver' in window)) {
@@ -759,7 +760,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
         .forEach((entry, entryIndex) => {
           if (entry.isIntersecting) {
-            entry.target.style.setProperty('--scroll-reveal-delay', `${Math.min(entryIndex * 90, 360)}ms`)
+            const delay = entry.target.classList.contains('story-chapter')
+              ? 0
+              : Math.min(entryIndex * 90, 360)
+            entry.target.style.setProperty('--scroll-reveal-delay', `${delay}ms`)
             entry.target.classList.add('is-scroll-visible')
             observer.unobserve(entry.target)
           }
