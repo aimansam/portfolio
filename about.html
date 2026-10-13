@@ -21,7 +21,7 @@
 		<meta name="twitter:description" content="Learn about Aiman Sam's background, skills, certifications, and experience in penetration testing and web development." />
 		<meta name="twitter:image" content="https://portfolio.aimansam.my/assets/images/me/aimansamformal.jpg" />
 
-		<link rel="stylesheet" href="./css/layout.css?v=20261014-docker-page-style">
+		<link rel="stylesheet" href="./css/layout.css?v=20261014-docker-about-full">
 		<link rel="stylesheet" href="./css/typography.css">
 		<link rel="stylesheet" href="./css/utilities.css">
 
@@ -70,66 +70,67 @@
 		</nav>
 
 		<div id="main-content" aria-live="polite">
-			<section class="story-chapters" aria-labelledby="story-chapters-heading">
-				<span class="subheader-text" id="story-chapters-heading">The Story So Far</span>
-				<div class="story-chapter-list">
-					<article class="story-chapter">
-						<span class="story-chapter-number">01</span>
-						<div data-story-content="0"><h2>I started by competing.</h2><p>CTFs taught me to work under pressure and think through web, cryptography, and forensics problems with a team.</p><strong>2nd Place · UM Attack &amp; Defense CTF</strong><strong>3rd / 50 · Bingo CTF</strong></div>
-						<div class="story-chapter-media" data-story-media="0" role="img" aria-label="Image placeholder for competition achievement"><span>ADD IMAGE</span></div>
+			<div id="about-section">
+				<span class="subheader-text">My Background / About Me</span>
+				<div class="about-section-content">
+					<article class="about-card about-card-story">
+						<div class="about-story-header">
+							<div class="about-story-heading">
+								<span class="about-card-eyebrow">About Me</span>
+								<h3 class="about-card-title" id="about-title">Loading...</h3>
+							</div>
+							<figure class="about-profile-card">
+								<img src="./assets/images/me/aimansamformal.jpg" class="about-profile-image" alt="Portrait of Aiman Sam">
+							</figure>
+						</div>
+						<div class="about-story-roles">
+							<span class="about-story-label" id="about-looking-label">Looking For</span>
+							<div class="about-story-visual" id="about-role-list" aria-label="Positions I am looking for">
+								<!-- Roles injected by script.js -->
+							</div>
+						</div>
+						<div class="body-text about-copy" id="about-intro">Loading...</div>
+						<ul class="about-points body-text" id="about-points" aria-label="About me summary">
+							<!-- Points injected by script.js -->
+						</ul>
 					</article>
-					<article class="story-chapter">
-						<span class="story-chapter-number">02</span>
-						<div data-story-content="1"><h2>Then I started building.</h2><p>I moved from solving challenges to creating realistic environments for others to solve.</p><strong>9 Web Challenges · 1 Boot2Root</strong><strong>GCP · Cloudflare · GitHub CI/CD</strong></div>
-						<div class="story-chapter-media" data-story-media="1" role="img" aria-label="Image placeholder for challenge development"><span>ADD IMAGE</span></div>
+
+					<article class="about-card">
+						<span class="about-card-eyebrow">Skills</span>
+						<h3 class="about-card-title about-card-title-compact" id="skills-title">Loading...</h3>
+						<div class="about-skill-filters" id="skills-filter-list" aria-label="Skill category filters">
+							<!-- Filters injected by script.js -->
+						</div>
+						<div class="about-skill-pages" id="skills-page-list" aria-label="Hiring-focused skills from resume">
+							<!-- Pages injected by script.js -->
+						</div>
 					</article>
-					<article class="story-chapter">
-						<span class="story-chapter-number">03</span>
-						<div data-story-content="2"><h2>Then I started teaching.</h2><p>Security knowledge becomes more valuable when it can be explained clearly and applied by someone else.</p><strong>Two practical web-exploitation workshops</strong><strong>DIV:IDE Academy · Hack@10 CTF</strong></div>
-						<div class="story-chapter-media" data-story-media="2" role="img" aria-label="Image placeholder for security workshop"><span>ADD IMAGE</span></div>
-					</article>
-					<article class="story-chapter story-chapter-current">
-						<span class="story-chapter-number">04</span>
-						<div data-story-content="3"><h2>Now I am expanding.</h2><p>I am carrying offensive security practice into detection engineering and defensive capability.</p><strong>Web Security · Active Directory · Forensics</strong><strong>Penetration Testing → Detection Engineering</strong></div>
-						<div class="story-chapter-media" data-story-media="3" role="img" aria-label="Image placeholder for current security direction"><span>ADD IMAGE</span></div>
+
+					<article class="about-card">
+						<span class="about-card-eyebrow">Certificates</span>
+						<h3 class="about-card-title about-card-title-compact" id="certs-title">Loading...</h3>
+						<div class="about-cert-masonry" id="cert-list">
+							<!-- Certificates injected by script.js -->
+						</div>
+						<div class="about-cert-pagination">
+							<button class="about-cert-nav-btn" type="button" data-cert-prev aria-label="Previous page">
+								<span>Prev</span>
+							</button>
+							<span class="about-cert-counter" id="cert-counter">Loading...</span>
+							<button class="about-cert-nav-btn" type="button" data-cert-next aria-label="Next page">
+								<span>Next</span>
+							</button>
+						</div>
 					</article>
 				</div>
-			</section>
-
-			<div class="about-lower-grid">
-				<article class="about-card about-card-skills">
-					<div class="about-evidence-heading">
-						<span class="about-card-eyebrow">Capabilities</span>
-						<span class="about-evidence-note">Evidence from practice</span>
-					</div>
-					<h3 class="about-card-title about-card-title-compact">Security work measured by what I have built.</h3>
-					<div class="about-evidence-bars" aria-label="Security capability evidence">
-						<div class="about-evidence-bar"><div><strong>Web Security</strong><span>9 challenges built</span></div><div class="about-evidence-track"><span style="width: 94%"></span></div></div>
-						<div class="about-evidence-bar"><div><strong>CTF / Competition</strong><span>2nd place · 3rd / 50</span></div><div class="about-evidence-track"><span style="width: 88%"></span></div></div>
-						<div class="about-evidence-bar"><div><strong>Digital Forensics</strong><span>Top 10 finalist</span></div><div class="about-evidence-track"><span style="width: 68%"></span></div></div>
-						<div class="about-evidence-bar"><div><strong>Cloud Infrastructure</strong><span>GCP · Cloudflare · CI/CD</span></div><div class="about-evidence-track"><span style="width: 72%"></span></div></div>
-						<div class="about-evidence-bar"><div><strong>Security Teaching</strong><span>2 technical workshops</span></div><div class="about-evidence-track"><span style="width: 58%"></span></div></div>
-					</div>
-				</article>
-
-				<article class="about-card about-card-certificates">
-					<span class="about-card-eyebrow">Credentials</span>
-					<h3 class="about-card-title about-card-title-compact" id="certs-title">Loading...</h3>
-					<div class="about-cert-masonry" id="cert-list">
-						<!-- Certificates injected by script.js -->
-					</div>
-					<div class="about-cert-pagination">
-						<button class="about-cert-nav-btn" type="button" data-cert-prev aria-label="Previous page">
-							<span>Prev</span>
-						</button>
-						<span class="about-cert-counter" id="cert-counter">Loading...</span>
-						<button class="about-cert-nav-btn" type="button" data-cert-next aria-label="Next page">
-							<span>Next</span>
-						</button>
-					</div>
-				</article>
 			</div>
 
+			<div id="stats-summary-section">
+				<span class="subheader-text" id="stats-heading">Loading...</span>
+				<div id="stats-diagram" aria-label="Career highlights and quick stats">
+					<!-- Stats injected by script.js -->
+				</div>
+			</div>
 		</div>
 
 		<div id="footer">
