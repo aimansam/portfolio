@@ -1,6 +1,6 @@
 {
   "about": {
-    "title": "I turn attack paths into stronger defenses.",
+    "title": "Foundations built through practice.",
     "lookingLabel": "Looking For",
     "roles": [
       "Penetration Tester",
@@ -50,11 +50,14 @@
         "imageAlt": "Current security direction"
       }
     ],
-    "intro": "I compete, build, and teach across web security, Active Directory, and attack-defense operations.",
+    "intro": "Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.",
     "points": [
-      "Top 1% globally on TryHackMe with 350+ completed rooms.",
-      "Built 9 web challenges and 1 Boot2Root machine using GCP, Cloudflare, and GitHub CI/CD.",
-      "Earned CEH and CPTS certifications while maintaining a 3.80 GPA."
+      "Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.",
+      "System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.",
+      "Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.",
+      "Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.",
+      "Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.",
+      "Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional."
     ]
   },
   "skills": {
@@ -125,43 +128,60 @@
     ]
   },
   "stats": {
-    "type": "timeline",
-    "heading": "Security Journey",
+    "heading": "Highlights / Quick Stats",
     "items": [
       {
-        "step": "2025",
-        "value": "Bingo CTF",
-        "label": "3rd out of 50 teams",
-        "note": "Web exploitation, cryptography, and forensics under time pressure."
+        "step": "01",
+        "value": "Top 1%",
+        "label": "TryHackMe Ranking",
+        "note": "Ranked in the top 1% globally on TryHackMe and listed 44th in Malaysia."
       },
       {
-        "step": "2025",
-        "value": "MCMC Forensics",
-        "label": "Top 10 finalist",
-        "note": "Incident analysis, memory analysis, and evidence handling."
+        "step": "02",
+        "value": "350+",
+        "label": "TryHackMe Rooms",
+        "note": "Completed over 350 rooms covering penetration testing, web exploitation, and network exploitation."
       },
       {
-        "step": "2026",
-        "value": "UM Attack & Defense",
-        "label": "2nd Place",
-        "note": "Vulnerability analysis, exploitation, monitoring, and incident response."
+        "step": "03",
+        "value": "Top 3 / 50",
+        "label": "Bingo CTF 2025",
+        "note": "Placed 3rd with a 3-member team across web exploitation, cryptography, and forensics challenges."
       },
       {
-        "step": "2026",
-        "value": "CTF Creator",
-        "label": "9 Web + 1 Boot2Root",
-        "note": "Built challenge environments with cloud infrastructure and secure deployment."
+        "step": "04",
+        "value": "Top 10",
+        "label": "MCMC Finalist",
+        "note": "Finalist in the MCMC Intervarsity Cyber Forensics Challenge 2025 under time-constrained incident analysis."
       },
       {
-        "step": "NOW",
-        "value": "Penetration Testing",
-        "label": "→ Detection Engineering",
-        "note": "Expanding offensive security practice into defensive capability."
+        "step": "05",
+        "value": "10",
+        "label": "Challenges Delivered",
+        "note": "Delivered 9 web challenges and 1 Boot2Root machine across CTF events."
+      },
+      {
+        "step": "06",
+        "value": "2",
+        "label": "Technical Talks",
+        "note": "Delivered two web exploitation sessions for DIV:IDE Academy and Hack@10 CTF preparation."
+      },
+      {
+        "step": "07",
+        "value": "5",
+        "label": "Certificates Earned",
+        "note": "Including CEHv13, CCNA Intro to Networks, Junior Penetration Tester, and web development training."
+      },
+      {
+        "step": "08",
+        "value": "3.80",
+        "label": "Current GPA",
+        "note": "Bachelor of Computer Science (Cybersecurity) student at Universiti Tenaga Nasional."
       }
     ]
   },
   "certificates": {
-    "title": "Certifications that support the work.",
+    "title": "Recognized industry credentials.",
     "items": [
       {
         "name": "CEHv13",
