@@ -3157,3 +3157,169 @@ body.is-loaded .page-loader {
     justify-self: start;
   }
 }
+
+/* Match the Docker portfolio's framed card treatment on About and Projects. */
+.page-about .story-chapters {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 30px;
+  border: 2px solid #141414;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  box-shadow: 0 18px 40px rgba(20, 20, 20, 0.08);
+}
+
+.page-about .story-chapters::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(20, 20, 20, 0.08) 0 1.5px, transparent 1.7px) 0 0 / 18px 18px,
+    linear-gradient(135deg, rgba(20, 20, 20, 0.045), transparent 48%);
+  opacity: 0.55;
+}
+
+.page-about .story-chapter-list {
+  max-width: none;
+  padding: 0;
+}
+
+.page-about .story-chapter-list::before {
+  left: 48px;
+}
+
+.page-about .story-chapter {
+  grid-template-columns: 96px minmax(0, 1fr) 250px;
+  gap: 32px;
+  padding: 24px 0;
+}
+
+.page-about .story-chapter-media {
+  width: 220px;
+  background:
+    linear-gradient(135deg, rgba(239, 246, 255, 0.96), rgba(248, 250, 252, 0.99)),
+    repeating-linear-gradient(135deg, transparent 0 10px, rgba(37, 99, 235, 0.07) 10px 11px);
+}
+
+.page-about .story-chapter-media.has-image {
+  background: #ffffff;
+}
+
+.page-about .about-card {
+  border: 2px solid #141414;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  box-shadow: 0 18px 40px rgba(20, 20, 20, 0.08);
+}
+
+.page-projects .projects-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 16px;
+  align-items: stretch;
+}
+
+.page-projects .project-card,
+.page-projects .project-card:nth-child(4n + 1),
+.page-projects .project-card:nth-child(4n + 4) {
+  display: flex;
+  grid-column: auto;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  max-width: none;
+  padding: 18px;
+  border: 2px solid transparent;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.page-projects .project-card:hover,
+.page-projects .project-card:active,
+.page-projects .project-card:focus-within {
+  z-index: 1;
+  transform: translateY(-4px);
+  border-color: #141414;
+  box-shadow: 0 20px 38px rgba(20, 20, 20, 0.14);
+}
+
+.page-projects .project-card.is-hidden {
+  display: none;
+}
+
+.page-projects .project-card-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-projects .project-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 18px;
+  transition: transform 180ms ease;
+}
+
+.page-projects .project-card:hover .project-image,
+.page-projects .project-card:active .project-image,
+.page-projects .project-card:focus-within .project-image {
+  transform: scale(1.02);
+}
+
+@media only screen and (max-width: 900px) {
+  .page-about .story-chapter {
+    grid-template-columns: 72px minmax(0, 1fr) 180px;
+    gap: 20px;
+  }
+
+  .page-about .story-chapter-media {
+    width: 168px;
+  }
+
+  .page-projects .projects-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .page-about .story-chapters {
+    padding: 22px 18px;
+    border-radius: 24px;
+  }
+
+  .page-about .story-chapter-list::before {
+    left: 17px;
+  }
+
+  .page-about .story-chapter {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .page-about .story-chapter-number {
+    margin-left: 0;
+  }
+
+  .page-about .story-chapter-media {
+    grid-column: 2;
+    width: min(220px, 78vw);
+    margin-top: 8px;
+    justify-self: start;
+  }
+
+  .page-projects .projects-container {
+    grid-template-columns: 1fr;
+  }
+
+  .page-projects .project-card {
+    gap: 22px;
+  }
+}
