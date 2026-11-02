@@ -2,6 +2,8 @@
 !Dockerfile
 !.dockerignore
 !CNAME
+!robots.txt
+!package.json
 !index.html
 !about.html
 !projects.html

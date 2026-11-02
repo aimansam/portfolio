@@ -25,7 +25,7 @@ A deployable portfolio site for a junior penetration tester and web developer. T
 | Section | What's there |
 |---------|-------------|
 | **Home** | Hero, about, certifications, skills, stats, gallery |
-| **Projects** | 9 security projects with case study descriptions |
+| **Projects** | 6 featured security projects with case study pages (8 case studies in `content/projects/`) |
 | **Blog** | 4 technical writeups (CTF solves, lab notes, exploitation workflow) |
 | **Gallery** | Image gallery |
 | **Admin** | Decap CMS at `/admin` — edit content via GitHub OAuth |
@@ -40,14 +40,15 @@ A deployable portfolio site for a junior penetration tester and web developer. T
 │  index.html  about.html  projects.html       │
 │  gallery.html  blog/  admin/  assets/        │
 │  content/  project-pages/  css/  js/         │
+│  sitemap.xml  robots.txt (generated/static)  │
 └───────────────────┬─────────────────────────┘
                     │
           docker-compose.yml (port 5200→80)
                     │
-          Dockerfile (multi-stage: prepare → nginx)
+          Dockerfile (multi-stage: node build → nginx)
 ```
 
-**Content-driven.** All site content lives in JSON files under `content/`. The build scripts compile blog posts from JSON into static HTML, update the blog preview, and inject SEO meta tags into `index.html`.
+**Content-driven.** All site content lives in JSON files under `content/`. The build scripts compile blog posts from JSON into static HTML, update the blog preview, inject SEO meta tags into `index.html`, and generate `sitemap.xml`.
 
 **CMS.** Decap CMS runs at `/admin`, authenticates via GitHub OAuth through a Cloudflare Workers proxy (`cms-auth-portfolio.aimansam.my`), and writes back to the `main` branch.
 
@@ -88,6 +89,7 @@ content/
 │   ├── navigation.json      # Navigation links
 │   ├── projects.json        # Projects section config
 │   ├── seo.json             # SEO meta tags (title, description, OG)
+│   ├── site.json            # Site tag (page-title suffix) and analytics ID
 │   ├── skills.json          # Skills list
 │   ├── stats.json           # Stats (TryHackMe, HTB, etc.)
 │   └── blog-preview.json    # Generated: recent posts preview
@@ -128,12 +130,15 @@ npm run build
 ```bash
 npm run build
 # Runs in sequence:
-#   1. node scripts/build-blog.js     — compile blog post JSON → HTML
+#   1. node scripts/build-blog.js          — compile blog post JSON → HTML shells
 #   2. node scripts/update-blog-preview.js — update blog-preview.json
-#   3. node scripts/inject-seo.js    — inject SEO meta into index.html
+#   3. node scripts/inject-seo.js          — inject SEO meta + JSON-LD into index.html
+#   4. node scripts/build-sitemap.js       — write sitemap.xml (pages, projects, posts)
 ```
 
-The `Dockerfile` runs `sync-seo.sh` during the build stage to inject SEO before the nginx image is assembled.
+`blog/**/index.html` and `sitemap.xml` are generated and git-ignored; never edit them by hand.
+
+The `Dockerfile` runs `npm run build` in a Node build stage, then copies the output into nginx. GitHub Actions runs the same command before publishing to Pages, so there is a single build path.
 
 ---
 
@@ -179,7 +184,7 @@ portfolio/
 ├── projects.html           # Projects listing
 ├── gallery.html            # Gallery page
 ├── CNAME                   # Custom domain
-├── Dockerfile              # Multi-stage: prepare → nginx:alpine
+├── Dockerfile              # Multi-stage: node build → nginx:alpine
 ├── docker-compose.yml      # Port 5200 → 80
 ├── package.json            # Build scripts (npm run build)
 ├── .dockerignore
@@ -188,13 +193,22 @@ portfolio/
 │   ├── index.html          # Decap CMS frontend
 │   └── config.yml          # CMS config: collections, auth, repo
 ├── assets/
-│   ├── images/             # Hero, certificates, gallery, uploads
-│   ├── css/                # Stylesheets
-│   └── js/                 # Client-side scripts
+│   ├── icons/              # SVG/PNG icons
+│   ├── images/             # Hero, certificates, gallery, projects (WebP)
+│   └── resume/             # Resume.pdf
+├── css/
+│   ├── layout/             # Page styles, loaded in order (base → about-story)
+│   ├── typography.css
+│   ├── utilities.css
+│   └── blog.css
+├── js/
+│   ├── main.js             # Entry point: fetch JSON, render, start UI
+│   ├── blog.js             # Blog client
+│   └── modules/            # utils, markup, apply (render), ui (lightbox, filters…)
 ├── blog/
 │   ├── index.html          # Blog listing
-│   ├── posts/              # Generated: individual post pages
-│   └── categories/         # Generated: category pages
+│   ├── posts/              # Generated post shells (+ committed post images)
+│   └── categories/ tags/   # Generated shells
 ├── content/                # ALL editable content (JSON)
 ├── project-pages/
 │   └── project.html        # Project case study template
@@ -202,7 +216,7 @@ portfolio/
     ├── build-blog.js       # JSON → HTML for blog posts
     ├── update-blog-preview.js  # Update blog-preview.json
     ├── inject-seo.js       # Inject SEO meta into index.html
-    ├── sync-seo.sh         # Shell wrapper for SEO injection
+    ├── build-sitemap.js    # Generate sitemap.xml
     └── blog-publish.sh     # Convenience: build + git status
 ```
 

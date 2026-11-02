@@ -1,0 +1,445 @@
+/* About evidence sections */
+.about-lower-grid {
+  grid-template-columns: 1fr;
+}
+
+.about-card-skills,
+.about-card-certificates {
+  grid-column: auto;
+}
+
+.about-card-skills {
+  border-top: 3px solid #2563eb;
+}
+
+.about-evidence-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-evidence-note {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-evidence-bars {
+  display: grid;
+  gap: 18px;
+  max-width: 900px;
+}
+
+.about-evidence-bar {
+  display: grid;
+  gap: 8px;
+}
+
+.about-evidence-bar > div:first-child {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-evidence-bar strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.about-evidence-bar span {
+  color: #64748b;
+  font-size: 11px;
+  text-align: right;
+}
+
+.about-evidence-track {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+.about-evidence-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+@media only screen and (max-width: 600px) {
+  .about-evidence-bar > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .about-evidence-bar span {
+    text-align: left;
+  }
+}
+
+.about-card-skills .about-skill-page {
+  padding: 4px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.about-card-skills .about-pill {
+  border-color: #d9dee7;
+  background: #f8fafc;
+}
+
+.about-card-certificates {
+  border-top: 3px solid #0f172a;
+}
+
+.about-card-certificates .about-cert-masonry {
+  column-count: 3;
+  column-gap: 16px;
+}
+
+.about-card-certificates .about-cert-masonry-card {
+  border-color: #d9dee7;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+}
+
+@media only screen and (max-width: 1000px) {
+  .about-card-certificates .about-cert-masonry {
+    column-count: 3;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .about-card-certificates .about-cert-masonry {
+    column-count: 1;
+  }
+}
+
+/* Certificate Masonry - Tablet */
+@media only screen and (max-width: 1000px) {
+  .about-cert-masonry {
+    column-count: 2;
+    column-gap: 10px;
+  }
+}
+
+/* Certificate Pagination */
+.about-cert-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 20, 20, 0.1);
+}
+
+.about-cert-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 2px solid #141414;
+  border-radius: 999px;
+  background-color: white;
+  color: #141414;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.about-cert-nav-btn:hover:not(:disabled),
+.about-cert-nav-btn:active:not(:disabled) {
+  background-color: #141414;
+  color: white;
+  box-shadow: 0 8px 16px rgba(20, 20, 20, 0.12);
+}
+
+.about-cert-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.about-cert-counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(20, 20, 20, 0.68);
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Gallery Masonry with Ken Burns Effect */
+#gallery-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gallery-masonry {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.gallery-masonry-item {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #141414;
+  box-shadow: 0 8px 24px rgba(20, 20, 20, 0.08);
+  aspect-ratio: 4/3;
+  opacity: 0;
+  animation: gallery-fade-in 0.6s ease forwards;
+}
+
+.gallery-masonry-item:nth-child(1) { animation-delay: 0.1s; }
+.gallery-masonry-item:nth-child(2) { animation-delay: 0.2s; }
+.gallery-masonry-item:nth-child(3) { animation-delay: 0.3s; }
+.gallery-masonry-item:nth-child(4) { animation-delay: 0.4s; }
+.gallery-masonry-item:nth-child(5) { animation-delay: 0.5s; }
+.gallery-masonry-item:nth-child(6) { animation-delay: 0.6s; }
+.gallery-masonry-item:nth-child(7) { animation-delay: 0.7s; }
+.gallery-masonry-item:nth-child(8) { animation-delay: 0.8s; }
+.gallery-masonry-item:nth-child(9) { animation-delay: 0.9s; }
+
+@keyframes gallery-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-masonry-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.gallery-masonry-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform-origin: center center;
+  animation: ken-burns 20s ease-in-out infinite alternate;
+}
+
+.gallery-masonry-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+/* Gallery bento layout */
+.gallery-masonry {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 150px;
+  grid-auto-flow: dense;
+}
+
+.gallery-masonry-item {
+  aspect-ratio: auto;
+  min-height: 150px;
+}
+
+.gallery-masonry-item:nth-child(1),
+.gallery-masonry-item:nth-child(10n + 1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery-masonry-item:nth-child(4n + 2),
+.gallery-masonry-item:nth-child(4n + 3) {
+  grid-row: span 2;
+}
+
+.gallery-masonry-item-video {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-color: #2563eb;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.18);
+}
+
+@media only screen and (max-width: 800px) {
+  .gallery-masonry {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 140px;
+  }
+
+  .gallery-masonry-item {
+    min-height: 140px;
+  }
+
+  .gallery-masonry-item:nth-child(4n + 2),
+  .gallery-masonry-item:nth-child(4n + 3) {
+    grid-row: span 1;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .gallery-masonry {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+
+  .gallery-masonry-item,
+  .gallery-masonry-item:nth-child(1),
+  .gallery-masonry-item:nth-child(10n + 1),
+  .gallery-masonry-item-video {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 220px;
+  }
+}
+
+/* Staggered Ken Burns animations for variety */
+.gallery-masonry-item:nth-child(odd) .gallery-masonry-image {
+  animation-direction: alternate;
+}
+
+.gallery-masonry-item:nth-child(even) .gallery-masonry-image {
+  animation-direction: alternate-reverse;
+}
+
+.gallery-masonry-item:nth-child(3n) .gallery-masonry-image {
+  animation-delay: -5s;
+}
+
+.gallery-masonry-item:nth-child(3n+1) .gallery-masonry-image {
+  animation-delay: -10s;
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.05) translate(-1%, -1%);
+  }
+  50% {
+    transform: scale(1.08) translate(1%, -0.5%);
+  }
+  75% {
+    transform: scale(1.05) translate(-0.5%, 1%);
+  }
+  100% {
+    transform: scale(1.1) translate(0.5%, 0.5%);
+  }
+}
+
+/* Pause animation on hover for viewing */
+.gallery-masonry-item:hover .gallery-masonry-image {
+  animation-play-state: paused;
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.85) 60%, transparent 100%);
+  padding: 40px 14px 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.gallery-masonry-card:hover .gallery-overlay,
+.gallery-masonry-card:active .gallery-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gallery-overlay-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.gallery-overlay-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+}
+
+/* Gallery Masonry - Tablet */
+@media only screen and (max-width: 1000px) {
+  .gallery-masonry {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Gallery Masonry - Mobile */
+@media only screen and (max-width: 600px) {
+  .gallery-masonry {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-masonry-item {
+    margin-bottom: 10px;
+  }
+}
+
+/* Certificate Masonry - Mobile */
+@media only screen and (max-width: 600px) {
+  .about-cert-masonry {
+    column-count: 1;
+    column-gap: 0;
+  }
+
+  .about-cert-masonry-item {
+    margin-bottom: 10px;
+  }
+
+  .about-cert-pagination {
+    gap: 10px;
+  }
+
+  .about-cert-nav-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .about-cert-counter {
+    font-size: 12px;
+    min-width: 100px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .about-story-visual {
+    grid-template-columns: 1fr;
+  }
+}

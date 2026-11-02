@@ -11,10 +11,9 @@ function injectSEO() {
     const seoData = JSON.parse(fs.readFileSync(SEO_FILE, 'utf8')).seo;
     let html = fs.readFileSync(INDEX_FILE, 'utf8');
 
-    // Helper to replace content by ID or attribute
-    const replaceById = (id, newValue, isAttribute = false, attrName = 'content') => {
-      // Intentional no-op as we use specific replacements below
-    };
+    const escapeHtml = (value) => String(value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
     // Using simpler targeted replacements for the specific SEO IDs used in index.html
     const replacements = [
@@ -35,17 +34,17 @@ function injectSEO() {
     replacements.forEach(rep => {
       if (rep.type === 'text') {
         const regex = new RegExp(`(<[^>]*id="${rep.id}"[^>]*>)([\\s\\S]*?)(</[^>]*>)`, 'g');
-        html = html.replace(regex, `$1${rep.value}$3`);
+        html = html.replace(regex, (_, open, __, close) => `${open}${escapeHtml(rep.value)}${close}`);
       } else {
         const regex = new RegExp(`(<[^>]*id="${rep.id}"[^>]* ${rep.attr}=")([^"]*)(")`, 'g');
-        html = html.replace(regex, `$1${rep.value}$3`);
+        html = html.replace(regex, (_, open, __, close) => `${open}${escapeHtml(rep.value)}${close}`);
       }
     });
 
     // Handle the structured data separately as it's a JSON block
     // We can't easily use the same regex because it's a large block.
     // We'll find the <script id="seo-structured-data"> block and replace its content.
-    const sdRegex = /(<script id="seo-structured-data">)([\s\S]*?)(<\/script>)/;
+    const sdRegex = /(<script[^>]*id="seo-structured-data"[^>]*>)([\s\S]*?)(<\/script>)/;
     const structuredData = JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
@@ -74,7 +73,7 @@ function injectSEO() {
       ]
     }, null, 2);
     
-    html = html.replace(sdRegex, `$1\n${structuredData}\n$3`);
+    html = html.replace(sdRegex, (_, open, __, close) => `${open}\n${structuredData.replace(/</g, '\\u003c')}\n${close}`);
 
     fs.writeFileSync(INDEX_FILE, html);
     console.log('Successfully injected SEO metadata into index.html');

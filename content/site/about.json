@@ -16,7 +16,7 @@
           "2nd Place · UM Attack & Defense CTF",
           "3rd / 50 · Bingo CTF"
         ],
-        "image": "./assets/images/me/aimansamwinner.png",
+        "image": "./assets/images/me/aimansamwinner.webp",
         "imageAlt": "Competition achievement"
       },
       {
@@ -26,7 +26,7 @@
           "9 Web Challenges · 1 Boot2Root",
           "GCP · Cloudflare · GitHub CI/CD"
         ],
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.jpg",
+        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.webp",
         "imageAlt": "Challenge development and lab infrastructure"
       },
       {
@@ -36,7 +36,7 @@
           "Two practical web-exploitation workshops",
           "DIV:IDE Academy · Hack@10 CTF"
         ],
-        "image": "./assets/images/gallery/workshop/workshop2.jpg",
+        "image": "./assets/images/gallery/workshop/workshop2.webp",
         "imageAlt": "Security workshop"
       },
       {
@@ -46,7 +46,7 @@
           "Web Security · Active Directory · Forensics",
           "Penetration Testing → Detection Engineering"
         ],
-        "image": "./assets/images/certificates/CPTS.jpg",
+        "image": "./assets/images/certificates/CPTS.webp",
         "imageAlt": "Current security direction"
       }
     ],
@@ -188,14 +188,14 @@
         "note": "Certified Ethical Hacker from EC-Council.",
         "code": "CEH",
         "meta": "EC",
-        "image": "./assets/images/certificates/CEH.jpg"
+        "image": "./assets/images/certificates/CEH.webp"
       },
       {
         "name": "Certified Penetration Testing Specialist",
         "note": "Hack The Box certification focused on practical penetration testing methodology and execution.",
         "code": "CPTS",
         "meta": "HTB",
-        "image": "./assets/images/certificates/CPTS.jpg"
+        "image": "./assets/images/certificates/CPTS.webp"
       },
       {
         "name": "Junior Penetration Tester",
@@ -209,7 +209,7 @@
         "note": "Cisco networking foundation covering infrastructure and core network concepts.",
         "code": "CCNA",
         "meta": "Cisco",
-        "image": "./assets/images/certificates/CCNA1.jpg"
+        "image": "./assets/images/certificates/CCNA1.webp"
       },
       {
         "name": "Full-Stack Web Development Bootcamp",

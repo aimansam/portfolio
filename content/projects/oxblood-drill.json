@@ -10,7 +10,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
   "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenario definitions, telemetry, and operational reporting.",
-  "headerImage": "../assets/images/projects/enterprise-homelab/homelab.jpg",
+  "headerImage": "../assets/images/projects/enterprise-homelab/homelab.webp",
   "sections": [
     {
       "title": "What I Built",
@@ -35,7 +35,7 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/projects/enterprise-homelab/homelab.jpg",
+      "image": "../assets/images/projects/enterprise-homelab/homelab.webp",
       "caption": "Related lab infrastructure used to contextualize the cyber-drill platform.",
       "width": "full"
     }

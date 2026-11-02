@@ -10,7 +10,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/siem-lite",
   "description": "A collection of focused Python tools for SIEM-style log analysis, phishing triage, packet analysis, port discovery, and password auditing.",
-  "headerImage": "../assets/images/zx10r/zx10r.jpg",
+  "headerImage": "../assets/images/zx10r/zx10r.webp",
   "sections": [
     {
       "title": "Collection Overview",
@@ -29,7 +29,7 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/zx10r/zx10r.jpg",
+      "image": "../assets/images/zx10r/zx10r.webp",
       "caption": "Security tooling collection overview; repository links provide the implementation details.",
       "width": "full"
     }

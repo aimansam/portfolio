@@ -20,20 +20,15 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Build JSON blog and homepage data
+      - name: Build blog, homepage SEO, and sitemap
         run: npm run build
 
-      - name: Sync Homepage SEO
-        run: |
-          chmod +x ./scripts/sync-seo.sh
-          ./scripts/sync-seo.sh ./content/site/seo.json ./index.html
-          
       - name: Organize Files
         run: |
           mkdir staging
           # 1. Copy root portfolio files (excluding source/git folders)
           # This assumes your main portfolio is at the root
-          rsync -av --exclude='blog-source' --exclude='public' --exclude='.git*' --exclude='staging' ./ staging/
+          rsync -av --exclude='cms-auth' --exclude='scripts' --exclude='docs' --exclude='node_modules' --exclude='Dockerfile' --exclude='docker-compose.yml' --exclude='worker-configuration.d.ts' --exclude='public' --exclude='.git*' --exclude='staging' ./ staging/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
