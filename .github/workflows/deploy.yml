@@ -20,8 +20,14 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install build dependencies
+        run: npm ci
+
       - name: Build blog, homepage SEO, and sitemap
         run: npm run build
+
+      - name: Prerender pages
+        run: npm run prerender
 
       - name: Organize Files
         run: |

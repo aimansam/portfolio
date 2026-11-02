@@ -136,6 +136,8 @@ npm run build
 #   4. node scripts/build-sitemap.js       — write sitemap.xml (pages, projects, posts)
 ```
 
+`npm run prerender` (used by the Dockerfile and CI, **not** part of `build`) renders the JSON-driven pages into static HTML with jsdom so crawlers see content without running JS. It rewrites `index/about/projects/gallery.html` in place, so don't run it on your working copy.
+
 `blog/**/index.html` and `sitemap.xml` are generated and git-ignored; never edit them by hand.
 
 The `Dockerfile` runs `npm run build` in a Node build stage, then copies the output into nginx. GitHub Actions runs the same command before publishing to Pages, so there is a single build path.
@@ -204,7 +206,7 @@ portfolio/
 ├── js/
 │   ├── main.js             # Entry point: fetch JSON, render, start UI
 │   ├── blog.js             # Blog client
-│   └── modules/            # utils, markup, apply (render), ui (lightbox, filters…)
+│   └── modules/            # utils, markup, apply (render), content (loader), ui
 ├── blog/
 │   ├── index.html          # Blog listing
 │   ├── posts/              # Generated post shells (+ committed post images)
@@ -217,6 +219,7 @@ portfolio/
     ├── update-blog-preview.js  # Update blog-preview.json
     ├── inject-seo.js       # Inject SEO meta into index.html
     ├── build-sitemap.js    # Generate sitemap.xml
+    ├── prerender.js        # Build-time prerender of JSON-driven pages
     └── blog-publish.sh     # Convenience: build + git status
 ```
 

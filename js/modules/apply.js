@@ -276,9 +276,9 @@ export const applyGalleryContent = (content) => {
   if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
     galleryList.innerHTML = content.gallery.items.map(item => {
       const media = item.type === 'video'
-        ? `<video class="gallery-masonry-video" controls preload="metadata" playsinline aria-label="${escapeHtml(item.alt || 'Gallery video')}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
+        ? `<video class="gallery-masonry-video" controls preload="none"${item.poster ? ` poster="${escapeHtml(item.poster)}"` : ''} playsinline aria-label="${escapeHtml(item.alt || 'Gallery video')}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
         : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${escapeHtml(item.alt || 'image')} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${escapeHtml(item.alt || '')}">
-            <div class="gallery-image-wrapper"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.alt || 'Gallery image')}" class="gallery-masonry-image" loading="lazy"></div>
+            <div class="gallery-image-wrapper"><img src="${escapeHtml(item.thumb || item.image)}"${item.thumb ? ` srcset="${escapeHtml(item.thumb)} 640w, ${escapeHtml(item.image)} 1600w" sizes="(max-width: 800px) 90vw, 400px"` : ''} alt="${escapeHtml(item.alt || 'Gallery image')}" class="gallery-masonry-image" loading="lazy" decoding="async"></div>
           </div>`
       return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}">${media}</div>`
     }).join('')

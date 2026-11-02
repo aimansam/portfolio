@@ -15,7 +15,8 @@ export const escapeHtml = (str) => {
 
 // Resolve shared content from the portfolio root, even when the current page is
 // nested (for example, /project-pages/project.html).
-export const portfolioRootUrl = new URL('../../', import.meta.url)
+export // The prerenderer (scripts/prerender.js) overrides the root so output stays relative.
+const portfolioRootUrl = new URL(globalThis.__PORTFOLIO_ROOT__ || '../../', import.meta.url)
 
 export const resolvePortfolioUrl = (value) => {
   if (!value) return ''

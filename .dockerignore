@@ -4,6 +4,7 @@
 !CNAME
 !robots.txt
 !package.json
+!package-lock.json
 !index.html
 !about.html
 !projects.html

@@ -3,6 +3,7 @@
  */
 import { resolvePortfolioUrl } from './modules/utils.js'
 import { applyPortfolioContent } from './modules/apply.js'
+import { loadPageContent } from './modules/content.js'
 import { initLightbox, initBackToTop, initAnalytics } from './modules/ui.js'
 
 const hideLoader = (delay) => {
@@ -33,20 +34,6 @@ const safeFetch = async (url) => {
     console.warn(`Fetch error: ${resolvedUrl} - ${e.message}`)
     return null
   }
-}
-
-const pathMatches = (name) => new RegExp(`(^|/)${name}\\.html$`, 'i').test(window.location.pathname)
-
-const getPageContentFile = () => {
-  if (pathMatches('project')) {
-    const projectId = new URLSearchParams(window.location.search).get('id')
-    return projectId ? `content/projects/${encodeURIComponent(projectId)}.json` : 'content/site/projects.json'
-  }
-  if (pathMatches('about')) return 'content/site/about.json'
-  if (pathMatches('projects')) return 'content/site/projects.json'
-  if (pathMatches('gallery')) return 'content/site/gallery.json'
-  if (pathMatches('certificates')) return 'content/site/certificates.json'
-  return 'content/site/index.json'
 }
 
 const initScrollReveal = () => {
@@ -99,35 +86,10 @@ const initScrollReveal = () => {
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const isHomePage = !/\.html$/i.test(window.location.pathname) || pathMatches('index')
-
   try {
     hideLoader(500)
 
-    // Every JSON file is independent, so fetch them all at once.
-    const [navData, footerData, siteData, pageContent, heroContent, certificatesContent] = await Promise.all([
-      safeFetch('content/site/navigation.json'),
-      safeFetch('content/site/footer.json'),
-      safeFetch('content/site/site.json'),
-      safeFetch(getPageContentFile()),
-      isHomePage ? safeFetch('content/site/hero.json') : null,
-      pathMatches('about') ? safeFetch('content/site/certificates.json') : null
-    ])
-
-    const finalContent = {
-      navigation: navData?.navigation || null,
-      footer: footerData?.footer || null,
-      site: siteData?.site || null
-    }
-    if (pageContent) {
-      Object.assign(finalContent, pageContent)
-    } else {
-      console.warn('Page content not available, using base content only')
-    }
-    if (heroContent?.hero) finalContent.hero = heroContent.hero
-    if (certificatesContent?.certificates) finalContent.certificates = certificatesContent.certificates
-    // Keep the site config even if a page file defines its own `site` key.
-    finalContent.site = siteData?.site || finalContent.site
+    const finalContent = await loadPageContent(safeFetch, window.location.pathname, window.location.search)
 
     applyPortfolioContent(finalContent)
 

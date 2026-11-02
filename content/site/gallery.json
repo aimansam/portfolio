@@ -4,160 +4,199 @@
     "items": [
       {
         "image": "./assets/images/gallery/workshop/workshop2.webp",
-        "alt": "Security workshop photo 1"
+        "alt": "Web Exploitation slide from the DIV:IDE Academy online session",
+        "thumb": "./assets/images/gallery/workshop/workshop2-640.webp"
       },
       {
         "image": "./assets/images/gallery/workshop/workshop3.webp",
-        "alt": "Security workshop photo 2"
+        "alt": "Slide listing common web attacks, including local file inclusion and SQL injection",
+        "thumb": "./assets/images/gallery/workshop/workshop3-640.webp"
       },
       {
         "image": "./assets/images/gallery/workshop/workshop1.webp",
-        "alt": "Security workshop photo 3"
+        "alt": "Browser showing a vulnerable demo search page used in the session",
+        "thumb": "./assets/images/gallery/workshop/workshop1-640.webp"
       },
       {
         "image": "./assets/images/gallery/workshop/workshop5.webp",
-        "alt": "Security workshop photo 4"
+        "alt": "Burp Suite-style request history during a web exploitation demo",
+        "thumb": "./assets/images/gallery/workshop/workshop5-640.webp"
       },
       {
         "image": "./assets/images/gallery/workshop/workshop4.webp",
-        "alt": "Security workshop photo 5"
+        "alt": "Video call grid of participants in the online web exploitation session",
+        "thumb": "./assets/images/gallery/workshop/workshop4-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-47.webp",
-        "alt": "Security portfolio photo 6"
+        "alt": "DIV:IDE Academy poster for the Click, Inject, Own web exploitation session on 16 April 2026",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-47-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-51.webp",
-        "alt": "Security portfolio photo 7"
+        "alt": "Selfie in a lecture hall with the 1st Runner Up RM1,500 cheque",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-51-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53.webp",
-        "alt": "Security portfolio photo 8"
+        "alt": "Name placard on a table at the UM Cybersecurity Summit",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-55.webp",
-        "alt": "Security portfolio photo 9"
+        "alt": "Attendees talking in a conference hall lobby",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-55-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-57.webp",
-        "alt": "Security portfolio photo 10"
+        "alt": "Group of participants giving thumbs up at a CTF event",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-57-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-58.webp",
-        "alt": "Security portfolio photo 11"
+        "alt": "Hand holding a NexSec 2025 CTF Player badge",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-58-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-00.webp",
-        "alt": "Security portfolio photo 12"
+        "alt": "Holding a Battle of Hackers Stage 2 Attack and Defense prize cheque",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-00-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-01.webp",
-        "alt": "Security portfolio photo 13"
+        "alt": "Four people posing in front of a CodeQuest coding competition screen",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-01-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-05.webp",
-        "alt": "Security portfolio photo 14"
+        "alt": "Participants gathered around a laptop during a competition",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-05-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-07.webp",
-        "alt": "Security portfolio photo 15"
+        "alt": "Large group photo of participants holding certificates",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-07-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-11.webp",
-        "alt": "Security portfolio photo 16"
+        "alt": "Participants working on laptops at a long table during a CTF",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-11-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.webp",
-        "alt": "Security portfolio photo 17"
+        "alt": "Desk flat lay with a keyboard, USB devices, a Wi-Fi adapter and a mug",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-15.webp",
-        "alt": "Security portfolio photo 18"
+        "alt": "DIV:IDE Academy poster for the From URL to FLAG web exploitation session on 7 March 2026",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-15-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-17.webp",
-        "alt": "Security portfolio photo 19"
+        "alt": "Group photo of organizers and participants in front of a wall",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-17-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-19.webp",
-        "alt": "Security portfolio photo 20"
+        "alt": "Group on stage in front of the CLICQ DIV:IDE CTF 26 banner",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-19-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-21.webp",
-        "alt": "Security portfolio photo 21"
+        "alt": "Laptop on a desk showing a CTF challenge screen in a dim room",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-21-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-23.webp",
-        "alt": "Security portfolio photo 22"
+        "alt": "Web Exploitation title slide shown in a Microsoft Teams session",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-23-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-24.webp",
-        "alt": "Security portfolio photo 23"
+        "alt": "Audience of students seated at a CTF briefing",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-24-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-27.webp",
-        "alt": "Security portfolio photo 24"
+        "alt": "Group of participants giving thumbs up after the event",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-27-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-30.webp",
-        "alt": "Security portfolio photo 25"
+        "alt": "Speaker presenting competition requirements beside a NexSec banner",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-30-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-34.webp",
-        "alt": "Security portfolio photo 26"
+        "alt": "Terminal-style CTF challenge interface displayed above a laptop keyboard",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-34-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-37.webp",
-        "alt": "Security portfolio photo 27"
+        "alt": "Teams working at laptops during the CTF in a large open hall",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-37-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-39.webp",
-        "alt": "Security portfolio photo 28"
+        "alt": "Participants collaborating at a table during the CTF",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-39-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41.webp",
-        "alt": "Security portfolio photo 29"
+        "alt": "Competitors gathered around a laptop and cheering",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-41-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-42.webp",
-        "alt": "Security portfolio photo 30"
+        "alt": "Participants seated at laptops in an open lab",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-42-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-51.webp",
-        "alt": "Security portfolio photo 31"
+        "alt": "Participants looking at a laptop screen during the event",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-51-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-54.webp",
-        "alt": "Security portfolio photo 32"
+        "alt": "Four people posing in front of a CodeQuest coding competition screen",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-54-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-57.webp",
-        "alt": "Security portfolio photo 33"
+        "alt": "Laptop glowing in a dark room during a CTF",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-01-57-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-08.webp",
-        "alt": "Security portfolio photo 34"
+        "alt": "Table card reading hehe i play ctf",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-02-08-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-02-16.webp",
-        "alt": "Security portfolio photo 35"
+        "alt": "Laptop screen showing terminal output with a person behind it",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-02-16-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00.webp",
-        "alt": "Security portfolio photo 36"
+        "alt": "Four organizers posing together in an atrium",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02.webp",
-        "alt": "Security portfolio photo 37"
+        "alt": "DIV:IDE Academy poster for the web exploitation session on 7 March 2026",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02-640.webp"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-05.webp",
-        "alt": "Security portfolio photo 38"
+        "alt": "Participants at a table with laptops at an indoor CTF",
+        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-03-05-640.webp"
       },
       {
         "type": "video",
         "video": "./assets/images/gallery/dump/video_2026-09-22_14-02-22.mp4",
-        "alt": "Security portfolio video from September 2026"
+        "poster": "./assets/images/gallery/dump/video_2026-09-22_14-02-22-poster.webp",
+        "alt": "Short video from a CTF event, September 2026"
       }
     ]
   }
