@@ -12,7 +12,7 @@ Live at **[portfolio.aimansam.my](https://portfolio.aimansam.my)** — a penetra
 
 ## What It Is
 
-A deployable portfolio site for a junior penetration tester and web developer. The site showcases security writeups, lab case studies, certifications, and skills — all driven by JSON content files that you edit directly or through Decap CMS.
+A deployable portfolio site for a penetration tester focused on red team work. The site showcases security writeups, lab case studies, certifications, and skills — all driven by JSON content files that you edit directly or through Decap CMS.
 
 **Built for:** security professionals who want a portfolio that looks credible and is easy to maintain — edit a JSON file, run a build script, push, and the site updates.
 
@@ -244,7 +244,7 @@ portfolio/
 ## Repo Metadata
 
 - **Topics:** `portfolio`, `pentester`, `security-writeups`, `decap-cms`, `nginx`, `docker`, `static-site`
-- **Description:** Junior Pentester & Web Developer Portfolio — security writeups, offensive security labs, and case studies.
+- **Description:** Penetration Tester & Red Team Portfolio — security writeups, offensive security labs, and case studies.
 
 ---
 
