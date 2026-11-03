@@ -549,14 +549,10 @@ a {
     font-size: 14px;
   }
 
-  .blog-portfolio-nav {
-    display: none;
-  }
-
   .blog-main {
     width: calc(100% - 40px);
     margin: 42px 20px 0;
-    padding-bottom: 48px;
+    padding-bottom: 120px;
   }
 
   .blog-hero,
@@ -1176,4 +1172,50 @@ html[data-theme="dark"] {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+/* --- Portfolio nav on small screens: a floating bar along the bottom --- */
+
+@media only screen and (max-width: 900px) {
+  .blog-portfolio-nav {
+    top: auto;
+    right: auto;
+    bottom: 14px;
+    left: 50%;
+    z-index: 35;
+    transform: translateX(-50%);
+  }
+
+  .blog-portfolio-nav .nav-icon-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 8px 10px;
+    border-radius: 999px;
+  }
+
+  .blog-portfolio-nav .nav-icon-link {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  /* Labels are hover tooltips on desktop; the links keep their aria-labels. */
+  .blog-portfolio-nav .nav-icon-label {
+    display: none;
+  }
+
+  /* Keep the back-to-top button clear of the bar. */
+  .back-to-top {
+    bottom: 84px;
+    right: 16px;
+  }
+}
+
+/* Long inline paths and hashes wrap instead of widening the page. */
+.blog-post-content :not(pre) > code {
+  overflow-wrap: anywhere;
 }
