@@ -7,6 +7,25 @@ const BLOG_DATA = path.join(ROOT, 'content/blog/posts.json');
 const BLOG_DIR = path.join(ROOT, 'blog');
 const PREVIEW_FILE = path.join(ROOT, 'content/site/blog-preview.json');
 
+const escapeHtml = (value) => String(value ?? '')
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// The side nav comes from content/site/navigation.json so it matches every other page.
+// Paths there are relative to the site root ("./about.html"); blog pages need absolute ones.
+const toAbsolute = (href) => (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href) ? href : `/${href.replace(/^\.\//, '').replace(/index\.html$/, '')}`);
+
+const PORTFOLIO_NAV_ITEMS = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/navigation.json'), 'utf8'))
+  .navigation.items
+  .map((item) => {
+    const href = toAbsolute(item.href);
+    const active = href === '/blog/';
+    return `        <a class="nav-icon-link${active ? ' is-active' : ''}" href="${escapeHtml(href)}" aria-label="${escapeHtml(item.ariaLabel || item.label)}"${active ? ' aria-current="page"' : ''}>
+          <img src="${escapeHtml(toAbsolute(item.icon))}" alt="" class="nav-icon">
+          <span class="nav-icon-label">${escapeHtml(item.label)}</span>
+        </a>`;
+  })
+  .join('\n');
+
 const BLOG_SHELL = `<!doctype html>
 <html lang="en">
   <head>
@@ -41,26 +60,7 @@ const BLOG_SHELL = `<!doctype html>
 
     <nav class="blog-portfolio-nav" aria-label="Portfolio navigation">
       <div class="nav-icon-box">
-        <a class="nav-icon-link" href="/" aria-label="Go to home">
-          <img src="/assets/icons/home.svg" alt="" class="nav-icon">
-          <span class="nav-icon-label">Home</span>
-        </a>
-        <a class="nav-icon-link" href="/about.html" aria-label="Go to about page">
-          <img src="/assets/icons/user.svg" alt="" class="nav-icon">
-          <span class="nav-icon-label">About</span>
-        </a>
-        <a class="nav-icon-link" href="/projects.html" aria-label="Go to projects page">
-          <img src="/assets/icons/briefcase.svg" alt="" class="nav-icon">
-          <span class="nav-icon-label">Projects</span>
-        </a>
-        <a class="nav-icon-link is-active" href="/blog/" aria-label="Go to blog" aria-current="page">
-          <img src="/assets/icons/article.svg" alt="" class="nav-icon">
-          <span class="nav-icon-label">Blog</span>
-        </a>
-        <a class="nav-icon-link" href="mailto:zx10r8443@gmail.com" aria-label="Email contact">
-          <img src="/assets/icons/mail.svg" alt="" class="nav-icon">
-          <span class="nav-icon-label">Email</span>
-        </a>
+${PORTFOLIO_NAV_ITEMS}
       </div>
     </nav>
 
