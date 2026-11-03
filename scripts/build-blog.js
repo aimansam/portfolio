@@ -40,13 +40,14 @@ const BLOG_SHELL = `<!doctype html>
     <link rel="stylesheet" href="/css/blog.css">
   </head>
   <body>
+    <a class="skip-to-content" href="#blog-app">Skip to main content</a>
     <header class="blog-header">
       <button class="nav-menu-toggle blog-menu-toggle" type="button" aria-expanded="false" aria-controls="blog-menu" aria-label="Open navigation menu">
         <span class="nav-menu-toggle-bar"></span>
         <span class="nav-menu-toggle-bar"></span>
         <span class="nav-menu-toggle-bar"></span>
       </button>
-      <a class="nav-title-link blog-brand" href="/blog/"><span class="nav-title">zx10r</span></a>
+      <a class="nav-title-link blog-brand" href="/blog/" aria-label="zx10r Security Notes, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Security Notes</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
         <a href="/blog/categories/writeups/" data-blog-nav="writeups">Writeups</a>
         <a href="/blog/categories/labs/" data-blog-nav="labs">Labs</a>

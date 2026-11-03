@@ -30,21 +30,6 @@ export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(pos
 const POSTS_ON_HOME = 10;
 const TAGS_ON_HOME = 10;
 
-// One dense, fully clickable row per post.
-export const postRow = (post) => `
-  <a class="blog-row" href="${postHref(post)}">
-    <span class="blog-row-date">${escapeHtml(formatDate(post.date))}</span>
-    <span class="blog-row-main">
-      ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
-      <span class="blog-row-title">${escapeHtml(post.title)}</span>
-      <span class="blog-row-summary">${escapeHtml(post.summary)}</span>
-    </span>
-    <span class="blog-row-meta">${escapeHtml((post.categories || [])[0] || 'Notes')} · ${readMinutes(post.body)} min</span>
-  </a>
-`;
-
-const postRows = (posts) => `<div class="blog-rows">${posts.map(postRow).join('')}</div>`;
-
 // Categories with counts, biggest first.
 const categoryCounts = (posts) => {
   const counts = new Map();
@@ -172,8 +157,10 @@ export const renderArchive = (posts) => {
 
 export const renderTerms = (title, terms, hrefFor) => `
   ${archiveHeader(title, 'Browse the writing by topic and lab context.')}
-  <section class="blog-term-grid">
-    ${terms.map(([term, count]) => `<a class="blog-term" href="${hrefFor(term)}"><span>${escapeHtml(term)}</span><strong>${count}</strong></a>`).join('')}
+  <section class="blog-tag-page" aria-label="All tags">
+    <div class="blog-tag-cloud blog-tag-cloud-large">
+      ${[...terms].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([term, count]) => `<a class="project-tag" href="${hrefFor(term)}">${escapeHtml(term)} <span>${count}</span></a>`).join('')}
+    </div>
   </section>
 `;
 
@@ -192,7 +179,8 @@ const relatedPosts = (post, posts, limit = 2) => posts
   .slice(0, limit)
   .map((entry) => entry.other);
 
-const tableOfContents = (headings) => headings.length < 3 ? '' : `
+// Only worth the space on longer posts: 5+ minutes, or plenty of sections.
+const tableOfContents = (headings, minutes) => headings.length < 3 || (minutes < 5 && headings.length < 8) ? '' : `
   <nav class="blog-toc" aria-label="Table of contents">
     <details open>
       <summary>On this page</summary>
@@ -226,14 +214,14 @@ export const renderPost = (post, posts = []) => {
       </div>
     </header>
     ${post.cover?.image ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
-    ${tableOfContents(headings)}
+    ${tableOfContents(headings, readMinutes(post.body))}
     <div class="blog-post-content">${html}</div>
     <footer class="blog-post-footer">
       ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
       ${related.length ? `
         <section class="blog-related" aria-label="Related posts">
           <h2>Related posts</h2>
-          ${postRows(related)}
+          ${postCards(related)}
         </section>` : ''}
       <a class="blog-button" href="/blog/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
     </footer>

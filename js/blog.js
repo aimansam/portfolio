@@ -82,6 +82,12 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') setMenu(false);
 });
 
+// Fade a background in behind the fixed header once the page scrolls, so text never collides with it.
+const header = document.querySelector('.blog-header');
+const syncHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+window.addEventListener('scroll', syncHeader, { passive: true });
+syncHeader();
+
 initLightbox();
 initBackToTop();
 
