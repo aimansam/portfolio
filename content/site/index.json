@@ -54,7 +54,7 @@
   },
   "blogPreview": {
     "heading": "Writeups",
-    "intro": "Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.",
+    "intro": "Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.",
     "viewAllHref": "./blog/index.html",
     "viewAllLabel": "View all posts",
     "items": [

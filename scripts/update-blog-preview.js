@@ -35,8 +35,8 @@ const previewItems = posts.slice(0, 3).map((post, index) => ({
 
 fs.writeFileSync(PREVIEW_FILE, `${JSON.stringify({
   blogPreview: {
-    heading: 'Writeups / Blog',
-    intro: 'Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.',
+    heading: 'Writeups',
+    intro: 'Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.',
     viewAllHref: './blog/',
     viewAllLabel: 'View all posts',
     items: previewItems

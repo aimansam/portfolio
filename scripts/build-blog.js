@@ -32,7 +32,7 @@ const BLOG_SHELL = `<!doctype html>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>zx10r Security Notes</title>
-    <meta name="description" content="Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.">
+    <meta name="description" content="Writeups, lab notes, and CTF workflows from red team and penetration testing practice.">
     <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
     <script>try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="stylesheet" href="/css/typography.css">
@@ -116,8 +116,8 @@ function updatePreview(posts) {
 
   fs.writeFileSync(PREVIEW_FILE, `${JSON.stringify({
     blogPreview: {
-      heading: 'Writeups / Blog',
-      intro: 'Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.',
+      heading: 'Writeups',
+      intro: 'Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.',
       viewAllHref: './blog/',
       viewAllLabel: 'View all posts',
       items

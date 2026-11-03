@@ -79,7 +79,7 @@ const sidebar = (posts, activeCategory = '') => {
   <aside class="blog-sidebar" aria-label="Blog sidebar">
     <section class="blog-side-card">
       <h2 class="blog-section-title">About</h2>
-      <p><strong>Aiman Sam</strong> is a junior penetration tester. These notes are written up from labs and CTFs.</p>
+      <p><strong>Aiman Sam</strong> is a final-year cybersecurity student and penetration tester. These notes are written up from red team labs and CTFs.</p>
       <div class="blog-socials">
         <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
         <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
