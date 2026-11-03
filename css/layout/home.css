@@ -8,68 +8,6 @@
   gap: 96px;
 }
 
-[data-scroll-reveal="true"] {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 520ms ease,
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--scroll-reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-
-[data-scroll-reveal="true"].is-scroll-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.pointer-effect {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.pointer-effect.is-visible {
-  visibility: visible;
-}
-
-.pointer-particle {
-  position: fixed;
-  top: var(--particle-y);
-  left: var(--particle-x);
-  display: block;
-  width: var(--particle-size);
-  height: var(--particle-size);
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-  background-color: rgba(20, 20, 20, 0.72);
-  box-shadow: 0 0 12px rgba(20, 20, 20, 0.2);
-  pointer-events: none;
-  animation: pointer-particle-drift 680ms ease-out forwards;
-}
-
-.pointer-particle-strong {
-  background-color: #141414;
-  box-shadow: 0 0 16px rgba(20, 20, 20, 0.28);
-}
-
-@keyframes pointer-particle-drift {
-  0% {
-    opacity: 0.86;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(
-      calc(-50% + var(--particle-drift-x)),
-      calc(-50% + var(--particle-drift-y))
-    ) scale(0.18);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   body.is-loading {
     overflow: auto;
@@ -85,26 +23,7 @@
     animation: none;
   }
 
-  [data-scroll-reveal="true"] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    will-change: auto;
-  }
-
-  .pointer-effect {
-    display: none;
-  }
 }
-
-@media (hover: none), (pointer: coarse) {
-  .pointer-effect {
-    display: none;
-  }
-}
-
-
-
 
 /* Portfolio Header */
 
@@ -470,4 +389,20 @@
 
 .stat-node:nth-child(even) {
   margin-top: 26px;
+}
+
+/* Hero intro: text blocks rise in one after another from first paint (no JS). The portrait,
+   the largest element, is not animated so it paints as early as possible. */
+.hero-top-content > * {
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.hero-top-content > :nth-child(1) { animation-delay: 60ms; }
+.hero-top-content > :nth-child(2) { animation-delay: 140ms; }
+.hero-top-content > :nth-child(3) { animation-delay: 220ms; }
+.hero-top-content > :nth-child(4) { animation-delay: 300ms; }
+.hero-top-content > :nth-child(5) { animation-delay: 380ms; }
+
+.hero-image-caption {
+  animation: fade-in var(--dur-slow) var(--ease-out) 200ms both;
 }

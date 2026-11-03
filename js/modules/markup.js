@@ -76,8 +76,8 @@ export const createSkillFilterMarkup = (filter, isActive) => `
 export const createSkillPageMarkup = (page, isActive) => `
   <section class="about-skill-page${isActive ? ' is-active' : ''}" data-skill-page="${page.id}">
     <div class="about-pill-list">
-      ${page.skills.map(skill => `
-        <span class="about-pill"><i data-lucide="${skill.icon}"></i>${skill.name}</span>
+      ${page.skills.map((skill, index) => `
+        <span class="about-pill" style="--i:${index}"><i data-lucide="${skill.icon}"></i>${skill.name}</span>
       `).join('')}
     </div>
   </section>

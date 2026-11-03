@@ -104,7 +104,9 @@ function prerenderBlog(blog) {
     const dom = new JSDOM(fs.readFileSync(file, 'utf8'), { url: `${SITE}${route}` });
     const { document } = dom.window;
 
-    document.getElementById('blog-app').innerHTML = blog.renderRoute(posts, parts);
+    const app = document.getElementById('blog-app');
+    app.innerHTML = blog.renderRoute(posts, parts);
+    app.setAttribute('data-prerendered', '');
     addImageDimensions(document);
     blog.setActiveNav(document, route);
     document.title = meta.title;

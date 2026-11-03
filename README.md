@@ -145,6 +145,15 @@ The `Dockerfile` runs `npm run build` in a Node build stage, then copies the out
 
 ---
 
+## Motion
+
+Animations share one set of timings and easings (`--ease-out`, `--dur-*`, `--stagger` in `css/utilities.css`) and are subtle by design: transform and opacity only, nothing loops, and everything is off for `prefers-reduced-motion`.
+
+- **Scroll reveal, count-up, FLIP filtering, TOC highlight, spoilers:** `js/modules/motion.js`. Elements already on screen are never hidden, and content is visible without JS.
+- **Page transitions:** `@view-transition` in `utilities.css` (Chrome, Edge, Safari; other browsers change page instantly). The nav and brand stay still.
+- **Loader:** shown on a visitor's first page of a session only (`sessionStorage`, read in each page's `<head>`).
+- **Adding a reveal:** add a selector to `REVEAL_GROUPS` in `js/main.js` (portfolio) or `enhance()` in `js/blog.js` (blog).
+
 ## Deployment
 
 See [docs/deployment.md](docs/deployment.md) for the GitHub Pages and self-host details, including recommended response headers.

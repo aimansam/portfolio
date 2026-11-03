@@ -1,4 +1,5 @@
 /** Interactive UI: menu, filters, lightbox, back-to-top, analytics. */
+import { flip, prefersReducedMotion } from './motion.js'
 
 // Mobile Menu Toggle
 const menuToggle = document.querySelector('.nav-menu-toggle')
@@ -34,16 +35,16 @@ document.addEventListener('click', (e) => {
     const filter = e.target.dataset.filter
     const buttons = document.querySelectorAll('.filter-button')
     const projects = document.querySelectorAll('.project-card')
-    
+
     buttons.forEach(b => b.classList.remove('is-active'))
     e.target.classList.add('is-active')
-    
-    projects.forEach(p => {
-      if (filter === 'all' || p.dataset.category === filter) {
-        p.style.display = 'flex'
-      } else {
-        p.style.display = 'none'
-      }
+
+    // Cards that stay glide to their new place; cards that appear scale in.
+    const visibleCards = () => [...projects].filter(card => card.style.display !== 'none')
+    flip(visibleCards, () => {
+      projects.forEach(p => {
+        p.style.display = (filter === 'all' || p.dataset.category === filter) ? 'flex' : 'none'
+      })
     })
   }
 })
@@ -122,8 +123,14 @@ export const initLightbox = () => {
     const item = lightboxItems[lightboxIndex]
     if (!item) return
     const img = lightbox.querySelector('.lightbox-image')
-    img.src = item.src
     img.alt = item.title || 'Gallery image'
+    // Cross-fade between pictures when browsing with the arrows.
+    if (!prefersReducedMotion() && lightbox.classList.contains('is-open') && img.getAttribute('src') !== item.src) {
+      img.classList.add('is-swapping')
+      img.addEventListener('load', () => img.classList.remove('is-swapping'), { once: true })
+      img.addEventListener('error', () => img.classList.remove('is-swapping'), { once: true })
+    }
+    img.src = item.src
     lightbox.querySelector('.lightbox-title').textContent = item.title || ''
     lightbox.querySelector('.lightbox-desc').textContent = item.desc || ''
   }

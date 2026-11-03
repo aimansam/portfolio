@@ -1542,3 +1542,91 @@ a.project-tag:focus-visible {
     break-inside: avoid;
   }
 }
+
+/* --- Motion (see the motion system in utilities.css) --- */
+
+/* Headers rise in from first paint. */
+.blog-post-header > *,
+.blog-page-header > *,
+.blog-home-title {
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.blog-post-header > :nth-child(2),
+.blog-page-header > :nth-child(2) { animation-delay: 60ms; }
+.blog-post-header > :nth-child(3),
+.blog-page-header > :nth-child(3) { animation-delay: 120ms; }
+.blog-post-header > :nth-child(n+4) { animation-delay: 180ms; }
+
+/* Section marker in the table of contents */
+.blog-toc ol {
+  position: relative;
+}
+
+.blog-toc-marker {
+  position: absolute;
+  left: -2px;
+  top: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--ink);
+  opacity: 0;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    height var(--dur-base) var(--ease-out),
+    opacity var(--dur-fast) ease;
+  pointer-events: none;
+}
+
+.blog-toc a {
+  transition: color var(--dur-fast) ease;
+}
+
+.blog-toc a.is-current {
+  font-weight: 800;
+}
+
+/* Copy confirmation pops */
+@keyframes pop {
+  0% { transform: scale(0.9); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.code-copy.is-copied {
+  opacity: 1;
+  animation: pop var(--dur-base) var(--ease-out);
+}
+
+/* Theme toggle icon turns as the theme changes */
+@keyframes icon-spin {
+  from { transform: rotate(-90deg) scale(0.8); }
+  to { transform: none; }
+}
+
+.theme-toggle.is-spinning svg {
+  animation: icon-spin var(--dur-base) var(--ease-out);
+}
+
+/* Links in articles thicken their underline on hover */
+.blog-post-content a {
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness var(--dur-fast) ease;
+}
+
+.blog-post-content a:hover,
+.blog-post-content a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-post-header > *,
+  .blog-page-header > *,
+  .blog-home-title {
+    animation: none;
+  }
+
+  .blog-toc-marker {
+    transition: none;
+  }
+}

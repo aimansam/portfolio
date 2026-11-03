@@ -5,6 +5,7 @@ import { resolvePortfolioUrl } from './modules/utils.js'
 import { applyPortfolioContent } from './modules/apply.js'
 import { loadPageContent } from './modules/content.js'
 import { initLightbox, initBackToTop, initAnalytics } from './modules/ui.js'
+import { initReveal, initCountUp, initImageFade } from './modules/motion.js'
 
 const hideLoader = (delay) => {
   document.body.classList.remove('is-loading')
@@ -36,54 +37,22 @@ const safeFetch = async (url) => {
   }
 }
 
-const initScrollReveal = () => {
-  const revealTargets = document.querySelectorAll([
-    '#main-content > *:not(.story-chapters)',
-    '#main-content .story-chapter',
-    '#main-content .about-card',
-    '#main-content .project-card',
-    '#main-content .gallery-masonry-item',
-    '#main-content .blog-preview-card'
-  ].join(','))
+// Leaf elements first, so a card animates on its own instead of with its whole section.
+const REVEAL_GROUPS = [
+  { selector: '#main-content .project-card' },
+  { selector: '#main-content .gallery-masonry-item:nth-child(n+10)' },
+  { selector: '#main-content .blog-preview-card' },
+  { selector: '#main-content .stat-node' },
+  { selector: '#main-content .about-card' },
+  { selector: '#main-content .story-chapter' },
+  { selector: '#main-content > *:not(.story-chapters)' },
+  { selector: '#footer', variant: 'fade' }
+]
 
-  revealTargets.forEach((element, index) => {
-    if (element.dataset.scrollReveal !== 'true') {
-      element.dataset.scrollReveal = 'true'
-    }
-    const delay = element.classList.contains('story-chapter') ? 0 : Math.min((index % 6) * 70, 350)
-    element.style.setProperty('--scroll-reveal-delay', `${delay}ms`)
-  })
+const IMAGE_FADE = '.gallery-masonry-image, .project-image, .about-cert-masonry-image, .about-certificate-image'
 
-  if (!('IntersectionObserver' in window)) {
-    revealTargets.forEach(element => element.classList.add('is-scroll-visible'))
-    return
-  }
-
-  const observerOptions = {
-    threshold: 0.16,
-    rootMargin: '0px 0px -18% 0px'
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries
-      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-      .forEach((entry, entryIndex) => {
-        if (entry.isIntersecting) {
-          const delay = entry.target.classList.contains('story-chapter')
-            ? 0
-            : Math.min(entryIndex * 90, 360)
-          entry.target.style.setProperty('--scroll-reveal-delay', `${delay}ms`)
-          entry.target.classList.add('is-scroll-visible')
-          observer.unobserve(entry.target)
-        }
-      })
-  }, observerOptions)
-
-  document.querySelectorAll('[data-scroll-reveal="true"]').forEach(el => {
-    observer.observe(el)
-  })
-}
-
+// The full-screen loader is for a visitor's first page only; <head> reads this flag.
+try { window.sessionStorage.setItem('zx10r-seen', '1') } catch { /* storage unavailable */ }
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -98,7 +67,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (window.lucide) drawIcons()
     else window.addEventListener('load', drawIcons, { once: true })
 
-    initScrollReveal()
+    initImageFade(IMAGE_FADE)
+    initReveal(REVEAL_GROUPS)
+    initCountUp('.stat-value')
     initLightbox()
     initBackToTop()
     initAnalytics(finalContent.site?.analyticsId)

@@ -1,6 +1,7 @@
 /** Applies loaded JSON content to the page DOM. */
 import { escapeHtml, resolvePortfolioUrl, resolveContentAsset } from './utils.js'
 import { isProjectPath, getProjectId } from './content.js'
+import { prefersReducedMotion } from './motion.js'
 import {
   createStructuredData, createCareerTimelineMarkup, createStatsRow,
   createSkillFilterMarkup, createSkillPageMarkup, createProjectMarkup,
@@ -205,7 +206,7 @@ export const applyCertificatesContent = (content) => {
       certPrevBtn.addEventListener('click', () => {
         if (certCurrentPage > 1) {
           certCurrentPage--
-          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
+          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn, -1)
         }
       })
     }
@@ -214,23 +215,26 @@ export const applyCertificatesContent = (content) => {
       certNextBtn.addEventListener('click', () => {
         if (certCurrentPage < totalPages) {
           certCurrentPage++
-          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
+          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn, 1)
         }
       })
     }
   }
 }
 
-export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBtn) => {
+// direction: 1 when moving forward, -1 when moving back, 0 for the first render.
+export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBtn, direction = 0) => {
   const totalPages = Math.ceil(allCerts.length / certPerPage)
   const startIdx = (certCurrentPage - 1) * certPerPage
   const endIdx = Math.min(startIdx + certPerPage, allCerts.length)
   const pageCerts = allCerts.slice(startIdx, endIdx)
   
-  // Render certificates with fade animation
+  // The old page slides out against the direction of travel, the new one slides in.
+  const animate = direction !== 0 && !prefersReducedMotion()
+  certList.style.transition = 'opacity 150ms ease, transform 150ms ease'
   certList.style.opacity = '0'
-  certList.style.transition = 'opacity 200ms ease'
-  
+  if (animate) certList.style.transform = `translateX(${-direction * 24}px)`
+
   setTimeout(() => {
     certList.innerHTML = pageCerts.map(cert => `
       <div class="about-cert-masonry-item">
@@ -248,7 +252,14 @@ export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, cer
       </div>
     `).join('')
     
+    if (animate) {
+      certList.style.transition = 'none'
+      certList.style.transform = `translateX(${direction * 24}px)`
+      void certList.offsetWidth
+      certList.style.transition = 'opacity 250ms ease, transform 250ms cubic-bezier(0.22, 1, 0.36, 1)'
+    }
     certList.style.opacity = '1'
+    certList.style.transform = 'none'
     
     // Update counter
     if (certCounter) {
@@ -267,7 +278,7 @@ export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, cer
       certNextBtn.style.opacity = certCurrentPage === totalPages ? '0.5' : '1'
       certNextBtn.style.cursor = certCurrentPage === totalPages ? 'not-allowed' : 'pointer'
     }
-  }, 200)
+  }, animate ? 150 : 200)
 }
 
 export const applyGalleryContent = (content) => {

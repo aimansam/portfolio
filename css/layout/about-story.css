@@ -896,3 +896,12 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* Story images settle in with a slight scale as their chapter is revealed. */
+.story-chapter [data-story-media] img {
+  transition: transform 700ms var(--ease-out);
+}
+
+.story-chapter[data-reveal]:not(.is-revealed) [data-story-media] img {
+  transform: scale(1.03);
+}

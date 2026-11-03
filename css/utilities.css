@@ -741,11 +741,6 @@ a.no-underline:hover {
     opacity: 1;
   }
 
-  [data-scroll-reveal="true"] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
   .gallery-masonry-image {
     animation: none !important;
   }
@@ -756,5 +751,227 @@ a.no-underline:hover {
 
   .back-to-top {
     transition: none;
+  }
+}
+
+/* =========================================================================
+   Motion system
+   One set of timings and easings shared by the portfolio and the blog.
+   Movement uses transform and opacity only, and is switched off for people
+   who ask for reduced motion (see the media query at the end).
+   ========================================================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 500ms;
+  --stagger: 60ms;
+  --reveal-distance: 16px;
+}
+
+/* Scroll reveal. js/modules/motion.js tags below-the-fold elements with
+   data-reveal, then removes it once they have settled, so an element's own
+   hover transitions are untouched afterwards. Nothing is hidden without JS. */
+[data-reveal] {
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+}
+
+[data-reveal="fade"]:not(.is-revealed) {
+  transform: none;
+}
+
+[data-reveal="scale"]:not(.is-revealed) {
+  transform: scale(0.97);
+}
+
+/* Entrance used for above-the-fold content (runs from first paint, no JS). */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cross-page transitions (Chrome, Edge, Safari). Firefox just changes page. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-out var(--dur-base) var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-in var(--dur-base) var(--ease-out) both;
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* The navigation and brand stay put while the page content changes. */
+.navbar .nav-icon-box,
+.blog-portfolio-nav .nav-icon-box {
+  view-transition-name: site-nav;
+}
+
+.nav-title-link {
+  view-transition-name: site-brand;
+}
+
+/* Theme switch (blog): a plain crossfade, no rise. */
+html.theme-switching::view-transition-old(root) {
+  animation: vt-out var(--dur-base) ease both;
+}
+
+html.theme-switching::view-transition-new(root) {
+  animation: fade-in var(--dur-base) ease both;
+}
+
+/* First-visit-only loader: pages mark themselves in <head> after the first view. */
+html.skip-loader .page-loader {
+  display: none;
+}
+
+html.skip-loader body.is-loading {
+  overflow: auto;
+}
+
+/* Press feedback (the individual hover transitions stay as they are). */
+a.button:active,
+.filter-button:active,
+.about-skill-filter:active,
+.nav-icon-link:active,
+a.icon-link:active,
+.nav-menu-toggle:active,
+.theme-toggle:active,
+.back-to-top:active,
+.blog-button:active,
+.blog-filter:active {
+  scale: 0.97;
+}
+
+/* Animated skills pills: they pop in each time their page is shown. */
+@keyframes pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.about-skill-page.is-active .about-pill {
+  animation: pill-in var(--dur-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 25ms);
+}
+
+/* Images fade in once they have loaded. */
+img.is-loading {
+  opacity: 0;
+}
+
+img.is-loading-done {
+  animation: fade-in var(--dur-base) var(--ease-out) both;
+}
+
+/* Lightbox: the picture scales in, and swaps cross-fade. */
+.lightbox-image {
+  transform: scale(0.96);
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) ease;
+}
+
+.lightbox-overlay.is-open .lightbox-image {
+  transform: scale(1);
+}
+
+.lightbox-image.is-swapping {
+  opacity: 0;
+}
+
+/* Mobile menu opens with a short fade and drop (browsers without
+   @starting-style or allow-discrete simply show it instantly). */
+@media only screen and (max-width: 800px) {
+  .nav-icon-box {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+    transform-origin: top left;
+    transition:
+      opacity var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      display var(--dur-fast) allow-discrete;
+  }
+
+  .nav-icon-box.is-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  @starting-style {
+    .nav-icon-box.is-open {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.97);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  [data-reveal]:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .about-skill-page.is-active .about-pill,
+  img.is-loading-done {
+    animation: none;
+  }
+
+  img.is-loading {
+    opacity: 1;
+  }
+
+  .nav-icon-box {
+    transform: none;
   }
 }

@@ -1,5 +1,6 @@
 import { renderRoute, routeParts, setActiveNav } from './modules/blog-render.js';
 import { initLightbox, initBackToTop } from './modules/ui.js';
+import { initReveal, initTocSpy, animateDetails, prefersReducedMotion } from './modules/motion.js';
 
 const dataUrl = '/content/blog/posts.json';
 
@@ -16,10 +17,14 @@ const addCopyButtons = (root) => {
       try {
         await navigator.clipboard.writeText(pre.querySelector('code').innerText);
         button.textContent = 'Copied';
+        button.classList.add('is-copied');
       } catch {
         button.textContent = 'Press Ctrl+C';
       }
-      setTimeout(() => { button.textContent = 'Copy'; }, 1800);
+      setTimeout(() => {
+        button.textContent = 'Copy';
+        button.classList.remove('is-copied');
+      }, 1800);
     });
     pre.appendChild(button);
   });
@@ -42,13 +47,28 @@ const initProgress = (root) => {
   progressHandler();
 };
 
-const render = (posts) => {
-  const app = document.getElementById('blog-app');
-  app.innerHTML = renderRoute(posts, routeParts(window.location.pathname));
+// Everything a rendered page needs on top of its markup. Used both after a client-side render
+// and on pages that were prerendered at build time.
+const enhance = (app) => {
   setActiveNav(document, window.location.pathname);
   addCopyButtons(app);
   initProgress(app);
+  initTocSpy(app.querySelector('.blog-toc'));
+  app.querySelectorAll('.spoiler').forEach((details) => animateDetails(details, '.spoiler-body'));
+  initReveal([
+    { selector: '.blog-post-card' },
+    { selector: '.blog-side-card' },
+    { selector: '.blog-archive-year' },
+    { selector: '.blog-post-nav-link' },
+    { selector: '.blog-related h2', variant: 'fade' }
+  ]);
   if (window.location.hash) document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();
+};
+
+const render = (posts) => {
+  const app = document.getElementById('blog-app');
+  app.innerHTML = renderRoute(posts, routeParts(window.location.pathname));
+  enhance(app);
 };
 
 // Light/dark theme. The initial value is set by an inline script in <head> to avoid a flash.
@@ -59,10 +79,24 @@ const syncThemeToggle = () => {
   themeToggle?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
 };
 themeToggle?.addEventListener('click', () => {
-  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next;
-  try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
-  syncThemeToggle();
+  const root = document.documentElement;
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  const apply = () => {
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
+    syncThemeToggle();
+  };
+  if (!prefersReducedMotion()) {
+    themeToggle.classList.add('is-spinning');
+    themeToggle.addEventListener('animationend', () => themeToggle.classList.remove('is-spinning'), { once: true });
+  }
+  // Crossfade the whole page where the browser supports view transitions.
+  if (document.startViewTransition && !prefersReducedMotion()) {
+    root.classList.add('theme-switching');
+    document.startViewTransition(apply).finished.finally(() => root.classList.remove('theme-switching'));
+  } else {
+    apply();
+  }
 });
 syncThemeToggle();
 
@@ -91,12 +125,18 @@ syncHeader();
 initLightbox();
 initBackToTop();
 
-fetch(dataUrl)
-  .then((response) => {
-    if (!response.ok) throw new Error(`Unable to load posts: ${response.status}`);
-    return response.json();
-  })
-  .then((data) => render((data.posts || []).filter((post) => !post.draft).sort((a, b) => new Date(b.date) - new Date(a.date))))
-  .catch((error) => {
-    document.getElementById('blog-app').innerHTML = `<section class="blog-loading"><span class="blog-kicker">Error</span><h1>Blog could not load.</h1><p>${String(error.message).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)}</p></section>`;
-  });
+const app = document.getElementById('blog-app');
+if (app.hasAttribute('data-prerendered')) {
+  // The server already sent the finished page, so there is nothing to fetch or re-render.
+  enhance(app);
+} else {
+  fetch(dataUrl)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Unable to load posts: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => render((data.posts || []).filter((post) => !post.draft).sort((a, b) => new Date(b.date) - new Date(a.date))))
+    .catch((error) => {
+      app.innerHTML = `<section class="blog-loading"><span class="blog-kicker">Error</span><h1>Blog could not load.</h1><p>${String(error.message).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)}</p></section>`;
+    });
+}
