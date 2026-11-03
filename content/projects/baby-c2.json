@@ -10,7 +10,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/BABY-C2",
   "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
-  "headerImage": "../assets/images/zx10r/zx10r.webp",
+  "headerImage": "../assets/images/projects/jebat/jebat.webp",
   "sections": [
     {
       "title": "Responsible Scope",
@@ -35,7 +35,7 @@
   ],
   "gallery": [
     {
-      "image": "../assets/images/zx10r/zx10r.webp",
+      "image": "../assets/images/projects/jebat/jebat.webp",
       "caption": "Authorized research case study; implementation details remain scoped to the repository and isolated lab context.",
       "width": "full"
     }

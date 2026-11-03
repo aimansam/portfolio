@@ -10,7 +10,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/web-vuln-scanner",
   "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
-  "headerImage": "../blog/posts/monster-corporate/monster-corporate-00.png",
+  "headerImage": "../assets/images/projects/durian/durian.webp",
   "sections": [
     {
       "title": "What I Built",
@@ -29,7 +29,7 @@
   ],
   "gallery": [
     {
-      "image": "../blog/posts/monster-corporate/monster-corporate-00.png",
+      "image": "../assets/images/projects/durian/durian.webp",
       "caption": "Related web-exploitation evidence from the Monster Corporate writeup.",
       "width": "full"
     }

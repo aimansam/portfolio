@@ -149,6 +149,8 @@ The `Dockerfile` runs `npm run build` in a Node build stage, then copies the out
 
 ## Deployment
 
+See [docs/deployment.md](docs/deployment.md) for the GitHub Pages and self-host details, including recommended response headers.
+
 **Docker:**
 
 ```bash
