@@ -23,11 +23,13 @@ body {
 }
 
 .main-title {
+  margin: 0;
   font-size: 40px;
   font-weight: 700;
 }
 
 .subheader-text {
+  margin: 0;
   font-size: 20px;
   font-weight: 700;
 }
