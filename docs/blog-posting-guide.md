@@ -2,7 +2,7 @@
 
 How to write, preview, and publish posts for `zx10r Security Notes`.
 
-A post is a Markdown file with a short header. Everything else (summary, cover, tags, URLs, social tags, RSS, sitemap, related posts) is generated.
+A post is a Markdown file with a short header. Everything else (summary, cover, tags, URLs, social tags, sitemap, related posts) is generated.
 
 ## Quick Path
 
@@ -94,7 +94,7 @@ The flag is `HTB{example}`.
 
 ## What Is Generated (Never Commit)
 
-`/blog/`, `/projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are git-ignored and rebuilt by `npm run build` (locally by `npm run preview`) and in CI. CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml` and the RSS feed (`/blog/feed.xml`).
+`/blog/`, `/projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are git-ignored and rebuilt by `npm run build` (locally by `npm run preview`) and in CI. CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml`.
 
 The blog also has a light/dark toggle, an `/blog/archive/` page grouped by year, and on each post: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
 
@@ -103,13 +103,12 @@ The blog also has a light/dark toggle, an `/blog/archive/` page grouped by year,
 ```sh
 curl -s -o /dev/null -w '%{http_code}\n' 'https://portfolio.aimansam.my/blog/posts/<slug>/'
 curl -s 'https://portfolio.aimansam.my/blog/posts/<slug>/' | grep -o '<title>[^<]*'
-curl -s 'https://portfolio.aimansam.my/blog/feed.xml' | grep -c '<item>'
 ```
 
 ## Quality Checklist
 
 - Title is clear and specific.
-- The first paragraph works as a summary (it is the meta description and RSS summary) unless you set `summary`.
+- The first paragraph works as a summary (it is the meta description and the summary shown in lists) unless you set `summary`.
 - Tags and category match the topic; shared tags drive "Related posts".
 - Images have useful alt text.
 - Commands are in fenced code blocks with a language (`bash`, `python`, ...); raw tool output has none.

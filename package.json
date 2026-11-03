@@ -5,7 +5,7 @@
     "cms:proxy": "npx decap-server",
     "cms:auth:dev": "npx wrangler dev --config cms-auth/wrangler.toml",
     "cms:auth:deploy": "npx wrangler deploy --config cms-auth/wrangler.toml",
-    "build": "node scripts/build-blog.js && node scripts/update-blog-preview.js && node scripts/build-projects.js && node scripts/inject-seo.js && node scripts/build-sitemap.js && node scripts/build-feed.js",
+    "build": "node scripts/build-blog.js && node scripts/update-blog-preview.js && node scripts/build-projects.js && node scripts/inject-seo.js && node scripts/build-sitemap.js",
     "prerender": "node scripts/prerender.js",
     "check": "node scripts/check-site.js",
     "new-post": "node scripts/new-post.js",

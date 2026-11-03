@@ -34,7 +34,6 @@ const BLOG_SHELL = `<!doctype html>
     <title>zx10r Security Notes</title>
     <meta name="description" content="Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.">
     <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
-    <link rel="alternate" type="application/rss+xml" title="zx10r Security Notes" href="/blog/feed.xml">
     <script>try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="stylesheet" href="/css/typography.css">
     <link rel="stylesheet" href="/css/utilities.css">
@@ -49,13 +48,11 @@ const BLOG_SHELL = `<!doctype html>
       </button>
       <a class="nav-title-link blog-brand" href="/blog/"><span class="nav-title">zx10r</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
-        <a href="/blog/posts/" data-blog-nav="posts">Posts</a>
         <a href="/blog/categories/writeups/" data-blog-nav="writeups">Writeups</a>
         <a href="/blog/categories/labs/" data-blog-nav="labs">Labs</a>
         <a href="/blog/categories/notes/" data-blog-nav="notes">Notes</a>
         <a href="/blog/tags/" data-blog-nav="tags">Tags</a>
         <a href="/blog/archive/" data-blog-nav="archive">Archive</a>
-        <a href="/blog/about/" data-blog-nav="about">About</a>
       </nav>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>

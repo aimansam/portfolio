@@ -27,50 +27,39 @@ export const tagHref = (tag) => `${blogRoot}tags/${slugify(tag)}/`;
 
 export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(post.body)} min read`;
 
-export const postCard = (post, { feature = false } = {}) => `
-  <article class="blog-card${feature ? ' blog-card-feature' : ''}">
-    ${post.cover?.image ? `<a class="blog-card-cover" href="${postHref(post)}"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" loading="lazy"></a>` : ''}
-    <div class="blog-card-body">
+const POSTS_ON_HOME = 10;
+const TAGS_ON_HOME = 10;
+
+// One dense, fully clickable row per post.
+export const postRow = (post) => `
+  <a class="blog-row" href="${postHref(post)}">
+    <span class="blog-row-date">${escapeHtml(formatDate(post.date))}</span>
+    <span class="blog-row-main">
       ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
-      <div class="blog-card-tags">
-        ${(post.categories || []).map((category) => `<a class="project-tag" href="${categoryHref(category)}">${escapeHtml(category)}</a>`).join('')}
-      </div>
-      <h2><a href="${postHref(post)}">${escapeHtml(post.title)}</a></h2>
-      <p>${escapeHtml(post.summary)}</p>
-      <div class="blog-card-meta">${escapeHtml(postMeta(post))}</div>
-      <a class="blog-button${feature ? ' blog-button-primary' : ''}" href="${postHref(post)}">
-        <span>${feature ? 'Read latest' : 'Read post'}</span>
-        <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon">
-      </a>
-    </div>
-  </article>
+      <span class="blog-row-title">${escapeHtml(post.title)}</span>
+      <span class="blog-row-summary">${escapeHtml(post.summary)}</span>
+    </span>
+    <span class="blog-row-meta">${escapeHtml((post.categories || [])[0] || 'Notes')} · ${readMinutes(post.body)} min</span>
+  </a>
 `;
 
-export const hero = (latest) => `
-  <section class="blog-hero">
-    <div class="blog-hero-copy">
-      <span class="blog-kicker">Security Notes</span>
-      <h1>Security notes from the lab.</h1>
-      <p>Hands-on security writeups covering CTFs, Active Directory labs, web exploitation, privilege escalation, and defensive lessons from offensive practice.</p>
-      <div class="blog-actions">
-        <a class="blog-button blog-button-primary" href="/blog/posts/"><span>Start reading</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
-        <a class="blog-button" href="/blog/categories/writeups/"><span>Browse writeups</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
-      </div>
-      <div class="blog-socials">
-        <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
-        <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
-      </div>
-    </div>
-    ${latest ? `
-      <a class="blog-latest" href="${postHref(latest)}">
-        <span class="blog-kicker">Latest Writeup</span>
-        <strong>${escapeHtml(latest.title)}</strong>
-        <span>${escapeHtml(latest.summary)}</span>
-        <small>${escapeHtml(postMeta(latest))}</small>
-        <span class="blog-latest-action">Read latest <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></span>
-      </a>
-    ` : ''}
-  </section>
+const postRows = (posts) => `<div class="blog-rows">${posts.map(postRow).join('')}</div>`;
+
+// Categories with counts, biggest first.
+const categoryCounts = (posts) => {
+  const counts = new Map();
+  posts.forEach((post) => (post.categories || []).forEach((name) => {
+    const slug = slugify(name);
+    counts.set(slug, { name, slug, count: (counts.get(slug)?.count || 0) + 1 });
+  }));
+  return [...counts.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+};
+
+const filterNav = (posts, activeSlug, allHref) => `
+  <nav class="blog-filters" aria-label="Filter by category">
+    <a class="blog-filter${activeSlug ? '' : ' is-active'}" href="${allHref}"${activeSlug ? '' : ' aria-current="page"'}>All <span>${posts.length}</span></a>
+    ${categoryCounts(posts).map(({ name, slug, count }) => `<a class="blog-filter${slug === activeSlug ? ' is-active' : ''}" href="${categoryHref(name)}"${slug === activeSlug ? ' aria-current="page"' : ''}>${escapeHtml(name)} <span>${count}</span></a>`).join('')}
+  </nav>
 `;
 
 export const archiveHeader = (title, intro = '') => `
@@ -81,16 +70,49 @@ export const archiveHeader = (title, intro = '') => `
   </header>
 `;
 
-export const renderHome = (posts) => `
-  ${hero(posts[0])}
-  <section class="blog-list" aria-label="Recent posts">
-    ${posts.slice(1).map((post) => postCard(post)).join('')}
-  </section>
-`;
+export const renderHome = (posts) => {
+  if (!posts.length) {
+    return `${archiveHeader('Security notes from the lab.', 'No posts yet. Check back soon.')}`;
+  }
+  const latest = formatDate(posts[0].date, { month: 'long', day: 'numeric', year: 'numeric' });
+  const categories = categoryCounts(posts);
+  const topTags = countTerms(posts, 'tags')
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, TAGS_ON_HOME);
 
-export const renderList = (title, posts, intro = '') => `
+  return `
+  <section class="blog-intro">
+    <span class="blog-kicker">Security Notes</span>
+    <h1>Security notes from the lab.</h1>
+    <p>Hands-on writeups on CTFs, Active Directory labs, web exploitation, and privilege escalation.</p>
+    <p class="blog-stats">${posts.length} post${posts.length === 1 ? '' : 's'} · ${categories.length} categor${categories.length === 1 ? 'y' : 'ies'} · Updated ${escapeHtml(latest)}</p>
+  </section>
+  ${filterNav(posts, '', '/blog/')}
+  <section class="blog-index" aria-labelledby="latest-posts">
+    <h2 class="blog-section-title" id="latest-posts">Latest posts</h2>
+    ${postRows(posts.slice(0, POSTS_ON_HOME))}
+    <a class="blog-more" href="${posts.length > POSTS_ON_HOME ? '/blog/posts/' : '/blog/archive/'}">${posts.length > POSTS_ON_HOME ? `View all ${posts.length} posts` : 'Browse the archive'} <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+  </section>
+  ${topTags.length ? `
+  <section class="blog-topics" aria-labelledby="popular-tags">
+    <h2 class="blog-section-title" id="popular-tags">Popular tags</h2>
+    <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
+  </section>` : ''}
+  <footer class="blog-about">
+    <p><strong>Aiman Sam</strong> is a junior penetration tester. These notes are written up from labs and CTFs. <a href="/blog/about/">About this blog</a></p>
+    <div class="blog-socials">
+      <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
+      <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
+    </div>
+  </footer>
+`;
+};
+
+// options.allPosts + options.activeCategory add the category filter bar above the list.
+export const renderList = (title, posts, intro = '', options = {}) => `
   ${archiveHeader(title, intro)}
-  <section class="blog-list">${posts.map((post) => postCard(post)).join('')}</section>
+  ${options.allPosts ? filterNav(options.allPosts, options.activeCategory || '', '/blog/posts/') : ''}
+  <section class="blog-index">${posts.length ? postRows(posts) : '<p class="blog-empty">No posts here yet.</p>'}</section>
 `;
 
 export const renderArchive = (posts) => {
@@ -186,7 +208,7 @@ export const renderPost = (post, posts = []) => {
       ${related.length ? `
         <section class="blog-related" aria-label="Related posts">
           <h2>Related posts</h2>
-          <div class="blog-list">${related.map((other) => postCard(other)).join('')}</div>
+          ${postRows(related)}
         </section>` : ''}
       <a class="blog-button" href="/blog/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
     </footer>
@@ -231,10 +253,11 @@ export const renderRoute = (posts, parts) => {
     return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.');
   }
   if (parts[0] === 'archive') return renderArchive(posts);
-  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.');
+  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.', { allPosts: posts });
   if (parts[0] === 'categories' && parts[1]) {
     const filtered = posts.filter((post) => (post.categories || []).some((category) => slugify(category) === parts[1]));
-    return renderList(parts[1].replace(/-/g, ' '), filtered);
+    const name = categoryCounts(posts).find((entry) => entry.slug === parts[1])?.name || parts[1].replace(/-/g, ' ');
+    return renderList(name, filtered, '', { allPosts: posts, activeCategory: parts[1] });
   }
   if (parts[0] === 'tags' && parts[1]) {
     const filtered = posts.filter((post) => (post.tags || []).some((tag) => slugify(tag) === parts[1]));
