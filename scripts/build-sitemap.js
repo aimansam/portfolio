@@ -20,7 +20,7 @@ fs.readdirSync(PROJECTS_DIR)
   .filter((name) => name.endsWith('.json'))
   .sort()
   .forEach((name) => {
-    urls.push({ loc: `${SITE}/project-pages/project.html?id=${encodeURIComponent(name.replace(/\.json$/, ''))}` });
+    urls.push({ loc: `${SITE}/projects/${encodeURIComponent(name.replace(/\.json$/, ''))}/` });
   });
 
 const { posts } = JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8'));

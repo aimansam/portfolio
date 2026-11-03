@@ -5,11 +5,19 @@
 
 const pageIs = (pathname, name) => new RegExp(`(^|/)${name}\\.html$`, 'i').test(pathname)
 
+// A project page is either the legacy template (project.html?id=x) or the static /projects/<id>/ route.
+const PROJECT_ROUTE = /(?:^|\/)projects\/([^/]+)\/(?:index\.html)?$/i
+
+export const isProjectPath = (pathname) => pageIs(pathname, 'project') || PROJECT_ROUTE.test(pathname)
+
+export const getProjectId = (pathname, search = '') =>
+  pathname.match(PROJECT_ROUTE)?.[1] || new URLSearchParams(search).get('id')
+
 export const isHomePath = (pathname) => !/\.html$/i.test(pathname) || pageIs(pathname, 'index')
 
 const getPageContentFile = (pathname, search) => {
-  if (pageIs(pathname, 'project')) {
-    const projectId = new URLSearchParams(search).get('id')
+  if (isProjectPath(pathname)) {
+    const projectId = getProjectId(pathname, search)
     return projectId ? `content/projects/${encodeURIComponent(projectId)}.json` : 'content/site/projects.json'
   }
   if (pageIs(pathname, 'about')) return 'content/site/about.json'

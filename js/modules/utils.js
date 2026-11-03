@@ -14,7 +14,7 @@ export const escapeHtml = (str) => {
 }
 
 // Resolve shared content from the portfolio root, even when the current page is
-// nested (for example, /project-pages/project.html).
+// nested (for example, /projects/<id>/).
 export // The prerenderer (scripts/prerender.js) overrides the root so output stays relative.
 const portfolioRootUrl = new URL(globalThis.__PORTFOLIO_ROOT__ || '../../', import.meta.url)
 
@@ -49,8 +49,10 @@ export const isNavItemActive = (item) => {
 
   // Project detail pages belong to the Projects navigation section.
   if (/\/projects\.html$/i.test(targetUrl.pathname)) {
-    const projectPagesPath = `${portfolioRootUrl.pathname.replace(/\/$/, '')}/project-pages/`
-    return currentPath === targetPath || window.location.pathname.startsWith(projectPagesPath)
+    const rootPath = portfolioRootUrl.pathname.replace(/\/$/, '')
+    return currentPath === targetPath ||
+      window.location.pathname.startsWith(`${rootPath}/project-pages/`) ||
+      window.location.pathname.startsWith(`${rootPath}/projects/`)
   }
 
   // Treat directory index links (notably /blog/index.html) as their section so
@@ -61,3 +63,7 @@ export const isNavItemActive = (item) => {
 
   return currentPath === targetPath
 }
+
+// Content JSON written for nested pages uses paths like ../assets/x.webp. Resolve
+// them from the portfolio root so they work from any page depth.
+export const resolveContentAsset = (value) => resolvePortfolioUrl(String(value || '').replace(/^(?:\.{1,2}\/)+/, ''))

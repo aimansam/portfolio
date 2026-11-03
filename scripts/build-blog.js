@@ -64,7 +64,7 @@ const BLOG_SHELL = `<!doctype html>
       </section>
     </main>
 
-    <script src="/js/blog.js" defer></script>
+    <script type="module" src="/js/blog.js"></script>
   </body>
 </html>
 `;

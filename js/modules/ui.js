@@ -60,7 +60,7 @@ export const initLightbox = () => {
     <button class="lightbox-prev" aria-label="Previous image">&#8249;</button>
     <button class="lightbox-next" aria-label="Next image">&#8250;</button>
     <div class="lightbox-content">
-      <img class="lightbox-image" src="" alt="">
+      <img class="lightbox-image" alt="">
       <div class="lightbox-caption">
         <span class="lightbox-title"></span>
         <span class="lightbox-desc"></span>

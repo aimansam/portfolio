@@ -1,5 +1,6 @@
 /** Applies loaded JSON content to the page DOM. */
-import { escapeHtml, resolvePortfolioUrl } from './utils.js'
+import { escapeHtml, resolvePortfolioUrl, resolveContentAsset } from './utils.js'
+import { isProjectPath, getProjectId } from './content.js'
 import {
   createStructuredData, createCareerTimelineMarkup, createStatsRow,
   createSkillFilterMarkup, createSkillPageMarkup, createProjectMarkup,
@@ -385,7 +386,7 @@ export const applyProjectDetailContent = (content) => {
     `).join('')
   }
   if (projectLinkList && content.githubUrl) {
-    projectLinkList.innerHTML = `<a class="button" href="${escapeHtml(content.githubUrl)}" target="_blank" rel="noopener noreferrer"><span class="button-text">View source on GitHub</span><img src="../assets/icons/arrow-right.svg" class="right-arrow-icon" alt=""></a>`
+    projectLinkList.innerHTML = `<a class="button" href="${escapeHtml(content.githubUrl)}" target="_blank" rel="noopener noreferrer"><span class="button-text">View source on GitHub</span><img src="${resolvePortfolioUrl('assets/icons/arrow-right.svg')}" class="right-arrow-icon" alt=""></a>`
   }
   if (content.description) {
     projectDesc.textContent = content.description
@@ -396,23 +397,22 @@ export const applyProjectDetailContent = (content) => {
     if (projectTwitterDesc) projectTwitterDesc.setAttribute('content', content.description)
   }
   if (content.headerImage && projectImage) {
-    projectImage.src = content.headerImage
+    projectImage.src = resolveContentAsset(content.headerImage)
     projectImage.alt = content.title || 'Project header'
     const projectOgImage = document.getElementById('project-og-image')
     const projectTwitterImage = document.getElementById('project-twitter-image')
-    const resolvedImage = resolvePortfolioUrl(content.headerImage)
+    const resolvedImage = resolveContentAsset(content.headerImage)
     if (projectOgImage) projectOgImage.setAttribute('content', resolvedImage)
     if (projectTwitterImage) projectTwitterImage.setAttribute('content', resolvedImage)
   }
 
-  const projectId = new URLSearchParams(window.location.search).get('id')
-  const projectUrl = new URL(window.location.href)
-  projectUrl.hash = ''
-  if (projectId) projectUrl.search = `?id=${encodeURIComponent(projectId)}`
+  // Always advertise the clean static route, even when reached via project.html?id=x.
+  const projectId = getProjectId(window.location.pathname, window.location.search)
+  const projectUrl = projectId ? resolvePortfolioUrl(`projects/${encodeURIComponent(projectId)}/`) : window.location.href
   const projectCanonical = document.getElementById('project-canonical')
   const projectOgUrl = document.getElementById('project-og-url')
-  if (projectCanonical) projectCanonical.setAttribute('href', projectUrl.href)
-  if (projectOgUrl) projectOgUrl.setAttribute('content', projectUrl.href)
+  if (projectCanonical) projectCanonical.setAttribute('href', projectUrl)
+  if (projectOgUrl) projectOgUrl.setAttribute('content', projectUrl)
 
   if (Array.isArray(content.sections) && content.sections.length && detailsContainer) {
     detailsContainer.innerHTML = content.sections.map(section => `
@@ -428,7 +428,7 @@ export const applyProjectDetailContent = (content) => {
       const caption = escapeHtml(item.caption || '')
       return `
       <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
-        <img src="${escapeHtml(item.image)}" class="gallery-image" alt="${caption || 'Project image'}" loading="lazy" role="button" tabindex="0" aria-label="View ${caption || 'image'} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${caption}">
+        <img src="${escapeHtml(resolveContentAsset(item.image))}" class="gallery-image" alt="${caption || 'Project image'}" loading="lazy" role="button" tabindex="0" aria-label="View ${caption || 'image'} in lightbox" data-lightbox="${escapeHtml(resolveContentAsset(item.image))}" data-lightbox-title="${caption}">
         ${item.caption ? `<span class="body-text">${caption}</span>` : ''}
       </div>
     `}).join('')
@@ -440,10 +440,8 @@ export const applyPortfolioContent = (content) => {
   
   // Check if this is a project detail page
   const path = window.location.pathname
-  const urlParams = new URLSearchParams(window.location.search)
-  const projectId = urlParams.get('id')
   
-  if (path.match(/project\.html$/i) || path.match(/\/project\.html/i)) {
+  if (isProjectPath(path)) {
     // Project detail page - apply project-specific content
     applyCommonContent(content)
     applyProjectDetailContent(content)

@@ -9,6 +9,7 @@ COPY ./scripts ./scripts
 COPY ./content ./content
 COPY ./blog ./blog
 COPY ./js ./js
+COPY ./project-pages ./project-pages
 COPY ./index.html ./about.html ./projects.html ./gallery.html ./
 
 # Generates blog pages, the blog preview, homepage SEO, and sitemap.xml,
@@ -23,6 +24,7 @@ COPY ./robots.txt /usr/share/nginx/html/robots.txt
 COPY --from=build /workspace/index.html /usr/share/nginx/html/index.html
 COPY --from=build /workspace/sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY --from=build /workspace/blog /usr/share/nginx/html/blog
+COPY --from=build /workspace/projects /usr/share/nginx/html/projects
 COPY --from=build /workspace/content /usr/share/nginx/html/content
 COPY --from=build /workspace/about.html /usr/share/nginx/html/about.html
 COPY --from=build /workspace/projects.html /usr/share/nginx/html/projects.html
