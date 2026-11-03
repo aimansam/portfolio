@@ -479,6 +479,7 @@ a {
 }
 
 .blog-post-content pre {
+  position: relative;
   overflow-x: auto;
   padding: 18px;
   border: 2px solid #141414;
@@ -514,13 +515,13 @@ a {
 
   .blog-top-nav {
     width: 100%;
-    overflow-x: auto;
-    gap: 20px;
-    padding: 12px 14px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
   }
 
   .blog-top-nav a {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .blog-portfolio-nav {
@@ -592,5 +593,211 @@ a {
 
   .blog-term-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --- Reading experience --- */
+
+.blog-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  height: 4px;
+  pointer-events: none;
+}
+
+.blog-progress span {
+  display: block;
+  height: 100%;
+  background: #141414;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.blog-post-content h2,
+.blog-post-content h3,
+.blog-post-content h4 {
+  scroll-margin-top: 120px;
+}
+
+.blog-post-content h4 {
+  margin: 32px 0 12px;
+  line-height: 1.2;
+}
+
+.heading-anchor {
+  margin-left: 0.4em;
+  color: #8a8a8a;
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.blog-post-content :is(h2, h3, h4):hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.blog-post-tags {
+  margin-top: 18px;
+}
+
+.blog-toc {
+  margin: 0 0 40px;
+  padding: 18px 22px;
+  border: 2px solid #141414;
+  border-radius: 18px;
+  background: #f7f7f7;
+}
+
+.blog-toc summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.blog-toc ol {
+  margin: 14px 0 0;
+  padding-left: 1.2rem;
+  line-height: 1.9;
+}
+
+.blog-toc a {
+  text-decoration: none;
+}
+
+.blog-toc a:hover,
+.blog-toc a:focus-visible {
+  text-decoration: underline;
+}
+
+.blog-toc-level-3 {
+  margin-left: 1rem;
+  list-style: circle;
+}
+
+.blog-toc-level-4 {
+  margin-left: 2rem;
+  list-style: square;
+}
+
+.code-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font: 600 12px/1.4 inherit;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.blog-post-content pre:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+
+.code-copy:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+@media (hover: none) {
+  .code-copy {
+    opacity: 1;
+  }
+}
+
+.tok-comment { color: #9aa4b2; font-style: italic; }
+.tok-string { color: #a5e3a0; }
+.tok-variable { color: #ffd479; }
+.tok-flag { color: #8ec5ff; }
+.tok-number { color: #ffb59a; }
+.tok-keyword { color: #f4a3ff; }
+
+.blog-post-content .blog-table-wrap {
+  margin: 0 0 24px;
+  overflow-x: auto;
+}
+
+.blog-post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.blog-post-content th,
+.blog-post-content td {
+  padding: 10px 14px;
+  border: 2px solid #141414;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-post-content th {
+  background: #f1f1f1;
+}
+
+.blog-post-content img[data-lightbox] {
+  cursor: zoom-in;
+}
+
+.blog-post-content a {
+  text-underline-offset: 3px;
+}
+
+.blog-post-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.blog-post-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 22px;
+  border: 2px solid #141414;
+  border-radius: 18px;
+  text-decoration: none;
+}
+
+.blog-post-nav-link:last-child {
+  text-align: right;
+}
+
+.blog-post-nav-link:hover,
+.blog-post-nav-link:focus-visible {
+  background: #141414;
+  color: #ffffff;
+}
+
+.blog-post-nav-link .blog-kicker {
+  margin-bottom: 0;
+}
+
+.blog-related {
+  margin-bottom: 40px;
+}
+
+.blog-related h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+}
+
+@media only screen and (max-width: 600px) {
+  .blog-post-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .blog-post-nav-link:last-child {
+    text-align: left;
   }
 }

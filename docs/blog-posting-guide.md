@@ -2,7 +2,7 @@
 
 This guide explains how to add, preview, publish, and verify posts for `zx10r Security Notes`.
 
-The blog source lives in one JSON file per post under `content/blog/posts/`. The combined frontend feed is generated at `content/blog/posts.json`, and route shells are generated into `blog/` by `scripts/build-blog.js`.
+The blog source lives in one JSON file per post under `content/blog/posts/`. The combined frontend feed is generated at `content/blog/posts.json`, and route shells are generated into `blog/` by `scripts/build-blog.js` (git-ignored) and prerendered in CI.
 
 ## Quick Path
 
@@ -11,12 +11,7 @@ The blog source lives in one JSON file per post under `content/blog/posts/`. The
 3. Click `New Blog Post`.
 3. Put images for the post under `blog/posts/<slug>/`.
 4. Reference images with absolute paths such as `/blog/posts/<slug>/<image>.png`.
-5. Run:
-
-```sh
-npm run build
-docker compose up -d --build
-```
+5. Run `npm run build` to preview, then follow "Publish A Post" below.
 
 ## Post Shape
 
@@ -49,63 +44,55 @@ Use `draft: false` only when the post is ready to publish. Draft posts are ignor
 
 ## Supported Markdown
 
-The native renderer supports:
+| Syntax | Result |
+|---|---|
+| `## Heading`, `### Heading`, `#### Heading` | Headings. Each gets an anchor link, and posts with 3+ headings get a table of contents |
+| `**bold**`, `*italic*`, `~~strike~~`, `` `code` `` | Inline formatting |
+| `[text](https://...)` | Links (external links open in a new tab; `javascript:` links are dropped) |
+| `- item` / `1. item`, indented 2 spaces to nest | Bullet and numbered lists |
+| `> quote` | Blockquote |
+| `\| a \| b \|` rows with a `\|---\|---\|` divider | Tables |
+| `![alt text](/blog/posts/<slug>/image.png)` | Image on its own line; click to zoom, so give it real alt text |
+| ```` ```bash ```` ... ```` ``` ```` | Code block with a copy button |
 
-- Paragraphs
-- `##` and `###` headings
-- Bullet and numbered lists
-- Blockquotes
-- Fenced code blocks
-- Inline code
-- Links
-- Images
+Syntax highlighting is applied for `bash` (also `sh`, `shell`, `console`), `python`, `js` (also `json`, `ts`), `php` and `sql`. A fence with no language stays plain, which is best for tool output such as nmap results. Bash highlighting colours commands' flags, strings, variables and comments, but not numbers, so output pasted into a `bash` block stays readable.
+
+Posts also get, automatically: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
 
 ## Publish A Post
 
-Run the helper after editing JSON:
+1. Write the post in `/admin/` or as `content/blog/posts/<slug>.json`, with `"draft": false`.
+2. Preview locally:
 
 ```sh
-./scripts/blog-publish.sh <slug>
+npm run build
+python3 -m http.server 8000   # http://localhost:8000/blog/
 ```
 
-Then review:
+3. Commit only the sources: the post JSON, `content/blog/posts.json`, `content/site/blog-preview.json` and any images under `blog/posts/<slug>/`. Generated pages (`blog/**/index.html`, `blog/feed.xml`, `sitemap.xml`, `projects/`) are git-ignored and rebuilt by CI.
 
 ```sh
-git diff --stat
-```
-
-Commit the JSON source, generated route files, and images:
-
-```sh
-git add content/blog/posts content/blog/posts.json content/site/blog-preview.json blog
+git add content blog/posts
 git commit -m "Publish <post title>"
 git push origin main
 ```
 
+CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml` and the RSS feed.
+
 ## Live Verification
 
-After pushing, check the live post:
-
 ```sh
-curl -L -s -o /tmp/post.html -w '%{http_code}\n' \
-  'https://portfolio.aimansam.my/blog/posts/<slug>/?check=1'
+curl -s -o /dev/null -w '%{http_code}\n' 'https://portfolio.aimansam.my/blog/posts/<slug>/'
+curl -s 'https://portfolio.aimansam.my/blog/posts/<slug>/' | grep -o '<title>[^<]*'
+curl -s 'https://portfolio.aimansam.my/blog/feed.xml' | grep -c '<item>'
 ```
-
-RSS is intentionally disabled:
-
-```sh
-curl -L -s -o /tmp/rss.xml -w '%{http_code}\n' \
-  'https://portfolio.aimansam.my/blog/index.xml?check=1'
-```
-
-Expected RSS status: `404`.
 
 ## Quality Checklist
 
 - Title is clear and specific.
-- Summary explains the value of the post.
-- Tags and category match the topic.
+- Summary explains the value of the post (it is the meta description and RSS summary).
+- Tags and category match the topic; shared tags drive "Related posts".
 - Images have useful alt text.
 - The post starts with a short intro.
-- Commands are in fenced code blocks.
+- Commands are in fenced code blocks with a language (`bash`, `python`, ...); raw tool output has none.
 - The post ends with lessons learned or a clear takeaway.

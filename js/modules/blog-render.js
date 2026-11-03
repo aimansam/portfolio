@@ -1,19 +1,11 @@
 /** Pure HTML renderers for the blog, shared by js/blog.js and scripts/prerender.js. */
 
+import { escapeHtml, slugify, renderMarkdown } from './markdown.js';
+
+export { escapeHtml, slugify };
+
 const blogRoot = '/blog/';
 export const dataUrl = '/content/blog/posts.json';
-
-export const escapeHtml = (value) => String(value ?? '')
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&#39;');
-
-export const slugify = (value) => String(value || '')
-  .toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-')
-  .replace(/^-+|-+$/g, '');
 
 export const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -23,124 +15,11 @@ export const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
 
 export const readMinutes = (body = '') => Math.max(1, Math.ceil(body.split(/\s+/).filter(Boolean).length / 220));
 
-export const inlineMarkdown = (text) => escapeHtml(text)
-  .replace(/`([^`]+)`/g, '<code>$1</code>')
-  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-  .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-
-export const renderMarkdown = (markdown = '') => {
-  const lines = markdown.split('\n');
-  const html = [];
-  let paragraph = [];
-  let list = [];
-  let orderedList = [];
-  let inCode = false;
-  let code = [];
-
-  const flushParagraph = () => {
-    if (!paragraph.length) return;
-    html.push(`<p>${inlineMarkdown(paragraph.join(' '))}</p>`);
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (!list.length) return;
-    html.push(`<ul>${list.map((item) => `<li>${inlineMarkdown(item)}</li>`).join('')}</ul>`);
-    list = [];
-  };
-
-  const flushOrderedList = () => {
-    if (!orderedList.length) return;
-    html.push(`<ol>${orderedList.map((item) => `<li>${inlineMarkdown(item)}</li>`).join('')}</ol>`);
-    orderedList = [];
-  };
-
-  lines.forEach((line) => {
-    if (line.trim().startsWith('```')) {
-      if (inCode) {
-        html.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);
-        code = [];
-        inCode = false;
-      } else {
-        flushParagraph();
-        flushList();
-        flushOrderedList();
-        inCode = true;
-      }
-      return;
-    }
-
-    if (inCode) {
-      code.push(line);
-      return;
-    }
-
-    if (!line.trim()) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      return;
-    }
-
-    const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
-    if (image) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      html.push(`<figure><img src="${escapeHtml(image[2])}" alt="${escapeHtml(image[1])}" loading="lazy"></figure>`);
-      return;
-    }
-
-    const heading = line.match(/^(#{2,3})\s+(.+)$/);
-    if (heading) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      const level = heading[1].length;
-      html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
-      return;
-    }
-
-    const bullet = line.match(/^-\s+(.+)$/);
-    if (bullet) {
-      flushParagraph();
-      flushOrderedList();
-      list.push(bullet[1]);
-      return;
-    }
-
-    const ordered = line.match(/^\d+\.\s+(.+)$/);
-    if (ordered) {
-      flushParagraph();
-      flushList();
-      orderedList.push(ordered[1]);
-      return;
-    }
-
-    const quote = line.match(/^>\s+(.+)$/);
-    if (quote) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      html.push(`<blockquote>${inlineMarkdown(quote[1])}</blockquote>`);
-      return;
-    }
-
-    paragraph.push(line.trim());
-  });
-
-  flushParagraph();
-  flushList();
-  flushOrderedList();
-  if (inCode) html.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);
-  return html.join('\n');
-};
-
 export const postHref = (post) => `${blogRoot}posts/${post.slug}/`;
 export const categoryHref = (category) => `${blogRoot}categories/${slugify(category)}/`;
 export const tagHref = (tag) => `${blogRoot}tags/${slugify(tag)}/`;
 
-export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(post.body)} min · zx10r`;
+export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(post.body)} min read`;
 
 export const postCard = (post, { feature = false } = {}) => `
   <article class="blog-card${feature ? ' blog-card-feature' : ''}">
@@ -214,7 +93,41 @@ export const renderTerms = (title, terms, hrefFor) => `
   </section>
 `;
 
-export const renderPost = (post) => `
+const postNav = (label, post) => post ? `
+  <a class="blog-post-nav-link" href="${postHref(post)}">
+    <span class="blog-kicker">${label}</span>
+    <strong>${escapeHtml(post.title)}</strong>
+  </a>` : '<span></span>';
+
+// Posts sharing the most tags with this one (excluding itself), best match first.
+const relatedPosts = (post, posts, limit = 2) => posts
+  .filter((other) => other.slug !== post.slug)
+  .map((other) => ({ other, shared: (other.tags || []).filter((tag) => (post.tags || []).includes(tag)).length }))
+  .filter((entry) => entry.shared > 0)
+  .sort((a, b) => b.shared - a.shared)
+  .slice(0, limit)
+  .map((entry) => entry.other);
+
+const tableOfContents = (headings) => headings.length < 3 ? '' : `
+  <nav class="blog-toc" aria-label="Table of contents">
+    <details open>
+      <summary>On this page</summary>
+      <ol>
+        ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
+      </ol>
+    </details>
+  </nav>
+`;
+
+export const renderPost = (post, posts = []) => {
+  const { html, headings } = renderMarkdown(post.body);
+  const index = posts.findIndex((other) => other.slug === post.slug);
+  const newer = index > 0 ? posts[index - 1] : null;
+  const older = index >= 0 ? posts[index + 1] : null;
+  const related = relatedPosts(post, posts);
+
+  return `
+  <div class="blog-progress" aria-hidden="true"><span></span></div>
   <article class="blog-post">
     <header class="blog-post-header">
       <div class="blog-card-tags">
@@ -223,14 +136,25 @@ export const renderPost = (post) => `
       <h1>${escapeHtml(post.title)}</h1>
       <p>${escapeHtml(post.summary)}</p>
       <div class="blog-card-meta">${escapeHtml(postMeta(post))}</div>
+      <div class="blog-card-tags blog-post-tags">
+        ${(post.tags || []).map((tag) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
+      </div>
     </header>
-    ${post.cover?.image ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}"></figure>` : ''}
-    <div class="blog-post-content">${renderMarkdown(post.body)}</div>
+    ${post.cover?.image ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
+    ${tableOfContents(headings)}
+    <div class="blog-post-content">${html}</div>
     <footer class="blog-post-footer">
+      ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
+      ${related.length ? `
+        <section class="blog-related" aria-label="Related posts">
+          <h2>Related posts</h2>
+          <div class="blog-list">${related.map((other) => postCard(other)).join('')}</div>
+        </section>` : ''}
       <a class="blog-button" href="/blog/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
     </footer>
   </article>
 `;
+};
 
 export const countTerms = (posts, key) => {
   const counts = new Map();
@@ -266,7 +190,7 @@ export const renderRoute = (posts, parts) => {
   if (!parts.length) return renderHome(posts);
   if (parts[0] === 'posts' && parts[1]) {
     const post = findPost(posts, parts);
-    return post ? renderPost(post) : renderList('Post not found', posts, 'That post does not exist yet.');
+    return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.');
   }
   if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.');
   if (parts[0] === 'categories' && parts[1]) {
