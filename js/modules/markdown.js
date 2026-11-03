@@ -123,17 +123,19 @@ const renderImage = (alt, src) => {
   return `<figure><img src="${safeSrc}" alt="${escapeHtml(alt)}" loading="lazy" data-lightbox="${safeSrc}" data-lightbox-title="${escapeHtml(alt)}" role="button" tabindex="0"></figure>`;
 };
 
-/** Returns { html, headings: [{ level, id, text }] }. */
-export const renderMarkdown = (markdown = '') => {
-  const lines = String(markdown).split('\n');
+const CALLOUTS = { note: 'Note', tip: 'Tip', important: 'Important', warning: 'Warning', caution: 'Caution' };
+const CALLOUT_START = /^\[!(note|tip|important|warning|caution)\]\s*$/i;
+const SPOILER_START = /^:::\s*spoiler\b\s*(.*)$/i;
+const CONTAINER_OPEN = /^:::\s*\w+/;
+
+// ctx: { usedIds: Map, headings: [], collect: boolean } shared across nested blocks.
+const renderBlocks = (lines, ctx) => {
   const html = [];
-  const headings = [];
-  const usedIds = new Map();
 
   const uniqueId = (text) => {
     const base = slugify(text) || 'section';
-    const count = usedIds.get(base) || 0;
-    usedIds.set(base, count + 1);
+    const count = ctx.usedIds.get(base) || 0;
+    ctx.usedIds.set(base, count + 1);
     return count ? `${base}-${count}` : base;
   };
 
@@ -175,7 +177,7 @@ export const renderMarkdown = (markdown = '') => {
       const level = heading[1].length;
       const text = plainText(heading[2]);
       const id = uniqueId(text);
-      headings.push({ level, id, text });
+      if (ctx.collect) ctx.headings.push({ level, id, text });
       html.push(`<h${level} id="${id}">${inlineMarkdown(heading[2])}<a class="heading-anchor" href="#${id}" aria-label="Link to this section">#</a></h${level}>`);
       index += 1;
       continue;
@@ -204,21 +206,46 @@ export const renderMarkdown = (markdown = '') => {
       continue;
     }
 
-    // Blockquote (consecutive > lines)
+    // Spoiler container: ::: spoiler Optional title ... :::
+    const spoiler = line.trim().match(SPOILER_START);
+    if (spoiler) {
+      const inner = [];
+      let depth = 1;
+      index += 1;
+      while (index < lines.length) {
+        const current = lines[index].trim();
+        if (CONTAINER_OPEN.test(current)) depth += 1;
+        else if (current === ':::') depth -= 1;
+        if (depth === 0) break;
+        inner.push(lines[index]);
+        index += 1;
+      }
+      index += 1;
+      html.push(`<details class="spoiler"><summary>${inlineMarkdown(spoiler[1].trim() || 'Spoiler')}</summary><div class="spoiler-body">${renderBlocks(inner, { ...ctx, collect: false }).join('\n')}</div></details>`);
+      continue;
+    }
+
+    // Blockquote, or a callout when it starts with [!NOTE] / [!TIP] / [!IMPORTANT] / [!WARNING] / [!CAUTION]
     if (/^>\s?/.test(line)) {
       const quote = [];
       while (index < lines.length && /^>\s?/.test(lines[index])) {
         quote.push(lines[index].replace(/^>\s?/, ''));
         index += 1;
       }
-      html.push(`<blockquote>${inlineMarkdown(quote.join(' '))}</blockquote>`);
+      const callout = quote[0] && quote[0].trim().match(CALLOUT_START);
+      if (callout) {
+        const type = callout[1].toLowerCase();
+        html.push(`<aside class="callout callout-${type}"><p class="callout-title">${CALLOUTS[type]}</p>${renderBlocks(quote.slice(1), { ...ctx, collect: false }).join('\n')}</aside>`);
+      } else {
+        html.push(`<blockquote>${inlineMarkdown(quote.join(' '))}</blockquote>`);
+      }
       continue;
     }
 
     // Paragraph: run until a blank line or the start of another block
     const paragraph = [];
     while (index < lines.length && lines[index].trim() &&
-      !/^(#{2,4}\s|```|>\s?)/.test(lines[index].trim()) &&
+      !/^(#{2,4}\s|```|>\s?|:::)/.test(lines[index].trim()) &&
       !LIST_ITEM.test(lines[index]) &&
       !/^!\[[^\]]*\]\([^)]+\)$/.test(lines[index].trim())) {
       paragraph.push(lines[index].trim());
@@ -227,5 +254,12 @@ export const renderMarkdown = (markdown = '') => {
     html.push(`<p>${inlineMarkdown(paragraph.join(' '))}</p>`);
   }
 
-  return { html: html.join('\n'), headings };
+  return html;
+};
+
+/** Returns { html, headings: [{ level, id, text }] }. */
+export const renderMarkdown = (markdown = '') => {
+  const ctx = { usedIds: new Map(), headings: [], collect: true };
+  const html = renderBlocks(String(markdown).split('\n'), ctx).join('\n');
+  return { html, headings: ctx.headings };
 };

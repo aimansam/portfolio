@@ -2,6 +2,10 @@ name: Deploy Portfolio and Blog
 on:
   push:
     branches: ["main"]
+  # Rebuild daily so posts scheduled for a future date go live without a push.
+  schedule:
+    - cron: "0 17 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read

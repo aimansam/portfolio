@@ -7,7 +7,6 @@ RUN npm ci
 
 COPY ./scripts ./scripts
 COPY ./content ./content
-COPY ./blog ./blog
 COPY ./js ./js
 COPY ./project-pages ./project-pages
 COPY ./index.html ./about.html ./projects.html ./gallery.html ./

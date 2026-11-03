@@ -297,18 +297,21 @@ collections:
     label_singular: Blog Post
     folder: content/blog/posts
     create: true
+    # Each post is a folder: content/blog/posts/<slug>/index.md, with its images beside it.
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
     slug: "{{slug}}"
-    extension: json
-    format: json
+    extension: md
+    format: frontmatter
     preview_path: "blog/posts/{{slug}}"
     editor:
       preview: false
     fields:
-      - { label: Slug, name: slug, widget: string }
       - { label: Title, name: title, widget: string }
-      - { label: Publish Date, name: date, widget: datetime }
-      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
-      - { label: Summary, name: summary, widget: text }
+      - { label: Publish Date, name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: "HH:mm", format: "YYYY-MM-DDTHH:mm:ssZ", hint: "A future date schedules the post: it goes live on the first build after that time." }
+      - { label: Draft, name: draft, widget: boolean, default: true, required: false, hint: "Drafts are never published. Untick when ready." }
+      - { label: Summary, name: summary, widget: text, required: false, hint: "Optional. Defaults to the first paragraph. Used for cards, search results, and social previews." }
       - label: Tags
         name: tags
         widget: list
@@ -318,12 +321,15 @@ collections:
         name: categories
         widget: list
         required: false
-        field: { label: Category, name: category, widget: string }
+        default: ["Notes"]
+        field: { label: Category, name: category, widget: select, options: ["Writeups", "Labs", "Notes"] }
       - label: Cover
         name: cover
         widget: object
         required: false
+        hint: "Optional. Defaults to the first image in the post."
         fields:
-          - { label: Image Path, name: image, widget: string, required: false }
+          - { label: Image, name: image, widget: image, required: false }
           - { label: Alt Text, name: alt, widget: string, required: false }
-      - { label: Body, name: body, widget: markdown }
+      - { label: Last Updated, name: updated, widget: datetime, required: false, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Body, name: body, widget: markdown, hint: "Callouts: start a quote with [!NOTE], [!TIP], [!IMPORTANT], [!WARNING] or [!CAUTION]. Spoilers: wrap text in ::: spoiler Title ... :::" }

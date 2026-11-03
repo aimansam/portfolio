@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { loadPosts, slugify } = require('./lib/posts');
 
 const ROOT = path.join(__dirname, '..');
-const BLOG_POSTS_DIR = path.join(ROOT, 'content/blog/posts');
 const BLOG_DATA = path.join(ROOT, 'content/blog/posts.json');
 const BLOG_DIR = path.join(ROOT, 'blog');
 const PREVIEW_FILE = path.join(ROOT, 'content/site/blog-preview.json');
@@ -87,27 +87,10 @@ function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
-function slugify(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
+const DRAFTS = process.argv.includes('--drafts');
 
 function readPosts() {
-  const posts = fs.readdirSync(BLOG_POSTS_DIR, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
-    .map((entry) => {
-      const filePath = path.join(BLOG_POSTS_DIR, entry.name);
-      const post = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      return {
-        ...post,
-        slug: post.slug || entry.name.replace(/\.json$/u, '')
-      };
-    })
-    .filter((post) => !post.draft)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
-
+  const posts = loadPosts({ drafts: DRAFTS });
   fs.writeFileSync(BLOG_DATA, `${JSON.stringify({ posts }, null, 2)}\n`);
   return posts;
 }
@@ -160,4 +143,4 @@ categories.forEach((category) => writeShell(`categories/${category}`));
 tags.forEach((tag) => writeShell(`tags/${tag}`));
 updatePreview(posts);
 
-console.log(`Built JSON blog with ${posts.length} posts.`);
+console.log(`Built blog with ${posts.length} posts${DRAFTS ? ' (including drafts)' : ''}.`);

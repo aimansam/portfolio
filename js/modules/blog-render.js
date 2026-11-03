@@ -31,6 +31,7 @@ export const postCard = (post, { feature = false } = {}) => `
   <article class="blog-card${feature ? ' blog-card-feature' : ''}">
     ${post.cover?.image ? `<a class="blog-card-cover" href="${postHref(post)}"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" loading="lazy"></a>` : ''}
     <div class="blog-card-body">
+      ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
       <div class="blog-card-tags">
         ${(post.categories || []).map((category) => `<a class="project-tag" href="${categoryHref(category)}">${escapeHtml(category)}</a>`).join('')}
       </div>
@@ -166,12 +167,13 @@ export const renderPost = (post, posts = []) => {
   <div class="blog-progress" aria-hidden="true"><span></span></div>
   <article class="blog-post">
     <header class="blog-post-header">
+      ${post.status ? `<span class="blog-status">${escapeHtml(post.status)} · not public</span>` : ''}
       <div class="blog-card-tags">
         ${(post.categories || []).map((category) => `<a class="project-tag" href="${categoryHref(category)}">${escapeHtml(category)}</a>`).join('')}
       </div>
       <h1>${escapeHtml(post.title)}</h1>
       <p>${escapeHtml(post.summary)}</p>
-      <div class="blog-card-meta">${escapeHtml(postMeta(post))}</div>
+      <div class="blog-card-meta">${escapeHtml(postMeta(post))}${post.updated ? escapeHtml(` · Updated ${formatDate(post.updated)}`) : ''}</div>
       <div class="blog-card-tags blog-post-tags">
         ${(post.tags || []).map((tag) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
       </div>

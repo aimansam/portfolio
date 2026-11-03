@@ -1071,3 +1071,109 @@ html[data-theme="dark"] .theme-toggle .icon-moon {
 .project-tag {
   border-color: var(--ink);
 }
+
+/* --- Callouts and spoilers --- */
+
+:root {
+  --callout-note: #1d4ed8;
+  --callout-tip: #15803d;
+  --callout-important: #7e22ce;
+  --callout-warning: #b45309;
+  --callout-caution: #b91c1c;
+}
+
+html[data-theme="dark"] {
+  --callout-note: #7aa7ff;
+  --callout-tip: #5fd38d;
+  --callout-important: #c79bff;
+  --callout-warning: #f2b45c;
+  --callout-caution: #ff8a8a;
+}
+
+.callout {
+  --accent: var(--ink);
+  margin: 0 0 24px;
+  padding: 16px 22px;
+  border: 2px solid var(--accent);
+  border-left-width: 6px;
+  border-radius: 14px;
+  background: var(--soft);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.callout-note { --accent: var(--callout-note); }
+.callout-tip { --accent: var(--callout-tip); }
+.callout-important { --accent: var(--callout-important); }
+.callout-warning { --accent: var(--callout-warning); }
+.callout-caution { --accent: var(--callout-caution); }
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout .callout-title {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.spoiler {
+  margin: 0 0 24px;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.spoiler summary {
+  padding: 14px 20px;
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.spoiler summary::-webkit-details-marker {
+  display: none;
+}
+
+.spoiler summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 10px;
+  transition: transform 150ms ease;
+}
+
+.spoiler[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.spoiler summary:hover,
+.spoiler summary:focus-visible {
+  background: var(--soft);
+  border-radius: 12px;
+}
+
+.spoiler .spoiler-body {
+  padding: 4px 20px 0;
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+}
+
+.spoiler .spoiler-body > :last-child {
+  margin-bottom: 20px;
+}
+
+.blog-status {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 4px 10px;
+  border: 2px dashed var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

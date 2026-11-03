@@ -7,9 +7,12 @@
     "cms:auth:deploy": "npx wrangler deploy --config cms-auth/wrangler.toml",
     "build": "node scripts/build-blog.js && node scripts/update-blog-preview.js && node scripts/build-projects.js && node scripts/inject-seo.js && node scripts/build-sitemap.js && node scripts/build-feed.js",
     "prerender": "node scripts/prerender.js",
-    "check": "node scripts/check-site.js"
+    "check": "node scripts/check-site.js",
+    "new-post": "node scripts/new-post.js",
+    "preview": "node scripts/preview.js"
   },
   "devDependencies": {
-    "jsdom": "^25.0.1"
+    "jsdom": "^25.0.1",
+    "yaml": "^2.9.1"
   }
 }

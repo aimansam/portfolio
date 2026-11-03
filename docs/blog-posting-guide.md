@@ -1,46 +1,62 @@
 # Blog Posting Guide
 
-This guide explains how to add, preview, publish, and verify posts for `zx10r Security Notes`.
+How to write, preview, and publish posts for `zx10r Security Notes`.
 
-The blog source lives in one JSON file per post under `content/blog/posts/`. The combined frontend feed is generated at `content/blog/posts.json`, and route shells are generated into `blog/` by `scripts/build-blog.js` (git-ignored) and prerendered in CI.
+A post is a Markdown file with a short header. Everything else (summary, cover, tags, URLs, social tags, RSS, sitemap, related posts) is generated.
 
 ## Quick Path
 
-1. Open `/admin/`.
-2. Choose `Blog Posts`.
-3. Click `New Blog Post`.
-3. Put images for the post under `blog/posts/<slug>/`.
-4. Reference images with absolute paths such as `/blog/posts/<slug>/<image>.png`.
-5. Run `npm run build` to preview, then follow "Publish A Post" below.
+```sh
+npm run new-post -- "My Post Title" --category Writeups   # Writeups | Labs | Notes
+# edit content/blog/posts/my-post-title/index.md
+npm run preview                                           # http://localhost:4000/blog/
+```
 
-## Post Shape
+When it reads well, set `draft: false` in the header (or delete the line), then:
 
-Each post is stored as:
+```sh
+git add content && git commit -m "Publish: My Post Title" && git push origin main
+```
+
+CI builds, checks, prerenders and deploys. You can also write posts in the `/admin` CMS, which edits the same files.
+
+## Post Layout
+
+Each post is a folder with the Markdown and its images side by side:
 
 ```text
-content/blog/posts/<slug>.json
+content/blog/posts/my-post-title/
+  index.md
+  login.png
+  dashboard.png
 ```
 
-Use this structure:
+(`content/blog/posts/<slug>.md` also works for a post with no images, and legacy `<slug>.json` posts still build.)
 
-```json
-{
-  "slug": "blue-team-lab",
-  "title": "Example Lab Writeup",
-  "date": "2026-05-11T00:00:00+08:00",
-  "draft": true,
-  "summary": "Short summary of the target, attack path, and main lesson.",
-  "tags": ["ctf", "web", "privilege-escalation"],
-  "categories": ["Writeups"],
-  "cover": {
-    "image": "/blog/posts/blue-team-lab/blue-team-lab-00.png",
-    "alt": "Short description of the cover image"
-  },
-  "body": "Write Markdown here."
-}
+Reference images by file name; the build rewrites the path: `![Login page](login.png)`.
+
+## The Header
+
+```yaml
+---
+title: "My Post Title"               # required
+date: "2026-05-11T14:30:00+08:00"    # required; a future date schedules the post
+draft: true                          # drafts are never published
+tags: [ctf, web]                     # lowercased automatically
+categories: [Writeups]               # defaults to Notes
+summary: "One sentence."             # optional: defaults to the first paragraph
+cover: login.png                     # optional: defaults to the first image
+updated: "2026-05-20T09:00:00+08:00" # optional: shows "Updated ..." on the post
+---
 ```
 
-Use `draft: false` only when the post is ready to publish. Draft posts are ignored by the blog renderer and homepage preview.
+Only `title` and `date` are required. Mistakes (missing title, bad YAML, duplicate slug) stop the build with a message naming the file.
+
+## Drafts And Scheduling
+
+- `draft: true` posts are never published.
+- A post dated in the future is hidden until that time. A daily CI run (01:00 Malaysia time) and any push rebuild the site, so it goes live on the first build after its date.
+- `npm run preview` shows drafts and scheduled posts with a "DRAFT" / "SCHEDULED" badge, and rebuilds when you save a file.
 
 ## Supported Markdown
 
@@ -52,34 +68,35 @@ Use `draft: false` only when the post is ready to publish. Draft posts are ignor
 | `- item` / `1. item`, indented 2 spaces to nest | Bullet and numbered lists |
 | `> quote` | Blockquote |
 | `\| a \| b \|` rows with a `\|---\|---\|` divider | Tables |
-| `![alt text](/blog/posts/<slug>/image.png)` | Image on its own line; click to zoom, so give it real alt text |
+| `![alt text](file.png)` | Image on its own line; click to zoom, so give it real alt text |
 | ```` ```bash ```` ... ```` ``` ```` | Code block with a copy button |
 
-Syntax highlighting is applied for `bash` (also `sh`, `shell`, `console`), `python`, `js` (also `json`, `ts`), `php` and `sql`. A fence with no language stays plain, which is best for tool output such as nmap results. Bash highlighting colours commands' flags, strings, variables and comments, but not numbers, so output pasted into a `bash` block stays readable.
+Syntax highlighting is applied for `bash` (also `sh`, `shell`, `console`), `python`, `js` (also `json`, `ts`), `php` and `sql`. A fence with no language stays plain, which is best for tool output such as nmap results. Bash highlighting colours flags, strings, variables and comments, but not numbers, so pasted output stays readable.
 
-The blog has a light/dark theme toggle in the header (it follows the visitor's system setting until they choose, then remembers the choice) and an `/blog/archive/` page that groups every post by year.
+### Callouts
 
-Posts also get, automatically: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
+Start a quote with one of `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`. The rest can contain paragraphs, lists and code:
 
-## Publish A Post
-
-1. Write the post in `/admin/` or as `content/blog/posts/<slug>.json`, with `"draft": false`.
-2. Preview locally:
-
-```sh
-npm run build
-python3 -m http.server 8000   # http://localhost:8000/blog/
+```md
+> [!WARNING]
+> Only run this against systems you are authorised to test.
 ```
 
-3. Commit only the sources: the post JSON, `content/blog/posts.json`, `content/site/blog-preview.json` and any images under `blog/posts/<slug>/`. Generated pages (`blog/**/index.html`, `blog/feed.xml`, `sitemap.xml`, `projects/`) are git-ignored and rebuilt by CI.
+### Spoilers
 
-```sh
-git add content blog/posts
-git commit -m "Publish <post title>"
-git push origin main
+Hide flags and solutions until the reader clicks:
+
+```md
+::: spoiler Root flag
+The flag is `HTB{example}`.
+:::
 ```
 
-CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml` and the RSS feed.
+## What Is Generated (Never Commit)
+
+`/blog/`, `/projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are git-ignored and rebuilt by `npm run build` (locally by `npm run preview`) and in CI. CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml` and the RSS feed (`/blog/feed.xml`).
+
+The blog also has a light/dark toggle, an `/blog/archive/` page grouped by year, and on each post: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
 
 ## Live Verification
 
@@ -92,9 +109,9 @@ curl -s 'https://portfolio.aimansam.my/blog/feed.xml' | grep -c '<item>'
 ## Quality Checklist
 
 - Title is clear and specific.
-- Summary explains the value of the post (it is the meta description and RSS summary).
+- The first paragraph works as a summary (it is the meta description and RSS summary) unless you set `summary`.
 - Tags and category match the topic; shared tags drive "Related posts".
 - Images have useful alt text.
-- The post starts with a short intro.
 - Commands are in fenced code blocks with a language (`bash`, `python`, ...); raw tool output has none.
+- Flags and solutions are inside spoilers.
 - The post ends with lessons learned or a clear takeaway.
