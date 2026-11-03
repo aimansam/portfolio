@@ -56,7 +56,7 @@ const { posts } = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/blog/posts
 posts.forEach((post) => {
   if (!exists(path.join(ROOT, 'blog/posts', post.slug, 'index.html'))) problems.push(`blog/posts/${post.slug}/index.html missing (run npm run build)`);
 });
-['sitemap.xml', 'robots.txt'].forEach((name) => {
+['sitemap.xml', 'robots.txt', 'blog/feed.xml', '404.html'].forEach((name) => {
   if (!exists(path.join(ROOT, name))) problems.push(`${name} missing`);
 });
 

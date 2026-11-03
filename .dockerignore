@@ -3,6 +3,8 @@
 !.dockerignore
 !CNAME
 !robots.txt
+!404.html
+!nginx.conf
 !package.json
 !package-lock.json
 !index.html

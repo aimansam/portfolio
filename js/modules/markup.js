@@ -133,8 +133,8 @@ export const createProjectMarkup = (project) => `
       ${Array.isArray(project.tools) && project.tools.length ? `<div class="project-card-tools" aria-label="Technology stack">${project.tools.map(tool => `<span class="project-tool-chip"><i data-lucide="${getProjectToolIcon(tool)}" aria-hidden="true"></i><span>${escapeHtml(tool)}</span></span>`).join('')}</div>` : ''}
     </div>
     <div class="project-card-actions">
-      <a class="button" href="${project.href || './projects/' + project.id + '/'}">
-        <span class="button-text">Read More</span>
+      <a class="button" href="${project.href || './projects/' + project.id + '/'}" aria-label="View case study: ${escapeHtml(project.title)}">
+        <span class="button-text">View case study</span>
         <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon" alt="">
       </a>
       ${project.githubUrl ? `<a class="project-github-link" href="${escapeHtml(project.githubUrl)}" target="_blank" rel="noopener noreferrer" aria-label="View ${escapeHtml(project.title)} on GitHub"><img src="./assets/icons/github.svg" alt=""></a>` : ''}

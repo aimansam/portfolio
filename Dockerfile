@@ -20,7 +20,9 @@ FROM nginx:alpine
 
 # Copy only public portfolio assets into the nginx web root.
 COPY ./CNAME /usr/share/nginx/html/CNAME
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./robots.txt /usr/share/nginx/html/robots.txt
+COPY ./404.html /usr/share/nginx/html/404.html
 COPY --from=build /workspace/index.html /usr/share/nginx/html/index.html
 COPY --from=build /workspace/sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY --from=build /workspace/blog /usr/share/nginx/html/blog

@@ -51,6 +51,28 @@ const setMeta = (document, attr, key, content) => setHead(document, `meta[${attr
   return meta;
 });
 
+// Reads PNG width/height from the IHDR chunk; returns null for other formats.
+const pngSize = (file) => {
+  try {
+    const buffer = fs.readFileSync(file);
+    if (buffer.readUInt32BE(0) !== 0x89504e47) return null;
+    return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+  } catch {
+    return null;
+  }
+};
+
+// Explicit dimensions let the browser reserve space and avoid layout shift.
+const addImageDimensions = (document) => {
+  document.querySelectorAll('#blog-app img[src^="/"]').forEach((img) => {
+    if (img.hasAttribute('width')) return;
+    const size = pngSize(path.join(ROOT, img.getAttribute('src').split('?')[0]));
+    if (!size) return;
+    img.setAttribute('width', size.width);
+    img.setAttribute('height', size.height);
+  });
+};
+
 async function prerenderPage(modules, file, route, depthPrefix) {
   const dom = new JSDOM(fs.readFileSync(file, 'utf8'), { url: `${ORIGIN}${route}` });
   globalThis.window = dom.window;
@@ -83,6 +105,7 @@ function prerenderBlog(blog) {
     const { document } = dom.window;
 
     document.getElementById('blog-app').innerHTML = blog.renderRoute(posts, parts);
+    addImageDimensions(document);
     blog.setActiveNav(document, route);
     document.title = meta.title;
     setMeta(document, 'name', 'description', meta.description);

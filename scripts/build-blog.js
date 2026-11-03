@@ -14,7 +14,8 @@ const BLOG_SHELL = `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>zx10r Security Notes</title>
     <meta name="description" content="Security writeups, lab notes, CTF workflows, and lessons from practical offensive and defensive security work.">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
+    <link rel="alternate" type="application/rss+xml" title="zx10r Security Notes" href="/blog/feed.xml">
     <link rel="stylesheet" href="/css/typography.css">
     <link rel="stylesheet" href="/css/utilities.css">
     <link rel="stylesheet" href="/css/blog.css">
