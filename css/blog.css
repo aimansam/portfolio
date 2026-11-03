@@ -53,7 +53,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 24px 0;
+  padding: 27px 28px 0;
   pointer-events: none;
 }
 
@@ -103,8 +103,8 @@ a {
 
 .blog-portfolio-nav {
   position: fixed;
-  top: 146px;
-  left: 24px;
+  top: 89px;
+  left: 28px;
   z-index: 20;
 }
 
@@ -529,7 +529,7 @@ a {
   margin-top: 48px;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 800px) {
   .blog-header {
     position: sticky;
     align-items: flex-start;
@@ -1027,7 +1027,7 @@ html[data-theme="dark"] .theme-toggle .icon-moon {
   white-space: nowrap;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 800px) {
   .blog-header {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1174,48 +1174,68 @@ html[data-theme="dark"] {
   text-transform: uppercase;
 }
 
-/* --- Portfolio nav on small screens: a floating bar along the bottom --- */
+/* --- Portfolio nav on small screens: same hamburger menu as the other pages --- */
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 800px) {
+  .blog-menu-toggle {
+    border-color: var(--ink);
+    background-color: var(--paper);
+  }
+
+  .blog-menu-toggle .nav-menu-toggle-bar {
+    background-color: var(--ink);
+  }
+
+  .blog-menu-toggle:hover,
+  .blog-menu-toggle:active,
+  .blog-menu-toggle:focus-visible,
+  .blog-menu-toggle[aria-expanded="true"] {
+    background-color: var(--ink);
+  }
+
+  .blog-menu-toggle:hover .nav-menu-toggle-bar,
+  .blog-menu-toggle:active .nav-menu-toggle-bar,
+  .blog-menu-toggle:focus-visible .nav-menu-toggle-bar,
+  .blog-menu-toggle[aria-expanded="true"] .nav-menu-toggle-bar {
+    background-color: var(--paper);
+  }
+
   .blog-portfolio-nav {
-    top: auto;
-    right: auto;
-    bottom: 14px;
-    left: 50%;
-    z-index: 35;
-    transform: translateX(-50%);
+    top: 78px;
+    left: 20px;
+    z-index: 45;
   }
 
-  .blog-portfolio-nav .nav-icon-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-    padding: 8px 10px;
-    border-radius: 999px;
-  }
-
-  .blog-portfolio-nav .nav-icon-link {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    justify-content: center;
-  }
-
-  /* Labels are hover tooltips on desktop; the links keep their aria-labels. */
+  /* Labels are inline text in the dropdown, not hover tooltips. */
   .blog-portfolio-nav .nav-icon-label {
-    display: none;
+    border: 0;
+    background-color: transparent;
+    color: var(--ink);
   }
 
-  /* Keep the back-to-top button clear of the bar. */
-  .back-to-top {
-    bottom: 84px;
-    right: 16px;
+  .blog-portfolio-nav .nav-icon-link:hover .nav-icon-label,
+  .blog-portfolio-nav .nav-icon-link:active .nav-icon-label,
+  .blog-portfolio-nav .nav-icon-link:focus-visible .nav-icon-label,
+  .blog-portfolio-nav .nav-icon-link.is-active .nav-icon-label {
+    opacity: 1;
+    color: var(--paper);
   }
 }
 
 /* Long inline paths and hashes wrap instead of widening the page. */
 .blog-post-content :not(pre) > code {
   overflow-wrap: anywhere;
+}
+
+/* Tablet widths keep the side nav, so stack the two-column blocks earlier. */
+@media only screen and (max-width: 900px) {
+  .blog-hero,
+  .blog-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .blog-hero {
+    gap: 34px;
+    padding-bottom: 42px;
+  }
 }

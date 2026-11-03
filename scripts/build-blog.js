@@ -42,6 +42,11 @@ const BLOG_SHELL = `<!doctype html>
   </head>
   <body>
     <header class="blog-header">
+      <button class="nav-menu-toggle blog-menu-toggle" type="button" aria-expanded="false" aria-controls="blog-menu" aria-label="Open navigation menu">
+        <span class="nav-menu-toggle-bar"></span>
+        <span class="nav-menu-toggle-bar"></span>
+        <span class="nav-menu-toggle-bar"></span>
+      </button>
       <a class="nav-title-link blog-brand" href="/blog/"><span class="nav-title">zx10r</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
         <a href="/blog/posts/" data-blog-nav="posts">Posts</a>
@@ -59,7 +64,7 @@ const BLOG_SHELL = `<!doctype html>
     </header>
 
     <nav class="blog-portfolio-nav" aria-label="Portfolio navigation">
-      <div class="nav-icon-box">
+      <div class="nav-icon-box" id="blog-menu">
 ${PORTFOLIO_NAV_ITEMS}
       </div>
     </nav>
