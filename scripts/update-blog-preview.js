@@ -4,11 +4,15 @@ const path = require('path');
 const POSTS_FILE = path.join(__dirname, '../content/blog/posts.json');
 const PREVIEW_FILE = path.join(__dirname, '../content/site/blog-preview.json');
 
+// Use the calendar date as written in the post so the build timezone cannot shift it.
 function formatDate(value) {
-  return new Date(value).toLocaleDateString('en-US', {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value));
+  const date = match ? new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))) : new Date(value);
+  return date.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   });
 }
 

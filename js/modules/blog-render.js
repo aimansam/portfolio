@@ -7,11 +7,17 @@ export { escapeHtml, slugify };
 const blogRoot = '/blog/';
 export const dataUrl = '/content/blog/posts.json';
 
-export const formatDate = (value) => new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  day: 'numeric',
-  year: 'numeric'
-}).format(new Date(value));
+// Posts carry the author's local date (for example 2026-05-11T00:00:00+08:00). Use that
+// calendar date as written so the build server's timezone never shifts it by a day.
+const calendarDate = (value) => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value));
+  return match ? new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))) : new Date(value);
+};
+
+export const formatDate = (value, options = { month: 'short', day: 'numeric', year: 'numeric' }) =>
+  new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'UTC' }).format(calendarDate(value));
+
+export const postYear = (post) => calendarDate(post.date).getUTCFullYear();
 
 export const readMinutes = (body = '') => Math.max(1, Math.ceil(body.split(/\s+/).filter(Boolean).length / 220));
 
@@ -85,6 +91,36 @@ export const renderList = (title, posts, intro = '') => `
   ${archiveHeader(title, intro)}
   <section class="blog-list">${posts.map((post) => postCard(post)).join('')}</section>
 `;
+
+export const renderArchive = (posts) => {
+  const byYear = new Map();
+  posts.forEach((post) => {
+    const year = postYear(post);
+    byYear.set(year, [...(byYear.get(year) || []), post]);
+  });
+  const years = [...byYear.keys()].sort((a, b) => b - a);
+
+  return `
+  ${archiveHeader('Archive', 'Every post, grouped by year.')}
+  ${years.length > 1 ? `<nav class="blog-archive-years" aria-label="Jump to year">${years.map((year) => `<a class="project-tag" href="#year-${year}">${year}</a>`).join('')}</nav>` : ''}
+  <div class="blog-archive">
+    ${years.map((year) => `
+      <section class="blog-archive-year" aria-labelledby="year-${year}">
+        <h2 id="year-${year}">${year}<small>${byYear.get(year).length} post${byYear.get(year).length === 1 ? '' : 's'}</small></h2>
+        <ul class="blog-archive-list">
+          ${byYear.get(year).map((post) => `
+            <li class="blog-archive-item">
+              <a href="${postHref(post)}">
+                <span class="blog-archive-date">${escapeHtml(formatDate(post.date, { month: 'short', day: 'numeric' }))}</span>
+                <span class="blog-archive-title">${escapeHtml(post.title)}</span>
+                <span class="blog-archive-meta">${escapeHtml((post.categories || [])[0] || '')} · ${readMinutes(post.body)} min</span>
+              </a>
+            </li>`).join('')}
+        </ul>
+      </section>`).join('')}
+  </div>
+`;
+};
 
 export const renderTerms = (title, terms, hrefFor) => `
   ${archiveHeader(title, 'Browse the writing by topic and lab context.')}
@@ -192,6 +228,7 @@ export const renderRoute = (posts, parts) => {
     const post = findPost(posts, parts);
     return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.');
   }
+  if (parts[0] === 'archive') return renderArchive(posts);
   if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.');
   if (parts[0] === 'categories' && parts[1]) {
     const filtered = posts.filter((post) => (post.categories || []).some((category) => slugify(category) === parts[1]));
@@ -216,7 +253,7 @@ export const routeMeta = (posts, parts) => {
     return { title: `${post.title} | ${SITE_NAME}`, description: post.summary || fallback, image: post.cover?.image || '', type: 'article', post };
   }
   const label = parts[1] ? parts[1].replace(/-/g, ' ') : parts[0];
-  const titles = { posts: 'All posts', tags: 'Tags', about: 'About this blog' };
+  const titles = { posts: 'All posts', archive: 'Archive', tags: 'Tags', about: 'About this blog' };
   const title = parts[0] === 'categories' || (parts[0] === 'tags' && parts[1])
     ? `${label} | ${SITE_NAME}`
     : (titles[parts[0]] ? `${titles[parts[0]]} | ${SITE_NAME}` : SITE_NAME);

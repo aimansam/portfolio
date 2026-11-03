@@ -13,7 +13,8 @@ const urls = [
   { loc: `${SITE}/about.html` },
   { loc: `${SITE}/projects.html` },
   { loc: `${SITE}/gallery.html` },
-  { loc: `${SITE}/blog/` }
+  { loc: `${SITE}/blog/` },
+  { loc: `${SITE}/blog/archive/` }
 ];
 
 fs.readdirSync(PROJECTS_DIR)

@@ -51,6 +51,21 @@ const render = (posts) => {
   if (window.location.hash) document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();
 };
 
+// Light/dark theme. The initial value is set by an inline script in <head> to avoid a flash.
+const themeToggle = document.querySelector('[data-theme-toggle]');
+const syncThemeToggle = () => {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  themeToggle?.setAttribute('aria-pressed', String(dark));
+  themeToggle?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+};
+themeToggle?.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
+  syncThemeToggle();
+});
+syncThemeToggle();
+
 initLightbox();
 initBackToTop();
 

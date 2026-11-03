@@ -57,6 +57,8 @@ Use `draft: false` only when the post is ready to publish. Draft posts are ignor
 
 Syntax highlighting is applied for `bash` (also `sh`, `shell`, `console`), `python`, `js` (also `json`, `ts`), `php` and `sql`. A fence with no language stays plain, which is best for tool output such as nmap results. Bash highlighting colours commands' flags, strings, variables and comments, but not numbers, so output pasted into a `bash` block stays readable.
 
+The blog has a light/dark theme toggle in the header (it follows the visitor's system setting until they choose, then remembers the choice) and an `/blog/archive/` page that groups every post by year.
+
 Posts also get, automatically: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
 
 ## Publish A Post
