@@ -1,14 +1,30 @@
 {
-  "title": "Web Vulnerability Scanner",
+  "title": "Durian: A Web Vulnerability Scanner",
   "category": "Web Security / Python",
-  "focus": ["Authorized Assessment", "Crawler Design", "Security Reporting"],
-  "facts": [
-    { "label": "Interface", "value": "Python CLI" },
-    { "label": "Coverage", "value": "Discovery and common web checks" },
-    { "label": "Output", "value": "Structured assessment reports" },
-    { "label": "Scope", "value": "Authorized targets only" }
+  "focus": [
+    "Authorized Assessment",
+    "Crawler Design",
+    "Security Reporting"
   ],
-  "githubUrl": "https://github.com/aimansam/web-vuln-scanner",
+  "facts": [
+    {
+      "label": "Interface",
+      "value": "Python CLI"
+    },
+    {
+      "label": "Coverage",
+      "value": "Discovery and common web checks"
+    },
+    {
+      "label": "Output",
+      "value": "Structured assessment reports"
+    },
+    {
+      "label": "Scope",
+      "value": "Authorized targets only"
+    }
+  ],
+  "githubUrl": "https://github.com/aimansam/durian",
   "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
   "headerImage": "../assets/images/projects/durian/durian.webp",
   "sections": [

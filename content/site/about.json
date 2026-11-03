@@ -17,7 +17,7 @@
           "3rd / 50 · Bingo CTF"
         ],
         "image": "./assets/images/me/aimansamwinner.webp",
-        "imageAlt": "Competition achievement"
+        "imageAlt": "Aiman Sam at the UM Cybersecurity Summit"
       },
       {
         "title": "Then I started building.",
@@ -40,8 +40,8 @@
         "imageAlt": "Security workshop"
       },
       {
-        "title": "Now I am expanding.",
-        "description": "I am carrying offensive security practice into detection engineering and defensive capability.",
+        "title": "Now I'm expanding.",
+        "description": "I'm carrying offensive security practice into detection engineering and defensive capability.",
         "highlights": [
           "Web Security · Active Directory · Forensics",
           "Penetration Testing → Detection Engineering"
@@ -63,66 +63,171 @@
   "skills": {
     "title": "Applied security and development skills.",
     "filters": [
-      { "id": "all", "label": "All" },
-      { "id": "red-team", "label": "Red Team" },
-      { "id": "blue-team", "label": "Blue Team" },
-      { "id": "web-dev", "label": "Web Dev" },
-      { "id": "cloud", "label": "Cloud" }
+      {
+        "id": "all",
+        "label": "All"
+      },
+      {
+        "id": "red-team",
+        "label": "Red Team"
+      },
+      {
+        "id": "blue-team",
+        "label": "Blue Team"
+      },
+      {
+        "id": "web-dev",
+        "label": "Web Dev"
+      },
+      {
+        "id": "cloud",
+        "label": "Cloud"
+      }
     ],
     "pages": [
       {
         "id": "all",
         "skills": [
-          { "name": "Web Exploitation", "icon": "bug" },
-          { "name": "Blue Team Mindset", "icon": "shield" },
-          { "name": "Flask", "icon": "flask-conical" },
-          { "name": "React", "icon": "atom" },
-          { "name": "Cloud Security", "icon": "cloud-lightning" },
-          { "name": "Node.js", "icon": "server" },
-          { "name": "Python", "icon": "code-2" },
-          { "name": "Security Engineering", "icon": "shield-check" }
+          {
+            "name": "Web Exploitation",
+            "icon": "bug"
+          },
+          {
+            "name": "Blue Team Mindset",
+            "icon": "shield"
+          },
+          {
+            "name": "Flask",
+            "icon": "flask-conical"
+          },
+          {
+            "name": "React",
+            "icon": "atom"
+          },
+          {
+            "name": "Cloud Security",
+            "icon": "cloud-lightning"
+          },
+          {
+            "name": "Node.js",
+            "icon": "server"
+          },
+          {
+            "name": "Python",
+            "icon": "code-2"
+          },
+          {
+            "name": "Security Engineering",
+            "icon": "shield-check"
+          }
         ]
       },
       {
         "id": "red-team",
         "skills": [
-          { "name": "Web Exploitation", "icon": "bug" },
-          { "name": "Penetration Testing", "icon": "crosshair" },
-          { "name": "Active Directory Exploitation", "icon": "key" },
-          { "name": "Access Control Testing", "icon": "lock" },
-          { "name": "Network Security", "icon": "network" }
+          {
+            "name": "Web Exploitation",
+            "icon": "bug"
+          },
+          {
+            "name": "Penetration Testing",
+            "icon": "crosshair"
+          },
+          {
+            "name": "Active Directory Exploitation",
+            "icon": "key"
+          },
+          {
+            "name": "Access Control Testing",
+            "icon": "lock"
+          },
+          {
+            "name": "Network Security",
+            "icon": "network"
+          }
         ]
       },
       {
         "id": "blue-team",
         "skills": [
-          { "name": "Log Analysis", "icon": "file-text" },
-          { "name": "SIEM (Splunk)", "icon": "bar-chart-2" },
-          { "name": "Wireshark", "icon": "activity" },
-          { "name": "System Hardening", "icon": "shield-check" },
-          { "name": "Threat Detection", "icon": "alert-triangle" }
+          {
+            "name": "Log Analysis",
+            "icon": "file-text"
+          },
+          {
+            "name": "SIEM (Splunk)",
+            "icon": "bar-chart-2"
+          },
+          {
+            "name": "Wireshark",
+            "icon": "activity"
+          },
+          {
+            "name": "System Hardening",
+            "icon": "shield-check"
+          },
+          {
+            "name": "Threat Detection",
+            "icon": "alert-triangle"
+          }
         ]
       },
       {
         "id": "web-dev",
         "skills": [
-          { "name": "Flask", "icon": "flask-conical" },
-          { "name": "React", "icon": "atom" },
-          { "name": "Next.js", "icon": "triangle" },
-          { "name": "Node.js", "icon": "server" },
-          { "name": "PostgreSQL", "icon": "database" },
-          { "name": "MongoDB", "icon": "layers" }
+          {
+            "name": "Flask",
+            "icon": "flask-conical"
+          },
+          {
+            "name": "React",
+            "icon": "atom"
+          },
+          {
+            "name": "Next.js",
+            "icon": "triangle"
+          },
+          {
+            "name": "Node.js",
+            "icon": "server"
+          },
+          {
+            "name": "PostgreSQL",
+            "icon": "database"
+          },
+          {
+            "name": "MongoDB",
+            "icon": "layers"
+          }
         ]
       },
       {
         "id": "cloud",
         "skills": [
-          { "name": "Linux Administration", "icon": "cpu" },
-          { "name": "Docker", "icon": "box" },
-          { "name": "Bash Scripting", "icon": "terminal" },
-          { "name": "Python Automation", "icon": "bot" },
-          { "name": "Network Fundamentals", "icon": "wifi" },
-          { "name": "Secure Deployment", "icon": "upload-cloud" }
+          {
+            "name": "Linux Administration",
+            "icon": "cpu"
+          },
+          {
+            "name": "Docker",
+            "icon": "box"
+          },
+          {
+            "name": "Bash Scripting",
+            "icon": "terminal"
+          },
+          {
+            "name": "Python Automation",
+            "icon": "bot"
+          },
+          {
+            "name": "Network Fundamentals",
+            "icon": "wifi"
+          },
+          {
+            "name": "Secure Deployment",
+            "icon": "upload-cloud"
+          }
         ]
       }
     ]
@@ -181,7 +286,7 @@
     ]
   },
   "certificates": {
-    "title": "Recognized industry credentials.",
+    "title": "Certifications and training.",
     "items": [
       {
         "name": "CEHv13",

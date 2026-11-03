@@ -6,7 +6,7 @@
     },
     "cta": {
       "label": "Hire Me",
-      "href": "mailto:zx10r8443@gmail.com"
+      "href": "mailto:aimansammrsm@gmail.com"
     },
     "items": [
       {
@@ -40,7 +40,7 @@
         "icon": "./assets/icons/article.svg"
       },
       {
-        "href": "mailto:zx10r8443@gmail.com",
+        "href": "mailto:aimansammrsm@gmail.com",
         "label": "Email",
         "ariaLabel": "Email contact",
         "icon": "./assets/icons/mail.svg"

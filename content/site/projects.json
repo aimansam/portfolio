@@ -1,24 +1,52 @@
 {
   "projects": {
-    "heading": "My Work / My Projects",
+    "heading": "Projects",
     "filters": [
-      { "id": "all", "label": "All" },
-      { "id": "infrastructure", "label": "Infrastructure" },
-      { "id": "hardware", "label": "Hardware" },
-      { "id": "wireless", "label": "Wireless" },
-      { "id": "web", "label": "Web Security" },
-      { "id": "defensive", "label": "Defensive" },
-      { "id": "research", "label": "Security Research" }
+      {
+        "id": "all",
+        "label": "All"
+      },
+      {
+        "id": "infrastructure",
+        "label": "Infrastructure"
+      },
+      {
+        "id": "hardware",
+        "label": "Hardware"
+      },
+      {
+        "id": "wireless",
+        "label": "Wireless"
+      },
+      {
+        "id": "web",
+        "label": "Web Security"
+      },
+      {
+        "id": "defensive",
+        "label": "Defensive"
+      },
+      {
+        "id": "research",
+        "label": "Security Research"
+      }
     ],
     "items": [
       {
         "id": "bad-usb-lab",
         "category": "hardware",
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-01-13.webp",
-        "tags": ["Hardware", "Endpoint"],
-        "title": "Rubber Ducky / Bad USB",
+        "tags": [
+          "Hardware",
+          "Endpoint"
+        ],
+        "title": "Bad USB Payload Lab",
         "summary": "Studies physical-access payloads and endpoint detection visibility.",
-        "tools": ["Bad USB", "Windows", "Endpoint monitoring"],
+        "tools": [
+          "Bad USB",
+          "Windows",
+          "Endpoint monitoring"
+        ],
         "description": "A custom-built Bad USB project leveraging keystroke injection techniques to simulate real-world attack scenarios. Used for developing and testing payloads that automate exploitation, credential harvesting, and system compromise, this project demonstrates practical understanding of physical attack vectors and endpoint security weaknesses.",
         "href": "./projects/bad-usb-lab/",
         "featured": false
@@ -27,10 +55,17 @@
         "id": "wifi-audit-lab",
         "category": "wireless",
         "image": "./assets/images/projects/wifi-audit-lab/pineapple.webp",
-        "tags": ["Wireless", "Audit"],
-        "title": "Bad Wifi Audit",
+        "tags": [
+          "Wireless",
+          "Audit"
+        ],
+        "title": "Wireless Audit Lab",
         "summary": "Audits wireless trust, traffic, and rogue infrastructure.",
-        "tools": ["Wi-Fi auditing", "Packet capture", "Rogue AP simulation"],
+        "tools": [
+          "Wi-Fi auditing",
+          "Packet capture",
+          "Rogue AP simulation"
+        ],
         "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
         "href": "./projects/wifi-audit-lab/",
         "featured": false
@@ -39,10 +74,18 @@
         "id": "oxblood-drill",
         "category": "infrastructure",
         "image": "./assets/images/projects/oxblood/oxblood.webp",
-        "tags": ["Cyber Range", "Proxmox", "Blue Team"],
+        "tags": [
+          "Cyber Range",
+          "Proxmox",
+          "Blue Team"
+        ],
         "title": "OxBlood: A Cyber Drill Platform",
         "summary": "Runs repeatable red-blue drills on Proxmox infrastructure.",
-        "tools": ["Proxmox", "Docker", "Grafana"],
+        "tools": [
+          "Proxmox",
+          "Docker",
+          "Grafana"
+        ],
         "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
         "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenarios, telemetry, and operational reporting.",
         "href": "./projects/oxblood-drill/",
@@ -52,10 +95,18 @@
         "id": "web-vuln-scanner",
         "category": "web",
         "image": "./assets/images/projects/durian/durian.webp",
-        "tags": ["Web Security", "Python", "CLI"],
+        "tags": [
+          "Web Security",
+          "Python",
+          "CLI"
+        ],
         "title": "Durian: A Web Vulnerability Scanner",
         "summary": "Scans authorized web targets and generates reports.",
-        "tools": ["Python", "Crawler", "Reporting"],
+        "tools": [
+          "Python",
+          "Crawler",
+          "Reporting"
+        ],
         "githubUrl": "https://github.com/aimansam/durian",
         "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
         "href": "./projects/web-vuln-scanner/",
@@ -65,11 +116,19 @@
         "id": "divide-ctf-recipe",
         "category": "web",
         "image": "./assets/images/projects/DIVIDE/DIVIDE.webp",
-        "tags": ["Web Engineering", "Cloudflare", "CTF"],
-        "title": "DIVIDE CTF - A Vulnerable Web Lab",
-        "summary": "Challenges client trust with server-side API validation.",
-        "tools": ["JavaScript", "Cloudflare Pages", "Docker"],
-        "githubUrl": "https://github.com/aimansam/divideCTF-docker",
+        "tags": [
+          "Web Engineering",
+          "Cloudflare",
+          "CTF"
+        ],
+        "title": "DIVIDE CTF: A Vulnerable Web Lab",
+        "summary": "Teaches why client-side checks aren't access control.",
+        "tools": [
+          "JavaScript",
+          "Cloudflare Pages",
+          "Docker"
+        ],
+        "githubUrl": "https://github.com/aimansam/divideCTF-recipe",
         "description": "A public web challenge combining a static frontend, Cloudflare Pages Functions, API behavior, and a client-side access-control lesson.",
         "href": "https://ctf.aimansam.my",
         "featured": false
@@ -78,10 +137,18 @@
         "id": "baby-c2",
         "category": "research",
         "image": "./assets/images/projects/jebat/jebat.webp",
-        "tags": ["Authorized Research", "Detection", "Python"],
+        "tags": [
+          "Authorized Research",
+          "Detection",
+          "Python"
+        ],
         "title": "Jebat: A C2 Agent",
         "summary": "Studies command channels through authorized defensive research.",
-        "tools": ["Python", "Threat modeling", "Telemetry"],
+        "tools": [
+          "Python",
+          "Threat modeling",
+          "Telemetry"
+        ],
         "githubUrl": "https://github.com/aimansam/jebat",
         "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
         "href": "./projects/baby-c2/",

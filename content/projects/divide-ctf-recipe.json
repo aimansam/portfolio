@@ -1,12 +1,28 @@
 {
-  "title": "divideCTF Recipe Challenge",
+  "title": "DIVIDE CTF: A Vulnerable Web Lab",
   "category": "Web Engineering / CTF",
-  "focus": ["Cloudflare Pages", "API Behavior", "Client-Side Trust"],
+  "focus": [
+    "Cloudflare Pages",
+    "API Behavior",
+    "Client-Side Trust"
+  ],
   "facts": [
-    { "label": "Frontend", "value": "Static HTML, CSS, and JavaScript" },
-    { "label": "Backend", "value": "Cloudflare Pages Function API" },
-    { "label": "Deployment", "value": "Cloudflare Pages and Docker parity" },
-    { "label": "Theme", "value": "Learning through controlled challenge design" }
+    {
+      "label": "Frontend",
+      "value": "Static HTML, CSS, and JavaScript"
+    },
+    {
+      "label": "Backend",
+      "value": "Cloudflare Pages Function API"
+    },
+    {
+      "label": "Deployment",
+      "value": "Cloudflare Pages and Docker parity"
+    },
+    {
+      "label": "Theme",
+      "value": "Learning through controlled challenge design"
+    }
   ],
   "githubUrl": "https://github.com/aimansam/divideCTF-recipe",
   "description": "A public web challenge combining a static frontend, Cloudflare Pages Functions, API behavior, and a client-side access-control lesson.",

@@ -1,12 +1,28 @@
 {
-  "title": "div:ide Cyber Drill Platform",
+  "title": "OxBlood: A Cyber Drill Platform",
   "category": "Infrastructure / Cyber Range",
-  "focus": ["Proxmox Operations", "Red Team / Blue Team", "Scenario Management"],
+  "focus": [
+    "Proxmox Operations",
+    "Red Team / Blue Team",
+    "Scenario Management"
+  ],
   "facts": [
-    { "label": "Platform", "value": "Dockerized Flask and API services" },
-    { "label": "Infrastructure", "value": "Proxmox VE integration" },
-    { "label": "Visibility", "value": "Prometheus and Grafana telemetry" },
-    { "label": "Scope", "value": "Repeatable authorized cyber drills" }
+    {
+      "label": "Platform",
+      "value": "Dockerized Flask and API services"
+    },
+    {
+      "label": "Infrastructure",
+      "value": "Proxmox VE integration"
+    },
+    {
+      "label": "Visibility",
+      "value": "Prometheus and Grafana telemetry"
+    },
+    {
+      "label": "Scope",
+      "value": "Repeatable authorized cyber drills"
+    }
   ],
   "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
   "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenario definitions, telemetry, and operational reporting.",

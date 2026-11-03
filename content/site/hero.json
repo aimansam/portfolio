@@ -1,19 +1,19 @@
 {
   "hero": {
-    "title": "Hello, I'm @Aiman Sam.",
-    "intro": "Security focused developer building Red Team tooling, EDR evasion research, web security, CTF.",
+    "title": "Hello, I'm Aiman Sam.",
+    "intro": "Junior penetration tester and CTF creator. CPTS and CEH certified, 350+ TryHackMe rooms, 9 web challenges and a Boot2Root built.",
     "primaryAction": {
       "label": "Check out my projects",
       "href": "#my-work-section"
     },
     "secondaryAction": {
-      "label": "Download CV",
+      "label": "Download Resume",
       "href": "./assets/resume/Resume.pdf",
       "download": "Aiman_Sam_Resume.pdf"
     },
     "socialLinks": [
       {
-        "href": "mailto:zx10r8443@gmail.com",
+        "href": "mailto:aimansammrsm@gmail.com",
         "label": "Email",
         "icon": "./assets/icons/mail.svg"
       },

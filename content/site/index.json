@@ -1,62 +1,6 @@
 {
-  "hero": {
-    "title": "Hello, I'm Aiman Sam",
-    "intro": "I'm a junior penetration tester and web developer specializing in identifying vulnerabilities and building secure web applications.",
-    "primaryAction": {
-      "label": "Check out my projects",
-      "href": "./projects.html"
-    },
-    "secondaryAction": {
-      "label": "Download CV",
-      "href": "./assets/resume/Resume.pdf",
-      "download": "Aiman_Sam_Resume.pdf"
-    },
-    "socialLinks": [
-      {
-        "href": "mailto:zx10r8443@gmail.com",
-        "label": "Email",
-        "icon": "./assets/icons/mail.svg"
-      },
-      {
-        "href": "https://github.com/aimansam",
-        "label": "GitHub profile",
-        "icon": "./assets/icons/github.svg"
-      },
-      {
-        "href": "https://www.linkedin.com/in/aimansam",
-        "label": "LinkedIn profile",
-        "icon": "./assets/icons/linkedin.svg"
-      },
-      {
-        "href": "https://tryhackme.com/p/zx10r",
-        "label": "TryHackMe profile",
-        "icon": "./assets/icons/tryhackme.svg"
-      },
-      {
-        "href": "https://app.hackthebox.com/users/2188751",
-        "label": "Hack The Box profile",
-        "icon": "./assets/icons/hackthebox.png"
-      }
-    ],
-    "badges": [
-      {
-        "href": "https://tryhackme.com/p/zx10r",
-        "label": "TryHackMe badge",
-        "image": "https://tryhackme-badges.s3.amazonaws.com/zx10r.png?v=20260509",
-        "alt": "TryHackMe badge for zx10r",
-        "className": "hero-badge-link hero-badge-link-thm"
-      },
-      {
-        "href": "https://app.hackthebox.com/users/2188751?profile-top-tab=machines&ownership-period=1M&profile-bottom-tab=prolabs",
-        "label": "Hack The Box badge",
-        "image": "https://www.hackthebox.com/badge/image/2188751",
-        "alt": "Hack The Box badge for zx10r",
-        "className": "hero-badge-link hero-badge-link-htb"
-      }
-    ]
-  },
   "stats": {
-    "heading": "Highlights / Quick Stats",
+    "heading": "Highlights",
     "items": [
       {
         "step": "01",
@@ -72,7 +16,7 @@
       },
       {
         "step": "03",
-        "value": "Top 3 / 50",
+        "value": "3rd / 50",
         "label": "Bingo CTF 2025",
         "note": "Placed 3rd with a 3-member team across web exploitation, cryptography, and forensics challenges."
       },
@@ -96,20 +40,20 @@
       },
       {
         "step": "07",
-        "value": "5",
+        "value": "6",
         "label": "Certificates Earned",
-        "note": "Including CEHv13, CCNA Intro to Networks, Junior Penetration Tester, and web development training."
+        "note": "Including CEHv13, CPTS, CCNA Intro to Networks, Junior Penetration Tester, and web development training."
       },
       {
         "step": "08",
         "value": "3.80",
-        "label": "Current GPA",
+        "label": "Current CGPA",
         "note": "Bachelor of Computer Science (Cybersecurity) student at Universiti Tenaga Nasional."
       }
     ]
   },
   "blogPreview": {
-    "heading": "Writeups / Blog",
+    "heading": "Writeups",
     "intro": "Technical writeups covering CTF solves, lab work, exploitation paths, and security lessons pulled from hands-on practice.",
     "viewAllHref": "./blog/index.html",
     "viewAllLabel": "View all posts",
@@ -147,25 +91,6 @@
         "url": "./blog/posts/web-exploitation-workflow/",
         "accent": false
       }
-    ]
-  },
-  "seo": {
-    "title": "Aiman Sam | Junior Pentester and Web Developer",
-    "description": "Aiman Sam is a junior penetration tester and web developer focused on web exploitation, offensive security labs, and building secure web applications.",
-    "siteName": "Aiman Sam Portfolio",
-    "canonicalUrl": "https://portfolio.aimansam.my/",
-    "image": "https://portfolio.aimansam.my/assets/images/me/og-image.jpg",
-    "imageAlt": "Portrait of Aiman Sam",
-    "personName": "Aiman Sam",
-    "alternateName": "zx10r",
-    "jobTitle": "Junior Penetration Tester and Web Developer",
-    "email": "mailto:zx10r8443@gmail.com",
-    "sameAs": [
-      "https://github.com/aimansam",
-      "https://www.linkedin.com/in/aimansam",
-      "https://tryhackme.com/p/zx10r",
-      "https://app.hackthebox.com/users/2188751",
-      "https://portfolio.aimansam.my/blog/"
     ]
   }
 }
