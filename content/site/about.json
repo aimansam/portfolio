@@ -4,9 +4,9 @@
     "lookingLabel": "Looking For",
     "roles": [
       "Penetration Tester",
+      "Red Team Operator",
       "Security Engineer",
-      "Blue Team Analyst",
-      "Cloud Engineer"
+      "Detection Engineer"
     ],
     "story": [
       {
@@ -50,7 +50,7 @@
         "imageAlt": "Current security direction"
       }
     ],
-    "intro": "Second-year Computer Science (Cybersecurity) student focused on penetration testing and ethical hacking. I earned my CEH certification before the age of 20 and have continued building hands-on experience through labs, competitions, and practical security work.",
+    "intro": "Final-year Computer Science (Cybersecurity) student at Universiti Tenaga Nasional, specializing in penetration testing and red team operations. I earned my CEH certification before the age of 20, went on to CPTS, and have built my skills through labs, competitions, and practical security work.",
     "points": [
       "Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.",
       "System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.",

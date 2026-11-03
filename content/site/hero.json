@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "Hello, I'm Aiman Sam.",
-    "intro": "Junior penetration tester and CTF creator. CPTS and CEH certified, 350+ TryHackMe rooms, 9 web challenges and a Boot2Root built.",
+    "intro": "Penetration tester focused on red team work. Final-year cybersecurity student, CPTS and CEH certified, top 1% on TryHackMe, and a CTF challenge creator.",
     "primaryAction": {
       "label": "Check out my projects",
       "href": "#my-work-section"
