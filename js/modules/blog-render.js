@@ -55,13 +55,6 @@ const categoryCounts = (posts) => {
   return [...counts.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 };
 
-const filterNav = (posts, activeSlug, allHref) => `
-  <nav class="blog-filters" aria-label="Filter by category">
-    <a class="blog-filter${activeSlug ? '' : ' is-active'}" href="${allHref}"${activeSlug ? '' : ' aria-current="page"'}>All <span>${posts.length}</span></a>
-    ${categoryCounts(posts).map(({ name, slug, count }) => `<a class="blog-filter${slug === activeSlug ? ' is-active' : ''}" href="${categoryHref(name)}"${slug === activeSlug ? ' aria-current="page"' : ''}>${escapeHtml(name)} <span>${count}</span></a>`).join('')}
-  </nav>
-`;
-
 export const archiveHeader = (title, intro = '') => `
   <header class="blog-page-header">
     <span class="blog-kicker">Security Notes</span>
@@ -70,49 +63,81 @@ export const archiveHeader = (title, intro = '') => `
   </header>
 `;
 
-export const renderHome = (posts) => {
-  if (!posts.length) {
-    return `${archiveHeader('Security notes from the lab.', 'No posts yet. Check back soon.')}`;
-  }
-  const latest = formatDate(posts[0].date, { month: 'long', day: 'numeric', year: 'numeric' });
+// Horizontal card: cover (or a patterned fallback showing the category) beside the text.
+export const postCard = (post) => {
+  const category = (post.categories || [])[0] || 'Notes';
+  return `
+  <a class="blog-post-card" href="${postHref(post)}">
+    <span class="blog-post-card-media${post.cover?.image ? '' : ' is-fallback'}">
+      ${post.cover?.image ? `<img src="${escapeHtml(post.cover.image)}" alt="" loading="lazy">` : `<span>${escapeHtml(category)}</span>`}
+    </span>
+    <span class="blog-post-card-body">
+      ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
+      <span class="blog-post-card-meta">${escapeHtml(category)} · ${escapeHtml(formatDate(post.date))} · ${readMinutes(post.body)} min</span>
+      <span class="blog-post-card-title">${escapeHtml(post.title)}</span>
+      <span class="blog-post-card-summary">${escapeHtml(post.summary)}</span>
+    </span>
+  </a>
+`;
+};
+
+const postCards = (posts) => (posts.length
+  ? `<div class="blog-post-cards">${posts.map(postCard).join('')}</div>`
+  : '<p class="blog-empty">No posts here yet.</p>');
+
+const sidebar = (posts, activeCategory = '') => {
   const categories = categoryCounts(posts);
   const topTags = countTerms(posts, 'tags')
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .slice(0, TAGS_ON_HOME);
-
   return `
-  <section class="blog-intro">
-    <span class="blog-kicker">Security Notes</span>
-    <h1>Security notes from the lab.</h1>
-    <p>Hands-on writeups on CTFs, Active Directory labs, web exploitation, and privilege escalation.</p>
-    <p class="blog-stats">${posts.length} post${posts.length === 1 ? '' : 's'} · ${categories.length} categor${categories.length === 1 ? 'y' : 'ies'} · Updated ${escapeHtml(latest)}</p>
-  </section>
-  ${filterNav(posts, '', '/blog/')}
-  <section class="blog-index" aria-labelledby="latest-posts">
-    <h2 class="blog-section-title" id="latest-posts">Latest posts</h2>
-    ${postRows(posts.slice(0, POSTS_ON_HOME))}
-    <a class="blog-more" href="${posts.length > POSTS_ON_HOME ? '/blog/posts/' : '/blog/archive/'}">${posts.length > POSTS_ON_HOME ? `View all ${posts.length} posts` : 'Browse the archive'} <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
-  </section>
-  ${topTags.length ? `
-  <section class="blog-topics" aria-labelledby="popular-tags">
-    <h2 class="blog-section-title" id="popular-tags">Popular tags</h2>
-    <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
-  </section>` : ''}
-  <footer class="blog-about">
-    <p><strong>Aiman Sam</strong> is a junior penetration tester. These notes are written up from labs and CTFs. <a href="/blog/about/">About this blog</a></p>
-    <div class="blog-socials">
-      <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
-      <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
-    </div>
-  </footer>
+  <aside class="blog-sidebar" aria-label="Blog sidebar">
+    <section class="blog-side-card">
+      <h2 class="blog-section-title">About</h2>
+      <p><strong>Aiman Sam</strong> is a junior penetration tester. These notes are written up from labs and CTFs.</p>
+      <div class="blog-socials">
+        <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
+        <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
+      </div>
+    </section>
+    ${categories.length ? `
+    <section class="blog-side-card">
+      <h2 class="blog-section-title">Categories</h2>
+      <ul class="blog-side-list">
+        ${categories.map(({ name, slug, count }) => `<li><a href="${categoryHref(name)}"${slug === activeCategory ? ' class="is-active" aria-current="page"' : ''}><span>${escapeHtml(name)}</span><strong>${count}</strong></a></li>`).join('')}
+      </ul>
+    </section>` : ''}
+    ${topTags.length ? `
+    <section class="blog-side-card">
+      <h2 class="blog-section-title">Tags</h2>
+      <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
+    </section>` : ''}
+    <a class="blog-more" href="/blog/archive/">Browse the archive <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+  </aside>
 `;
 };
 
-// options.allPosts + options.activeCategory add the category filter bar above the list.
+export const renderHome = (posts) => {
+  const shown = posts.slice(0, POSTS_ON_HOME);
+  return `
+  <div class="blog-layout">
+    <div class="blog-main-col">
+      <h1 class="blog-home-title">Security notes from the lab.</h1>
+      ${postCards(shown)}
+      ${posts.length > POSTS_ON_HOME ? `<a class="blog-more" href="/blog/posts/">View all ${posts.length} posts <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>` : ''}
+    </div>
+    ${sidebar(posts)}
+  </div>
+`;
+};
+
+// options.allPosts feeds the sidebar counts; options.activeCategory highlights the current category.
 export const renderList = (title, posts, intro = '', options = {}) => `
   ${archiveHeader(title, intro)}
-  ${options.allPosts ? filterNav(options.allPosts, options.activeCategory || '', '/blog/posts/') : ''}
-  <section class="blog-index">${posts.length ? postRows(posts) : '<p class="blog-empty">No posts here yet.</p>'}</section>
+  <div class="blog-layout">
+    <div class="blog-main-col">${postCards(posts)}</div>
+    ${sidebar(options.allPosts || posts, options.activeCategory || '')}
+  </div>
 `;
 
 export const renderArchive = (posts) => {
