@@ -43,7 +43,9 @@
       "figure": {
         "image": "../assets/images/projects/oxblood/architecture.svg",
         "alt": "Architecture diagram: players and referees reach Traefik, the Flask portal and the FastAPI backend inside a Docker Compose stack. The backend uses PostgreSQL, Redis and MinIO, and controls Proxmox VE, which hosts the red team, blue team and scenario machines. Prometheus, Alertmanager and Grafana provide observability.",
-        "caption": "Architecture of the platform, drawn from its Docker Compose file and README."
+        "caption": "Architecture of the platform, drawn from its Docker Compose file and README.",
+        "width": 1000,
+        "height": 520
       }
     },
     {
@@ -54,7 +56,9 @@
       "figure": {
         "image": "../assets/images/projects/oxblood/drill-flow.svg",
         "alt": "Flow diagram of a drill in seven steps: create the exercise, set up teams, plan rounds, prepare the range, start a round, play and score, then finish and reset. After the reset the next round starts again, and referees can adjust points with a written reason while a round is played.",
-        "caption": "The life of a drill, from creating the exercise to resetting the range between rounds."
+        "caption": "The life of a drill, from creating the exercise to resetting the range between rounds.",
+        "width": 1000,
+        "height": 440
       },
       "bullets": [
         "Flags get a new value at the start of every round and are written to the machines first, so a flag from an earlier round never scores.",
@@ -72,5 +76,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    1200,
+    742
+  ]
 }

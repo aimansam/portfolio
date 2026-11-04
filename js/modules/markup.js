@@ -31,7 +31,7 @@ export const createHeroSocialMarkup = (item) => `
 
 export const createHeroBadgeMarkup = (item) => `
   <a class="hero-badge-link ${escapeHtml(item.className)}" href="${escapeHtml(item.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(item.label)}">
-    <img src="${escapeHtml(item.image)}" class="hero-badge-image" alt="${escapeHtml(item.label)}">
+    <img src="${escapeHtml(resolvePortfolioUrl(item.image))}"${item.width && item.height ? ` width="${Number(item.width)}" height="${Number(item.height)}"` : ''} class="hero-badge-image" alt="${escapeHtml(item.alt || item.label)}">
   </a>
 `;
 

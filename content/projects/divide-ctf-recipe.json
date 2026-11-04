@@ -43,7 +43,9 @@
       "figure": {
         "image": "../assets/images/projects/DIVIDE/build-and-deploy.svg",
         "alt": "Diagram: a player's browser loads a static site and calls a JavaScript Pages Function, both on Cloudflare Pages. The function reads the flag from a Cloudflare secret stored as an environment variable. Below, local development with Wrangler or Flask feeds a build script, then a push to GitHub, then an automatic Cloudflare Pages deploy.",
-        "caption": "How the challenge is built, secured and deployed."
+        "caption": "How the challenge is built, secured and deployed.",
+        "width": 800,
+        "height": 470
       },
       "bullets": [
         "The front end is plain HTML, CSS and JavaScript with all 30 recipe cards pre-built, so Cloudflare needs no build step.",
@@ -61,5 +63,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    470,
+    201
+  ]
 }

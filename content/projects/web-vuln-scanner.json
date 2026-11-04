@@ -43,7 +43,9 @@
       "figure": {
         "image": "../assets/images/projects/durian/pipeline.svg",
         "alt": "Diagram: a target URL goes to the crawler, which finds links and forms. The scanner modules test for SQL injection, reflected XSS, path traversal and sensitive files. The results go into a report. Session and authentication handling underlies the whole run.",
-        "caption": "The scan pipeline, from target URL to report."
+        "caption": "The scan pipeline, from target URL to report.",
+        "width": 1000,
+        "height": 300
       },
       "bullets": [
         "The scan command runs every module against a target, and a modules option picks specific checks such as sqli, xss and traversal.",
@@ -60,5 +62,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    1200,
+    742
+  ]
 }

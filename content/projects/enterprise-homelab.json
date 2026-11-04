@@ -44,7 +44,9 @@
       "figure": {
         "image": "../assets/images/projects/enterprise-homelab/lab-roles-and-loop.svg",
         "alt": "Diagram: attacker systems test a segmented enterprise network made of a domain controller, user workstations and Linux servers. Logs from the network go to logging and monitoring with SIEM visibility. Below, a five-step loop repeats: build the environment, introduce a vulnerable path, test exploitation, observe telemetry, refine detections.",
-        "caption": "The lab's roles and the loop used to improve detections. Hostnames and addressing are left out on purpose."
+        "caption": "The lab's roles and the loop used to improve detections. Hostnames and addressing are left out on purpose.",
+        "width": 1000,
+        "height": 500
       }
     },
     {
@@ -55,5 +57,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    1600,
+    900
+  ]
 }

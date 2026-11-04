@@ -43,7 +43,9 @@
       "figure": {
         "image": "../assets/images/projects/wifi-audit-lab/audit-workflow.svg",
         "alt": "Diagram: five audit steps, reconnaissance, packet capture, analysis of misconfigurations and encryption posture, simulation of rogue access points and credential capture, and a report. The report recommends encryption, client isolation, SSID trust, monitoring and user training.",
-        "caption": "The audit method, from reconnaissance to a report with remediation. All activity stays in a controlled, authorized lab."
+        "caption": "The audit method, from reconnaissance to a report with remediation. All activity stays in a controlled, authorized lab.",
+        "width": 1000,
+        "height": 330
       }
     },
     {
@@ -54,5 +56,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    1200,
+    1200
+  ]
 }

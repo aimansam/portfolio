@@ -43,5 +43,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    256,
+    256
+  ]
 }

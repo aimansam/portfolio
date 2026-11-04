@@ -43,7 +43,9 @@
       "figure": {
         "image": "../assets/images/projects/bad-usb-lab/payload-workflow.svg",
         "alt": "Diagram: five steps from planning a payload, checking the environment, injecting keystrokes with tuned delays, observing what works and fails, to reviewing the host indicators. Below, the defender controls that interrupt it: device control policy, application allow-listing, endpoint monitoring and user awareness.",
-        "caption": "The payload workflow and the defender controls that interrupt it. No payload code is published."
+        "caption": "The payload workflow and the defender controls that interrupt it. No payload code is published.",
+        "width": 1000,
+        "height": 330
       }
     },
     {
@@ -54,5 +56,9 @@
       ]
     }
   ],
-  "gallery": []
+  "gallery": [],
+  "headerImageSize": [
+    970,
+    728
+  ]
 }

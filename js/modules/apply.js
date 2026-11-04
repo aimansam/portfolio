@@ -478,6 +478,11 @@ export const applyProjectDetailContent = (content) => {
   if (content.headerImage && projectImage) {
     projectImage.src = resolveContentAsset(content.headerImage)
     projectImage.alt = content.title || 'Project header'
+    // Reserve the image's space up front so the page does not shift when it loads.
+    if (Array.isArray(content.headerImageSize)) {
+      projectImage.setAttribute('width', content.headerImageSize[0])
+      projectImage.setAttribute('height', content.headerImageSize[1])
+    }
     const projectOgImage = document.getElementById('project-og-image')
     const projectTwitterImage = document.getElementById('project-twitter-image')
     const resolvedImage = resolveContentAsset(content.headerImage)
@@ -500,7 +505,7 @@ export const applyProjectDetailContent = (content) => {
       const caption = escapeHtml(figure.caption || '')
       return `
         <figure class="project-figure">
-          <img src="${src}" alt="${escapeHtml(figure.alt || figure.caption || 'Project figure')}" loading="lazy" role="button" tabindex="0" aria-label="View larger: ${caption || 'figure'}" data-lightbox="${src}" data-lightbox-title="${caption}">
+          <img src="${src}"${figure.width && figure.height ? ` width="${Number(figure.width)}" height="${Number(figure.height)}"` : ''} alt="${escapeHtml(figure.alt || figure.caption || 'Project figure')}" loading="lazy" role="button" tabindex="0" aria-label="View larger: ${caption || 'figure'}" data-lightbox="${src}" data-lightbox-title="${caption}">
           ${figure.caption ? `<figcaption class="body-text">${caption}</figcaption>` : ''}
         </figure>`
     }

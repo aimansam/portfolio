@@ -16,6 +16,34 @@ const ORIGIN = 'http://prerender.invalid/';
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/seo.json'), 'utf8')).seo.canonicalUrl.replace(/\/$/, '');
 const SITE_IMAGE = `${SITE}/assets/images/me/og-image.jpg`;
 
+// All portfolio stylesheets in the order the pages load them, merged into one file so a visit makes
+// one render-blocking request instead of ten. Runs here (CI and Docker only); source pages keep the separate files.
+const CSS_FILES = ['layout/base', 'layout/home', 'layout/about', 'layout/projects', 'layout/responsive', 'layout/certs-gallery', 'layout/about-story', 'typography', 'utilities', 'flat'];
+let bundleVersion = '';
+const bundleCss = () => {
+  const css = CSS_FILES
+    .map((name) => fs.readFileSync(path.join(ROOT, 'css', `${name}.css`), 'utf8'))
+    .join('\n')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{};])\s*/g, '$1');
+  fs.writeFileSync(path.join(ROOT, 'css/site.css'), css);
+  bundleVersion = require('crypto').createHash('md5').update(css).digest('hex').slice(0, 8);
+  console.log(`Bundled ${CSS_FILES.length} stylesheets into css/site.css (${Math.round(css.length / 1024)} KB)`);
+};
+const LINK_RE = new RegExp(`[ \\t]*<link rel="stylesheet" href="((?:\\.\\./|\\./)*)css/(?:${CSS_FILES.map((n) => n.replace('/', '\\/')).join('|')})\\.css(?:\\?[^"]*)?">\\s*`, 'g');
+const useBundle = (html) => {
+  const matches = [...html.matchAll(LINK_RE)];
+  if (matches.length !== CSS_FILES.length) return html; // an unexpected page: leave its links alone
+  const prefix = matches[0][1];
+  let first = true;
+  return html.replace(LINK_RE, () => {
+    if (!first) return '';
+    first = false;
+    return `    <link rel="stylesheet" href="${prefix}css/site.css?v=${bundleVersion}">\n    `;
+  });
+};
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const readJson = (file) => {
@@ -84,7 +112,7 @@ async function prerenderPage(modules, file, route, depthPrefix) {
   // The certificate pager renders after a short fade timeout.
   await sleep(300);
 
-  fs.writeFileSync(file, withBeacon(finalize(dom.serialize(), depthPrefix), 'portfolio'));
+  fs.writeFileSync(file, withBeacon(useBundle(finalize(dom.serialize(), depthPrefix)), 'portfolio'));
   dom.window.close();
 }
 
@@ -161,6 +189,7 @@ async function main() {
   const content = await load('content.js');
   const modules = { applyPortfolioContent: apply.applyPortfolioContent, loadPageContent: content.loadPageContent };
 
+  bundleCss();
   for (const page of ['index.html', 'about.html', 'projects.html', 'gallery.html']) {
     await prerenderPage(modules, path.join(ROOT, page), page, './');
     console.log(`Prerendered ${page}`);

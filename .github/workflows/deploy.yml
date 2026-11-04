@@ -28,6 +28,8 @@ jobs:
         run: npm ci
 
       - name: Build blog, homepage SEO, and sitemap
+        env:
+          FETCH_BADGES: '1'
         run: npm run build
 
       - name: Check site integrity
@@ -81,6 +83,8 @@ jobs:
 
       - name: Build blog and link hub
         if: env.CLOUDFLARE_API_TOKEN != ''
+        env:
+          FETCH_BADGES: '1'
         run: |
           npm ci
           npm run build

@@ -17,6 +17,7 @@ COPY ./index.html ./about.html ./projects.html ./gallery.html ./
 
 # Generates all three sites (portfolio, blog in dist/blog, link hub in dist/card), the
 # homepage SEO and sitemaps, then prerenders the JSON-driven pages into static HTML.
+ENV FETCH_BADGES=1
 RUN npm run build && npm run prerender
 
 # Blog (pwn.aimansam.my):  docker build --target blog .
@@ -49,7 +50,10 @@ COPY --from=build /workspace/about.html /usr/share/nginx/html/about.html
 COPY --from=build /workspace/projects.html /usr/share/nginx/html/projects.html
 COPY --from=build /workspace/gallery.html /usr/share/nginx/html/gallery.html
 COPY ./assets /usr/share/nginx/html/assets
+# Badges refreshed during the build override the committed snapshot.
+COPY --from=build /workspace/assets/images/badges /usr/share/nginx/html/assets/images/badges
 COPY ./css /usr/share/nginx/html/css
+COPY --from=build /workspace/css/site.css /usr/share/nginx/html/css/site.css
 COPY ./js /usr/share/nginx/html/js
 COPY ./admin /usr/share/nginx/html/admin
 COPY ./project-pages /usr/share/nginx/html/project-pages
