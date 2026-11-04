@@ -1927,3 +1927,14 @@ a.project-tag:focus-visible {
     padding-bottom: 56px;
   }
 }
+
+/* Line the header up with the content column on wide screens. */
+.blog-header {
+  padding-inline: max(28px, calc((100% - 1180px) / 2));
+}
+
+@media only screen and (max-width: 800px) {
+  .blog-header {
+    padding-inline: 20px;
+  }
+}
