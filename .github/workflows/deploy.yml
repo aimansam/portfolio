@@ -59,19 +59,38 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-  # The blog (pwn.aimansam.my) and link hub (aimansam.my) deploy from Cloudflare on every push.
-  # Posts scheduled for a future date need a rebuild when their date arrives, so the daily run
-  # (and a manual run) also pings their deploy hooks. Skipped when the secrets are not set.
-  rebuild-subdomains:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+  # The blog (pwn.aimansam.my) and link hub (aimansam.my) are static-asset Workers on Cloudflare.
+  # This job builds them and deploys straight from GitHub, so it does not depend on Cloudflare's own
+  # Git integration. It also runs on the daily schedule, so posts dated in the future go live on time.
+  # Skipped until the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets exist.
+  deploy-subdomains:
     runs-on: ubuntu-latest
-    needs: deploy
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
-      - name: Trigger Cloudflare deploy hooks
-        env:
-          BLOG_HOOK: ${{ secrets.CF_BLOG_DEPLOY_HOOK }}
-          CARD_HOOK: ${{ secrets.CF_CARD_DEPLOY_HOOK }}
+      - name: Checkout
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Build blog and link hub
+        if: env.CLOUDFLARE_API_TOKEN != ''
         run: |
-          for hook in "$BLOG_HOOK" "$CARD_HOOK"; do
-            if [ -n "$hook" ]; then curl -fsS -X POST "$hook" > /dev/null && echo "hook triggered"; fi
-          done
+          npm ci
+          npm run build
+          npm run check
+          npm run prerender
+
+      - name: Deploy blog (pwn.aimansam.my)
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx --yes wrangler@4 deploy --config wrangler.blog.jsonc
+
+      - name: Deploy link hub (aimansam.my)
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx --yes wrangler@4 deploy --config wrangler.card.jsonc

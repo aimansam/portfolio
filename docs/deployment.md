@@ -45,15 +45,20 @@ The production branch is under Settings → Builds → Branch control.
 - **Old links**: the redirect pages above cover them. For real 301s, add a Redirect Rule on `portfolio.aimansam.my`: when the path starts with `/blog`, redirect to `https://pwn.aimansam.my/` + the rest of the path.
 - **Headers and caching**: `dist/blog/_headers` and `dist/card/_headers` (sources: `blog-site/_headers`, `scripts/build-card.js`) are applied automatically, and `404-page` serves each site's own 404.html.
 
-### Scheduled posts
+### Deploying from GitHub Actions (recommended)
 
-A post dated in the future is left out of the build, so the blog must rebuild when the date arrives.
-The daily GitHub Actions run does this by calling Cloudflare deploy hooks:
+Cloudflare's own Git integration can stop receiving pushes (it did during the first setup). The
+`deploy-subdomains` job in `.github/workflows/deploy.yml` avoids that: on every push to `main`, on the
+daily schedule and on manual runs it builds the site and runs `wrangler deploy` for both apps.
+Scheduled posts go live through this daily run. To enable it:
 
-1. In each Cloudflare app: Settings → Builds → Deploy hooks → add one for `main`.
-2. In GitHub: Settings → Secrets and variables → Actions → add `CF_BLOG_DEPLOY_HOOK` and `CF_CARD_DEPLOY_HOOK` with those URLs.
+1. Cloudflare dashboard → My Profile → API Tokens → Create Token → use the **Edit Cloudflare Workers** template
+   (limit it to your account) and copy the token.
+2. Copy your Account ID (Workers & Pages → Overview, right-hand side).
+3. GitHub repo → Settings → Secrets and variables → Actions → add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+4. In both Cloudflare apps, Settings → Builds → turn on **Disable builds**, so the same site is not built twice.
 
-Without the secrets the step is skipped, and the blog only updates when you push.
+Until the secrets exist the job is skipped and the apps only update when you rebuild them in the dashboard.
 
 ### Search Console
 
