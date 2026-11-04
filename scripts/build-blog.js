@@ -22,7 +22,9 @@ const BLOG_SHELL = `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pwn Diary | zx10r</title>
     <meta name="description" content="Pwn Diary: writeups, lab notes, and malware analysis from red team and penetration testing practice.">
-    <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
+    <link rel="icon" href="/assets/images/zx10r/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/assets/images/zx10r/apple-touch-icon.png" />
     <script>try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="stylesheet" href="/css/typography.css">
     <link rel="stylesheet" href="/css/utilities.css">
@@ -126,7 +128,7 @@ const copy = (from, to) => {
 ['typography.css', 'utilities.css', 'blog.css'].forEach((name) => copy(`css/${name}`, `css/${name}`));
 copy('js', 'js');
 copy('assets/icons', 'assets/icons');
-copy('assets/images/zx10r/favicon-64.png', 'assets/images/zx10r/favicon-64.png');
+['favicon.svg', 'favicon-64.png', 'apple-touch-icon.png'].forEach((name) => copy(`assets/images/zx10r/${name}`, `assets/images/zx10r/${name}`));
 ensureDir(path.join(BLOG_DIR, 'content/blog'));
 fs.copyFileSync(BLOG_DATA, path.join(BLOG_DIR, 'content/blog/posts.json'));
 fs.readdirSync(path.join(ROOT, 'blog-site')).forEach((name) => copy(`blog-site/${name}`, name));

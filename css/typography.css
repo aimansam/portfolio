@@ -3,8 +3,39 @@ body {
 }
 
 .nav-title {
-  font-weight: 700;
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 800;
   font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+/* The logo: the wordmark followed by a red terminal cursor (the same shape as in the loader and the favicon). */
+.nav-title::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.13em;
+  margin-left: 0.12em;
+  background-color: #d9291c;
+}
+
+.nav-title-link:hover .nav-title::after,
+.nav-title-link:focus-visible .nav-title::after {
+  animation: logo-blink 900ms steps(1, end) infinite;
+}
+
+@keyframes logo-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-title-link:hover .nav-title::after,
+  .nav-title-link:focus-visible .nav-title::after {
+    animation: none;
+  }
 }
 
 .button-text {

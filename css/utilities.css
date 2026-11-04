@@ -104,29 +104,10 @@ a.icon-link:focus-visible .footer-icon {
   transition: opacity 180ms ease;
 }
 
-.nav-title-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  background-color: #141414;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms ease;
-}
-
 .nav-title-link:hover,
 .nav-title-link:active,
 .nav-title-link:focus-visible {
   opacity: 0.72;
-}
-
-.nav-title-link:hover::after,
-.nav-title-link:active::after,
-.nav-title-link:focus-visible::after {
-  transform: scaleX(1);
 }
 
 .nav-cta {

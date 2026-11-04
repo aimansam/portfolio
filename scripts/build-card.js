@@ -20,7 +20,7 @@ copy('card/index.html', 'index.html');
 copy('card/404.html', '404.html');
 ['briefcase', 'article', 'arrow-right', 'github', 'linkedin', 'tryhackme', 'hackthebox', 'mail']
   .forEach((name) => copy(`assets/icons/${name}.svg`));
-['assets/images/me/aimansamformal.webp', 'assets/images/me/og-image.jpg', 'assets/images/zx10r/favicon-64.png'].forEach((file) => copy(file));
+['assets/images/me/aimansamformal.webp', 'assets/images/me/og-image.jpg', 'assets/images/zx10r/favicon.svg', 'assets/images/zx10r/favicon-64.png', 'assets/images/zx10r/apple-touch-icon.png'].forEach((file) => copy(file));
 
 // Cloudflare Web Analytics, when a token is set in content/site/sites.json.
 const cardPage = path.join(CARD_DIST, 'index.html');
