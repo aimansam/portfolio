@@ -43,11 +43,5 @@
       ]
     }
   ],
-  "gallery": [
-    {
-      "image": "../assets/images/projects/DIVIDE/DIVIDE.webp",
-      "caption": "Web challenge project; visit the repository for the live application structure and API implementation.",
-      "width": "full"
-    }
-  ]
+  "gallery": []
 }

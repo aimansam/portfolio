@@ -580,3 +580,65 @@ html body #footer {
     font-size: 26px;
   }
 }
+
+/* ===== Project case studies: figures and bullet lists ===== */
+
+#project-gallery[hidden] {
+  display: none;
+}
+
+.project-figure {
+  margin: 22px 0 6px;
+}
+
+.project-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid #141414;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: zoom-in;
+}
+
+.project-figure figcaption {
+  margin-top: 10px;
+  color: rgba(20, 20, 20, 0.68);
+  font-size: 14px;
+}
+
+.project-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding-left: 1.2rem;
+}
+
+.project-list li {
+  line-height: 1.6;
+}
+
+@media only screen and (max-width: 800px) {
+  /* Project header: one column on phones (it used to stay two squeezed columns). */
+  html body #project-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  /* Diagrams keep a readable size and scroll sideways inside their own box; tap one to open it full size. */
+  .project-figure {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .project-figure img {
+    width: 680px;
+    max-width: none;
+  }
+
+  .project-figure figcaption {
+    position: sticky;
+    left: 0;
+    width: calc(100vw - 64px);
+  }
+}

@@ -36,24 +36,41 @@
       ]
     },
     {
-      "title": "Engineering and Security Value",
+      "title": "Architecture",
       "content": [
-        "The repository demonstrates full-stack security engineering across Docker, Flask, PostgreSQL, Proxmox, Prometheus, Grafana, CI, and API documentation.",
-        "Its strongest portfolio value is the connection between infrastructure and learning outcomes: offensive actions can be exercised inside a controlled environment while defensive teams measure visibility, response, and operational readiness."
+        "The platform runs as a Docker Compose stack behind Traefik. A Flask portal serves the React interface and proxies API calls to a FastAPI backend. The backend keeps its state in PostgreSQL, Redis and MinIO, and controls Proxmox VE to build and reset the training range. Prometheus, Alertmanager and Grafana watch the stack."
+      ],
+      "figure": {
+        "image": "../assets/images/projects/oxblood/architecture.svg",
+        "alt": "Architecture diagram: players and referees reach Traefik, the Flask portal and the FastAPI backend inside a Docker Compose stack. The backend uses PostgreSQL, Redis and MinIO, and controls Proxmox VE, which hosts the red team, blue team and scenario machines. Prometheus, Alertmanager and Grafana provide observability.",
+        "caption": "Architecture of the platform, drawn from its Docker Compose file and README."
+      }
+    },
+    {
+      "title": "How a drill runs",
+      "content": [
+        "A drill holds up to 20 players in 2, 4 or 6 teams. Rounds swap sides, so every team attacks once and defends once, and the points from all rounds are added up."
+      ],
+      "figure": {
+        "image": "../assets/images/projects/oxblood/drill-flow.svg",
+        "alt": "Flow diagram of a drill in seven steps: create the exercise, set up teams, plan rounds, prepare the range, start a round, play and score, then finish and reset. After the reset the next round starts again, and referees can adjust points with a written reason while a round is played.",
+        "caption": "The life of a drill, from creating the exercise to resetting the range between rounds."
+      },
+      "bullets": [
+        "Flags get a new value at the start of every round and are written to the machines first, so a flag from an earlier round never scores.",
+        "A flag scores once per team per round. Points decay over time, the first team to capture a flag gets a 25% bonus, and more than 10 attempts a minute are refused.",
+        "Referees can add or remove points only with a written reason, and every change stays in a ledger with the referee's name and the time.",
+        "With 4 or 6 teams, the one-range-per-match option gives each pair of teams its own copy of the range, with its own VLANs.",
+        "Between rounds every machine rolls back to its clean-baseline snapshot, boots, and is checked before the next round can start."
       ]
     },
     {
-      "title": "Next Evidence to Add",
+      "title": "Engineering and Security Value",
       "content": [
-        "The case study should eventually include an architecture diagram, a sanitized exercise flow, and a screenshot of the drill dashboard. Sensitive infrastructure credentials and live host details should remain excluded."
+        "Isolation is tested, not assumed. A script runs from inside the red-team machines and checks that the Proxmox web interface and SSH cannot be reached, and a dry-run tool builds a range, validates every VM and tears it down before an event.",
+        "The platform is built to be operated. It has a health endpoint, a database backup script, and Prometheus alert rules routed through Alertmanager to Discord, Telegram or email."
       ]
     }
   ],
-  "gallery": [
-    {
-      "image": "../assets/images/projects/oxblood/oxblood.webp",
-      "caption": "Related lab infrastructure used to contextualize the cyber-drill platform.",
-      "width": "full"
-    }
-  ]
+  "gallery": []
 }

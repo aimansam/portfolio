@@ -36,18 +36,29 @@
       ]
     },
     {
+      "title": "How it works",
+      "content": [
+        "Durian is a command-line scanner. It crawls the target to find links and forms, runs its scanner modules against what it found, and writes the results to a report. Cookies and authentication live in one session layer, so the crawl and every check run as the same user."
+      ],
+      "figure": {
+        "image": "../assets/images/projects/durian/pipeline.svg",
+        "alt": "Diagram: a target URL goes to the crawler, which finds links and forms. The scanner modules test for SQL injection, reflected XSS, path traversal and sensitive files. The results go into a report. Session and authentication handling underlies the whole run.",
+        "caption": "The scan pipeline, from target URL to report."
+      },
+      "bullets": [
+        "The scan command runs every module against a target, and a modules option picks specific checks such as sqli, xss and traversal.",
+        "The crawl command maps a site's endpoints before anything is tested.",
+        "SQL injection checks are error-based and boolean-based, and the XSS checks look for reflected input.",
+        "The report command writes the findings to a file in a structured format."
+      ]
+    },
+    {
       "title": "Security Value",
       "content": [
         "The project demonstrates how I translate manual web-testing workflows into repeatable tooling while keeping scope, authorization, and reporting in mind.",
-        "Its next maturity step is adding fixture applications, reproducible test cases, clearer severity logic, and sanitized output examples that show how findings become useful remediation work."
+        "On the roadmap: fixture applications, reproducible test cases, clearer severity logic, and sanitized output examples that show how findings become useful remediation work."
       ]
     }
   ],
-  "gallery": [
-    {
-      "image": "../assets/images/projects/durian/durian.webp",
-      "caption": "Related web-exploitation evidence from the Monster Corporate writeup.",
-      "width": "full"
-    }
-  ]
+  "gallery": []
 }

@@ -1,12 +1,28 @@
 {
   "title": "Enterprise Grade Home Lab",
   "category": "Infrastructure / Active Directory",
-  "focus": ["Active Directory", "Detection Engineering", "Incident Response"],
+  "focus": [
+    "Active Directory",
+    "Detection Engineering",
+    "Incident Response"
+  ],
   "facts": [
-    { "label": "Environment", "value": "Segmented Windows and Linux lab" },
-    { "label": "Focus", "value": "Attack paths and defensive visibility" },
-    { "label": "Scope", "value": "Controlled enterprise-style environment" },
-    { "label": "Approach", "value": "Offensive testing linked to response" }
+    {
+      "label": "Environment",
+      "value": "Segmented Windows and Linux lab"
+    },
+    {
+      "label": "Focus",
+      "value": "Attack paths and defensive visibility"
+    },
+    {
+      "label": "Scope",
+      "value": "Controlled enterprise-style environment"
+    },
+    {
+      "label": "Approach",
+      "value": "Offensive testing linked to response"
+    }
   ],
   "description": "A segmented enterprise-style lab built for realistic penetration testing, Active Directory attack simulation, detection engineering, and incident response drills across Windows and Linux systems.",
   "headerImage": "../assets/images/projects/enterprise-homelab/homelab.webp",
@@ -34,21 +50,5 @@
       ]
     }
   ],
-  "gallery": [
-    {
-      "image": "../assets/images/projects/enterprise-homelab/homelab.webp",
-      "caption": "High-level view of the home lab environment used for enterprise-style testing and research.",
-      "width": "half"
-    },
-    {
-      "image": "../assets/images/projects/enterprise-homelab/homelab.webp",
-      "caption": "Segmented design supports AD attack simulation, host isolation, and pivot validation across multiple trust zones.",
-      "width": "half"
-    },
-    {
-      "image": "../assets/images/projects/enterprise-homelab/homelab.webp",
-      "caption": "Used for privilege escalation practice, detection validation, incident-response drills, and end-to-end attack path rehearsal.",
-      "width": "full"
-    }
-  ]
+  "gallery": []
 }

@@ -1,12 +1,28 @@
 {
   "title": "Wireless Audit Lab",
   "category": "Wireless Security / Assessment",
-  "focus": ["Wireless Reconnaissance", "Rogue Infrastructure", "Packet Analysis"],
+  "focus": [
+    "Wireless Reconnaissance",
+    "Rogue Infrastructure",
+    "Packet Analysis"
+  ],
   "facts": [
-    { "label": "Environment", "value": "Controlled wireless audit lab" },
-    { "label": "Focus", "value": "Client behavior and trust boundaries" },
-    { "label": "Scope", "value": "Authorized network assessment scenarios" },
-    { "label": "Approach", "value": "Technical findings tied to remediation" }
+    {
+      "label": "Environment",
+      "value": "Controlled wireless audit lab"
+    },
+    {
+      "label": "Focus",
+      "value": "Client behavior and trust boundaries"
+    },
+    {
+      "label": "Scope",
+      "value": "Authorized network assessment scenarios"
+    },
+    {
+      "label": "Approach",
+      "value": "Technical findings tied to remediation"
+    }
   ],
   "description": "A wireless assessment project built to study Wi-Fi attack surfaces, identify insecure configurations, and simulate realistic audit scenarios involving rogue infrastructure, packet capture, and user-impact testing.",
   "headerImage": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
@@ -33,21 +49,5 @@
       ]
     }
   ],
-  "gallery": [
-    {
-      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
-      "caption": "Wireless assessment tooling used for reconnaissance, SSID analysis, and packet capture workflows.",
-      "width": "half"
-    },
-    {
-      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
-      "caption": "Rogue infrastructure and user-behavior testing helped simulate realistic audit scenarios around trust and association.",
-      "width": "half"
-    },
-    {
-      "image": "../assets/images/projects/wifi-audit-lab/pineapple.webp",
-      "caption": "Used to study encryption posture, deauthentication impact, traffic visibility, and wireless misconfiguration risk.",
-      "width": "full"
-    }
-  ]
+  "gallery": []
 }

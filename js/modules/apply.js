@@ -470,16 +470,32 @@ export const applyProjectDetailContent = (content) => {
   if (projectOgUrl) projectOgUrl.setAttribute('content', projectUrl)
 
   if (Array.isArray(content.sections) && content.sections.length && detailsContainer) {
+    // A section is a title, paragraphs, and optionally a figure (diagram or screenshot) and a bullet list.
+    const figureMarkup = (figure) => {
+      const src = escapeHtml(resolveContentAsset(figure.image))
+      const caption = escapeHtml(figure.caption || '')
+      return `
+        <figure class="project-figure">
+          <img src="${src}" alt="${escapeHtml(figure.alt || figure.caption || 'Project figure')}" loading="lazy" role="button" tabindex="0" aria-label="View larger: ${caption || 'figure'}" data-lightbox="${src}" data-lightbox-title="${caption}">
+          ${figure.caption ? `<figcaption class="body-text">${caption}</figcaption>` : ''}
+        </figure>`
+    }
     detailsContainer.innerHTML = content.sections.map(section => `
       <div class="project-details-content">
         <h2 class="subheader-text">${escapeHtml(section.title)}</h2>
-        ${section.content.map(p => `<p class="body-text">${escapeHtml(p)}</p>`).join('')}
+        ${(section.content || []).map(p => `<p class="body-text">${escapeHtml(p)}</p>`).join('')}
+        ${section.figure ? figureMarkup(section.figure) : ''}
+        ${Array.isArray(section.bullets) && section.bullets.length ? `<ul class="project-list">${section.bullets.map(b => `<li class="body-text">${escapeHtml(b)}</li>`).join('')}</ul>` : ''}
       </div>
     `).join('')
   }
 
-  if (Array.isArray(content.gallery) && content.gallery.length && galleryGrid) {
-    galleryGrid.innerHTML = content.gallery.map(item => {
+  // The gallery only appears when it has images beyond the header image.
+  const galleryItems = (Array.isArray(content.gallery) ? content.gallery : []).filter(item => item.image !== content.headerImage)
+  const gallerySection = document.getElementById('project-gallery')
+  if (gallerySection) gallerySection.hidden = galleryItems.length === 0
+  if (galleryItems.length && galleryGrid) {
+    galleryGrid.innerHTML = galleryItems.map(item => {
       const caption = escapeHtml(item.caption || '')
       return `
       <div class="gallery-image-container ${item.width === 'half' ? 'half-width' : ''}">
