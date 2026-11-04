@@ -16,7 +16,7 @@
 <path d="M392 104.0 H414" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
 <rect x="414" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="438" cy="68" r="14" fill="#141414"/><text x="438" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">3</text>
-<text x="460" y="73" font-size="15.5" font-weight="800" fill="#141414">Analyse</text>
+<text x="460" y="73" font-size="15.5" font-weight="800" fill="#141414">Analyze</text>
 <text x="430" y="110" font-size="13" font-weight="500" fill="#5c5c5c">Misconfigurations and</text>
 <text x="430" y="131" font-size="13" font-weight="500" fill="#5c5c5c">encryption posture</text>
 <path d="M586 104.0 H608" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>

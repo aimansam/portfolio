@@ -1,5 +1,5 @@
 /**
- * Portfolio entry point: loads JSON content, renders it, starts UI behaviour.
+ * Portfolio entry point: loads JSON content, renders it, starts UI behavior.
  */
 import { resolvePortfolioUrl } from './modules/utils.js'
 import { applyPortfolioContent } from './modules/apply.js'

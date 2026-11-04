@@ -233,7 +233,7 @@
     ]
   },
   "stats": {
-    "heading": "Highlights / Quick Stats",
+    "heading": "Highlights",
     "items": [
       {
         "step": "01",
@@ -249,7 +249,7 @@
       },
       {
         "step": "03",
-        "value": "Top 3 / 50",
+        "value": "3rd / 50",
         "label": "Bingo CTF 2025",
         "note": "Placed 3rd with a 3-member team across web exploitation, cryptography, and forensics challenges."
       },
@@ -273,14 +273,14 @@
       },
       {
         "step": "07",
-        "value": "5",
+        "value": "6",
         "label": "Certificates Earned",
-        "note": "Including CEHv13, CCNA Intro to Networks, Junior Penetration Tester, and web development training."
+        "note": "Including CEH, CPTS, CCNA Introduction to Networks, Junior Penetration Tester, and web development training."
       },
       {
         "step": "08",
         "value": "3.80",
-        "label": "Current GPA",
+        "label": "Current CGPA",
         "note": "Bachelor of Computer Science (Cybersecurity) student at Universiti Tenaga Nasional."
       }
     ]

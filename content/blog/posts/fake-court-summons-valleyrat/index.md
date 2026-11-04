@@ -1,5 +1,5 @@
 ---
-title: "Fake High Court Summons on WhatsApp: Analysing a ValleyRAT-Style Loader"
+title: "Fake High Court Summons on WhatsApp: Analyzing a ValleyRAT-Style Loader"
 date: "2026-11-04T20:00:00+08:00"
 summary: "A WhatsApp message posing as the Kuala Lumpur High Court delivers an ISO with a DLL-sideloaded loader that hides shellcode in the pixels of a bitmap. Delivery, attack chain, detections and IOCs."
 tags: [malware-analysis, threat-intel, valleyrat, dll-sideloading, phishing, malaysia]
@@ -16,7 +16,7 @@ Inside is an ISO. A Microsoft-signed Office executable disguised as a PDF loads 
 
 - The lure is localized to Malaysia and aimed at finance staff. That points to a financial-crime motive, but this is an assessment: the message itself states no goal.
 - The malware stacks three evasion layers: a trusted signed host program, a payload hidden in an image, and execution entirely in memory.
-- The ZIP contents were verified byte-identical to the ISO analysed. The memory dump confirmed that the extracted shellcode ran and made repeated connection attempts to the C2.
+- The ZIP contents were verified byte-identical to the ISO analyzed. The memory dump confirmed that the extracted shellcode ran and made repeated connection attempts to the C2.
 - Likely family: ValleyRAT / Winos 4.0, at moderate confidence.
 
 **Do now:** block the C2 IP and port, search for the hashes in the IOC section, find out who received or opened the ZIP, and isolate any machine that ran the ISO.
@@ -81,7 +81,7 @@ The loader starts GDI+, opens `CoreUI_sys.ax`, and reads each pixel with `GdipBi
 
 The base64 decodes to 2,381 bytes of x86 shellcode, followed by the marker `codemark` and a configuration block. The loader calls `VirtualAlloc` with execute permission, copies the shellcode in, and jumps to it. It runs in the same process: no new process or thread, and no file written.
 
-### Shellcode behaviour
+### Shellcode behavior
 
 - Resolves Windows API addresses by hashing export names (BKDR hash, multiplier 131). Every hash resolved to a common memory or networking API: `LoadLibraryA`, `VirtualAlloc`, `WSAStartup`, `socket`, `getaddrinfo`, `htons`, `connect`, `send`, `recv`, `closesocket`, `WSACleanup`.
 - Connects to the C2 over TCP. The code also contains a UDP path.
@@ -161,7 +161,7 @@ A process dump from a Windows 10 (x86) test machine, captured at 10:32 UTC, conf
 
 5. Tell staff that courts do not serve summons through WhatsApp, and that no document should be forwarded or opened because a message says so.
 6. Report the sender's WhatsApp account in the app and report the incident to MyCERT (Cyber999).
-7. Hunt for the behaviours in the next section.
+7. Hunt for the behaviors in the next section.
 
 **Longer term**
 

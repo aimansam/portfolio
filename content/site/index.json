@@ -119,7 +119,7 @@
   },
   "featuredResearch": {
     "label": "Featured research",
-    "title": "Fake High Court summons on WhatsApp: analysing a ValleyRAT-style loader",
+    "title": "Fake High Court summons on WhatsApp: analyzing a ValleyRAT-style loader",
     "summary": "A WhatsApp message posing as the Kuala Lumpur High Court delivered an ISO that hides shellcode in the pixels of a bitmap. Full attack chain, MITRE ATT&CK mapping, detections and IOCs.",
     "tags": [
       "Malware analysis",
