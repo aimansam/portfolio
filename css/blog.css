@@ -2364,8 +2364,12 @@ a.project-tag:focus-visible {
   border-radius: 6px;
 }
 
-.theme-toggle,
-.blog-toc-fab,
-.back-to-top {
+.blog-toc-fab {
   border-radius: 8px;
+}
+
+/* Icon-only buttons stay round */
+.theme-toggle,
+.back-to-top {
+  border-radius: 50%;
 }

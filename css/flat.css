@@ -20,11 +20,9 @@ html body :is(
   border-radius: 6px;
 }
 
-/* Icon buttons: rounded squares instead of circles */
-html body :is(
-  a.icon-link, .nav-menu-toggle, .nav-icon-link, .hero-social-link, .back-to-top, .about-cert-nav-btn
-) {
-  border-radius: 8px;
+/* Icon-only buttons stay round */
+html body :is(a.icon-link, .hero-social-link, .back-to-top, .about-cert-nav-btn) {
+  border-radius: 50%;
 }
 
 /* No drop shadows, including on hover and focus */
