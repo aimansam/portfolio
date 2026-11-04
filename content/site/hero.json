@@ -54,10 +54,6 @@
         "className": "hero-badge-link hero-badge-link-htb"
       }
     ],
-    "latest": {
-      "label": "Latest research: fake court summons, analysed",
-      "href": "https://pwn.aimansam.my/posts/fake-court-summons-valleyrat/"
-    },
     "availability": "Final-year student, open to graduate roles in red team and penetration testing."
   }
 }

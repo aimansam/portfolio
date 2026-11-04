@@ -48,11 +48,6 @@ export const applyHeroContent = (content) => {
   if (content.hero?.title) heroTitle.textContent = content.hero.title
   const heroAvailability = document.getElementById('hero-availability-text')
   if (content.hero?.availability && heroAvailability) heroAvailability.textContent = content.hero.availability
-  const heroLatest = document.getElementById('hero-latest-link')
-  if (content.hero?.latest && heroLatest) {
-    heroLatest.href = content.hero.latest.href
-    heroLatest.innerHTML = `${escapeHtml(content.hero.latest.label)} <span aria-hidden="true">&rarr;</span>`
-  }
   if (content.hero?.intro && heroIntro) heroIntro.textContent = content.hero.intro
   if (content.hero?.primaryAction?.label && heroPrimaryActionLabel) heroPrimaryActionLabel.textContent = content.hero.primaryAction.label
   if (content.hero?.primaryAction?.href) {
