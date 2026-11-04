@@ -1731,3 +1731,8 @@ a.project-tag:focus-visible {
 .blog-post-content h2[data-num]::before {
   content: attr(data-num) ".";
 }
+
+/* Images inside the text stay about one reading column wide, like the screenshots in older posts. */
+.blog-post-content img {
+  max-width: min(100%, 640px);
+}
