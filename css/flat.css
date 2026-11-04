@@ -702,8 +702,20 @@ html body #footer {
   flex-direction: column;
   gap: 10px;
   padding-bottom: 26px;
-  border-bottom: 2px solid #141414;
+  position: relative;
   white-space: normal;
+}
+
+/* The rule under the header; it draws in left to right on load. */
+.page-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #141414;
+  transform-origin: left;
 }
 
 .page-kicker {
@@ -912,4 +924,84 @@ html body .about-cert-counter {
   .home-contact-actions {
     justify-content: flex-start;
   }
+}
+
+/* ===== Motion v2, phase 1: typed hero, page headers ===== */
+
+@keyframes hero-type {
+  from { clip-path: inset(-10% 100% -30% 0); }
+  to { clip-path: inset(-10% -2% -30% 0); }
+}
+
+@keyframes hero-cursor-move {
+  from { left: 0; }
+  to { left: calc(100% - 0.7em); }
+}
+
+@keyframes hero-cursor-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes hero-cursor-out {
+  to { opacity: 0; }
+}
+
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes title-rise {
+  from { opacity: 0; transform: translateY(0.5em); clip-path: inset(0 0 70% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(-10% -5% -30% -5%); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The title is in the page from the start (search engines and screen readers read it); it is only revealed letter by letter. */
+  #hero-title {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    align-self: flex-start;
+    padding-right: 0.7em;
+    margin-right: -0.7em;
+    white-space: nowrap;
+    animation: hero-type 750ms steps(21, end) 150ms both;
+  }
+
+  #hero-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0.14em;
+    left: 0;
+    width: 0.5em;
+    height: 0.13em;
+    background: #d9291c;
+    animation:
+      hero-cursor-move 750ms steps(21, end) 150ms both,
+      hero-cursor-blink 840ms steps(1, end) 900ms 3,
+      hero-cursor-out 300ms ease 3450ms forwards;
+  }
+
+  /* The title stays on one line, so the smallest phones scale it down instead of letting it overflow. */
+  @media only screen and (max-width: 420px) {
+    #hero-title { font-size: 7.4vw; }
+  }
+
+  /* The rest of the hero follows once the title has typed. */
+  .hero-top-content > .header-text { animation: none; }
+  #hero-intro { animation: rise-in 600ms var(--ease-out) 800ms both; }
+  .hero-top-content > :nth-child(2) { animation-delay: 900ms; }
+  .hero-top-content > :nth-child(3) { animation-delay: 1000ms; }
+  .hero-top-content > :nth-child(4) { animation-delay: 1100ms; }
+
+  .page-header::after { animation: rule-draw 900ms var(--ease-out) 250ms both; }
+  .page-kicker { animation: slide-in 600ms var(--ease-out) 60ms both; }
+  .page-title { animation: title-rise 800ms var(--ease-out) 120ms both; }
+  .page-intro { animation: rise-in 700ms var(--ease-out) 380ms both; }
 }

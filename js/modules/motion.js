@@ -106,14 +106,14 @@ export const initCountUp = (selector) => {
       const target = parseFloat(match[1])
       const decimals = (match[1].split('.')[1] || '').length
       const suffix = match[2]
-      const duration = 800
+      const duration = 1200
       const start = performance.now()
       // Reserve the final width so the layout never shifts while counting.
       entry.target.style.minWidth = `${entry.target.getBoundingClientRect().width}px`
 
       const tick = (now) => {
         const progress = Math.min(1, (now - start) / duration)
-        const eased = 1 - (1 - progress) ** 3
+        const eased = progress === 1 ? 1 : 1 - 2 ** (-10 * progress)
         entry.target.textContent = `${(target * eased).toFixed(decimals)}${suffix}`
         if (progress < 1) requestAnimationFrame(tick)
         else entry.target.style.minWidth = ''
