@@ -1,26 +1,35 @@
 const fs = require('fs');
 const path = require('path');
 const { loadPosts, slugify } = require('./lib/posts');
+const { ROOT, PORTFOLIO, BLOG, BLOG_DIST } = require('./lib/sites');
 
-const ROOT = path.join(__dirname, '..');
+/**
+ * Builds the blog as its own site: everything pwn.aimansam.my serves lands in dist/blog,
+ * with routes at the root (/posts/<slug>/). It also writes small redirect pages to
+ * blog/ in the portfolio so the old portfolio.aimansam.my/blog/ links still land on the new home.
+ */
 const BLOG_DATA = path.join(ROOT, 'content/blog/posts.json');
-const BLOG_DIR = path.join(ROOT, 'blog');
-const PREVIEW_FILE = path.join(ROOT, 'content/site/blog-preview.json');
+const BLOG_DIR = BLOG_DIST;
+const OLD_BLOG_DIR = path.join(ROOT, 'blog');
 
 const escapeHtml = (value) => String(value ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // The side nav comes from content/site/navigation.json so it matches every other page.
-// Paths there are relative to the site root ("./about.html"); blog pages need absolute ones.
-const toAbsolute = (href) => (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href) ? href : `/${href.replace(/^\.\//, '').replace(/index\.html$/, '')}`);
+// Paths there are relative to the portfolio root ("./about.html"), so on the blog's own
+// domain links must point back at the portfolio, while icons come from the blog's copy of /assets.
+const isRemote = (href) => /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href);
+const clean = (href) => href.replace(/^\.\//, '').replace(/index\.html$/, '');
+const toPortfolio = (href) => (isRemote(href) ? href : `${PORTFOLIO}/${clean(href)}`);
+const toLocal = (href) => (isRemote(href) ? href : `/${clean(href)}`);
 
 const PORTFOLIO_NAV_ITEMS = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/navigation.json'), 'utf8'))
   .navigation.items
   .map((item) => {
-    const href = toAbsolute(item.href);
-    const active = href === '/blog/';
+    const href = toPortfolio(item.href);
+    const active = href.replace(/\/$/, '') === BLOG;
     return `        <a class="nav-icon-link${active ? ' is-active' : ''}" href="${escapeHtml(href)}" aria-label="${escapeHtml(item.ariaLabel || item.label)}"${active ? ' aria-current="page"' : ''}>
-          <img src="${escapeHtml(toAbsolute(item.icon))}" alt="" class="nav-icon">
+          <img src="${escapeHtml(toLocal(item.icon))}" alt="" class="nav-icon">
           <span class="nav-icon-label">${escapeHtml(item.label)}</span>
         </a>`;
   })
@@ -47,13 +56,13 @@ const BLOG_SHELL = `<!doctype html>
         <span class="nav-menu-toggle-bar"></span>
         <span class="nav-menu-toggle-bar"></span>
       </button>
-      <a class="nav-title-link blog-brand" href="/blog/" aria-label="Pwn Diary, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Pwn Diary</span></a>
+      <a class="nav-title-link blog-brand" href="/" aria-label="Pwn Diary, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Pwn Diary</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
-        <a href="/blog/categories/writeups/" data-blog-nav="writeups">Writeups</a>
-        <a href="/blog/categories/labs/" data-blog-nav="labs">Labs</a>
-        <a href="/blog/categories/notes/" data-blog-nav="notes">Notes</a>
-        <a href="/blog/tags/" data-blog-nav="tags">Tags</a>
-        <a href="/blog/archive/" data-blog-nav="archive">Archive</a>
+        <a href="/categories/writeups/" data-blog-nav="writeups">Writeups</a>
+        <a href="/categories/labs/" data-blog-nav="labs">Labs</a>
+        <a href="/categories/notes/" data-blog-nav="notes">Notes</a>
+        <a href="/tags/" data-blog-nav="tags">Tags</a>
+        <a href="/archive/" data-blog-nav="archive">Archive</a>
       </nav>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -104,27 +113,8 @@ function writeShell(route) {
   fs.writeFileSync(target, BLOG_SHELL);
 }
 
-function updatePreview(posts) {
-  const items = posts.slice(0, 3).map((post, index) => ({
-    title: post.title,
-    description: post.summary,
-    date: formatDate(post.date),
-    tags: (post.tags || []).slice(0, 2),
-    url: `./blog/posts/${post.slug}/`,
-    accent: index === 0
-  }));
-
-  fs.writeFileSync(PREVIEW_FILE, `${JSON.stringify({
-    blogPreview: {
-      heading: 'Writeups',
-      intro: 'Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.',
-      viewAllHref: './blog/',
-      viewAllLabel: 'View all posts',
-      items
-    }
-  }, null, 2)}\n`);
-}
-
+fs.rmSync(OLD_BLOG_DIR, { recursive: true, force: true });
+fs.rmSync(BLOG_DIR, { recursive: true, force: true });
 const posts = readPosts();
 ensureDir(BLOG_DIR);
 fs.writeFileSync(path.join(BLOG_DIR, 'index.html'), BLOG_SHELL);
@@ -144,6 +134,44 @@ posts.forEach((post) => {
 
 categories.forEach((category) => writeShell(`categories/${category}`));
 tags.forEach((tag) => writeShell(`tags/${tag}`));
-updatePreview(posts);
+
+// Everything else the blog site needs to stand on its own.
+const copy = (from, to) => {
+  ensureDir(path.dirname(path.join(BLOG_DIR, to)));
+  fs.cpSync(path.join(ROOT, from), path.join(BLOG_DIR, to), { recursive: true });
+};
+['typography.css', 'utilities.css', 'blog.css'].forEach((name) => copy(`css/${name}`, `css/${name}`));
+copy('js', 'js');
+copy('assets/icons', 'assets/icons');
+copy('assets/images/zx10r/favicon-64.png', 'assets/images/zx10r/favicon-64.png');
+ensureDir(path.join(BLOG_DIR, 'content/blog'));
+fs.copyFileSync(BLOG_DATA, path.join(BLOG_DIR, 'content/blog/posts.json'));
+fs.readdirSync(path.join(ROOT, 'blog-site')).forEach((name) => copy(`blog-site/${name}`, name));
+
+// Old portfolio.aimansam.my/blog/... addresses: a page that sends visitors (and search engines) to the new home.
+const stub = (route) => {
+  const target = `${BLOG}/${route}${route ? '/' : ''}`;
+  const dir = path.join(OLD_BLOG_DIR, route);
+  ensureDir(dir);
+  fs.writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Moved to Pwn Diary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="${target}">
+    <meta http-equiv="refresh" content="0; url=${target}">
+    <script>location.replace(${JSON.stringify(target)} + location.hash)</script>
+  </head>
+  <body>
+    <p>Pwn Diary has moved to <a href="${target}">${target}</a>.</p>
+  </body>
+</html>
+`);
+};
+['', 'posts', 'tags', 'archive', 'about'].forEach(stub);
+posts.forEach((post) => stub(`posts/${post.slug}`));
+categories.forEach((category) => stub(`categories/${category}`));
+tags.forEach((tag) => stub(`tags/${tag}`));
 
 console.log(`Built blog with ${posts.length} posts${DRAFTS ? ' (including drafts)' : ''}.`);

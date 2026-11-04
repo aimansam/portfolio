@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { BLOG } = require('./lib/sites');
 
 const POSTS_FILE = path.join(__dirname, '../content/blog/posts.json');
 const PREVIEW_FILE = path.join(__dirname, '../content/site/blog-preview.json');
@@ -29,7 +30,7 @@ const previewItems = posts.slice(0, 3).map((post, index) => ({
   description: post.summary,
   date: formatDate(post.date),
   tags: (post.tags || []).slice(0, 2),
-  url: `./blog/posts/${post.slug}/`,
+  url: `${BLOG}/posts/${post.slug}/`,
   accent: index === 0
 }));
 
@@ -37,7 +38,7 @@ fs.writeFileSync(PREVIEW_FILE, `${JSON.stringify({
   blogPreview: {
     heading: 'Writeups',
     intro: 'Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.',
-    viewAllHref: './blog/',
+    viewAllHref: `${BLOG}/`,
     viewAllLabel: 'View all posts',
     items: previewItems
   }

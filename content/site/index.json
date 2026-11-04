@@ -55,7 +55,7 @@
   "blogPreview": {
     "heading": "Writeups",
     "intro": "Writeups from red team labs and CTFs: enumeration, exploitation paths, and the lessons behind them.",
-    "viewAllHref": "./blog/index.html",
+    "viewAllHref": "https://pwn.aimansam.my/",
     "viewAllLabel": "View all posts",
     "items": [
       {
@@ -66,7 +66,7 @@
           "ctf",
           "web"
         ],
-        "url": "./blog/posts/monster-corporate/",
+        "url": "https://pwn.aimansam.my/posts/monster-corporate/",
         "accent": true
       },
       {
@@ -77,7 +77,7 @@
           "active-directory",
           "windows"
         ],
-        "url": "./blog/posts/active-directory-lab-notes/",
+        "url": "https://pwn.aimansam.my/posts/active-directory-lab-notes/",
         "accent": false
       },
       {
@@ -88,7 +88,7 @@
           "web",
           "ctf"
         ],
-        "url": "./blog/posts/web-exploitation-workflow/",
+        "url": "https://pwn.aimansam.my/posts/web-exploitation-workflow/",
         "accent": false
       }
     ]

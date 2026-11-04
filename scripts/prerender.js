@@ -10,7 +10,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const { JSDOM } = require('jsdom');
 
-const ROOT = path.join(__dirname, '..');
+const { ROOT, BLOG, BLOG_DIST } = require('./lib/sites');
 const ORIGIN = 'http://prerender.invalid/';
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/seo.json'), 'utf8')).seo.canonicalUrl.replace(/\/$/, '');
 const SITE_IMAGE = `${SITE}/assets/images/me/og-image.jpg`;
@@ -63,10 +63,10 @@ const pngSize = (file) => {
 };
 
 // Explicit dimensions let the browser reserve space and avoid layout shift.
-const addImageDimensions = (document) => {
+const addImageDimensions = (document, root) => {
   document.querySelectorAll('#blog-app img[src^="/"]').forEach((img) => {
     if (img.hasAttribute('width')) return;
-    const size = pngSize(path.join(ROOT, img.getAttribute('src').split('?')[0]));
+    const size = pngSize(path.join(root, img.getAttribute('src').split('?')[0]));
     if (!size) return;
     img.setAttribute('width', size.width);
     img.setAttribute('height', size.height);
@@ -91,23 +91,24 @@ function prerenderBlog(blog) {
   const posts = (readJson('content/blog/posts.json')?.posts || [])
     .filter((post) => !post.draft)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
-  const blogDir = path.join(ROOT, 'blog');
+  const blogDir = BLOG_DIST;
   const shells = walk(blogDir).filter((file) => path.basename(file) === 'index.html');
 
   shells.forEach((file) => {
-    const route = `/${path.relative(ROOT, path.dirname(file)).split(path.sep).join('/')}/`.replace('/./', '/');
+    const relative = path.relative(blogDir, path.dirname(file)).split(path.sep).join('/');
+    const route = relative ? `/${relative}/` : '/';
     const parts = blog.routeParts(route);
     const meta = blog.routeMeta(posts, parts);
-    const canonical = `${SITE}${route === '/blog/' ? '/blog/' : route}`;
-    const image = meta.image ? new URL(meta.image, `${SITE}/`).href : SITE_IMAGE;
+    const canonical = `${BLOG}${route}`;
+    const image = meta.image ? new URL(meta.image, `${BLOG}/`).href : SITE_IMAGE;
 
-    const dom = new JSDOM(fs.readFileSync(file, 'utf8'), { url: `${SITE}${route}` });
+    const dom = new JSDOM(fs.readFileSync(file, 'utf8'), { url: canonical });
     const { document } = dom.window;
 
     const app = document.getElementById('blog-app');
     app.innerHTML = blog.renderRoute(posts, parts);
     app.setAttribute('data-prerendered', '');
-    addImageDimensions(document);
+    addImageDimensions(document, blogDir);
     blog.setActiveNav(document, route);
     document.title = meta.title;
     setMeta(document, 'name', 'description', meta.description);

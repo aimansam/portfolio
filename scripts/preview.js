@@ -7,7 +7,9 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const ROOT = path.join(__dirname, '..');
+const { BLOG_DIST } = require('./lib/sites');
+
+const ROOT = BLOG_DIST; // the blog is served from its own root, like pwn.aimansam.my
 const PORT = Number(process.env.PORT) || 4000;
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json',
@@ -17,9 +19,8 @@ const MIME = {
 
 const build = () => {
   try {
-    execFileSync('node', ['scripts/build-blog.js', '--drafts'], { cwd: ROOT, stdio: 'inherit' });
-    execFileSync('node', ['scripts/build-projects.js'], { cwd: ROOT, stdio: 'ignore' });
-  } catch {
+    execFileSync('node', ['scripts/build-blog.js', '--drafts'], { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
+      } catch {
     console.error('Build failed; fix the error above and save again.');
   }
 };
@@ -44,11 +45,11 @@ http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
   fs.createReadStream(file).pipe(res);
 }).listen(PORT, () => {
-  console.log(`\nPreview: http://localhost:${PORT}/blog/  (drafts and scheduled posts are shown)`);
+  console.log(`\nPreview: http://localhost:${PORT}/  (drafts and scheduled posts are shown)`);
 });
 
 let timer;
-fs.watch(path.join(ROOT, 'content/blog/posts'), { recursive: true }, () => {
+fs.watch(path.join(__dirname, '../content/blog/posts'), { recursive: true }, () => {
   clearTimeout(timer);
   timer = setTimeout(build, 300);
 });

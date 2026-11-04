@@ -34,7 +34,7 @@
         "icon": "./assets/icons/gallery.svg"
       },
       {
-        "href": "./blog/index.html",
+        "href": "https://pwn.aimansam.my/",
         "label": "Blog",
         "ariaLabel": "Go to blog",
         "icon": "./assets/icons/article.svg"

@@ -304,7 +304,9 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    preview_path: "blog/posts/{{slug}}"
+    # The blog is served from pwn.aimansam.my (site_url above is the portfolio), so the CMS
+    # preview link is only a hint; open https://pwn.aimansam.my/posts/<slug>/ after it deploys.
+    preview_path: "posts/{{slug}}"
     editor:
       preview: false
     fields:

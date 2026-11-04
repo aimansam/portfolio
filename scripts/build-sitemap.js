@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/seo.json'), 'utf8')).seo.canonicalUrl.replace(/\/$/, '');
+const { PORTFOLIO: SITE, BLOG, BLOG_DIST } = require('./lib/sites');
 const PROJECTS_DIR = path.join(ROOT, 'content/projects');
 const POSTS_FILE = path.join(ROOT, 'content/blog/posts.json');
 
@@ -12,9 +12,7 @@ const urls = [
   { loc: `${SITE}/` },
   { loc: `${SITE}/about.html` },
   { loc: `${SITE}/projects.html` },
-  { loc: `${SITE}/gallery.html` },
-  { loc: `${SITE}/blog/` },
-  { loc: `${SITE}/blog/archive/` }
+  { loc: `${SITE}/gallery.html` }
 ];
 
 fs.readdirSync(PROJECTS_DIR)
@@ -25,18 +23,22 @@ fs.readdirSync(PROJECTS_DIR)
   });
 
 const { posts } = JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8'));
-posts.forEach((post) => {
-  urls.push({ loc: `${SITE}/blog/posts/${post.slug}/`, lastmod: new Date(post.date).toISOString().slice(0, 10) });
-});
+const blogUrls = [
+  { loc: `${BLOG}/` },
+  { loc: `${BLOG}/archive/` },
+  ...posts.map((post) => ({ loc: `${BLOG}/posts/${post.slug}/`, lastmod: new Date(post.date).toISOString().slice(0, 10) }))
+];
 
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
+const toXml = (list) => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((url) => `  <url>
+${list.map((url) => `  <url>
     <loc>${escapeXml(url.loc)}</loc>${url.lastmod ? `
     <lastmod>${url.lastmod}</lastmod>` : ''}
   </url>`).join('\n')}
 </urlset>
 `;
 
-fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
-console.log(`Built sitemap with ${urls.length} URLs.`);
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), toXml(urls));
+fs.mkdirSync(BLOG_DIST, { recursive: true });
+fs.writeFileSync(path.join(BLOG_DIST, 'sitemap.xml'), toXml(blogUrls));
+console.log(`Built sitemaps: ${urls.length} portfolio URLs, ${blogUrls.length} blog URLs.`);

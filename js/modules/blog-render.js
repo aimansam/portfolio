@@ -4,7 +4,8 @@ import { escapeHtml, slugify, renderMarkdown } from './markdown.js';
 
 export { escapeHtml, slugify };
 
-const blogRoot = '/blog/';
+// The blog is served from the root of its own subdomain.
+const blogRoot = '/';
 export const dataUrl = '/content/blog/posts.json';
 
 // Posts carry the author's local date (for example 2026-05-11T00:00:00+08:00). Use that
@@ -97,7 +98,7 @@ const sidebar = (posts, activeCategory = '') => {
       <h2 class="blog-section-title">Tags</h2>
       <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
     </section>` : ''}
-    <a class="blog-more" href="/blog/archive/">Browse the archive <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+    <a class="blog-more" href="/archive/">Browse the archive <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
   </aside>
 `;
 };
@@ -109,7 +110,7 @@ export const renderHome = (posts) => {
     <div class="blog-main-col">
       <h1 class="blog-home-title">A diary of things I broke, fixed and learned.</h1>
       ${postCards(shown)}
-      ${posts.length > POSTS_ON_HOME ? `<a class="blog-more" href="/blog/posts/">View all ${posts.length} posts <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>` : ''}
+      ${posts.length > POSTS_ON_HOME ? `<a class="blog-more" href="/posts/">View all ${posts.length} posts <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>` : ''}
     </div>
     ${sidebar(posts)}
   </div>
@@ -239,7 +240,7 @@ export const renderPost = (post, posts = []) => {
           <h2>Related posts</h2>
           ${postCards(related)}
         </section>` : ''}
-      <a class="blog-button" href="/blog/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+      <a class="blog-button" href="/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
     </footer>
   </article>
 `;
@@ -255,10 +256,10 @@ export const countTerms = (posts, key) => {
 export const setActiveNav = (root, path) => {
   root.querySelectorAll('[data-blog-nav]').forEach((link) => {
     const key = link.dataset.blogNav;
-    const active = path.includes(`/blog/${key}/`) ||
-      (key === 'posts' && path.includes('/blog/posts/')) ||
-      (key === 'tags' && path.includes('/blog/tags/')) ||
-      (['writeups', 'labs', 'notes'].includes(key) && path.includes(`/blog/categories/${key}/`));
+    const active = path.includes(`/${key}/`) ||
+      (key === 'posts' && path.includes('/posts/')) ||
+      (key === 'tags' && path.includes('/tags/')) ||
+      (['writeups', 'labs', 'notes'].includes(key) && path.includes(`/categories/${key}/`));
     link.classList.toggle('is-active', active);
     if (active) link.setAttribute('aria-current', 'page');
   });
@@ -266,10 +267,10 @@ export const setActiveNav = (root, path) => {
 
 const SITE_NAME = 'Pwn Diary';
 
-// Splits /blog/<a>/<b>/ into ['<a>', '<b>'].
+// Splits /<a>/<b>/ into ['<a>', '<b>'].
 export const routeParts = (pathname) => pathname
   .replace(/\/index\.html$/u, '/')
-  .replace(/^\/blog\/?/u, '')
+  .replace(/^\//u, '')
   .split('/')
   .filter(Boolean);
 

@@ -14,7 +14,7 @@ const YAML = require('yaml');
 
 const ROOT = path.join(__dirname, '../..');
 const POSTS_DIR = path.join(ROOT, 'content/blog/posts');
-const OUT_POSTS_DIR = path.join(ROOT, 'blog/posts');
+const OUT_POSTS_DIR = path.join(ROOT, 'dist/blog/posts');
 
 const slugify = (value) => String(value || '')
   .toLowerCase()
@@ -23,7 +23,7 @@ const slugify = (value) => String(value || '')
 
 const isRemote = (url) => /^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(url);
 
-const absoluteAsset = (slug, url) => (isRemote(url) ? url : `/blog/posts/${slug}/${url.replace(/^\.\//, '')}`);
+const absoluteAsset = (slug, url) => (isRemote(url) ? url : `/posts/${slug}/${url.replace(/^\.\//, '')}`);
 
 // Walks the Markdown outside fenced code blocks, applying `fn` to each line.
 const mapOutsideFences = (markdown, fn) => {
@@ -196,7 +196,7 @@ function loadPosts({ drafts = false, now = new Date() } = {}) {
 
   posts.sort((a, b) => new Date(b.post.date) - new Date(a.post.date));
 
-  // Copy files that sit next to bundle posts (images and so on) to /blog/posts/<slug>/.
+  // Copy files that sit next to bundle posts (images and so on) to posts/<slug>/ in the blog output.
   posts.forEach(({ post, entry }) => {
     if (!entry.dir) return;
     const target = path.join(OUT_POSTS_DIR, post.slug);

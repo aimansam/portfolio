@@ -9,7 +9,7 @@ A post is a Markdown file with a short header. Everything else (summary, cover, 
 ```sh
 npm run new-post -- "My Post Title" --category Writeups   # Writeups | Labs | Notes
 # edit content/blog/posts/my-post-title/index.md
-npm run preview                                           # http://localhost:4000/blog/
+npm run preview                                           # http://localhost:4000/
 ```
 
 When it reads well, set `draft: false` in the header (or delete the line), then:
@@ -94,7 +94,7 @@ The flag is `HTB{example}`.
 
 ## What Is Generated (Never Commit)
 
-`/blog/`, `/projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are git-ignored and rebuilt by `npm run build` (locally by `npm run preview`) and in CI. CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml`.
+`/dist/`, `/blog/`, `/projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are git-ignored and rebuilt by `npm run build` (locally by `npm run preview`) and in CI. CI runs build, `npm run check`, then `npm run prerender`, so each post is published as static HTML with its own title, description, canonical URL, social image and `BlogPosting` data, and is added to `sitemap.xml`.
 
 The blog also has a light/dark toggle, an `/blog/archive/` page grouped by year, and on each post: reading time, tag links, newer/older links, related posts (by shared tags), and a reading progress bar.
 

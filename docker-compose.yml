@@ -1,7 +1,27 @@
 services:
   portfolio:
-    build: .
+    build:
+      context: .
+      target: portfolio
     container_name: my-portfolio-container
     restart: always
     ports:
-      - "5200:80"
+      - "5200:80"   # portfolio.aimansam.my
+
+  blog:
+    build:
+      context: .
+      target: blog
+    container_name: my-pwn-diary-container
+    restart: always
+    ports:
+      - "5201:80"   # pwn.aimansam.my
+
+  card:
+    build:
+      context: .
+      target: card
+    container_name: my-link-hub-container
+    restart: always
+    ports:
+      - "5202:80"   # aimansam.my

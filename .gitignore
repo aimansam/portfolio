@@ -11,3 +11,4 @@ worker-configuration.d.ts
 /content/blog/posts.json
 /content/site/blog-preview.json
 node_modules/
+/dist/

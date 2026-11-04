@@ -1,6 +1,6 @@
 # Aiman Sam Portfolio
 
-Live at **[portfolio.aimansam.my](https://portfolio.aimansam.my)** — a penetration tester and web developer portfolio with security writeups, offensive security labs, and a Decap CMS-powered blog.
+Live at **[portfolio.aimansam.my](https://portfolio.aimansam.my)**, with the blog at **[pwn.aimansam.my](https://pwn.aimansam.my)** and a link hub at **[aimansam.my](https://aimansam.my)** — a penetration tester and web developer portfolio with security writeups, offensive security labs, and a Decap CMS-powered blog.
 
 [![Live Site](https://img.shields.io/badge/Live-portfolio.aimansam.my-0055CC?logo=world-wide-web)](https://portfolio.aimansam.my)
 [![nginx](https://img.shields.io/badge/nginx-alpine-009639?logo=nginx)](https://nginx.org/)
@@ -38,7 +38,8 @@ A deployable portfolio site for a penetration tester focused on red team work. T
 ┌─────────────────────────────────────────────┐
 │                  nginx:alpine                 │
 │  index.html  about.html  projects.html       │
-│  gallery.html  blog/  admin/  assets/        │
+│  gallery.html  blog/ (redirects)  admin/     │
+│  assets/                                     │
 │  content/  project-pages/  css/  js/         │
 │  sitemap.xml  robots.txt (generated/static)  │
 └───────────────────┬─────────────────────────┘
@@ -113,7 +114,7 @@ content/
 
 ```bash
 npm run new-post -- "My Post Title" --category Writeups   # scaffolds a draft
-npm run preview                                           # http://localhost:4000/blog/ (shows drafts)
+npm run preview                                           # http://localhost:4000/ (shows drafts)
 # set draft: false, commit, push: CI builds and deploys
 ```
 
@@ -128,18 +129,19 @@ Posts are Markdown with a short header; summary, cover, URLs and social tags are
 ```bash
 npm run build
 # Runs in sequence:
-#   1. node scripts/build-blog.js          — compile blog post JSON → HTML shells
+#   1. node scripts/build-blog.js          — build the blog site into dist/blog (+ redirect pages in blog/)
 #   2. node scripts/update-blog-preview.js — update blog-preview.json
 #   3. node scripts/build-projects.js      — write projects/<id>/index.html per project
 #   4. node scripts/inject-seo.js          — inject SEO meta + JSON-LD into index.html
-#   5. node scripts/build-sitemap.js       — write sitemap.xml (pages, projects, posts)
+#   5. node scripts/build-sitemap.js       — write sitemap.xml (portfolio) and dist/blog/sitemap.xml
+#   6. node scripts/build-card.js          — build the aimansam.my link hub into dist/card
 #
 npm run check      # static integrity check: JSON, asset references, generated routes
 ```
 
 `npm run prerender` (used by the Dockerfile and CI, **not** part of `build`) renders the JSON-driven pages, project pages (`/projects/<id>/`) and every blog page into static HTML with jsdom, with per-page titles, canonical and social meta. It rewrites those files in place, so don't run it on your working copy.
 
-`blog/`, `projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are generated and git-ignored; never edit them by hand.
+`dist/`, `blog/` (redirect pages), `projects/`, `sitemap.xml`, `content/blog/posts.json` and `content/site/blog-preview.json` are generated and git-ignored; never edit them by hand.
 
 The `Dockerfile` runs `npm run build` in a Node build stage, then copies the output into nginx. GitHub Actions runs the same command before publishing to Pages, so there is a single build path.
 
@@ -227,7 +229,8 @@ portfolio/
 ├── project-pages/
 │   └── project.html        # Project case study template (copied to projects/<id>/)
 └── scripts/
-    ├── build-blog.js       # JSON → HTML for blog posts
+    ├── build-blog.js       # Builds the blog site (dist/blog) and redirect pages
+    ├── build-card.js       # Builds the aimansam.my link hub (dist/card)
     ├── update-blog-preview.js  # Update blog-preview.json
     ├── inject-seo.js       # Inject SEO meta into index.html
     ├── build-sitemap.js    # Generate sitemap.xml

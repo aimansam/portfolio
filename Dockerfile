@@ -8,14 +8,31 @@ RUN npm ci
 COPY ./scripts ./scripts
 COPY ./content ./content
 COPY ./js ./js
+COPY ./css ./css
+COPY ./assets ./assets
+COPY ./blog-site ./blog-site
+COPY ./card ./card
 COPY ./project-pages ./project-pages
 COPY ./index.html ./about.html ./projects.html ./gallery.html ./
 
-# Generates blog pages, the blog preview, homepage SEO, and sitemap.xml,
-# then prerenders the JSON-driven pages into static HTML.
+# Generates all three sites (portfolio, blog in dist/blog, link hub in dist/card), the
+# homepage SEO and sitemaps, then prerenders the JSON-driven pages into static HTML.
 RUN npm run build && npm run prerender
 
-FROM nginx:alpine
+# Blog (pwn.aimansam.my):  docker build --target blog .
+FROM nginx:alpine AS blog
+COPY ./nginx-static.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /workspace/dist/blog /usr/share/nginx/html
+EXPOSE 80
+
+# Link hub (aimansam.my):  docker build --target card .
+FROM nginx:alpine AS card
+COPY ./nginx-static.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /workspace/dist/card /usr/share/nginx/html
+EXPOSE 80
+
+# Portfolio (portfolio.aimansam.my): the default target.
+FROM nginx:alpine AS portfolio
 
 # Copy only public portfolio assets into the nginx web root.
 COPY ./CNAME /usr/share/nginx/html/CNAME
@@ -24,6 +41,7 @@ COPY ./robots.txt /usr/share/nginx/html/robots.txt
 COPY ./404.html /usr/share/nginx/html/404.html
 COPY --from=build /workspace/index.html /usr/share/nginx/html/index.html
 COPY --from=build /workspace/sitemap.xml /usr/share/nginx/html/sitemap.xml
+# /blog/ holds redirect pages that send old links to the blog subdomain.
 COPY --from=build /workspace/blog /usr/share/nginx/html/blog
 COPY --from=build /workspace/projects /usr/share/nginx/html/projects
 COPY --from=build /workspace/content /usr/share/nginx/html/content

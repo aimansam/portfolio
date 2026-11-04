@@ -27,3 +27,8 @@
 !project-pages/**
 !blog/
 !blog/**
+!nginx-static.conf
+!card/
+!card/**
+!blog-site/
+!blog-site/**

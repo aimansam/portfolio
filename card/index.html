@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aiman Sam | Penetration Tester and Red Team</title>
+    <meta name="description" content="Aiman Sam (zx10r), final-year cybersecurity student and penetration tester. Find the portfolio, the Pwn Diary blog, and every profile in one place.">
+    <meta name="theme-color" content="#141414">
+    <link rel="canonical" href="https://aimansam.my/">
+    <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
+
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Aiman Sam | Penetration Tester and Red Team">
+    <meta property="og:description" content="Final-year cybersecurity student and penetration tester. Portfolio, Pwn Diary blog, and profiles.">
+    <meta property="og:url" content="https://aimansam.my/">
+    <meta property="og:site_name" content="Aiman Sam">
+    <meta property="og:image" content="https://aimansam.my/assets/images/me/og-image.jpg">
+    <meta property="og:image:alt" content="Portrait of Aiman Sam">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aiman Sam | Penetration Tester and Red Team">
+    <meta name="twitter:description" content="Final-year cybersecurity student and penetration tester. Portfolio, Pwn Diary blog, and profiles.">
+    <meta name="twitter:image" content="https://aimansam.my/assets/images/me/og-image.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://portfolio.aimansam.my/#aiman-sam",
+        "name": "Aiman Sam",
+        "alternateName": "zx10r",
+        "url": "https://aimansam.my/",
+        "image": "https://aimansam.my/assets/images/me/og-image.jpg",
+        "jobTitle": "Penetration Tester and Red Team Practitioner",
+        "sameAs": [
+          "https://portfolio.aimansam.my/",
+          "https://pwn.aimansam.my/",
+          "https://github.com/aimansam",
+          "https://www.linkedin.com/in/aimansam",
+          "https://tryhackme.com/p/zx10r",
+          "https://app.hackthebox.com/users/2188751"
+        ]
+      }
+    }
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --ink: #141414;
+        --paper: #ffffff;
+        --soft: #f7f7f7;
+        --muted: rgba(20, 20, 20, 0.7);
+        --icon-filter: none;
+        --icon-on-ink: invert(1);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root { --ink: #f2f2f2; --paper: #121212; --soft: #1c1c1c; --muted: rgba(242, 242, 242, 0.72); --icon-filter: invert(1); --icon-on-ink: none; }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { width: min(460px, calc(100% - 32px)); padding: 56px 0 40px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .avatar { width: 112px; height: 112px; border: 2px solid var(--ink); border-radius: 50%; object-fit: cover; box-shadow: 0 6px 0 var(--ink); }
+      h1 { margin: 22px 0 6px; font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+      .handle { margin: 0 0 6px; font-size: 13px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+      .role { margin: 0 0 30px; font-size: 17px; line-height: 1.5; color: var(--muted); }
+      .links { width: 100%; display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+      .link {
+        display: flex; align-items: center; gap: 14px; width: 100%; padding: 14px 18px;
+        border: 2px solid var(--ink); border-radius: 20px; background: var(--paper); color: var(--ink);
+        text-decoration: none; text-align: left;
+        transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out), background-color 150ms ease;
+      }
+      .link:hover, .link:focus-visible { transform: translateY(-2px); box-shadow: 0 5px 0 var(--ink); }
+      .link:focus-visible { outline: 3px solid #0055cc; outline-offset: 3px; }
+      .link:active { transform: scale(0.98); box-shadow: none; }
+      .link img { width: 24px; height: 24px; flex: none; filter: var(--icon-filter); }
+      .link-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+      .link strong { font-size: 17px; }
+      .link small { font-size: 13.5px; color: var(--muted); }
+      .link .arrow { width: 18px; height: 18px; opacity: 0.8; }
+      .link-primary { background: var(--ink); color: var(--paper); }
+      .link-primary small { color: inherit; opacity: 0.8; }
+      .link-primary img { filter: var(--icon-on-ink); }
+      @media (prefers-color-scheme: dark) { .link-primary:hover, .link-primary:focus-visible { box-shadow: 0 5px 0 #8a8a8a; } }
+      .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 26px; padding: 0; list-style: none; }
+      .socials a {
+        width: 48px; height: 48px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper);
+        transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+      }
+      .socials a:hover, .socials a:focus-visible { transform: translateY(-2px); box-shadow: 0 4px 0 var(--ink); }
+      .socials a:focus-visible { outline: 3px solid #0055cc; outline-offset: 3px; }
+      .socials img { width: 22px; height: 22px; filter: var(--icon-filter); }
+      .socials img.keep-color { filter: none; }
+      footer { margin-top: 34px; font-size: 13px; color: var(--muted); }
+
+      @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: no-preference) {
+        .avatar, h1, .handle, .role, .links li, .socials, footer { animation: rise-in 500ms var(--ease-out) both; }
+        h1 { animation-delay: 60ms; } .handle { animation-delay: 100ms; } .role { animation-delay: 140ms; }
+        .links li:nth-child(1) { animation-delay: 200ms; } .links li:nth-child(2) { animation-delay: 260ms; }
+        .socials { animation-delay: 340ms; } footer { animation-delay: 400ms; }
+      }
+      @media (prefers-reduced-motion: reduce) { .link, .socials a { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img class="avatar" src="/assets/images/me/aimansamwinner-720.webp" width="720" height="720" alt="Aiman Sam at the UM Cybersecurity Summit" fetchpriority="high">
+      <h1>Aiman Sam</h1>
+      <p class="handle">zx10r</p>
+      <p class="role">Penetration tester focused on red team work. Final-year cybersecurity student and CTF creator.</p>
+
+      <ul class="links">
+        <li>
+          <a class="link link-primary" href="https://portfolio.aimansam.my/">
+            <img src="/assets/icons/briefcase.svg" alt="">
+            <span class="link-text"><strong>Portfolio</strong><small>Projects, certifications and resume</small></span>
+            <img class="arrow" src="/assets/icons/arrow-right.svg" alt="">
+          </a>
+        </li>
+        <li>
+          <a class="link" href="https://pwn.aimansam.my/">
+            <img src="/assets/icons/article.svg" alt="">
+            <span class="link-text"><strong>Pwn Diary</strong><small>Writeups, lab notes and malware analysis</small></span>
+            <img class="arrow" src="/assets/icons/arrow-right.svg" alt="">
+          </a>
+        </li>
+      </ul>
+
+      <ul class="socials" aria-label="Profiles">
+        <li><a href="https://github.com/aimansam" rel="me noopener" aria-label="GitHub"><img src="/assets/icons/github.svg" alt=""></a></li>
+        <li><a href="https://www.linkedin.com/in/aimansam" rel="me noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a></li>
+        <li><a href="https://tryhackme.com/p/zx10r" rel="me noopener" aria-label="TryHackMe"><img class="keep-color" src="/assets/icons/tryhackme.svg" alt=""></a></li>
+        <li><a href="https://app.hackthebox.com/users/2188751" rel="me noopener" aria-label="Hack The Box"><img src="/assets/icons/hackthebox.svg" alt=""></a></li>
+        <li><a href="mailto:aimansammrsm@gmail.com" aria-label="Email"><img src="/assets/icons/mail.svg" alt=""></a></li>
+      </ul>
+
+      <footer>© Aiman Sam</footer>
+    </main>
+  </body>
+</html>

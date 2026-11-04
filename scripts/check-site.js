@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SKIP_DIRS = new Set(['node_modules', '.git', 'cms-auth', 'docs', 'scripts']);
+const SKIP_DIRS = new Set(['node_modules', '.git', 'cms-auth', 'docs', 'scripts', 'dist']);
 const problems = [];
 
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -54,7 +54,15 @@ projectIds.forEach((id) => {
 });
 const { posts } = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/blog/posts.json'), 'utf8'));
 posts.forEach((post) => {
-  if (!exists(path.join(ROOT, 'blog/posts', post.slug, 'index.html'))) problems.push(`blog/posts/${post.slug}/index.html missing (run npm run build)`);
+  if (!exists(path.join(ROOT, 'dist/blog/posts', post.slug, 'index.html'))) problems.push(`dist/blog/posts/${post.slug}/index.html missing (run npm run build)`);
+  // The old portfolio.aimansam.my/blog/... address keeps a redirect page.
+  if (!exists(path.join(ROOT, 'blog/posts', post.slug, 'index.html'))) problems.push(`blog/posts/${post.slug}/index.html (redirect page) missing (run npm run build)`);
+});
+['index.html', 'sitemap.xml', 'robots.txt', '404.html', '_headers', 'css/blog.css', 'js/blog.js', 'content/blog/posts.json', 'assets/icons/arrow-right.svg'].forEach((name) => {
+  if (!exists(path.join(ROOT, 'dist/blog', name))) problems.push(`dist/blog/${name} missing (run npm run build)`);
+});
+['index.html', 'sitemap.xml'].forEach((name) => {
+  if (!exists(path.join(ROOT, 'dist/card', name))) problems.push(`dist/card/${name} missing (run npm run build)`);
 });
 ['sitemap.xml', 'robots.txt', '404.html'].forEach((name) => {
   if (!exists(path.join(ROOT, name))) problems.push(`${name} missing`);
