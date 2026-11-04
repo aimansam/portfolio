@@ -5,6 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const { ROOT, CARD, CARD_DIST } = require('./lib/sites');
+const { withBeacon } = require('./lib/analytics');
 
 const copy = (from, to = from) => {
   const target = path.join(CARD_DIST, to);
@@ -20,6 +21,10 @@ copy('card/404.html', '404.html');
 ['briefcase', 'article', 'arrow-right', 'github', 'linkedin', 'tryhackme', 'hackthebox', 'mail']
   .forEach((name) => copy(`assets/icons/${name}.svg`));
 ['assets/images/me/aimansamformal.webp', 'assets/images/me/og-image.jpg', 'assets/images/zx10r/favicon-64.png'].forEach((file) => copy(file));
+
+// Cloudflare Web Analytics, when a token is set in content/site/sites.json.
+const cardPage = path.join(CARD_DIST, 'index.html');
+fs.writeFileSync(cardPage, withBeacon(fs.readFileSync(cardPage, 'utf8'), 'card'));
 
 fs.writeFileSync(path.join(CARD_DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${CARD}/sitemap.xml\n`);
 fs.writeFileSync(path.join(CARD_DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>

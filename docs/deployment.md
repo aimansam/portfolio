@@ -93,3 +93,25 @@ The multi-stage `Dockerfile` runs the same build and prerender once, then has on
 site (`portfolio` is the default; `blog` and `card` are built with `--target`). The portfolio uses
 `nginx.conf`, which also 301-redirects `/blog/...` to `pwn.aimansam.my`; the other two use
 `nginx-static.conf`. All add the 404 page, gzip, the security headers above and a 7-day cache on assets.
+
+## Contact email and visitor analytics
+
+Both are switched on with a single value, and stay inert until then.
+
+### A custom email address (for example hello@aimansam.my)
+
+1. Cloudflare dashboard → `aimansam.my` → Email → Email Routing → enable it and add the address `hello` as a
+   custom address that forwards to your inbox. Confirm the verification email Cloudflare sends.
+2. Send yourself a test message to the new address.
+3. Run `node scripts/set-email.js hello@aimansam.my` (add `--dry-run` first to see which files change),
+   then `npm run build`, commit and push. It replaces the address in the Hire Me button, hero, footer, home page
+   contact panel, link hub, search data and 404 pages.
+4. Update the email inside `assets/resume/Resume.pdf` by hand, since that is a separate file.
+
+### Cloudflare Web Analytics (free, no cookies, no banner)
+
+1. Cloudflare dashboard → Analytics & Logs → Web Analytics → Add a site. Do it once for each of
+   `portfolio.aimansam.my`, `pwn.aimansam.my` and `aimansam.my`, choosing the manual (JavaScript snippet) option.
+2. Copy the token from each snippet (the long value after `"token":`).
+3. Paste them into `content/site/sites.json` under `analytics.cloudflareWebAnalytics` as `portfolio`, `blog` and `card`.
+4. Commit and push. The build adds the beacon to every page of that site (home, project pages, blog posts). Leaving a token empty adds nothing for that site.

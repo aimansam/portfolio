@@ -3,5 +3,12 @@
     "card": "https://aimansam.my",
     "portfolio": "https://portfolio.aimansam.my",
     "blog": "https://pwn.aimansam.my"
+  },
+  "analytics": {
+    "cloudflareWebAnalytics": {
+      "portfolio": "",
+      "blog": "",
+      "card": ""
+    }
   }
 }

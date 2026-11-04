@@ -11,6 +11,7 @@ const { pathToFileURL } = require('url');
 const { JSDOM } = require('jsdom');
 
 const { ROOT, BLOG, BLOG_DIST } = require('./lib/sites');
+const { withBeacon } = require('./lib/analytics');
 const ORIGIN = 'http://prerender.invalid/';
 const SITE = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/seo.json'), 'utf8')).seo.canonicalUrl.replace(/\/$/, '');
 const SITE_IMAGE = `${SITE}/assets/images/me/og-image.jpg`;
@@ -83,7 +84,7 @@ async function prerenderPage(modules, file, route, depthPrefix) {
   // The certificate pager renders after a short fade timeout.
   await sleep(300);
 
-  fs.writeFileSync(file, finalize(dom.serialize(), depthPrefix));
+  fs.writeFileSync(file, withBeacon(finalize(dom.serialize(), depthPrefix), 'portfolio'));
   dom.window.close();
 }
 
@@ -146,7 +147,7 @@ function prerenderBlog(blog) {
       });
     }
 
-    fs.writeFileSync(file, dom.serialize());
+    fs.writeFileSync(file, withBeacon(dom.serialize(), 'blog'));
     dom.window.close();
   });
   console.log(`Prerendered ${shells.length} blog pages`);
