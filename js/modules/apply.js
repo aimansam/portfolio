@@ -6,6 +6,7 @@ import {
   createStructuredData, createCareerTimelineMarkup, createStatsRow,
   createSkillFilterMarkup, createSkillPageMarkup, createProjectMarkup,
   createBlogPreviewMarkup, createNavItemMarkup, createFooterLinkMarkup,
+  createProofMarkup, createHomeProjectMarkup, createHomePostMarkup, createFeaturedResearchMarkup,
   createHeroSocialMarkup, createHeroBadgeMarkup
 } from './markup.js'
 
@@ -45,6 +46,13 @@ export const applyHeroContent = (content) => {
   const heroBadgeLinks = document.getElementById('hero-badge-links')
 
   if (content.hero?.title) heroTitle.textContent = content.hero.title
+  const heroAvailability = document.getElementById('hero-availability-text')
+  if (content.hero?.availability && heroAvailability) heroAvailability.textContent = content.hero.availability
+  const heroLatest = document.getElementById('hero-latest-link')
+  if (content.hero?.latest && heroLatest) {
+    heroLatest.href = content.hero.latest.href
+    heroLatest.innerHTML = `${escapeHtml(content.hero.latest.label)} <span aria-hidden="true">&rarr;</span>`
+  }
   if (content.hero?.intro && heroIntro) heroIntro.textContent = content.hero.intro
   if (content.hero?.primaryAction?.label && heroPrimaryActionLabel) heroPrimaryActionLabel.textContent = content.hero.primaryAction.label
   if (content.hero?.primaryAction?.href) {
@@ -329,6 +337,47 @@ export const applyBlogPreviewContent = (content) => {
   }
 }
 
+// Proof strip, featured research, selected projects and the newest posts on the home page.
+export const applyHomeSections = (content) => {
+  const proof = document.getElementById('home-proof')
+  if (!proof) return
+
+  if (Array.isArray(content.proof?.items) && content.proof.items.length) {
+    proof.innerHTML = content.proof.items.map(createProofMarkup).join('')
+    proof.hidden = false
+  }
+
+  const research = document.getElementById('home-research')
+  if (research && content.featuredResearch?.title) {
+    research.innerHTML = createFeaturedResearchMarkup(content.featuredResearch)
+    research.hidden = false
+  }
+
+  const projectsSection = document.getElementById('home-projects')
+  const featured = content.featuredProjects
+  if (projectsSection && featured && Array.isArray(content.projects?.items)) {
+    const chosen = (featured.ids || []).map((id) => content.projects.items.find((project) => project.id === id)).filter(Boolean)
+    if (chosen.length) {
+      document.getElementById('home-projects-grid').innerHTML = chosen.map(createHomeProjectMarkup).join('')
+      if (featured.heading) document.getElementById('home-projects-heading').textContent = featured.heading
+      const all = document.getElementById('home-projects-all')
+      if (featured.viewAllHref) all.href = resolvePortfolioUrl(featured.viewAllHref)
+      if (featured.viewAllLabel) all.innerHTML = `${escapeHtml(featured.viewAllLabel)} &rarr;`
+      projectsSection.hidden = false
+    }
+  }
+
+  const postsSection = document.getElementById('home-posts')
+  if (postsSection && Array.isArray(content.blogPreview?.items) && content.blogPreview.items.length) {
+    document.getElementById('home-posts-list').innerHTML = content.blogPreview.items.map(createHomePostMarkup).join('')
+    if (content.latestPosts?.heading) document.getElementById('home-posts-heading').textContent = content.latestPosts.heading
+    const allPosts = document.getElementById('home-posts-all')
+    if (content.blogPreview.viewAllHref) allPosts.href = content.blogPreview.viewAllHref
+    if (content.latestPosts?.viewAllLabel) allPosts.innerHTML = `${escapeHtml(content.latestPosts.viewAllLabel)} &rarr;`
+    postsSection.hidden = false
+  }
+}
+
 export const applySEOContent = (content) => {
   const seoTitle = document.getElementById('seo-title')
   if (!seoTitle || !content.seo) return
@@ -468,6 +517,7 @@ export const applyPortfolioContent = (content) => {
     applyGalleryContent(content)
     applyProjectsContent(content)
     applyBlogPreviewContent(content)
+    applyHomeSections(content)
     applySEOContent(content)
   }
 }

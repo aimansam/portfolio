@@ -120,7 +120,7 @@
         <div id="portfolio-header-image-container">
           <img src="./assets/images/me/aimansamwinner-720.webp" srcset="./assets/images/me/aimansamwinner-720.webp 720w, ./assets/images/me/aimansamwinner.webp 1600w" sizes="(max-width: 800px) 100vw, 540px" width="1600" height="1600" fetchpriority="high" class="portfolio-header-image" alt="Aiman Sam at the UM Cybersecurity Summit">
         </div>
-          <span class="image-caption hero-image-caption">Unemployables #8443</span>
+          <span class="image-caption hero-image-caption">UM Cybersecurity Summit 2026 · 1st Runner Up</span>
         </div>
 
         <div id="portfolio-header-text-container">
@@ -129,6 +129,7 @@
               <h1 class="main-title" id="hero-title">Hello, I'm Aiman Sam.</h1>
               <div class="body-text" id="hero-intro">Penetration tester focused on red team work. Final-year cybersecurity student, CPTS and CEH certified, top 1% on TryHackMe, and a CTF challenge creator.</div>
             </div>
+            <p class="hero-availability" id="hero-availability"><span class="hero-availability-dot" aria-hidden="true"></span><span id="hero-availability-text">Final-year student, open to graduate roles in red team and penetration testing.</span></p>
             <div class="hero-actions">
               <a class="button" id="my-work-link" href="./projects.html">
                 <span class="button-text" id="hero-primary-action-label">Check out my projects</span>
@@ -139,6 +140,7 @@
                 <img src="./assets/icons/arrow-right.svg" class="right-arrow-icon button-contrast-icon" alt=""/>
               </a>
             </div>
+            <a class="hero-latest" id="hero-latest-link" href="https://pwn.aimansam.my/posts/fake-court-summons-valleyrat/">Latest research: fake court summons, analysed <span aria-hidden="true">&rarr;</span></a>
             <div class="hero-socials" id="hero-social-links" aria-label="Social and contact links">
               <a class="hero-social-link" href="mailto:aimansammrsm@gmail.com" aria-label="Email">
                 <img src="./assets/icons/mail.svg" class="hero-social-icon" alt="">
@@ -167,6 +169,27 @@
             </div>
         </div>
       </div>
+
+      <!-- HOME SECTIONS: proof, featured research, selected projects, latest posts (filled from content/) -->
+      <section class="home-proof" id="home-proof" aria-label="Highlights" hidden></section>
+
+      <section class="home-research" id="home-research" aria-labelledby="home-research-title" hidden></section>
+
+      <section class="home-section" id="home-projects" aria-labelledby="home-projects-heading" hidden>
+        <div class="home-section-head">
+          <h2 class="subheader-text" id="home-projects-heading">Selected projects</h2>
+          <a class="home-section-link" id="home-projects-all" href="./projects.html">All projects &rarr;</a>
+        </div>
+        <div class="home-card-grid" id="home-projects-grid"></div>
+      </section>
+
+      <section class="home-section" id="home-posts" aria-labelledby="home-posts-heading" hidden>
+        <div class="home-section-head">
+          <h2 class="subheader-text" id="home-posts-heading">Latest from Pwn Diary</h2>
+          <a class="home-section-link" id="home-posts-all" href="https://pwn.aimansam.my/">All posts &rarr;</a>
+        </div>
+        <div class="home-post-list" id="home-posts-list"></div>
+      </section>
 
     </div>
 

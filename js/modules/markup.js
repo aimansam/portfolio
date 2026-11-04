@@ -173,3 +173,55 @@ export const createStructuredData = (seo) => JSON.stringify({
     }
   ]
 }, null, 2);
+
+// --- Home page sections ---
+
+export const createProofMarkup = (item) => `
+  <div class="home-proof-item">
+    <div class="stat-value">${escapeHtml(item.value)}</div>
+    <div class="home-proof-label">${escapeHtml(item.label)}</div>
+  </div>
+`
+
+const isAbsoluteUrl = (value) => /^https?:\/\//i.test(value || '')
+
+export const createHomeProjectMarkup = (project) => {
+  const external = isAbsoluteUrl(project.href)
+  const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : ''
+  return `
+  <a class="home-card" href="${escapeHtml(resolvePortfolioUrl(project.href))}"${attrs}>
+    <span class="home-card-tags">${escapeHtml((project.tags || []).slice(0, 2).join(' · '))}</span>
+    <span class="home-card-title">${escapeHtml(project.title)}</span>
+    <span class="home-card-text">${escapeHtml(project.summary)}</span>
+    <span class="home-card-tools">${escapeHtml((project.tools || []).join(' · '))}</span>
+    <span class="home-card-more">${external ? 'Visit project &nearr;' : 'View case study &rarr;'}</span>
+  </a>
+`
+}
+
+export const createHomePostMarkup = (post) => `
+  <a class="home-row" href="${escapeHtml(post.url)}">
+    <span class="home-row-date">${escapeHtml(String(post.date).replace(/^([A-Za-z]{3})[A-Za-z]*/, '$1'))}</span>
+    <span class="home-row-main">
+      <span class="home-row-title">${escapeHtml(post.title)}</span>
+      <span class="home-row-summary">${escapeHtml(post.description)}</span>
+    </span>
+    <span class="home-row-tag">${escapeHtml((post.tags || [])[0] || '')}</span>
+  </a>
+`
+
+export const createFeaturedResearchMarkup = (item) => `
+  <div class="home-research-text">
+    <span class="home-research-label">${escapeHtml(item.label)}</span>
+    <h2 class="home-research-title" id="home-research-title">${escapeHtml(item.title)}</h2>
+    <p class="home-research-summary">${escapeHtml(item.summary)}</p>
+    <ul class="home-research-tags">${(item.tags || []).map((tag) => `<li class="project-tag">${escapeHtml(tag)}</li>`).join('')}</ul>
+    <div class="home-research-actions">
+      <a class="button button-contrast" href="${escapeHtml(item.href)}"><span class="button-text">${escapeHtml(item.hrefLabel)}</span><img src="${resolvePortfolioUrl('./assets/icons/arrow-right.svg')}" class="right-arrow-icon button-contrast-icon" alt=""/></a>
+      ${item.secondaryHref ? `<a class="home-section-link" href="${escapeHtml(item.secondaryHref)}">${escapeHtml(item.secondaryLabel)} &rarr;</a>` : ''}
+    </div>
+  </div>
+  <a class="home-research-media" href="${escapeHtml(item.href)}" tabindex="-1" aria-hidden="true">
+    <img src="${escapeHtml(resolvePortfolioUrl(item.image))}" alt="" loading="lazy" decoding="async">
+  </a>
+`

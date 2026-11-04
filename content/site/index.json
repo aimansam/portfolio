@@ -92,5 +92,60 @@
         "accent": false
       }
     ]
+  },
+  "proof": {
+    "items": [
+      {
+        "value": "Top 1%",
+        "label": "TryHackMe, 44th in Malaysia"
+      },
+      {
+        "value": "350+",
+        "label": "TryHackMe rooms completed"
+      },
+      {
+        "value": "CPTS · CEH",
+        "label": "Industry certifications"
+      },
+      {
+        "value": "9",
+        "label": "CTF web challenges, plus a Boot2Root machine, built"
+      },
+      {
+        "value": "2nd",
+        "label": "UM Attack & Defense CTF 2026"
+      }
+    ]
+  },
+  "featuredResearch": {
+    "label": "Featured research",
+    "title": "Fake High Court summons on WhatsApp: analysing a ValleyRAT-style loader",
+    "summary": "A WhatsApp message posing as the Kuala Lumpur High Court delivered an ISO that hides shellcode in the pixels of a bitmap. Full attack chain, MITRE ATT&CK mapping, detections and IOCs.",
+    "tags": [
+      "Malware analysis",
+      "DLL sideloading",
+      "MITRE ATT&CK",
+      "IOCs"
+    ],
+    "image": "./assets/images/featured/payload-was-a-picture.webp",
+    "imageAlt": "Title card: The payload was a picture. A 61 by 61 pixel bitmap next to its red channel, with entropy 5.2 against 7.9 and 2,381 bytes of shellcode.",
+    "href": "https://pwn.aimansam.my/posts/fake-court-summons-valleyrat/",
+    "hrefLabel": "Read the analysis",
+    "secondaryHref": "https://pwn.aimansam.my/posts/triaging-fake-court-summons-malware/",
+    "secondaryLabel": "How I triaged it"
+  },
+  "featuredProjects": {
+    "heading": "Selected projects",
+    "viewAllHref": "./projects.html",
+    "viewAllLabel": "All projects",
+    "ids": [
+      "oxblood-drill",
+      "web-vuln-scanner",
+      "divide-ctf-recipe"
+    ]
+  },
+  "latestPosts": {
+    "heading": "Latest from Pwn Diary",
+    "viewAllLabel": "All posts"
   }
 }

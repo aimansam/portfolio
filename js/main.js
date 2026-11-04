@@ -37,7 +37,6 @@ const safeFetch = async (url) => {
   }
 }
 
-// Leaf elements first, so a card animates on its own instead of with its whole section.
 // A thin line appears under the header once the page scrolls (same as the blog).
 const siteHeader = document.getElementById('site-header')
 if (siteHeader) {
@@ -46,10 +45,15 @@ if (siteHeader) {
   syncHeader()
 }
 
+// Leaf elements first, so a card animates on its own instead of with its whole section.
 const REVEAL_GROUPS = [
   { selector: '#main-content .project-card' },
   { selector: '#main-content .gallery-masonry-item:nth-child(n+10)' },
   { selector: '#main-content .blog-preview-card' },
+  { selector: '.home-proof-item' },
+  { selector: '.home-research' },
+  { selector: '.home-card' },
+  { selector: '.home-row' },
   { selector: '#main-content .stat-node' },
   { selector: '#main-content .about-card' },
   { selector: '#main-content .story-chapter' },

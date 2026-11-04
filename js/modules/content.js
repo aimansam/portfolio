@@ -30,13 +30,16 @@ const getPageContentFile = (pathname, search) => {
 // `fetchJson` resolves a content path to parsed JSON, or null when unavailable.
 export const loadPageContent = async (fetchJson, pathname, search = '') => {
   // Every JSON file is independent, so fetch them all at once.
-  const [navData, footerData, siteData, pageContent, heroContent, certificatesContent] = await Promise.all([
+  const [navData, footerData, siteData, pageContent, heroContent, certificatesContent, projectsContent, latestPosts] = await Promise.all([
     fetchJson('content/site/navigation.json'),
     fetchJson('content/site/footer.json'),
     fetchJson('content/site/site.json'),
     fetchJson(getPageContentFile(pathname, search)),
     isHomePath(pathname) ? fetchJson('content/site/hero.json') : null,
-    pageIs(pathname, 'about') ? fetchJson('content/site/certificates.json') : null
+    pageIs(pathname, 'about') ? fetchJson('content/site/certificates.json') : null,
+    // The home page shows selected projects and the newest posts.
+    isHomePath(pathname) ? fetchJson('content/site/projects.json') : null,
+    isHomePath(pathname) ? fetchJson('content/site/blog-preview.json') : null
   ])
 
   const content = {
@@ -51,6 +54,8 @@ export const loadPageContent = async (fetchJson, pathname, search = '') => {
   }
   if (heroContent?.hero) content.hero = heroContent.hero
   if (certificatesContent?.certificates) content.certificates = certificatesContent.certificates
+  if (projectsContent?.projects) content.projects = projectsContent.projects
+  if (latestPosts?.blogPreview?.items?.length) content.blogPreview = latestPosts.blogPreview
   // Keep the site config even if a page file defines its own `site` key.
   content.site = siteData?.site || content.site
   return content
