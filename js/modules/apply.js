@@ -283,9 +283,13 @@ export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, cer
 export const applyGalleryContent = (content) => {
   const galleryTitle = document.getElementById('gallery-title')
   const galleryList = document.getElementById('gallery-list')
+  const galleryFilters = document.getElementById('gallery-filters')
   if (content.gallery?.title && galleryTitle) galleryTitle.textContent = content.gallery.title
-  if (Array.isArray(content.gallery?.items) && content.gallery.items.length && galleryList) {
-    galleryList.innerHTML = content.gallery.items.map(item => {
+  if (!Array.isArray(content.gallery?.items) || !content.gallery.items.length || !galleryList) return
+
+  const items = content.gallery.items
+  const renderItems = (list) => {
+    galleryList.innerHTML = list.map(item => {
       const media = item.type === 'video'
         ? `<video class="gallery-masonry-video" controls preload="none"${item.poster ? ` poster="${escapeHtml(item.poster)}"` : ''} playsinline aria-label="${escapeHtml(item.alt || 'Gallery video')}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
         : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${escapeHtml(item.alt || 'image')} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${escapeHtml(item.alt || '')}">
@@ -293,6 +297,24 @@ export const applyGalleryContent = (content) => {
           </div>`
       return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}">${media}</div>`
     }).join('')
+  }
+  renderItems(items)
+
+  // Filters: only shown when the photos carry categories. Each click re-renders the grid so the layout rhythm stays intact.
+  const filters = Array.isArray(content.gallery.filters) ? content.gallery.filters : []
+  if (galleryFilters && filters.length > 1) {
+    galleryFilters.innerHTML = filters.map((f, i) => `<button class="filter-button${i === 0 ? ' is-active' : ''}" type="button" data-gallery-filter="${escapeHtml(f.id)}" aria-pressed="${i === 0}">${escapeHtml(f.label)}</button>`).join('')
+    galleryFilters.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-gallery-filter]')
+      if (!button) return
+      const id = button.dataset.galleryFilter
+      galleryFilters.querySelectorAll('[data-gallery-filter]').forEach(b => {
+        const active = b === button
+        b.classList.toggle('is-active', active)
+        b.setAttribute('aria-pressed', String(active))
+      })
+      renderItems(id === 'all' ? items : items.filter(item => item.category === id))
+    })
   }
 }
 
