@@ -56,8 +56,7 @@ const enhance = (app) => {
   initTocSpy(app.querySelector('.blog-toc'));
   app.querySelectorAll('.spoiler').forEach((details) => animateDetails(details, '.spoiler-body'));
   initReveal([
-    { selector: '.blog-post-card' },
-    { selector: '.blog-side-card' },
+    { selector: '.blog-row' },
     { selector: '.blog-archive-year' },
     { selector: '.blog-post-nav-link' },
     { selector: '.blog-related h2', variant: 'fade' }

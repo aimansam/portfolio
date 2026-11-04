@@ -29,7 +29,6 @@ export const tagHref = (tag) => `${blogRoot}tags/${slugify(tag)}/`;
 export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(post.body)} min read`;
 
 const POSTS_ON_HOME = 10;
-const TAGS_ON_HOME = 6;
 
 // Categories with counts, biggest first.
 const categoryCounts = (posts) => {
@@ -49,79 +48,51 @@ export const archiveHeader = (title, intro = '') => `
   </header>
 `;
 
-// Horizontal card: a wide cover beside the text. Posts without a cover are text only.
-export const postCard = (post) => {
+// One post as a row: date, title with a short summary, category. No images, so a long list stays quick to scan.
+export const postRow = (post) => {
   const category = (post.categories || [])[0] || 'Research';
   return `
-  <a class="blog-post-card${post.cover?.image ? '' : ' is-text-only'}" href="${postHref(post)}">
-    ${post.cover?.image ? `<span class="blog-post-card-media"><img src="${escapeHtml(post.cover.image)}" alt="" loading="lazy"></span>` : ''}
-    <span class="blog-post-card-body">
+  <a class="blog-row" href="${postHref(post)}">
+    <time class="blog-row-date" datetime="${escapeHtml(String(post.date).slice(0, 10))}">${escapeHtml(formatDate(post.date, { month: 'short', day: 'numeric' }))}</time>
+    <span class="blog-row-main">
       ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
-      <span class="blog-post-card-meta">${escapeHtml(category)} · ${escapeHtml(formatDate(post.date))} · ${readMinutes(post.body)} min</span>
-      <span class="blog-post-card-title">${escapeHtml(post.title)}</span>
-      <span class="blog-post-card-summary">${escapeHtml(post.summary)}</span>
+      <span class="blog-row-title">${escapeHtml(post.title)}</span>
+      <span class="blog-row-summary">${escapeHtml(post.summary)}</span>
     </span>
+    <span class="blog-row-meta"><span class="blog-row-cat">${escapeHtml(category)}</span><span>${readMinutes(post.body)} min</span></span>
   </a>
 `;
 };
 
-const postCards = (posts) => (posts.length
-  ? `<div class="blog-post-cards">${posts.map(postCard).join('')}</div>`
-  : '<p class="blog-empty">No posts here yet.</p>');
-
-const sidebar = (posts, activeCategory = '') => {
-  const categories = categoryCounts(posts);
-  const allTags = countTerms(posts, 'tags').sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  const topTags = allTags.slice(0, TAGS_ON_HOME);
-  return `
-  <aside class="blog-sidebar" aria-label="Blog sidebar">
-    <section class="blog-side-card">
-      <h2 class="blog-section-title">About</h2>
-      <p><strong>Aiman Sam</strong> is a final-year cybersecurity student and penetration tester. These notes are written up from red team labs and CTFs.</p>
-      <div class="blog-socials">
-        <a class="icon-link" href="https://github.com/aimansam" aria-label="GitHub"><img src="/assets/icons/github.svg" alt="" class="footer-icon"></a>
-        <a class="icon-link" href="https://www.linkedin.com/in/aimansam" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt="" class="footer-icon"></a>
-      </div>
-    </section>
-    ${categories.length ? `
-    <section class="blog-side-card">
-      <h2 class="blog-section-title">Categories</h2>
-      <ul class="blog-side-list">
-        ${categories.map(({ name, slug, count }) => `<li><a href="${categoryHref(name)}"${slug === activeCategory ? ' class="is-active" aria-current="page"' : ''}><span>${escapeHtml(name)}</span><strong>${count}</strong></a></li>`).join('')}
-      </ul>
-    </section>` : ''}
-    ${topTags.length ? `
-    <section class="blog-side-card">
-      <h2 class="blog-section-title">Tags</h2>
-      <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
-      ${allTags.length > topTags.length ? `<a class="blog-side-link" href="/tags/">All ${allTags.length} tags &rarr;</a>` : ''}
-    </section>` : ''}
-    <a class="blog-more" href="/archive/">Browse the archive <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
-  </aside>
-`;
+// Rows, with a year heading above each group when the posts span more than one year.
+const postRows = (posts) => {
+  if (!posts.length) return '<p class="blog-empty">No posts here yet.</p>';
+  const years = [...new Set(posts.map(postYear))];
+  if (years.length < 2) return `<div class="blog-rows">${posts.map(postRow).join('')}</div>`;
+  return years.map((year) => `
+    <section class="blog-rows" aria-label="${year}">
+      <h2 class="blog-rows-year">${year}</h2>
+      ${posts.filter((post) => postYear(post) === year).map(postRow).join('')}
+    </section>`).join('');
 };
 
 export const renderHome = (posts) => {
   const shown = posts.slice(0, POSTS_ON_HOME);
   return `
-  <div class="blog-layout">
-    <div class="blog-main-col">
+  <section class="blog-index">
+    <header class="blog-index-head">
       <h1 class="blog-home-title">A diary of things I broke, fixed and learned.</h1>
-      ${postCards(shown)}
-      ${posts.length > POSTS_ON_HOME ? `<a class="blog-more" href="/posts/">View all ${posts.length} posts <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>` : ''}
-    </div>
-    ${sidebar(posts)}
-  </div>
+      <p>Red team labs, CTF writeups and malware analysis by Aiman Sam, a final-year cybersecurity student.</p>
+    </header>
+    ${postRows(shown)}
+    <a class="blog-more" href="${posts.length > POSTS_ON_HOME ? '/posts/' : '/archive/'}">${posts.length > POSTS_ON_HOME ? `View all ${posts.length} posts` : 'Browse the archive'} <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+  </section>
 `;
 };
 
-// options.allPosts feeds the sidebar counts; options.activeCategory highlights the current category.
-export const renderList = (title, posts, intro = '', options = {}) => `
+export const renderList = (title, posts, intro = '') => `
   ${archiveHeader(title, intro)}
-  <div class="blog-layout">
-    <div class="blog-main-col">${postCards(posts)}</div>
-    ${sidebar(options.allPosts || posts, options.activeCategory || '')}
-  </div>
+  <div class="blog-index">${postRows(posts)}</div>
 `;
 
 export const renderArchive = (posts) => {
@@ -213,39 +184,39 @@ export const renderPost = (post, posts = []) => {
 
   return `
   <div class="blog-progress" aria-hidden="true"><span></span></div>
-  <article class="blog-post">
-    <nav class="blog-breadcrumbs" aria-label="Breadcrumb">
-      <a href="/">Pwn Diary</a>
-      ${(post.categories || [])[0] ? `<span aria-hidden="true">/</span><a href="${categoryHref(post.categories[0])}">${escapeHtml(post.categories[0])}</a>` : ''}
-      <span aria-hidden="true">/</span>
-      <span class="blog-breadcrumbs-current" aria-current="page">${escapeHtml(post.title)}</span>
-    </nav>
-    <header class="blog-post-header">
-      ${post.status ? `<span class="blog-status">${escapeHtml(post.status)} · not public</span>` : ''}
-      <div class="blog-card-tags">
-        ${(post.categories || []).map((category) => `<a class="project-tag" href="${categoryHref(category)}">${escapeHtml(category)}</a>`).join('')}
-      </div>
-      <h1>${escapeHtml(post.title)}</h1>
-      <p>${escapeHtml(post.summary)}</p>
-      <div class="blog-card-meta">${escapeHtml(postMeta(post))}${post.updated ? escapeHtml(` · Updated ${formatDate(post.updated)}`) : ''}</div>
-      <div class="blog-card-tags blog-post-tags">
-        ${(post.tags || []).map((tag) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
-      </div>
-    </header>
-    ${post.cover?.image && !html.includes(post.cover.image) ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
-    <div class="blog-post-body${toc ? ' has-toc' : ''}">
-      ${toc}
+  <article class="blog-post${toc ? ' has-toc' : ''}">
+    ${toc}
+    <div class="blog-post-main">
+      <nav class="blog-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Pwn Diary</a>
+        ${(post.categories || [])[0] ? `<span aria-hidden="true">/</span><a href="${categoryHref(post.categories[0])}">${escapeHtml(post.categories[0])}</a>` : ''}
+        <span aria-hidden="true">/</span>
+        <span class="blog-breadcrumbs-current" aria-current="page">${escapeHtml(post.title)}</span>
+      </nav>
+      <header class="blog-post-header">
+        ${post.status ? `<span class="blog-status">${escapeHtml(post.status)} · not public</span>` : ''}
+        <div class="blog-card-tags">
+          ${(post.categories || []).map((category) => `<a class="project-tag" href="${categoryHref(category)}">${escapeHtml(category)}</a>`).join('')}
+        </div>
+        <h1>${escapeHtml(post.title)}</h1>
+        <p>${escapeHtml(post.summary)}</p>
+        <div class="blog-card-meta">${escapeHtml(postMeta(post))}${post.updated ? escapeHtml(` · Updated ${formatDate(post.updated)}`) : ''}</div>
+        <div class="blog-card-tags blog-post-tags">
+          ${(post.tags || []).map((tag) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
+        </div>
+      </header>
+      ${post.cover?.image && !html.includes(post.cover.image) ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
       <div class="blog-post-content">${toc ? html.replace(/<h([23]) id="([^"]+)"/gu, (match, level, id) => numbers.has(id) ? `<h${level} id="${id}" data-num="${numbers.get(id)}"` : match) : html}</div>
+      <footer class="blog-post-footer">
+        ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
+        ${related.length ? `
+          <section class="blog-related" aria-label="Related posts">
+            <h2>Related posts</h2>
+            <div class="blog-rows">${related.map(postRow).join('')}</div>
+          </section>` : ''}
+        <a class="blog-button" href="/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
+      </footer>
     </div>
-    <footer class="blog-post-footer">
-      ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
-      ${related.length ? `
-        <section class="blog-related" aria-label="Related posts">
-          <h2>Related posts</h2>
-          ${postCards(related)}
-        </section>` : ''}
-      <a class="blog-button" href="/posts/"><span>All posts</span><img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
-    </footer>
   </article>
 `;
 };
@@ -287,11 +258,11 @@ export const renderRoute = (posts, parts) => {
     return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.');
   }
   if (parts[0] === 'archive') return renderArchive(posts);
-  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.', { allPosts: posts });
+  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.');
   if (parts[0] === 'categories' && parts[1]) {
     const filtered = posts.filter((post) => (post.categories || []).some((category) => slugify(category) === parts[1]));
     const name = categoryCounts(posts).find((entry) => entry.slug === parts[1])?.name || parts[1].replace(/-/g, ' ');
-    return renderList(name, filtered, '', { allPosts: posts, activeCategory: parts[1] });
+    return renderList(name, filtered);
   }
   if (parts[0] === 'tags' && parts[1]) {
     const filtered = posts.filter((post) => (post.tags || []).some((tag) => slugify(tag) === parts[1]));
