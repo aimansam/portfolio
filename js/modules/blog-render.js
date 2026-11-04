@@ -194,7 +194,7 @@ const sectionNumbers = (headings) => {
 const tableOfContents = (headings, minutes, numbers) => headings.length < 3 || (minutes < 5 && headings.length < 8) ? '' : `
   <nav class="blog-toc" aria-label="Table of contents">
     <details open>
-      <summary>On this page</summary>
+      <summary>Contents</summary>
       <ol>
         ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"${numbers.has(heading.id) ? ` data-num="${numbers.get(heading.id)}" data-section="${numbers.get(heading.id).split('.')[0]}"` : ''}><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
       </ol>

@@ -200,12 +200,38 @@ export const initTocSpy = (toc) => {
   const headings = links.map((link) => document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)))).filter(Boolean)
   if (!headings.length) return
 
-  // On wide screens only the main sections show; the sub-sections of the section being read unfold.
-  const compact = window.matchMedia('(min-width: 1100px)')
-  toc.classList.toggle('is-compact', compact.matches)
-  compact.addEventListener?.('change', () => toc.classList.toggle('is-compact', compact.matches))
-  // On phones the list starts collapsed so it does not push the article down.
-  if (!compact.matches) toc.querySelector('details')?.removeAttribute('open')
+  // Wide screens: the list sits beside the article and only the main sections show; the
+  // sub-sections of the section being read unfold. Narrower screens: a floating "Contents"
+  // button opens the full list as a panel, so it never pushes the article down.
+  const wide = window.matchMedia('(min-width: 1100px)')
+  const details = toc.querySelector('details')
+  const fab = document.createElement('button')
+  fab.type = 'button'
+  fab.className = 'blog-toc-fab'
+  fab.setAttribute('aria-expanded', 'false')
+  fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg><span>Contents</span>'
+  const setSheet = (open) => {
+    toc.classList.toggle('is-sheet-open', open)
+    fab.setAttribute('aria-expanded', String(open))
+  }
+  const applyMode = () => {
+    toc.classList.toggle('is-compact', wide.matches)
+    toc.classList.toggle('is-sheet', !wide.matches)
+    fab.hidden = wide.matches
+    if (!wide.matches) details?.setAttribute('open', '')
+    if (wide.matches) setSheet(false)
+  }
+  document.querySelectorAll('.blog-toc-fab').forEach((old) => old.remove())
+  document.body.appendChild(fab)
+  fab.addEventListener('click', () => {
+    setSheet(!toc.classList.contains('is-sheet-open'))
+    requestAnimationFrame(() => update())
+  })
+  toc.addEventListener('click', (event) => { if (event.target.closest('a')) setSheet(false) })
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setSheet(false) })
+  document.addEventListener('click', (event) => {
+    if (toc.classList.contains('is-sheet-open') && !event.target.closest('.blog-toc, .blog-toc-fab')) setSheet(false)
+  })
   const subItems = [...list.querySelectorAll('.blog-toc-level-3, .blog-toc-level-4')]
   const unfold = (section) => subItems.forEach((item) => item.classList.toggle('is-open', Boolean(section) && item.dataset.section === section))
 
@@ -224,6 +250,7 @@ export const initTocSpy = (toc) => {
       else item.removeAttribute('aria-current')
     })
     unfold(link.parentElement.dataset.section)
+    if (!toc.offsetParent && getComputedStyle(toc).display === 'none') return
     marker.style.opacity = '1'
     marker.style.transform = `translateY(${link.parentElement.offsetTop}px)`
     marker.style.height = `${link.parentElement.offsetHeight}px`
@@ -243,6 +270,9 @@ export const initTocSpy = (toc) => {
       links.forEach((item) => item.classList.remove('is-current'))
     }
   }
+
+  applyMode()
+  wide.addEventListener?.('change', () => { applyMode(); update() })
 
   let ticking = false
   window.addEventListener('scroll', () => {
