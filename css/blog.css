@@ -1784,3 +1784,72 @@ a.project-tag:focus-visible {
     grid-template-columns: 112px minmax(0, 1fr);
   }
 }
+
+/* Contents list, wide screens: no box, only the main sections, and the current section unfolds. */
+.blog-toc.is-compact .blog-toc-level-3,
+.blog-toc.is-compact .blog-toc-level-4 {
+  display: none;
+}
+
+.blog-toc.is-compact .blog-toc-level-3.is-open,
+.blog-toc.is-compact .blog-toc-level-4.is-open {
+  display: flex;
+}
+
+@media only screen and (min-width: 1100px) {
+  .blog-post-body.has-toc {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    column-gap: 40px;
+  }
+
+  .blog-post-body.has-toc > .blog-toc {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    scrollbar-width: thin;
+  }
+
+  .blog-toc summary {
+    margin-bottom: 4px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    list-style: none;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .blog-toc summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .blog-toc ol {
+    margin-top: 8px;
+  }
+
+  .blog-toc ol a {
+    font-size: 13.5px;
+    line-height: 1.35;
+    color: var(--muted);
+  }
+
+  .blog-toc li {
+    padding: 4px 0;
+  }
+
+  .blog-toc li > a:hover,
+  .blog-toc li > a:focus-visible,
+  .blog-toc a.is-current {
+    color: var(--ink);
+  }
+
+  .blog-toc li[data-num]::before {
+    font-size: 12px;
+    min-width: 1.5em;
+  }
+
+  .blog-toc .blog-toc-level-3 {
+    margin-left: 0.4rem;
+  }
+}

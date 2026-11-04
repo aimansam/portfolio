@@ -196,7 +196,7 @@ const tableOfContents = (headings, minutes, numbers) => headings.length < 3 || (
     <details open>
       <summary>On this page</summary>
       <ol>
-        ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"${numbers.has(heading.id) ? ` data-num="${numbers.get(heading.id)}"` : ''}><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
+        ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"${numbers.has(heading.id) ? ` data-num="${numbers.get(heading.id)}" data-section="${numbers.get(heading.id).split('.')[0]}"` : ''}><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
       </ol>
     </details>
   </nav>

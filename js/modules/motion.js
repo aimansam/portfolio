@@ -200,6 +200,15 @@ export const initTocSpy = (toc) => {
   const headings = links.map((link) => document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)))).filter(Boolean)
   if (!headings.length) return
 
+  // On wide screens only the main sections show; the sub-sections of the section being read unfold.
+  const compact = window.matchMedia('(min-width: 1100px)')
+  toc.classList.toggle('is-compact', compact.matches)
+  compact.addEventListener?.('change', () => toc.classList.toggle('is-compact', compact.matches))
+  // On phones the list starts collapsed so it does not push the article down.
+  if (!compact.matches) toc.querySelector('details')?.removeAttribute('open')
+  const subItems = [...list.querySelectorAll('.blog-toc-level-3, .blog-toc-level-4')]
+  const unfold = (section) => subItems.forEach((item) => item.classList.toggle('is-open', Boolean(section) && item.dataset.section === section))
+
   list.style.position = 'relative'
   const marker = document.createElement('span')
   marker.className = 'blog-toc-marker'
@@ -214,6 +223,7 @@ export const initTocSpy = (toc) => {
       if (item === link) item.setAttribute('aria-current', 'location')
       else item.removeAttribute('aria-current')
     })
+    unfold(link.parentElement.dataset.section)
     marker.style.opacity = '1'
     marker.style.transform = `translateY(${link.parentElement.offsetTop}px)`
     marker.style.height = `${link.parentElement.offsetHeight}px`
@@ -229,6 +239,7 @@ export const initTocSpy = (toc) => {
     if (current) setCurrent(current)
     else {
       marker.style.opacity = '0'
+      unfold('')
       links.forEach((item) => item.classList.remove('is-current'))
     }
   }
