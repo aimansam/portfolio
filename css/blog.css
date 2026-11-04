@@ -2338,3 +2338,18 @@ a.project-tag:focus-visible {
     width: 36px;
   }
 }
+
+/* Small labels (page kicker, Newer/Older) are plain text, not capsules. */
+.blog-kicker {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.blog-post-nav-link:hover .blog-kicker,
+.blog-post-nav-link:focus-visible .blog-kicker {
+  color: inherit;
+}
