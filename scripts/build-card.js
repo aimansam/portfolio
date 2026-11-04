@@ -19,7 +19,7 @@ copy('card/index.html', 'index.html');
 copy('card/404.html', '404.html');
 ['briefcase', 'article', 'arrow-right', 'github', 'linkedin', 'tryhackme', 'hackthebox', 'mail']
   .forEach((name) => copy(`assets/icons/${name}.svg`));
-['assets/images/me/aimansamwinner-720.webp', 'assets/images/me/og-image.jpg', 'assets/images/zx10r/favicon-64.png'].forEach((file) => copy(file));
+['assets/images/me/aimansamformal.webp', 'assets/images/me/og-image.jpg', 'assets/images/zx10r/favicon-64.png'].forEach((file) => copy(file));
 
 fs.writeFileSync(path.join(CARD_DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${CARD}/sitemap.xml\n`);
 fs.writeFileSync(path.join(CARD_DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
