@@ -52,12 +52,11 @@
     ],
     "intro": "Final-year Computer Science (Cybersecurity) student at Universiti Tenaga Nasional, specializing in penetration testing and red team operations. I earned my CEH certification before the age of 20, went on to CPTS, and have built my skills through labs, competitions, and practical security work.",
     "points": [
-      "Hands-on vulnerability assessment using OpenVAS and Nessus in practical lab environments.",
-      "System exploitation across Windows and Unix environments, including privilege escalation and lateral movement.",
-      "Active Directory attack experience including pass-the-hash, Kerberoasting, and domain privilege escalation.",
-      "Ranked in the top 1% globally on TryHackMe and placed in national CTF competitions.",
-      "Contributed as both a competitor and challenge creator, building web exploitation scenarios and supporting secure CTF infrastructure.",
-      "Currently expanding into blue team domains through SIEM, EDR, and detection engineering to become a more well-rounded security professional."
+      "Web and Active Directory: SQL injection, LFI and IDOR, plus pass-the-hash, Kerberoasting and domain privilege escalation, practiced in my own lab.",
+      "Vulnerability assessment with OpenVAS and Nessus, and privilege escalation and lateral movement across Windows and Unix.",
+      "Top 1% on TryHackMe (44th in Malaysia), 2nd at the UM Attack & Defense CTF, and 3rd of 50 at Bingo CTF.",
+      "Built CTF infrastructure on GCP and Cloudflare with GitHub CI/CD: 9 web challenges and a Boot2Root machine.",
+      "Now adding detection engineering (SIEM and EDR) to pair offensive skills with defensive visibility."
     ]
   },
   "skills": {
@@ -93,8 +92,16 @@
             "icon": "bug"
           },
           {
-            "name": "Blue Team Mindset",
-            "icon": "shield"
+            "name": "Active Directory Exploitation",
+            "icon": "key"
+          },
+          {
+            "name": "SIEM (Splunk)",
+            "icon": "bar-chart-2"
+          },
+          {
+            "name": "Python",
+            "icon": "code-2"
           },
           {
             "name": "Flask",
@@ -105,20 +112,12 @@
             "icon": "atom"
           },
           {
-            "name": "Cloud Security",
-            "icon": "cloud-lightning"
-          },
-          {
             "name": "Node.js",
             "icon": "server"
           },
           {
-            "name": "Python",
-            "icon": "code-2"
-          },
-          {
-            "name": "Security Engineering",
-            "icon": "shield-check"
+            "name": "Cloud Security",
+            "icon": "cloud-lightning"
           }
         ]
       },
