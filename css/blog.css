@@ -1631,3 +1631,65 @@ a.project-tag:focus-visible {
     transition: none;
   }
 }
+
+/* Table of contents: unnumbered list with a track the active marker slides along;
+   on wide screens it sits to the right of the article text and follows the reader. */
+.blog-toc ol {
+  list-style: none;
+  padding-left: 14px;
+  border-left: 2px solid var(--soft-2);
+}
+
+.blog-toc-level-3,
+.blog-toc-level-4 {
+  list-style: none;
+}
+
+.blog-toc-level-3 { margin-left: 0.9rem; }
+.blog-toc-level-4 { margin-left: 1.8rem; }
+
+.blog-toc ol a {
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+
+.blog-toc li {
+  padding: 3px 0;
+}
+
+.blog-toc ol { line-height: 1.4; }
+
+@media only screen and (min-width: 1100px) {
+  .blog-post-body.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    column-gap: 36px;
+    align-items: start;
+  }
+
+  .blog-post-body.has-toc > .blog-toc {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 110px;
+    max-width: none;
+    margin: 0;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    padding: 12px 14px;
+  }
+
+  .blog-post-body.has-toc > .blog-post-content {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .blog-post {
+    max-width: 1180px;
+  }
+
+  .blog-post-header {
+    max-width: 920px;
+  }
+}

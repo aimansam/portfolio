@@ -197,6 +197,7 @@ export const renderPost = (post, posts = []) => {
   const newer = index > 0 ? posts[index - 1] : null;
   const older = index >= 0 ? posts[index + 1] : null;
   const related = relatedPosts(post, posts);
+  const toc = tableOfContents(headings, readMinutes(post.body));
 
   return `
   <div class="blog-progress" aria-hidden="true"><span></span></div>
@@ -213,9 +214,11 @@ export const renderPost = (post, posts = []) => {
         ${(post.tags || []).map((tag) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)}</a>`).join('')}
       </div>
     </header>
-    ${post.cover?.image ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
-    ${tableOfContents(headings, readMinutes(post.body))}
-    <div class="blog-post-content">${html}</div>
+    ${post.cover?.image && !html.includes(post.cover.image) ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
+    <div class="blog-post-body${toc ? ' has-toc' : ''}">
+      ${toc}
+      <div class="blog-post-content">${html}</div>
+    </div>
     <footer class="blog-post-footer">
       ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
       ${related.length ? `
