@@ -54,6 +54,7 @@ const REVEAL_GROUPS = [
   { selector: '.home-research' },
   { selector: '.home-card' },
   { selector: '.home-row' },
+  { selector: '.home-contact' },
   { selector: '#main-content .stat-node' },
   { selector: '#main-content .about-card' },
   { selector: '#main-content .story-chapter' },

@@ -753,3 +753,111 @@ html body .about-cert-counter {
   font-size: 12px;
   font-weight: 600;
 }
+
+/* ===== Home: closing "let's talk" panel ===== */
+
+.home-contact[hidden] {
+  display: none;
+}
+
+.home-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 40px 44px;
+  border-radius: 14px;
+  background: #141414;
+  color: #ffffff;
+  white-space: normal;
+}
+
+.home-contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 560px;
+}
+
+.home-contact-title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.home-contact-lead {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.home-contact-email {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.home-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.home-contact-button {
+  display: inline-flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 22px;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.home-contact-button.is-primary,
+.home-contact-button:hover,
+.home-contact-button:focus-visible {
+  background: #ffffff;
+  color: #141414;
+}
+
+.home-contact-button.is-primary:hover,
+.home-contact-button.is-primary:focus-visible {
+  background: transparent;
+  color: #ffffff;
+}
+
+.home-contact-button:focus-visible {
+  outline: 3px solid #7db4ff;
+  outline-offset: 3px;
+}
+
+.home-contact-button:active {
+  transform: scale(0.97);
+}
+
+@media only screen and (max-width: 800px) {
+  .home-contact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px 22px;
+  }
+
+  .home-contact-title {
+    font-size: 29px;
+  }
+
+  .home-contact-actions {
+    justify-content: flex-start;
+  }
+}

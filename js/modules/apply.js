@@ -6,7 +6,7 @@ import {
   createStructuredData, createCareerTimelineMarkup, createStatsRow,
   createSkillFilterMarkup, createSkillPageMarkup, createProjectMarkup,
   createBlogPreviewMarkup, createNavItemMarkup, createFooterLinkMarkup,
-  createProofMarkup, createHomeProjectMarkup, createHomePostMarkup, createFeaturedResearchMarkup,
+  createProofMarkup, createHomeProjectMarkup, createHomePostMarkup, createFeaturedResearchMarkup, createContactMarkup,
   createHeroSocialMarkup, createHeroBadgeMarkup
 } from './markup.js'
 
@@ -366,6 +366,12 @@ export const applyHomeSections = (content) => {
     if (content.blogPreview.viewAllHref) allPosts.href = content.blogPreview.viewAllHref
     if (content.latestPosts?.viewAllLabel) allPosts.innerHTML = `${escapeHtml(content.latestPosts.viewAllLabel)} &rarr;`
     postsSection.hidden = false
+  }
+
+  const contact = document.getElementById('home-contact')
+  if (contact && content.contact?.title) {
+    contact.innerHTML = createContactMarkup(content.contact)
+    contact.hidden = false
   }
 }
 

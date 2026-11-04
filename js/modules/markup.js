@@ -225,3 +225,14 @@ export const createFeaturedResearchMarkup = (item) => `
     <img src="${escapeHtml(resolvePortfolioUrl(item.image))}" alt="" loading="lazy" decoding="async">
   </a>
 `
+
+export const createContactMarkup = (contact) => `
+  <div class="home-contact-text">
+    <h2 class="home-contact-title" id="home-contact-title">${escapeHtml(contact.title)}</h2>
+    <p class="home-contact-lead">${escapeHtml(contact.text)}</p>
+    ${contact.email ? `<p class="home-contact-email">${escapeHtml(contact.email)}</p>` : ''}
+  </div>
+  <div class="home-contact-actions">
+    ${(contact.actions || []).map((action) => `<a class="home-contact-button${action.primary ? ' is-primary' : ''}" href="${escapeHtml(resolvePortfolioUrl(action.href))}"${action.external ? ' target="_blank" rel="noopener noreferrer"' : ''}${action.download ? ` download="${escapeHtml(action.download)}"` : ''}>${escapeHtml(action.label)}</a>`).join('')}
+  </div>
+`

@@ -147,5 +147,27 @@
   "latestPosts": {
     "heading": "Latest from Pwn Diary",
     "viewAllLabel": "All posts"
+  },
+  "contact": {
+    "title": "Let's talk",
+    "text": "I'm looking for graduate roles in red team and penetration testing. Email is the fastest way to reach me.",
+    "email": "aimansammrsm@gmail.com",
+    "actions": [
+      {
+        "label": "Email me",
+        "href": "mailto:aimansammrsm@gmail.com",
+        "primary": true
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/aimansam",
+        "external": true
+      },
+      {
+        "label": "Download resume",
+        "href": "./assets/resume/Resume.pdf",
+        "download": "Aiman_Sam_Resume.pdf"
+      }
+    ]
   }
 }
