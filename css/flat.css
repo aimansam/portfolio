@@ -3,19 +3,36 @@
 
 /* Cards and panels */
 html body :is(
-  .about-card, .page-about .about-card, .page-about .story-chapters, .project-card,
-  .page-projects .project-card:nth-child(4n + 4), .featured-work-card, .blog-preview-card,
-  #project-header, .stat-node, .skills-evidence-card, .about-card-story .about-profile-card,
-  .nav-header-row, .nav-icon-box, .page-loader-mark
+  .about-card,
+  .page-about .about-card,
+  .page-about .story-chapters,
+  .project-card,
+  .page-projects .project-card:nth-child(4n + 4),
+  .featured-work-card,
+  .blog-preview-card,
+  #project-header,
+  .stat-node,
+  .skills-evidence-card,
+  .about-card-story .about-profile-card,
+  .page-loader-mark
 ) {
   border-radius: 14px;
 }
 
 /* Tags, chips, filters and text buttons */
 html body :is(
-  .about-hero-action, .story-chapter-media span, .about-profile-status, .about-story-chip,
-  .page-about .about-story-chip, .about-skill-filter, .project-tool-chip, a.button,
-  .filter-button, .project-tag, .nav-icon-label, .about-certificate-nav, .about-cert-nav-btn
+  .about-hero-action,
+  .story-chapter-media span,
+  .about-profile-status,
+  .about-story-chip,
+  .page-about .about-story-chip,
+  .about-skill-filter,
+  .project-tool-chip,
+  a.button,
+  .filter-button,
+  .project-tag,
+  .about-certificate-nav,
+  .about-cert-nav-btn
 ) {
   border-radius: 6px;
 }
@@ -27,22 +44,59 @@ html body :is(a.icon-link, .hero-social-link, .back-to-top) {
 
 /* No drop shadows, including on hover and focus */
 html body :is(
-  .about-card, .about-card-story, .about-profile-card, .about-card-story .about-profile-card,
-  .page-about .about-profile-card, .page-about .about-card, .page-about .story-chapters,
-  .about-skill-page, .page-about .about-skill-page, .about-cert-masonry-card,
-  .about-card-certificates .about-cert-masonry-card, .gallery-masonry-item, .featured-work-card,
-  .skills-evidence-card, .blog-preview-card, .project-card, #project-header, .stat-node,
-  .nav-header-row, .nav-icon-box, .page-loader-mark, .story-chapter-media,
-  .about-story-chip, .page-about .about-story-chip, .about-skill-filter, .about-certificate-nav,
-  .about-cert-nav-btn, a.icon-link, .nav-menu-toggle, .nav-icon-link, a.button,
-  .hero-social-link, .hero-badge-link, .filter-button, .back-to-top
+  .about-card,
+  .about-card-story,
+  .about-profile-card,
+  .about-card-story .about-profile-card,
+  .page-about .about-profile-card,
+  .page-about .about-card,
+  .page-about .story-chapters,
+  .about-skill-page,
+  .page-about .about-skill-page,
+  .about-cert-masonry-card,
+  .about-card-certificates .about-cert-masonry-card,
+  .gallery-masonry-item,
+  .featured-work-card,
+  .skills-evidence-card,
+  .blog-preview-card,
+  .project-card,
+  #project-header,
+  .stat-node,
+  .page-loader-mark,
+  .story-chapter-media,
+  .about-story-chip,
+  .page-about .about-story-chip,
+  .about-skill-filter,
+  .about-certificate-nav,
+  .about-cert-nav-btn,
+  a.icon-link,
+  a.button,
+  .hero-social-link,
+  .hero-badge-link,
+  .filter-button,
+  .back-to-top
 ),
-html body :is(
-  .about-card, .project-card, .featured-work-card, .skills-evidence-card, .stat-node,
-  .about-cert-masonry-card, .story-chapter-media, a.icon-link, .nav-menu-toggle, .nav-icon-link,
-  a.button, .hero-social-link, .hero-badge-link, .filter-button, .back-to-top,
-  .about-skill-filter, .about-certificate-nav, .about-cert-nav-btn
-):is(:hover, :focus-visible, :focus-within, :active) {
+  html body :is(
+  .about-card,
+  .project-card,
+  .featured-work-card,
+  .skills-evidence-card,
+  .stat-node,
+  .about-cert-masonry-card,
+  .story-chapter-media,
+  a.icon-link,
+  a.button,
+  .hero-social-link,
+  .hero-badge-link,
+  .filter-button,
+  .back-to-top,
+  .about-skill-filter,
+  .about-certificate-nav,
+  .about-cert-nav-btn
+):is(:hover,
+  :focus-visible,
+  :focus-within,
+  :active) {
   box-shadow: none;
 }
 

@@ -12,9 +12,9 @@ Live at **[portfolio.aimansam.my](https://portfolio.aimansam.my)**, with the blo
 
 ## What It Is
 
-A deployable portfolio site for a penetration tester focused on red team work. The site showcases security writeups, lab case studies, certifications, and skills — all driven by JSON content files that you edit directly or through Decap CMS.
+The source for three small sites that share one repo, one set of content and one look: a link hub, a portfolio and a blog. Everything is driven by JSON and Markdown files that you edit directly or through Decap CMS.
 
-**Built for:** security professionals who want a portfolio that looks credible and is easy to maintain — edit a JSON file, run a build script, push, and the site updates.
+**Built for:** security professionals who want a portfolio that looks credible and is easy to maintain: edit a file, push, and the sites update.
 
 **Not a template.** This is a real portfolio with real content (writeups, labs, certifications). Fork it, replace the content, and ship your own.
 
@@ -22,36 +22,31 @@ A deployable portfolio site for a penetration tester focused on red team work. T
 
 ## Live Site
 
-| Section | What's there |
-|---------|-------------|
-| **Home** | Hero, about, certifications, skills, stats, gallery |
-| **Projects** | 6 featured security projects with case study pages (8 case studies in `content/projects/`) |
-| **Blog** | 4 technical writeups (CTF solves, lab notes, exploitation workflow) |
-| **Gallery** | Image gallery |
-| **Admin** | Decap CMS at `/admin` — edit content via GitHub OAuth |
+| Site | Address | What's there |
+|------|---------|--------------|
+| **Link hub** | [aimansam.my](https://aimansam.my) | One screen: photo, one line, links to the portfolio, the blog and every profile |
+| **Portfolio** | [portfolio.aimansam.my](https://portfolio.aimansam.my) | Home (proof, featured research, selected projects, latest posts), About, Projects with case studies, Gallery with filters |
+| **Blog (Pwn Diary)** | [pwn.aimansam.my](https://pwn.aimansam.my) | Research, CTF and Labs writeups in Markdown, with contents list, tags and archive |
+
+Old `portfolio.aimansam.my/blog/...` addresses redirect to the blog.
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│                  nginx:alpine                 │
-│  index.html  about.html  projects.html       │
-│  gallery.html  blog/ (redirects)  admin/     │
-│  assets/                                     │
-│  content/  project-pages/  css/  js/         │
-│  sitemap.xml  robots.txt (generated/static)  │
-└───────────────────┬─────────────────────────┘
-                    │
-          docker-compose.yml (port 5200→80)
-                    │
-          Dockerfile (multi-stage: node build → nginx)
+content/ (JSON + Markdown)  ──►  npm run build  ──►  portfolio pages      ──► GitHub Pages
+                                                 ├─►  dist/blog (blog)     ──► Cloudflare (Workers static assets)
+                                                 └─►  dist/card (link hub) ──► Cloudflare (Workers static assets)
+                                 npm run prerender  renders the JSON-driven pages to static HTML
 ```
 
-**Content-driven.** All site content lives in JSON files under `content/`. The build scripts compile blog posts from JSON into static HTML, update the blog preview, inject SEO meta tags into `index.html`, and generate `sitemap.xml`.
+- **One build, three outputs.** `npm run build` writes the portfolio pages in place, the blog to `dist/blog` and the link hub to `dist/card`. The three addresses live in `content/site/sites.json`.
+- **Deploys.** Pushing to `main` runs `.github/workflows/deploy.yml`: the portfolio goes to GitHub Pages, and the blog and link hub are deployed to Cloudflare with `wrangler` (`wrangler.blog.jsonc`, `wrangler.card.jsonc`). A daily run also publishes posts scheduled for a future date.
+- **Self-hosting.** The `Dockerfile` has one nginx target per site (`portfolio`, `blog`, `card`), and `docker-compose.yml` runs all three.
+- **CMS.** Decap CMS runs at `/admin` on the portfolio, authenticates via GitHub OAuth through a Cloudflare Workers proxy (`cms-auth-portfolio.aimansam.my`), and writes back to `main`. Open a new post on `pwn.aimansam.my/posts/<slug>/` once it deploys, since the CMS preview link can only point at the portfolio.
 
-**CMS.** Decap CMS runs at `/admin`, authenticates via GitHub OAuth through a Cloudflare Workers proxy (`cms-auth-portfolio.aimansam.my`), and writes back to the `main` branch.
+Full setup steps (Cloudflare apps, secrets, email, analytics) are in [docs/deployment.md](docs/deployment.md).
 
 ---
 
@@ -158,19 +153,16 @@ Animations share one set of timings and easings (`--ease-out`, `--dur-*`, `--sta
 
 ## Deployment
 
-See [docs/deployment.md](docs/deployment.md) for the GitHub Pages and self-host details, including recommended response headers.
+See [docs/deployment.md](docs/deployment.md) for the three-site setup, the GitHub secrets, the custom email address and Cloudflare Web Analytics.
 
 **Docker:**
 
 ```bash
 docker compose up -d
+# portfolio  http://localhost:5200
+# blog       http://localhost:5201
+# link hub   http://localhost:5202
 ```
-
-The `docker-compose.yml` exposes port 5200 → container port 80. The `CNAME` file sets `portfolio.aimansam.my`.
-
-**Manual nginx:** Copy the built files to any nginx web root. The `Dockerfile` shows exactly what gets copied.
-
-**CMS auth:** The Decap CMS backend requires a Cloudflare Workers auth proxy at `https://cms-auth-portfolio.aimansam.my`. Without it, `/admin` will not authenticate. See `admin/config.yml` for the endpoint configuration.
 
 ---
 
@@ -195,51 +187,35 @@ docker compose up -d
 
 ```
 portfolio/
-├── index.html              # Homepage (SEO-injected)
-├── about.html              # About page
-├── projects.html           # Projects listing
-├── gallery.html            # Gallery page
-├── CNAME                   # Custom domain
-├── Dockerfile              # Multi-stage: node build → nginx:alpine
-├── docker-compose.yml      # Port 5200 → 80
-├── package.json            # Build scripts (npm run build)
-├── .dockerignore
-├── .gitignore
-├── admin/
-│   ├── index.html          # Decap CMS frontend
-│   └── config.yml          # CMS config: collections, auth, repo
-├── assets/
-│   ├── icons/              # SVG/PNG icons
-│   ├── images/             # Hero, certificates, gallery, projects (WebP)
-│   └── resume/             # Resume.pdf
+├── index.html, about.html, projects.html, gallery.html, 404.html   # Portfolio pages
+├── project-pages/project.html  # Case-study template (copied to projects/<id>/)
+├── card/                       # Link hub source (aimansam.my)
+├── blog-site/                  # Blog extras: 404, robots, headers, redirects
+├── content/
+│   ├── site/                   # Portfolio, navigation, SEO, sites.json (the three addresses)
+│   ├── projects/               # One JSON per case study
+│   └── blog/posts/<slug>/      # index.md + images for each post
 ├── css/
-│   ├── layout/             # Page styles, loaded in order (base → about-story)
-│   ├── typography.css
-│   ├── utilities.css
-│   └── blog.css
+│   ├── layout/                 # Page styles, loaded in order
+│   ├── typography.css, utilities.css
+│   ├── flat.css                # The flat look, header, home sections (portfolio)
+│   └── blog.css                # Blog styles
 ├── js/
-│   ├── main.js             # Entry point: fetch JSON, render, start UI
-│   ├── blog.js             # Blog client
-│   └── modules/            # utils, markup, apply (render), content (loader), ui, blog-render
-├── blog/
-│   ├── index.html          # Blog listing
-│   ├── posts/              # Generated post shells (+ committed post images)
-│   └── categories/ tags/   # Generated shells
-├── content/                # ALL editable content (JSON)
-├── project-pages/
-│   └── project.html        # Project case study template (copied to projects/<id>/)
-└── scripts/
-    ├── build-blog.js       # Builds the blog site (dist/blog) and redirect pages
-    ├── build-card.js       # Builds the aimansam.my link hub (dist/card)
-    ├── update-blog-preview.js  # Update blog-preview.json
-    ├── inject-seo.js       # Inject SEO meta into index.html
-    ├── build-sitemap.js    # Generate sitemap.xml
-    ├── build-projects.js   # Generate projects/<id>/index.html
-    ├── check-site.js       # CI integrity check
-    ├── prerender.js        # Build-time prerender (pages, projects, blog)
-    ├── new-post.js         # Scaffold a draft post
-    ├── preview.js          # Local blog preview with drafts and live rebuild
-    └── lib/posts.js        # Post loader (Markdown/JSON, defaults, drafts, scheduling)
+│   ├── main.js, blog.js        # Portfolio and blog entry points
+│   └── modules/                # utils, markup, apply, content, ui, motion, markdown, blog-render
+├── assets/                     # Icons, images (WebP, SVG diagrams), resume
+├── admin/                      # Decap CMS
+├── scripts/
+│   ├── build-blog.js           # Blog site (dist/blog) and redirect pages
+│   ├── build-card.js           # Link hub (dist/card)
+│   ├── build-projects.js, build-sitemap.js, inject-seo.js, update-blog-preview.js
+│   ├── prerender.js, check-site.js, preview.js, new-post.js
+│   ├── set-email.js            # Switch the contact email everywhere
+│   ├── covers/make_covers.py   # One-off: project cover cards
+│   └── lib/                    # posts, sites, analytics helpers
+├── wrangler.blog.jsonc, wrangler.card.jsonc   # Cloudflare deploy config
+├── Dockerfile, docker-compose.yml, nginx.conf, nginx-static.conf
+└── .github/workflows/deploy.yml
 ```
 
 ---
