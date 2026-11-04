@@ -2353,3 +2353,19 @@ a.project-tag:focus-visible {
 .blog-post-nav-link:focus-visible .blog-kicker {
   color: inherit;
 }
+
+/* ===== No capsules: tags, buttons and icon buttons are squared ===== */
+.blog-button,
+.code-copy,
+.blog-status,
+.blog-row-cat,
+.project-tag,
+.blog-tag-cloud .project-tag {
+  border-radius: 6px;
+}
+
+.theme-toggle,
+.blog-toc-fab,
+.back-to-top {
+  border-radius: 8px;
+}
