@@ -3,7 +3,7 @@ title: "Fake High Court Summons on WhatsApp: Analysing a ValleyRAT-Style Loader"
 date: "2026-11-04T20:00:00+08:00"
 summary: "A WhatsApp message posing as the Kuala Lumpur High Court delivers an ISO with a DLL-sideloaded loader that hides shellcode in the pixels of a bitmap. Delivery, attack chain, detections and IOCs."
 tags: [malware-analysis, threat-intel, valleyrat, dll-sideloading, phishing, malaysia]
-categories: [Writeups]
+categories: [Research]
 ---
 
 On 4 November 2026, a WhatsApp message impersonating the **Commercial Division of the Kuala Lumpur High Court** delivered a ZIP named `WA-22NCC-041-112026_3185.zip`. It told the recipient to forward the "summons" to the company's **Finance Manager** and to open it on a computer.

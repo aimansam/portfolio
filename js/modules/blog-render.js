@@ -51,7 +51,7 @@ export const archiveHeader = (title, intro = '') => `
 
 // Horizontal card: cover (or a patterned fallback showing the category) beside the text.
 export const postCard = (post) => {
-  const category = (post.categories || [])[0] || 'Notes';
+  const category = (post.categories || [])[0] || 'Research';
   return `
   <a class="blog-post-card" href="${postHref(post)}">
     <span class="blog-post-card-media${post.cover?.image ? '' : ' is-fallback'}">
@@ -259,7 +259,7 @@ export const setActiveNav = (root, path) => {
     const active = path.includes(`/${key}/`) ||
       (key === 'posts' && path.includes('/posts/')) ||
       (key === 'tags' && path.includes('/tags/')) ||
-      (['writeups', 'labs', 'notes'].includes(key) && path.includes(`/categories/${key}/`));
+      (['research', 'ctf', 'labs'].includes(key) && path.includes(`/categories/${key}/`));
     link.classList.toggle('is-active', active);
     if (active) link.setAttribute('aria-current', 'page');
   });

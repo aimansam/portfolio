@@ -1,5 +1,5 @@
 /**
- * Scaffolds a new blog post as a draft: npm run new-post -- "My Post Title" [--category Writeups]
+ * Scaffolds a new blog post as a draft: npm run new-post -- "My Post Title" [--category Research|CTF|Labs]
  * Creates content/blog/posts/<slug>/index.md. Put images next to it and reference them
  * by file name, for example ![Login page](login.png).
  */
@@ -9,11 +9,11 @@ const { slugify } = require('./lib/posts');
 
 const args = process.argv.slice(2);
 const categoryFlag = args.indexOf('--category');
-const category = categoryFlag >= 0 ? args.splice(categoryFlag, 2)[1] : 'Notes';
+const category = categoryFlag >= 0 ? args.splice(categoryFlag, 2)[1] : 'Research';
 const title = args.join(' ').trim();
 
 if (!title) {
-  console.error('Usage: npm run new-post -- "Post title" [--category Writeups|Labs|Notes]');
+  console.error('Usage: npm run new-post -- "Post title" [--category Research|CTF|Labs]');
   process.exit(1);
 }
 

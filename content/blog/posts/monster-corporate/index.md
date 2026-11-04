@@ -3,7 +3,7 @@ title: "B2R Monster Corporate Writeup"
 date: "2026-05-11T00:00:00+08:00"
 summary: "A boot-to-root writeup for Monster Corporate, covering SMB enumeration, WordPress admin access, plugin RCE, lateral movement with xxd, and cron-based privilege escalation."
 tags: [ctf, web, wordpress, smb, privilege-escalation]
-categories: [Writeups]
+categories: [CTF]
 cover:
   image: monster-corporate-00.png
   alt: "Monster Corporate boot-to-root challenge description"

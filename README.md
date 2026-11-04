@@ -113,7 +113,7 @@ content/
 **Adding a blog post:**
 
 ```bash
-npm run new-post -- "My Post Title" --category Writeups   # scaffolds a draft
+npm run new-post -- "My Post Title" --category CTF   # scaffolds a draft
 npm run preview                                           # http://localhost:4000/ (shows drafts)
 # set draft: false, commit, push: CI builds and deploys
 ```

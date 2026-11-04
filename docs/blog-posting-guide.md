@@ -7,7 +7,7 @@ A post is a Markdown file with a short header. Everything else (summary, cover, 
 ## Quick Path
 
 ```sh
-npm run new-post -- "My Post Title" --category Writeups   # Writeups | Labs | Notes
+npm run new-post -- "My Post Title" --category CTF   # Research | CTF | Labs
 # edit content/blog/posts/my-post-title/index.md
 npm run preview                                           # http://localhost:4000/
 ```
@@ -43,7 +43,7 @@ title: "My Post Title"               # required
 date: "2026-05-11T14:30:00+08:00"    # required; a future date schedules the post
 draft: true                          # drafts are never published
 tags: [ctf, web]                     # lowercased automatically
-categories: [Writeups]               # defaults to Notes
+categories: [CTF]                    # Research | CTF | Labs; defaults to Research
 summary: "One sentence."             # optional: defaults to the first paragraph
 cover: login.png                     # optional: defaults to the first image
 updated: "2026-05-20T09:00:00+08:00" # optional: shows "Updated ..." on the post

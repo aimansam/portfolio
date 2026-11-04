@@ -134,7 +134,7 @@ function normalize({ file, slug: fileSlug, raw }, now) {
   }
 
   const tags = [...new Set((raw.tags || []).map((tag) => slugify(tag)).filter(Boolean))];
-  const categories = (raw.categories || []).length ? raw.categories : ['Notes'];
+  const categories = (raw.categories || []).length ? raw.categories : ['Research'];
 
   const draft = raw.draft === true;
   const scheduled = !draft && instant > now;

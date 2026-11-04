@@ -323,8 +323,8 @@ collections:
         name: categories
         widget: list
         required: false
-        default: ["Notes"]
-        field: { label: Category, name: category, widget: select, options: ["Writeups", "Labs", "Notes"] }
+        default: ["Research"]
+        field: { label: Category, name: category, widget: select, options: ["Research", "CTF", "Labs"] }
       - label: Cover
         name: cover
         widget: object

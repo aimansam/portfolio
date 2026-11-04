@@ -58,9 +58,9 @@ const BLOG_SHELL = `<!doctype html>
       </button>
       <a class="nav-title-link blog-brand" href="/" aria-label="Pwn Diary, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Pwn Diary</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
-        <a href="/categories/writeups/" data-blog-nav="writeups">Writeups</a>
+        <a href="/categories/research/" data-blog-nav="research">Research</a>
+        <a href="/categories/ctf/" data-blog-nav="ctf">CTF</a>
         <a href="/categories/labs/" data-blog-nav="labs">Labs</a>
-        <a href="/categories/notes/" data-blog-nav="notes">Notes</a>
         <a href="/tags/" data-blog-nav="tags">Tags</a>
         <a href="/archive/" data-blog-nav="archive">Archive</a>
       </nav>
@@ -149,8 +149,8 @@ fs.copyFileSync(BLOG_DATA, path.join(BLOG_DIR, 'content/blog/posts.json'));
 fs.readdirSync(path.join(ROOT, 'blog-site')).forEach((name) => copy(`blog-site/${name}`, name));
 
 // Old portfolio.aimansam.my/blog/... addresses: a page that sends visitors (and search engines) to the new home.
-const stub = (route) => {
-  const target = `${BLOG}/${route}${route ? '/' : ''}`;
+const stub = (route, to = route) => {
+  const target = `${BLOG}/${to}${to ? '/' : ''}`;
   const dir = path.join(OLD_BLOG_DIR, route);
   ensureDir(dir);
   fs.writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
@@ -173,5 +173,7 @@ const stub = (route) => {
 posts.forEach((post) => stub(`posts/${post.slug}`));
 categories.forEach((category) => stub(`categories/${category}`));
 tags.forEach((tag) => stub(`tags/${tag}`));
+// Categories that were renamed keep their old address (see blog-site/_redirects for the blog itself).
+Object.entries({ writeups: 'ctf', notes: 'research' }).forEach(([from, to]) => stub(`categories/${from}`, `categories/${to}`));
 
 console.log(`Built blog with ${posts.length} posts${DRAFTS ? ' (including drafts)' : ''}.`);

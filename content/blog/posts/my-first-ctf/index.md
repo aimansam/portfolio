@@ -3,7 +3,7 @@ title: "My First CTF: Enumeration Lessons That Made Exploitation Click"
 date: "2026-05-06T00:34:31+08:00"
 summary: "How my first rooted CTF target taught me to slow down, enumerate carefully, and turn small signals into a full attack path."
 tags: [ctf, enumeration, privilege-escalation]
-categories: [Writeups]
+categories: [CTF]
 ---
 
 My first rooted CTF machine was where a lot of disconnected concepts finally started to feel practical. Instead of solving isolated challenge boxes, I had to think through a full attack path: enumerate, identify the weak point, gain a foothold, and then escalate privileges without guessing.
