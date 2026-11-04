@@ -1690,7 +1690,8 @@ a.project-tag:focus-visible {
     max-width: 1180px;
   }
 
-  .blog-post-header {
+  .blog-post-header,
+  .blog-post-cover {
     max-width: 920px;
   }
 }
