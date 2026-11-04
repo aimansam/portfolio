@@ -1,6 +1,6 @@
 # Blog Posting Guide
 
-How to write, preview, and publish posts for `zx10r Security Notes`.
+How to write, preview, and publish posts for `Pwn Diary`.
 
 A post is a Markdown file with a short header. Everything else (summary, cover, tags, URLs, social tags, sitemap, related posts) is generated.
 

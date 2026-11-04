@@ -31,8 +31,8 @@ const BLOG_SHELL = `<!doctype html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>zx10r Security Notes</title>
-    <meta name="description" content="Writeups, lab notes, and CTF workflows from red team and penetration testing practice.">
+    <title>Pwn Diary | zx10r</title>
+    <meta name="description" content="Pwn Diary: writeups, lab notes, and malware analysis from red team and penetration testing practice.">
     <link rel="icon" href="/assets/images/zx10r/favicon-64.png" type="image/png">
     <script>try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="stylesheet" href="/css/typography.css">
@@ -47,7 +47,7 @@ const BLOG_SHELL = `<!doctype html>
         <span class="nav-menu-toggle-bar"></span>
         <span class="nav-menu-toggle-bar"></span>
       </button>
-      <a class="nav-title-link blog-brand" href="/blog/" aria-label="zx10r Security Notes, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Security Notes</span></a>
+      <a class="nav-title-link blog-brand" href="/blog/" aria-label="Pwn Diary, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Pwn Diary</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
         <a href="/blog/categories/writeups/" data-blog-nav="writeups">Writeups</a>
         <a href="/blog/categories/labs/" data-blog-nav="labs">Labs</a>
@@ -69,7 +69,7 @@ ${PORTFOLIO_NAV_ITEMS}
 
     <main class="blog-main" id="blog-app" aria-live="polite">
       <section class="blog-loading">
-        <span class="blog-kicker">Security Notes</span>
+        <span class="blog-kicker">Pwn Diary</span>
         <h1>Loading blog...</h1>
       </section>
     </main>

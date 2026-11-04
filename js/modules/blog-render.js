@@ -42,7 +42,7 @@ const categoryCounts = (posts) => {
 
 export const archiveHeader = (title, intro = '') => `
   <header class="blog-page-header">
-    <span class="blog-kicker">Security Notes</span>
+    <span class="blog-kicker">Pwn Diary</span>
     <h1>${escapeHtml(title)}</h1>
     ${intro ? `<p>${escapeHtml(intro)}</p>` : ''}
   </header>
@@ -107,7 +107,7 @@ export const renderHome = (posts) => {
   return `
   <div class="blog-layout">
     <div class="blog-main-col">
-      <h1 class="blog-home-title">Security notes from the lab.</h1>
+      <h1 class="blog-home-title">A diary of things I broke, fixed and learned.</h1>
       ${postCards(shown)}
       ${posts.length > POSTS_ON_HOME ? `<a class="blog-more" href="/blog/posts/">View all ${posts.length} posts <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>` : ''}
     </div>
@@ -264,7 +264,7 @@ export const setActiveNav = (root, path) => {
   });
 };
 
-const SITE_NAME = 'zx10r Security Notes';
+const SITE_NAME = 'Pwn Diary';
 
 // Splits /blog/<a>/<b>/ into ['<a>', '<b>'].
 export const routeParts = (pathname) => pathname
@@ -294,7 +294,7 @@ export const renderRoute = (posts, parts) => {
   }
   if (parts[0] === 'tags') return renderTerms('Tags', countTerms(posts, 'tags'), tagHref);
   if (parts[0] === 'about') {
-    return `${archiveHeader('About this blog', 'Security notes, lab writeups, and practical lessons from offensive security practice.')}<section class="blog-note"><p>This space keeps the deeper technical writing separate from the portfolio while using the same design system and navigation.</p></section>`;
+    return `${archiveHeader('About this blog', 'A diary of things I broke, fixed and learned: lab writeups, malware analysis, and practical lessons from offensive security.')}<section class="blog-note"><p>This space keeps the deeper technical writing separate from the portfolio while using the same design system and navigation.</p></section>`;
   }
   return renderHome(posts);
 };
