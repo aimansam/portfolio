@@ -36,10 +36,28 @@
       ]
     },
     {
+      "title": "How it is built",
+      "content": [
+        "The challenge is a small Cloudflare Pages app. The front end is static, and one JavaScript Pages Function serves the recipe content, so it runs on the free tier with no server to maintain."
+      ],
+      "figure": {
+        "image": "../assets/images/projects/DIVIDE/build-and-deploy.svg",
+        "alt": "Diagram: a player's browser loads a static site and calls a JavaScript Pages Function, both on Cloudflare Pages. The function reads the flag from a Cloudflare secret stored as an environment variable. Below, local development with Wrangler or Flask feeds a build script, then a push to GitHub, then an automatic Cloudflare Pages deploy.",
+        "caption": "How the challenge is built, secured and deployed."
+      },
+      "bullets": [
+        "The front end is plain HTML, CSS and JavaScript with all 30 recipe cards pre-built, so Cloudflare needs no build step.",
+        "The flag is a Cloudflare secret read from an environment variable. It is never committed to the repository.",
+        "Wrangler runs the whole setup locally, and a Flask and Docker version is kept for parity.",
+        "A build script regenerates the page from the recipe list, and a push to GitHub redeploys the site automatically.",
+        "The recipe list lives in both the build script and the function on purpose, so each part stays portable on its own."
+      ]
+    },
+    {
       "title": "Web Security Lesson",
       "content": [
         "The main lesson is that client-side overlays are not access control. Sensitive decisions must be enforced by the server-side function, and the API behavior should be tested independently of what the browser displays.",
-        "This project adds a practical web-engineering example to the portfolio alongside the offensive testing work."
+        "It sits alongside my offensive testing work as a practical web-engineering example."
       ]
     }
   ],
