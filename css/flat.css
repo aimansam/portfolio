@@ -642,3 +642,64 @@ html body #footer {
     width: calc(100vw - 64px);
   }
 }
+
+/* ===== Page headers (About, Projects, Gallery): label, large title, one-line intro, rule ===== */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 26px;
+  border-bottom: 2px solid #141414;
+  white-space: normal;
+}
+
+.page-kicker {
+  color: rgba(20, 20, 20, 0.66);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.page-intro {
+  max-width: 62ch;
+  margin: 2px 0 0;
+  color: rgba(20, 20, 20, 0.75);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+@media only screen and (max-width: 800px) {
+  .page-header {
+    gap: 8px;
+    padding-bottom: 20px;
+  }
+
+  .page-title {
+    font-size: 34px;
+  }
+
+  .page-intro {
+    font-size: 16px;
+  }
+}
+
+/* Project cards carry 20px of invisible padding; pull the grid out so the images line up with the page title. */
+html body .projects-container {
+  margin-inline: -20px;
+}
+
+@media only screen and (max-width: 600px) {
+  html body .projects-container {
+    margin-inline: -12px;
+  }
+}
