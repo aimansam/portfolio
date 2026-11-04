@@ -6,15 +6,10 @@ export const createNavItemMarkup = (item) => {
   const targetAttributes = item.target
     ? ` target="${escapeHtml(item.target)}" rel="noopener noreferrer"`
     : ''
-  const label = escapeHtml(item.label)
-  const ariaLabel = escapeHtml(item.ariaLabel || item.label)
+  // A link to another site (the blog) says so with an arrow; the visible text is the accessible name.
+  const arrow = item.external ? '<span class="site-nav-arrow" aria-hidden="true"> &nearr;</span>' : ''
 
-  return `
-  <a class="nav-icon-link${isActive ? ' is-active' : ''}" href="${resolvePortfolioUrl(item.href)}" aria-label="${ariaLabel}"${isActive ? ' aria-current="page"' : ''}${targetAttributes}>
-    <img src="${resolvePortfolioUrl(item.icon)}" class="nav-icon" alt="">
-    <span class="nav-icon-label">${label}</span>
-  </a>
-`
+  return `<a class="site-nav-link${isActive ? ' is-active' : ''}" href="${resolvePortfolioUrl(item.href)}"${isActive ? ' aria-current="page"' : ''}${targetAttributes}>${escapeHtml(item.label)}${arrow}</a>`
 }
 
 export const createFooterLinkMarkup = (item) => {

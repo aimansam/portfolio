@@ -47,3 +47,152 @@ html body :is(
 ):is(:hover, :focus-visible, :focus-within, :active) {
   box-shadow: none;
 }
+
+/* ===== Site header: one flat bar (logo, links, Hire Me), the same pattern as the blog ===== */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 72px;
+  padding: 0 max(28px, calc((100% - 1120px) / 2));
+  border-bottom: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: border-color 180ms ease;
+  /* The header stays put while the page content cross-fades. */
+  view-transition-name: site-nav;
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: #141414;
+}
+
+.site-header .nav-title-link {
+  margin-right: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.site-nav-link {
+  position: relative;
+  padding: 6px 0;
+  color: #141414;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: #141414;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.site-nav-link:hover::after,
+.site-nav-link:focus-visible::after,
+.site-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.site-nav-link:focus-visible {
+  outline: 3px solid #0055cc;
+  outline-offset: 4px;
+}
+
+html body .site-header .nav-cta {
+  margin: 0;
+  padding: 0 16px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header .nav-cta .button-text {
+  font-size: 14px;
+}
+
+/* Without the left rail, the page content is centered under the header. */
+html body #main-content {
+  width: min(1120px, calc(100% - 64px));
+  margin: 120px auto 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    flex-wrap: wrap;
+    height: auto;
+    gap: 6px 12px;
+    padding: 12px 20px 0;
+    border-bottom-color: #141414;
+  }
+
+  .site-nav {
+    order: 3;
+    flex: 1 0 100%;
+    gap: 24px;
+    margin: 0 -20px;
+    padding: 4px 20px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav-link {
+    flex: none;
+    font-size: 15px;
+  }
+
+  .site-nav-link::after {
+    bottom: 0;
+  }
+
+  html body #main-content {
+    width: calc(100% - 40px);
+    margin: 28px auto 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  html body #main-content {
+    width: calc(100% - 24px);
+    margin-top: 24px;
+  }
+}
+
+/* The footer shares the header's and the content's edges. */
+html body #footer {
+  width: min(1120px, calc(100% - 64px));
+  margin: 24px auto 0;
+  padding: 24px 0 36px;
+  border-top: 2px solid #141414;
+}
+
+@media only screen and (max-width: 800px) {
+  html body #footer {
+    width: calc(100% - 40px);
+    padding: 20px 0 32px;
+  }
+}

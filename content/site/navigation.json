@@ -37,13 +37,8 @@
         "href": "https://pwn.aimansam.my/",
         "label": "Blog",
         "ariaLabel": "Go to blog",
-        "icon": "./assets/icons/article.svg"
-      },
-      {
-        "href": "mailto:aimansammrsm@gmail.com",
-        "label": "Email",
-        "ariaLabel": "Email contact",
-        "icon": "./assets/icons/mail.svg"
+        "icon": "./assets/icons/article.svg",
+        "external": true
       }
     ]
   }
