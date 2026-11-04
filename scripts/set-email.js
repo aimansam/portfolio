@@ -5,7 +5,7 @@
  *   node scripts/set-email.js hello@aimansam.my            # apply
  *   node scripts/set-email.js hello@aimansam.my --dry-run  # list the files that would change
  *
- * The current address is read from content/site/navigation.json (the Hire Me button).
+ * The current address is read from content/site/navigation.json (the header button).
  * Remember the resume PDF is a separate file and has to be updated by hand.
  */
 const fs = require('fs');

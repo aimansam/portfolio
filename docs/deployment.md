@@ -104,7 +104,7 @@ Both are switched on with a single value, and stay inert until then.
    custom address that forwards to your inbox. Confirm the verification email Cloudflare sends.
 2. Send yourself a test message to the new address.
 3. Run `node scripts/set-email.js hello@aimansam.my` (add `--dry-run` first to see which files change),
-   then `npm run build`, commit and push. It replaces the address in the Hire Me button, hero, footer, home page
+   then `npm run build`, commit and push. It replaces the address in the header button, hero, footer, home page
    contact panel, link hub, search data and 404 pages.
 4. Update the email inside `assets/resume/Resume.pdf` by hand, since that is a separate file.
 
