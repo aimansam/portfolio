@@ -27,6 +27,8 @@ The WhatsApp message read:
 
 > Please forward this summons from the Commercial Division of the Kuala Lumpur High Court to your company's Finance Manager and open it on a computer for review.
 
+![WhatsApp message with the attachment WA-22NCC-041-112026_3185.zip (2 MB), received at 11:53, asking the recipient to forward the summons to the Finance Manager and open it on a computer](whatsapp-lure.png)
+
 | Element | Why it works |
 |---|---|
 | Court summons | Creates fear and urgency, so recipients act before verifying |
