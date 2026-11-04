@@ -13,8 +13,7 @@ html body :is(
   #project-header,
   .stat-node,
   .skills-evidence-card,
-  .about-card-story .about-profile-card,
-  .page-loader-mark
+  .about-card-story .about-profile-card
 ) {
   border-radius: 14px;
 }
@@ -62,7 +61,6 @@ html body :is(
   .project-card,
   #project-header,
   .stat-node,
-  .page-loader-mark,
   .story-chapter-media,
   .about-story-chip,
   .page-about .about-story-chip,

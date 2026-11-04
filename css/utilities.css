@@ -435,17 +435,6 @@ a.no-underline:hover {
 
 /* --- Dark Mode --- */
 
-@keyframes page-loader-pulse-dark {
-  0%, 100% {
-    transform: translateY(0) scale(0.96);
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
-  }
-  50% {
-    transform: translateY(-4px) scale(1);
-    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.3);
-  }
-}
-
 .back-to-top {
   position: fixed;
   right: 24px;

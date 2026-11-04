@@ -17,8 +17,7 @@
     transition: none;
   }
 
-  .page-loader-mark,
-  .page-loader-dots span,
+  .page-loader-cursor,
   .page-loader-bar span {
     animation: none;
   }
