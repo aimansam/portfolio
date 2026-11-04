@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 330" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+<title id="t">Bad USB payload workflow</title><desc id="d">Five steps: plan the payload, check the environment, inject keystrokes with tuned delays, observe what works and fails, then review the host indicators. Defender controls underneath: device control policy, application allow-listing, endpoint monitoring and user awareness.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#141414"/></marker></defs>
+<rect width="1000" height="330" fill="#ffffff"/>
+<rect x="26" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
+<circle cx="50" cy="68" r="14" fill="#141414"/><text x="50" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">1</text>
+<text x="72" y="73" font-size="15.5" font-weight="800" fill="#141414">Plan payload</text>
+<text x="42" y="110" font-size="13" font-weight="500" fill="#5c5c5c">Shell, PowerShell or</text>
+<text x="42" y="131" font-size="13" font-weight="500" fill="#5c5c5c">staged actions</text>
+<path d="M198 104.0 H220" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+<rect x="220" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
+<circle cx="244" cy="68" r="14" fill="#141414"/><text x="244" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">2</text>
+<text x="266" y="73" font-size="15.5" font-weight="800" fill="#141414">Check setup</text>
+<text x="236" y="110" font-size="13" font-weight="500" fill="#5c5c5c">User session, window</text>
+<text x="236" y="131" font-size="13" font-weight="500" fill="#5c5c5c">focus and language</text>
+<path d="M392 104.0 H414" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+<rect x="414" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
+<circle cx="438" cy="68" r="14" fill="#141414"/><text x="438" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">3</text>
+<text x="460" y="73" font-size="15.5" font-weight="800" fill="#141414">Inject keys</text>
+<text x="430" y="110" font-size="13" font-weight="500" fill="#5c5c5c">Delays tuned so the</text>
+<text x="430" y="131" font-size="13" font-weight="500" fill="#5c5c5c">payload runs reliably</text>
+<path d="M586 104.0 H608" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+<rect x="608" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
+<circle cx="632" cy="68" r="14" fill="#141414"/><text x="632" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">4</text>
+<text x="654" y="73" font-size="15.5" font-weight="800" fill="#141414">Observe</text>
+<text x="624" y="110" font-size="13" font-weight="500" fill="#5c5c5c">What works, and what</text>
+<text x="624" y="131" font-size="13" font-weight="500" fill="#5c5c5c">fails under controls</text>
+<path d="M780 104.0 H802" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+<rect x="802" y="40" width="172" height="128" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
+<circle cx="826" cy="68" r="14" fill="#141414"/><text x="826" y="73" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">5</text>
+<text x="848" y="73" font-size="15.5" font-weight="800" fill="#141414">Indicators</text>
+<text x="818" y="110" font-size="13" font-weight="500" fill="#5c5c5c">Host events defenders</text>
+<text x="818" y="131" font-size="13" font-weight="500" fill="#5c5c5c">should watch for</text>
+<rect x="26" y="210" width="948" height="96" rx="14" fill="none" stroke="#141414" stroke-width="1.6" stroke-dasharray="8 6"/>
+<text x="42" y="236" font-size="13" font-weight="800" letter-spacing="1.6" fill="#5c5c5c">DEFENDER CONTROLS THAT INTERRUPT IT</text>
+<rect x="42.0" y="250" width="218.5" height="38" rx="8" fill="#ffffff" stroke="#141414" stroke-width="1.6"/><text x="151.25" y="274" text-anchor="middle" font-size="13.5" font-weight="700" fill="#141414">Device control policy</text>
+<rect x="274.5" y="250" width="218.5" height="38" rx="8" fill="#ffffff" stroke="#141414" stroke-width="1.6"/><text x="383.75" y="274" text-anchor="middle" font-size="13.5" font-weight="700" fill="#141414">Application allow-listing</text>
+<rect x="507.0" y="250" width="218.5" height="38" rx="8" fill="#ffffff" stroke="#141414" stroke-width="1.6"/><text x="616.25" y="274" text-anchor="middle" font-size="13.5" font-weight="700" fill="#141414">Endpoint monitoring</text>
+<rect x="739.5" y="250" width="218.5" height="38" rx="8" fill="#ffffff" stroke="#141414" stroke-width="1.6"/><text x="848.75" y="274" text-anchor="middle" font-size="13.5" font-weight="700" fill="#141414">User awareness</text>
+</svg>

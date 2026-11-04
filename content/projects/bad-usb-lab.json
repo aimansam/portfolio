@@ -39,7 +39,12 @@
       "content": [
         "The lab focused on keystroke injection workflows, payload reliability, execution delay tuning, and environmental checks before running sensitive actions. This made the project useful for understanding how physical attack vectors interact with user sessions, application focus, language settings, USB trust, and local security tooling.",
         "I used it to explore how different payload styles behave across Windows systems, including command shell launches, PowerShell-based execution, staged operator actions, and automation designed to minimize visible user disruption. Testing emphasized both exploitation logic and defensive visibility."
-      ]
+      ],
+      "figure": {
+        "image": "../assets/images/projects/bad-usb-lab/payload-workflow.svg",
+        "alt": "Diagram: five steps from planning a payload, checking the environment, injecting keystrokes with tuned delays, observing what works and fails, to reviewing the host indicators. Below, the defender controls that interrupt it: device control policy, application allow-listing, endpoint monitoring and user awareness.",
+        "caption": "The payload workflow and the defender controls that interrupt it. No payload code is published."
+      }
     },
     {
       "title": "Security Value / Takeaways",

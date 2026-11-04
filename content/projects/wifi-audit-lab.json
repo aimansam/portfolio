@@ -39,7 +39,12 @@
       "content": [
         "Key activities included reconnaissance of nearby networks, packet capture and inspection, misconfiguration analysis, rogue AP simulation, deauthentication testing, and credential capture scenarios in a safe audit context. The emphasis was on understanding exactly when each technique is useful, noisy, or operationally risky.",
         "The project also supported testing around encryption posture, captive portal behavior, client roaming, and how endpoints respond when moved toward hostile or impersonated wireless infrastructure. This made it useful for both red-team practice and risk communication during reporting."
-      ]
+      ],
+      "figure": {
+        "image": "../assets/images/projects/wifi-audit-lab/audit-workflow.svg",
+        "alt": "Diagram: five audit steps, reconnaissance, packet capture, analysis of misconfigurations and encryption posture, simulation of rogue access points and credential capture, and a report. The report recommends encryption, client isolation, SSID trust, monitoring and user training.",
+        "caption": "The audit method, from reconnaissance to a report with remediation. All activity stays in a controlled, authorized lab."
+      }
     },
     {
       "title": "What This Project Demonstrates",
