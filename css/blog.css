@@ -1693,3 +1693,78 @@ a.project-tag:focus-visible {
     max-width: 920px;
   }
 }
+
+/* Section numbers (1, 1.1, 2 ...) on long posts, shared by the contents list and the headings. */
+.blog-toc ol {
+  counter-reset: sec sub;
+}
+
+.blog-toc li {
+  display: flex;
+  gap: 8px;
+}
+
+.blog-toc li > a {
+  flex: 1;
+  min-width: 0;
+}
+
+.blog-toc li::before {
+  flex: none;
+  min-width: 1.6em;
+  color: var(--faint);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.55;
+}
+
+.blog-toc .blog-toc-level-2 {
+  counter-increment: sec;
+  counter-reset: sub;
+}
+
+.blog-toc .blog-toc-level-2::before {
+  content: counter(sec);
+}
+
+.blog-toc .blog-toc-level-3 {
+  counter-increment: sub;
+}
+
+.blog-toc .blog-toc-level-3::before {
+  content: counter(sec) "." counter(sub);
+  min-width: 2.2em;
+}
+
+.blog-toc .blog-toc-level-4::before {
+  content: "–";
+}
+
+.blog-post-body.has-toc .blog-post-content {
+  counter-reset: sec sub;
+}
+
+.blog-post-body.has-toc .blog-post-content h2 {
+  counter-increment: sec;
+  counter-reset: sub;
+}
+
+.blog-post-body.has-toc .blog-post-content h3 {
+  counter-increment: sub;
+}
+
+.blog-post-body.has-toc .blog-post-content h2::before,
+.blog-post-body.has-toc .blog-post-content h3::before {
+  margin-right: 0.5em;
+  color: var(--faint);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.blog-post-body.has-toc .blog-post-content h2::before {
+  content: counter(sec) ".";
+}
+
+.blog-post-body.has-toc .blog-post-content h3::before {
+  content: counter(sec) "." counter(sub);
+}
