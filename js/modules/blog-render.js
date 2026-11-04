@@ -40,9 +40,10 @@ const categoryCounts = (posts) => {
   return [...counts.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 };
 
-export const archiveHeader = (title, intro = '') => `
+// The small label above a page title says what kind of page it is.
+export const archiveHeader = (title, intro = '', kicker = 'Pwn Diary') => `
   <header class="blog-page-header">
-    <span class="blog-kicker">Pwn Diary</span>
+    <span class="blog-kicker">${escapeHtml(kicker)}</span>
     <h1>${escapeHtml(title)}</h1>
     ${intro ? `<p>${escapeHtml(intro)}</p>` : ''}
   </header>
@@ -90,8 +91,8 @@ export const renderHome = (posts) => {
 `;
 };
 
-export const renderList = (title, posts, intro = '') => `
-  ${archiveHeader(title, intro)}
+export const renderList = (title, posts, intro = '', kicker = 'Pwn Diary') => `
+  ${archiveHeader(title, intro, kicker)}
   <div class="blog-index">${postRows(posts)}</div>
 `;
 
@@ -104,7 +105,7 @@ export const renderArchive = (posts) => {
   const years = [...byYear.keys()].sort((a, b) => b - a);
 
   return `
-  ${archiveHeader('Archive', 'Every post, grouped by year.')}
+  ${archiveHeader('Archive', 'Every post, grouped by year.', 'By year')}
   ${years.length > 1 ? `<nav class="blog-archive-years" aria-label="Jump to year">${years.map((year) => `<a class="project-tag" href="#year-${year}">${year}</a>`).join('')}</nav>` : ''}
   <div class="blog-archive">
     ${years.map((year) => `
@@ -126,7 +127,7 @@ export const renderArchive = (posts) => {
 };
 
 export const renderTerms = (title, terms, hrefFor) => `
-  ${archiveHeader(title, 'Browse the writing by topic and lab context.')}
+  ${archiveHeader(title, 'Browse the writing by topic and lab context.', 'Topics')}
   <section class="blog-tag-page" aria-label="All tags">
     <div class="blog-tag-cloud blog-tag-cloud-large">
       ${[...terms].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([term, count]) => `<a class="project-tag" href="${hrefFor(term)}">${escapeHtml(term)} <span>${count}</span></a>`).join('')}
@@ -255,22 +256,22 @@ export const renderRoute = (posts, parts) => {
   if (!parts.length) return renderHome(posts);
   if (parts[0] === 'posts' && parts[1]) {
     const post = findPost(posts, parts);
-    return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.');
+    return post ? renderPost(post, posts) : renderList('Post not found', posts, 'That post does not exist yet.', '404');
   }
   if (parts[0] === 'archive') return renderArchive(posts);
-  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.');
+  if (parts[0] === 'posts') return renderList('All posts', posts, 'Every writeup, lab note, and security workflow in one place.', 'Index');
   if (parts[0] === 'categories' && parts[1]) {
     const filtered = posts.filter((post) => (post.categories || []).some((category) => slugify(category) === parts[1]));
     const name = categoryCounts(posts).find((entry) => entry.slug === parts[1])?.name || parts[1].replace(/-/g, ' ');
-    return renderList(name, filtered);
+    return renderList(name, filtered, '', 'Category');
   }
   if (parts[0] === 'tags' && parts[1]) {
     const filtered = posts.filter((post) => (post.tags || []).some((tag) => slugify(tag) === parts[1]));
-    return renderList(parts[1].replace(/-/g, ' '), filtered);
+    return renderList(parts[1].replace(/-/g, ' '), filtered, '', 'Tag');
   }
   if (parts[0] === 'tags') return renderTerms('Tags', countTerms(posts, 'tags'), tagHref);
   if (parts[0] === 'about') {
-    return `${archiveHeader('About this blog', 'A diary of things I broke, fixed and learned: lab writeups, malware analysis, and practical lessons from offensive security.')}<section class="blog-note"><p>This space keeps the deeper technical writing separate from the portfolio while using the same design system and navigation.</p></section>`;
+    return `${archiveHeader('About this blog', 'A diary of things I broke, fixed and learned: lab writeups, malware analysis, and practical lessons from offensive security.', 'About')}<section class="blog-note"><p>This space keeps the deeper technical writing separate from the portfolio while using the same design system and navigation.</p></section>`;
   }
   return renderHome(posts);
 };

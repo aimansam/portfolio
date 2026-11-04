@@ -49,7 +49,7 @@ const BLOG_SHELL = `<!doctype html>
 
     <main class="blog-main" id="blog-app" aria-live="polite">
       <section class="blog-loading">
-        <span class="blog-kicker">Pwn Diary</span>
+        <span class="blog-kicker">Loading</span>
         <h1>Loading blog...</h1>
       </section>
     </main>
