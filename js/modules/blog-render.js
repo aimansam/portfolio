@@ -179,13 +179,25 @@ const relatedPosts = (post, posts, limit = 2) => posts
   .slice(0, limit)
   .map((entry) => entry.other);
 
+// Section numbers (1, 1.1, 2 ...) for h2/h3 headings, keyed by heading id.
+const sectionNumbers = (headings) => {
+  const numbers = new Map();
+  let section = 0;
+  let sub = 0;
+  headings.forEach((heading) => {
+    if (heading.level === 2) { section += 1; sub = 0; numbers.set(heading.id, `${section}`); }
+    else if (heading.level === 3 && section) { sub += 1; numbers.set(heading.id, `${section}.${sub}`); }
+  });
+  return numbers;
+};
+
 // Only worth the space on longer posts: 5+ minutes, or plenty of sections.
-const tableOfContents = (headings, minutes) => headings.length < 3 || (minutes < 5 && headings.length < 8) ? '' : `
+const tableOfContents = (headings, minutes, numbers) => headings.length < 3 || (minutes < 5 && headings.length < 8) ? '' : `
   <nav class="blog-toc" aria-label="Table of contents">
     <details open>
       <summary>On this page</summary>
       <ol>
-        ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
+        ${headings.map((heading) => `<li class="blog-toc-level-${heading.level}"${numbers.has(heading.id) ? ` data-num="${numbers.get(heading.id)}"` : ''}><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`).join('')}
       </ol>
     </details>
   </nav>
@@ -197,7 +209,8 @@ export const renderPost = (post, posts = []) => {
   const newer = index > 0 ? posts[index - 1] : null;
   const older = index >= 0 ? posts[index + 1] : null;
   const related = relatedPosts(post, posts);
-  const toc = tableOfContents(headings, readMinutes(post.body));
+  const numbers = sectionNumbers(headings);
+  const toc = tableOfContents(headings, readMinutes(post.body), numbers);
 
   return `
   <div class="blog-progress" aria-hidden="true"><span></span></div>
@@ -217,7 +230,7 @@ export const renderPost = (post, posts = []) => {
     ${post.cover?.image && !html.includes(post.cover.image) ? `<figure class="blog-post-cover"><img src="${escapeHtml(post.cover.image)}" alt="${escapeHtml(post.cover.alt || post.title)}" data-lightbox="${escapeHtml(post.cover.image)}" data-lightbox-title="${escapeHtml(post.cover.alt || post.title)}" role="button" tabindex="0"></figure>` : ''}
     <div class="blog-post-body${toc ? ' has-toc' : ''}">
       ${toc}
-      <div class="blog-post-content">${html}</div>
+      <div class="blog-post-content">${toc ? html.replace(/<h([23]) id="([^"]+)"/gu, (match, level, id) => numbers.has(id) ? `<h${level} id="${id}" data-num="${numbers.get(id)}"` : match) : html}</div>
     </div>
     <footer class="blog-post-footer">
       ${newer || older ? `<nav class="blog-post-nav" aria-label="More posts">${postNav('Newer', newer)}${postNav('Older', older)}</nav>` : ''}
