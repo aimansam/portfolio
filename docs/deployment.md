@@ -4,9 +4,9 @@ One repo builds **three sites**:
 
 | Site | Address | Source | Hosted on |
 |---|---|---|---|
-| Link hub | `aimansam.my` | `card/` → `dist/card` | Cloudflare Pages |
+| Link hub | `aimansam.my` | `card/` → `dist/card` | Cloudflare (static assets) |
 | Portfolio | `portfolio.aimansam.my` | repo root | GitHub Pages (`CNAME`) |
-| Blog (Pwn Diary) | `pwn.aimansam.my` | `content/blog/` → `dist/blog` | Cloudflare Pages |
+| Blog (Pwn Diary) | `pwn.aimansam.my` | `content/blog/` → `dist/blog` | Cloudflare (static assets) |
 
 The three addresses live in `content/site/sites.json`. `npm run build` produces all of them;
 the host for each site just publishes its own folder.
@@ -20,31 +20,37 @@ which is only small redirect pages: `portfolio.aimansam.my/blog/...` sends visit
 engines to `pwn.aimansam.my/...` (GitHub Pages cannot do real 301s, so these use
 `<meta refresh>` plus a canonical link).
 
-## Blog and link hub: Cloudflare Pages (one-time setup)
+## Blog and link hub: Cloudflare Workers static assets (one-time setup)
 
-Create two Pages projects from this same GitHub repo (Workers & Pages → Create → Pages → Connect to Git).
+Cloudflare's "Create an app" flow (Workers & Pages → Create application → Import a repository)
+builds a Worker that serves a folder of static files. Each site has a config file in the repo root
+that says which folder to serve (`wrangler.blog.jsonc`, `wrangler.card.jsonc`). Create two apps from
+this same GitHub repo:
 
 | | Blog | Link hub |
 |---|---|---|
+| Project name | `pwn-diary` | `aimansam-card` |
+| Build command | `npm run build && npm run prerender` | `npm run build` |
+| Deploy command | `npx wrangler deploy --config wrangler.blog.jsonc` | `npx wrangler deploy --config wrangler.card.jsonc` |
+| Preview command | `npx wrangler versions upload --config wrangler.blog.jsonc` | `npx wrangler versions upload --config wrangler.card.jsonc` |
+| Variable | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
 | Production branch | `main` | `main` |
-| Build command | `npm ci && npm run build && npm run prerender` | `npm ci && npm run build` |
-| Build output directory | `dist/blog` | `dist/card` |
-| Environment variable | `NODE_VERSION` = `22` | `NODE_VERSION` = `22` |
 | Custom domain | `pwn.aimansam.my` | `aimansam.my` (and `www.aimansam.my`) |
 
-Because the DNS is on Cloudflare, adding the custom domain in the project creates the DNS record
-and the HTTPS certificate for you. Then:
+The project name must match `name` in its config file. Add the custom domain under the app's
+Settings → Domains & Routes; because the DNS is on Cloudflare, the record and HTTPS certificate are created for you.
+The production branch is under Settings → Builds → Branch control.
 
-- **`www.aimansam.my`**: add it as a second custom domain on the link-hub project, or a Redirect Rule to `https://aimansam.my/`.
+- **`www.aimansam.my`**: add it as a second custom domain on the link-hub app, or a Redirect Rule to `https://aimansam.my/`.
 - **Old links**: the redirect pages above cover them. For real 301s, add a Redirect Rule on `portfolio.aimansam.my`: when the path starts with `/blog`, redirect to `https://pwn.aimansam.my/` + the rest of the path.
-- **Headers and caching**: `dist/blog/_headers` and `dist/card/_headers` (sources: `blog-site/_headers`, `scripts/build-card.js`) are applied by Cloudflare Pages automatically.
+- **Headers and caching**: `dist/blog/_headers` and `dist/card/_headers` (sources: `blog-site/_headers`, `scripts/build-card.js`) are applied automatically, and `404-page` serves each site's own 404.html.
 
 ### Scheduled posts
 
 A post dated in the future is left out of the build, so the blog must rebuild when the date arrives.
 The daily GitHub Actions run does this by calling Cloudflare deploy hooks:
 
-1. In each Pages project: Settings → Builds → Deploy hooks → add one for `main`.
+1. In each Cloudflare app: Settings → Builds → Deploy hooks → add one for `main`.
 2. In GitHub: Settings → Secrets and variables → Actions → add `CF_BLOG_DEPLOY_HOOK` and `CF_CARD_DEPLOY_HOOK` with those URLs.
 
 Without the secrets the step is skipped, and the blog only updates when you push.

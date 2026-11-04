@@ -1,0 +1,11 @@
+// Cloudflare Workers (static assets) config for the blog at pwn.aimansam.my.
+// Build command: npm run build && npm run prerender
+// Deploy command: npx wrangler deploy --config wrangler.blog.jsonc
+{
+  "name": "pwn-diary",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist/blog",
+    "not_found_handling": "404-page"
+  }
+}

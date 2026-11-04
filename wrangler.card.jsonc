@@ -1,0 +1,11 @@
+// Cloudflare Workers (static assets) config for the link hub at aimansam.my.
+// Build command: npm run build
+// Deploy command: npx wrangler deploy --config wrangler.card.jsonc
+{
+  "name": "aimansam-card",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist/card",
+    "not_found_handling": "404-page"
+  }
+}
