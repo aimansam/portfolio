@@ -1,52 +1,89 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
 <title id="t">How an OxBlood drill runs</title><desc id="d">Seven steps: create the exercise, set up teams, plan rounds, prepare the range, start a round, play and score with referee adjustments, then finish and reset the range before the next round.</desc>
+<style>
+.pkt{display:none}
+@media (prefers-reduced-motion: no-preference){
+  .n{transform-box:fill-box;transform-origin:center;animation:pop .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .a{stroke-dasharray:1;animation:draw .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .h{animation:head .2s ease-out calc(var(--d,0s) + .4s) both}
+  .pkt{display:block;offset-rotate:0deg;animation:ride var(--t,5s) cubic-bezier(.45,0,.55,1) var(--d,0s) both}
+}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.93)}to{opacity:1;transform:none}}
+@keyframes draw{0%{opacity:0;stroke-dashoffset:1}1%{opacity:1;stroke-dashoffset:1}100%{opacity:1;stroke-dashoffset:0}}
+@keyframes head{from{opacity:0}to{opacity:1}}
+@keyframes ride{0%{offset-distance:0%;opacity:0}6%{opacity:1}94%{opacity:1}100%{offset-distance:100%;opacity:0}}
+</style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#141414"/></marker></defs>
 <rect width="1000" height="440" fill="#ffffff"/>
+<g class="n" style="--d:0.12s">
 <rect x="30" y="40" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="54" cy="66" r="14" fill="#141414"/><text x="54" y="71" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">1</text>
 <text x="76" y="71" font-size="16" font-weight="800" fill="#141414">Create exercise</text>
 <text x="46" y="102" font-size="13" font-weight="500" fill="#5c5c5c">Pick a scenario and</text>
 <text x="46" y="122" font-size="13" font-weight="500" fill="#5c5c5c">an organization</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.22s" d="M235 92 H275" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.22s" d="M235 92 H275" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.32s">
 <rect x="275" y="40" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="299" cy="66" r="14" fill="#141414"/><text x="299" y="71" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">2</text>
 <text x="321" y="71" font-size="16" font-weight="800" fill="#141414">Set up teams</text>
 <text x="291" y="102" font-size="13" font-weight="500" fill="#5c5c5c">2, 4 or 6 teams,</text>
 <text x="291" y="122" font-size="13" font-weight="500" fill="#5c5c5c">up to 20 players</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.42s" d="M480 92 H520" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.42s" d="M480 92 H520" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.52s">
 <rect x="520" y="40" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="544" cy="66" r="14" fill="#141414"/><text x="544" y="71" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">3</text>
 <text x="566" y="71" font-size="16" font-weight="800" fill="#141414">Plan rounds</text>
 <text x="536" y="102" font-size="13" font-weight="500" fill="#5c5c5c">Sides swap: every team</text>
 <text x="536" y="122" font-size="13" font-weight="500" fill="#5c5c5c">attacks and defends once</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.62s" d="M725 92 H765" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.62s" d="M725 92 H765" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.72s">
 <rect x="765" y="40" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="789" cy="66" r="14" fill="#141414"/><text x="789" y="71" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">4</text>
 <text x="811" y="71" font-size="16" font-weight="800" fill="#141414">Prepare range</text>
 <text x="781" y="102" font-size="13" font-weight="500" fill="#5c5c5c">Clone VMs on Proxmox,</text>
 <text x="781" y="122" font-size="13" font-weight="500" fill="#5c5c5c">one copy per match</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.82s" d="M867 144 V220" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.82s" d="M867 144 V220" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.92s">
 <rect x="765" y="220" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="789" cy="246" r="14" fill="#141414"/><text x="789" y="251" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">5</text>
 <text x="811" y="251" font-size="16" font-weight="800" fill="#141414">Start a round</text>
 <text x="781" y="282" font-size="13" font-weight="500" fill="#5c5c5c">Fresh flags are planted</text>
 <text x="781" y="302" font-size="13" font-weight="500" fill="#5c5c5c">on the machines</text>
+</g>
+<path class="a" pathLength="1" style="--d:1.02s" d="M765 272 H725" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.02s" d="M765 272 H725" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:1.12s">
 <rect x="520" y="220" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="544" cy="246" r="14" fill="#141414"/><text x="544" y="251" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">6</text>
 <text x="566" y="251" font-size="16" font-weight="800" fill="#141414">Play and score</text>
 <text x="536" y="282" font-size="13" font-weight="500" fill="#5c5c5c">Points decay over time;</text>
 <text x="536" y="302" font-size="13" font-weight="500" fill="#5c5c5c">first capture earns +25%</text>
+</g>
+<path class="a" pathLength="1" style="--d:1.22s" d="M520 272 H480" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.22s" d="M520 272 H480" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:1.32s">
 <rect x="275" y="220" width="205" height="104" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <circle cx="299" cy="246" r="14" fill="#141414"/><text x="299" y="251" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">7</text>
 <text x="321" y="251" font-size="16" font-weight="800" fill="#141414">Finish and reset</text>
 <text x="291" y="282" font-size="13" font-weight="500" fill="#5c5c5c">Reveal the scoreboard,</text>
 <text x="291" y="302" font-size="13" font-weight="500" fill="#5c5c5c">reset to clean-baseline</text>
-<path d="M235 92 H275" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M480 92 H520" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M725 92 H765" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M867 144 V220" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M765 272 H725" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M520 272 H480" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+</g>
+<g class="n" style="--d:1.42s">
 <rect x="520" y="350" width="205" height="56" rx="10" fill="#ffffff" stroke="#141414" stroke-width="2" stroke-dasharray="7 6"/>
 <text x="622.5" y="373.0" text-anchor="middle" font-size="14" font-weight="500" fill="#5c5c5c">Referees adjust points</text>
 <text x="622.5" y="392.0" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">with a written reason</text>
-<path d="M622 324 V350" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
-<path d="M377 324 V420 H867 V324" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<text x="622" y="437" text-anchor="middle" font-size="13" font-weight="700" fill="#5c5c5c">Next round: reset the range, then start again</text>
+</g>
+<path class="n" style="--d:1.52s" d="M622 324 V350" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<path class="a" pathLength="1" style="--d:1.62s" d="M377 324 V420 H867 V324" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.62s" d="M377 324 V420 H867 V324" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<text class="n" style="--d:1.72s" x="622" y="437" text-anchor="middle" font-size="13" font-weight="700" fill="#5c5c5c">Next round: reset the range, then start again</text>
+<g class="pkt" style="--d:2.22s;--t:8s;offset-path:path('M132 92 H867 V272 H377 V420 H867 V272')"><circle r="10" fill="#ffffff" fill-opacity=".85"/><circle r="6.5" fill="#d9291c"/></g>
 </svg>

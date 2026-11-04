@@ -1,44 +1,84 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
 <title id="t">How the DIVIDE recipe challenge is built</title><desc id="d">A browser loads a static site and calls a JavaScript Pages Function on Cloudflare Pages. The function reads the flag from a Cloudflare secret. Code is pushed to GitHub, which redeploys Cloudflare Pages automatically. Locally the challenge runs with Wrangler, or with Flask in Docker for parity.</desc>
+<style>
+.pkt{display:none}
+@media (prefers-reduced-motion: no-preference){
+  .n{transform-box:fill-box;transform-origin:center;animation:pop .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .a{stroke-dasharray:1;animation:draw .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .h{animation:head .2s ease-out calc(var(--d,0s) + .4s) both}
+  .pkt{display:block;offset-rotate:0deg;animation:ride var(--t,5s) cubic-bezier(.45,0,.55,1) var(--d,0s) both}
+}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.93)}to{opacity:1;transform:none}}
+@keyframes draw{0%{opacity:0;stroke-dashoffset:1}1%{opacity:1;stroke-dashoffset:1}100%{opacity:1;stroke-dashoffset:0}}
+@keyframes head{from{opacity:0}to{opacity:1}}
+@keyframes ride{0%{offset-distance:0%;opacity:0}6%{opacity:1}94%{opacity:1}100%{offset-distance:100%;opacity:0}}
+</style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#141414"/></marker></defs>
 <rect width="800" height="470" fill="#ffffff"/>
+<g class="n" style="--d:0.12s">
 <rect x="30" y="150" width="140" height="80" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="100.0" y="185.0" text-anchor="middle" font-size="15" font-weight="500" fill="#5c5c5c">Player</text>
 <text x="100.0" y="205.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">browser</text>
+</g>
+<g class="n" style="--d:0.22s">
 <rect x="230" y="40" width="540" height="265" rx="14" fill="none" stroke="#141414" stroke-width="1.6" stroke-dasharray="8 6"/>
 <text x="246" y="66" font-size="13" font-weight="800" letter-spacing="1.6" fill="#5c5c5c">CLOUDFLARE PAGES</text>
+</g>
+<g class="n" style="--d:0.32s">
 <rect x="255" y="80" width="235" height="76" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="372.5" y="103.0" text-anchor="middle" font-size="15" font-weight="700" fill="#141414">Static site</text>
 <text x="372.5" y="123.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">HTML, CSS and JavaScript</text>
 <text x="372.5" y="143.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">30 pre-built recipe cards</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.42s" d="M170 175 H200 V118 H255" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.42s" d="M170 175 H200 V118 H255" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<text class="n" style="--d:0.42s" x="212" y="108" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">page</text>
+<g class="n" style="--d:0.52s">
 <rect x="255" y="200" width="235" height="76" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="372.5" y="223.0" text-anchor="middle" font-size="15" font-weight="700" fill="#141414">Pages Function</text>
 <text x="372.5" y="243.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">JavaScript API</text>
 <text x="372.5" y="263.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">serves content by day</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.62s" d="M200 175 V238 H255" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.62s" d="M200 175 V238 H255" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<text class="n" style="--d:0.62s" x="210" y="258" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">API</text>
+<g class="n" style="--d:0.72s">
 <rect x="540" y="200" width="205" height="76" rx="10" fill="#ffffff" stroke="#141414" stroke-width="2" stroke-dasharray="7 6"/>
 <text x="642.5" y="223.5" text-anchor="middle" font-size="14" font-weight="700" fill="#141414">FLAG secret</text>
 <text x="642.5" y="242.5" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">environment variable,</text>
 <text x="642.5" y="261.5" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">not stored in the repo</text>
-<path d="M170 175 H200 V118 H255" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<text x="212" y="108" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">page</text>
-<path d="M200 175 V238 H255" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<text x="210" y="258" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">API</text>
-<path d="M490 238 H540" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#a)"/><text x="515" y="228" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">reads</text>
+</g>
+<path class="n" style="--d:0.82s" d="M490 238 H540" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#a)"/>
+<text class="n" style="--d:0.92s" x="515" y="228" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5c5c5c">reads</text>
+<g class="n" style="--d:1.02s">
 <rect x="30" y="335" width="740" height="115" rx="14" fill="none" stroke="#141414" stroke-width="1.6" stroke-dasharray="8 6"/>
 <text x="46" y="361" font-size="13" font-weight="800" letter-spacing="1.6" fill="#5c5c5c">BUILD AND DEPLOY</text>
+</g>
+<g class="n" style="--d:1.12s">
 <rect x="50" y="368" width="150" height="64" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="125.0" y="395.0" text-anchor="middle" font-size="14" font-weight="700" fill="#141414">Local dev</text>
 <text x="125.0" y="414.0" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">Wrangler, or Flask</text>
+</g>
+<path class="a" pathLength="1" style="--d:1.22s" d="M200 400 H240" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.22s" d="M200 400 H240" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:1.32s">
 <rect x="240" y="368" width="170" height="64" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="325.0" y="395.0" text-anchor="middle" font-size="14" font-weight="700" fill="#141414">Build script</text>
 <text x="325.0" y="414.0" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">regenerates the HTML</text>
+</g>
+<path class="a" pathLength="1" style="--d:1.42s" d="M410 400 H450" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.42s" d="M410 400 H450" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:1.52s">
 <rect x="450" y="368" width="140" height="64" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="520.0" y="395.0" text-anchor="middle" font-size="14" font-weight="700" fill="#141414">GitHub</text>
 <text x="520.0" y="414.0" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">push to main</text>
+</g>
+<path class="a" pathLength="1" style="--d:1.62s" d="M590 400 H630" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:1.62s" d="M590 400 H630" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:1.72s">
 <rect x="630" y="368" width="125" height="64" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="692.5" y="395.0" text-anchor="middle" font-size="14" font-weight="700" fill="#141414">Auto deploy</text>
 <text x="692.5" y="414.0" text-anchor="middle" font-size="12" font-weight="500" fill="#5c5c5c">Cloudflare Pages</text>
-<path d="M200 400 H240" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M410 400 H450" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M590 400 H630" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+</g>
+<g class="pkt" style="--d:2.12s;--t:4s;offset-path:path('M100 190 H200 V238 H372 H642')"><circle r="10" fill="#ffffff" fill-opacity=".85"/><circle r="6.5" fill="#d9291c"/></g>
 </svg>

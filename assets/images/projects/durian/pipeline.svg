@@ -1,26 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
 <title id="t">How Durian scans a target</title><desc id="d">A target URL goes to the crawler, which finds links and forms. The scanners test them for SQL injection, cross-site scripting, path traversal and sensitive files. Results go into a report. Session and cookie handling sits underneath the whole run.</desc>
+<style>
+.pkt{display:none}
+@media (prefers-reduced-motion: no-preference){
+  .n{transform-box:fill-box;transform-origin:center;animation:pop .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .a{stroke-dasharray:1;animation:draw .6s cubic-bezier(.22,1,.36,1) var(--d,0s) both}
+  .h{animation:head .2s ease-out calc(var(--d,0s) + .4s) both}
+  .pkt{display:block;offset-rotate:0deg;animation:ride var(--t,5s) cubic-bezier(.45,0,.55,1) var(--d,0s) both}
+}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.93)}to{opacity:1;transform:none}}
+@keyframes draw{0%{opacity:0;stroke-dashoffset:1}1%{opacity:1;stroke-dashoffset:1}100%{opacity:1;stroke-dashoffset:0}}
+@keyframes head{from{opacity:0}to{opacity:1}}
+@keyframes ride{0%{offset-distance:0%;opacity:0}6%{opacity:1}94%{opacity:1}100%{offset-distance:100%;opacity:0}}
+</style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#141414"/></marker></defs>
 <rect width="1000" height="300" fill="#ffffff"/>
+<g class="n" style="--d:0.12s">
 <rect x="30" y="70" width="150" height="86" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="105.0" y="108.0" text-anchor="middle" font-size="15" font-weight="700" fill="#141414">Target URL</text>
 <text x="105.0" y="128.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">authorized only</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.22s" d="M180 113 H235" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.22s" d="M180 113 H235" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.32s">
 <rect x="235" y="70" width="190" height="86" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="330.0" y="108.0" text-anchor="middle" font-size="15" font-weight="700" fill="#141414">Crawler</text>
 <text x="330.0" y="128.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">finds links and forms</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.42s" d="M425 113 H480" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.42s" d="M425 113 H480" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.52s">
 <rect x="480" y="50" width="290" height="126" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="625" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="#141414">Scanner modules</text>
 <rect x="494" y="96" width="128" height="30" rx="6" fill="#ffffff" stroke="#141414" stroke-width="1.5"/><text x="558" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="#141414">SQL injection</text>
 <rect x="632" y="96" width="128" height="30" rx="6" fill="#ffffff" stroke="#141414" stroke-width="1.5"/><text x="696" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="#141414">Reflected XSS</text>
 <rect x="494" y="134" width="128" height="30" rx="6" fill="#ffffff" stroke="#141414" stroke-width="1.5"/><text x="558" y="154" text-anchor="middle" font-size="12.5" font-weight="700" fill="#141414">Path traversal</text>
 <rect x="632" y="134" width="128" height="30" rx="6" fill="#ffffff" stroke="#141414" stroke-width="1.5"/><text x="696" y="154" text-anchor="middle" font-size="12.5" font-weight="700" fill="#141414">Sensitive files</text>
+</g>
+<path class="a" pathLength="1" style="--d:0.62s" d="M770 113 H825" fill="none" stroke="#141414" stroke-width="2"/>
+<path class="h" style="--d:0.62s" d="M770 113 H825" fill="none" stroke="none" stroke-width="2" marker-end="url(#a)"/>
+<g class="n" style="--d:0.72s">
 <rect x="825" y="70" width="145" height="86" rx="10" fill="#f7f7f7" stroke="#141414" stroke-width="2"/>
 <text x="897.5" y="108.0" text-anchor="middle" font-size="15" font-weight="700" fill="#141414">Report</text>
 <text x="897.5" y="128.0" text-anchor="middle" font-size="13" font-weight="500" fill="#5c5c5c">structured output</text>
-<path d="M180 113 H235" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M425 113 H480" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
-<path d="M770 113 H825" fill="none" stroke="#141414" stroke-width="2" marker-end="url(#a)"/>
+</g>
+<g class="n" style="--d:0.82s">
 <rect x="235" y="205" width="535" height="52" rx="10" fill="#ffffff" stroke="#141414" stroke-width="2" stroke-dasharray="7 6"/>
 <text x="502" y="227" text-anchor="middle" font-size="14" font-weight="800" fill="#141414">Session and authentication handling</text><text x="502" y="246" text-anchor="middle" font-size="12.5" font-weight="500" fill="#5c5c5c">cookies carry through the crawl and every check</text>
-<path d="M330 205 V156 M625 205 V176" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+</g>
+<path class="n" style="--d:0.92s" d="M330 205 V156 M625 205 V176" stroke="#141414" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<g class="pkt" style="--d:1.32s;--t:4s;offset-path:path('M105 113 H898')"><circle r="10" fill="#ffffff" fill-opacity=".85"/><circle r="6.5" fill="#d9291c"/></g>
 </svg>
