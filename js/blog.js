@@ -100,22 +100,6 @@ themeToggle?.addEventListener('click', () => {
 });
 syncThemeToggle();
 
-// Portfolio menu on small screens (same behaviour as the other pages).
-const menuToggle = document.querySelector('.blog-menu-toggle');
-const menu = document.getElementById('blog-menu');
-const setMenu = (open) => {
-  menuToggle?.setAttribute('aria-expanded', String(open));
-  menuToggle?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-  menu?.classList.toggle('is-open', open);
-};
-menuToggle?.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('.blog-menu-toggle, #blog-menu')) setMenu(false);
-});
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') setMenu(false);
-});
-
 // Fade a background in behind the fixed header once the page scrolls, so text never collides with it.
 const header = document.querySelector('.blog-header');
 const syncHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);

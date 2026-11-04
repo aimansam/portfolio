@@ -15,26 +15,6 @@ const OLD_BLOG_DIR = path.join(ROOT, 'blog');
 const escapeHtml = (value) => String(value ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// The side nav comes from content/site/navigation.json so it matches every other page.
-// Paths there are relative to the portfolio root ("./about.html"), so on the blog's own
-// domain links must point back at the portfolio, while icons come from the blog's copy of /assets.
-const isRemote = (href) => /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href);
-const clean = (href) => href.replace(/^\.\//, '').replace(/index\.html$/, '');
-const toPortfolio = (href) => (isRemote(href) ? href : `${PORTFOLIO}/${clean(href)}`);
-const toLocal = (href) => (isRemote(href) ? href : `/${clean(href)}`);
-
-const PORTFOLIO_NAV_ITEMS = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site/navigation.json'), 'utf8'))
-  .navigation.items
-  .map((item) => {
-    const href = toPortfolio(item.href);
-    const active = href.replace(/\/$/, '') === BLOG;
-    return `        <a class="nav-icon-link${active ? ' is-active' : ''}" href="${escapeHtml(href)}" aria-label="${escapeHtml(item.ariaLabel || item.label)}"${active ? ' aria-current="page"' : ''}>
-          <img src="${escapeHtml(toLocal(item.icon))}" alt="" class="nav-icon">
-          <span class="nav-icon-label">${escapeHtml(item.label)}</span>
-        </a>`;
-  })
-  .join('\n');
-
 const BLOG_SHELL = `<!doctype html>
 <html lang="en">
   <head>
@@ -51,11 +31,6 @@ const BLOG_SHELL = `<!doctype html>
   <body>
     <a class="skip-to-content" href="#blog-app">Skip to main content</a>
     <header class="blog-header">
-      <button class="nav-menu-toggle blog-menu-toggle" type="button" aria-expanded="false" aria-controls="blog-menu" aria-label="Open navigation menu">
-        <span class="nav-menu-toggle-bar"></span>
-        <span class="nav-menu-toggle-bar"></span>
-        <span class="nav-menu-toggle-bar"></span>
-      </button>
       <a class="nav-title-link blog-brand" href="/" aria-label="Pwn Diary, blog home"><span class="nav-title">zx10r</span><span class="blog-brand-label">Pwn Diary</span></a>
       <nav class="blog-top-nav" aria-label="Blog navigation">
         <a href="/categories/research/" data-blog-nav="research">Research</a>
@@ -64,17 +39,14 @@ const BLOG_SHELL = `<!doctype html>
         <a href="/tags/" data-blog-nav="tags">Tags</a>
         <a href="/archive/" data-blog-nav="archive">Archive</a>
       </nav>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
-        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      </button>
-    </header>
-
-    <nav class="blog-portfolio-nav" aria-label="Portfolio navigation">
-      <div class="nav-icon-box" id="blog-menu">
-${PORTFOLIO_NAV_ITEMS}
+      <div class="blog-header-actions">
+        <a class="blog-portfolio-link" href="${PORTFOLIO}/">Portfolio <span aria-hidden="true">&nearr;</span></a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
       </div>
-    </nav>
+    </header>
 
     <main class="blog-main" id="blog-app" aria-live="polite">
       <section class="blog-loading">
@@ -82,6 +54,18 @@ ${PORTFOLIO_NAV_ITEMS}
         <h1>Loading blog...</h1>
       </section>
     </main>
+
+    <footer class="blog-footer">
+      <div class="blog-footer-inner">
+        <span>&copy; Aiman Sam &middot; <a href="/">Pwn Diary</a></span>
+        <nav aria-label="Elsewhere">
+          <a href="${PORTFOLIO}/">Portfolio</a>
+          <a href="https://github.com/aimansam" rel="me noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/aimansam" rel="me noopener">LinkedIn</a>
+          <a href="mailto:aimansammrsm@gmail.com">Email</a>
+        </nav>
+      </div>
+    </footer>
 
     <script type="module" src="/js/blog.js"></script>
   </body>

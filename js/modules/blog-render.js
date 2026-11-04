@@ -214,6 +214,12 @@ export const renderPost = (post, posts = []) => {
   return `
   <div class="blog-progress" aria-hidden="true"><span></span></div>
   <article class="blog-post">
+    <nav class="blog-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Pwn Diary</a>
+      ${(post.categories || [])[0] ? `<span aria-hidden="true">/</span><a href="${categoryHref(post.categories[0])}">${escapeHtml(post.categories[0])}</a>` : ''}
+      <span aria-hidden="true">/</span>
+      <span class="blog-breadcrumbs-current" aria-current="page">${escapeHtml(post.title)}</span>
+    </nav>
     <header class="blog-post-header">
       ${post.status ? `<span class="blog-status">${escapeHtml(post.status)} · not public</span>` : ''}
       <div class="blog-card-tags">

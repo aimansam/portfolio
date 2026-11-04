@@ -101,27 +101,6 @@ a {
   transform: scaleX(1);
 }
 
-.blog-portfolio-nav {
-  position: fixed;
-  top: 89px;
-  left: 28px;
-  z-index: 20;
-}
-
-.blog-portfolio-nav .nav-icon-link.is-active .nav-icon {
-  filter: invert(1);
-}
-
-.blog-portfolio-nav .nav-icon-link.is-active .nav-icon-label {
-  opacity: 0;
-}
-
-.blog-portfolio-nav .nav-icon-link:hover .nav-icon-label,
-.blog-portfolio-nav .nav-icon-link:active .nav-icon-label,
-.blog-portfolio-nav .nav-icon-link:focus-visible .nav-icon-label {
-  opacity: 1;
-}
-
 .blog-main {
   width: min(1224px, calc(100% - 236px));
   margin: 112px 48px 0 164px;
@@ -632,31 +611,15 @@ html[data-theme="dark"] :is(
   filter: none;
 }
 
-.blog-portfolio-nav .nav-icon-box {
-  border-color: var(--ink);
-  background-color: var(--paper-glass);
-}
-
-.blog-portfolio-nav .nav-icon-link,
 a.icon-link {
   border-color: var(--ink);
   background-color: var(--paper);
   color: var(--ink);
 }
 
-.blog-portfolio-nav .nav-icon-link:hover,
-.blog-portfolio-nav .nav-icon-link:active,
-.blog-portfolio-nav .nav-icon-link:focus-visible,
-.blog-portfolio-nav .nav-icon-link.is-active,
 a.icon-link:hover,
-a.icon-link:active,
-a.icon-link:focus-visible {
-  background-color: var(--ink);
-  color: var(--paper);
-}
-
-.blog-portfolio-nav .nav-icon-label {
-  border-color: var(--ink);
+  a.icon-link:active,
+  a.icon-link:focus-visible {
   background-color: var(--ink);
   color: var(--paper);
 }
@@ -959,53 +922,6 @@ html[data-theme="dark"] {
   text-transform: uppercase;
 }
 
-/* --- Portfolio nav on small screens: same hamburger menu as the other pages --- */
-
-@media only screen and (max-width: 800px) {
-  .blog-menu-toggle {
-    border-color: var(--ink);
-    background-color: var(--paper);
-  }
-
-  .blog-menu-toggle .nav-menu-toggle-bar {
-    background-color: var(--ink);
-  }
-
-  .blog-menu-toggle:hover,
-  .blog-menu-toggle:active,
-  .blog-menu-toggle:focus-visible,
-  .blog-menu-toggle[aria-expanded="true"] {
-    background-color: var(--ink);
-  }
-
-  .blog-menu-toggle:hover .nav-menu-toggle-bar,
-  .blog-menu-toggle:active .nav-menu-toggle-bar,
-  .blog-menu-toggle:focus-visible .nav-menu-toggle-bar,
-  .blog-menu-toggle[aria-expanded="true"] .nav-menu-toggle-bar {
-    background-color: var(--paper);
-  }
-
-  .blog-portfolio-nav {
-    top: 78px;
-    left: 20px;
-    z-index: 45;
-  }
-
-  /* Labels are inline text in the dropdown, not hover tooltips. */
-  .blog-portfolio-nav .nav-icon-label {
-    border: 0;
-    background-color: transparent;
-    color: var(--ink);
-  }
-
-  .blog-portfolio-nav .nav-icon-link:hover .nav-icon-label,
-  .blog-portfolio-nav .nav-icon-link:active .nav-icon-label,
-  .blog-portfolio-nav .nav-icon-link:focus-visible .nav-icon-label,
-  .blog-portfolio-nav .nav-icon-link.is-active .nav-icon-label {
-    opacity: 1;
-    color: var(--paper);
-  }
-}
 
 /* Long inline paths and hashes wrap instead of widening the page. */
 .blog-post-content :not(pre) > code {
@@ -1467,7 +1383,6 @@ a.project-tag:focus-visible {
   }
 
   .blog-header,
-  .blog-portfolio-nav,
   .blog-sidebar,
   .blog-progress,
   .back-to-top,
@@ -1851,5 +1766,164 @@ a.project-tag:focus-visible {
 
   .blog-toc .blog-toc-level-3 {
     margin-left: 0.4rem;
+  }
+}
+
+/* --- Blog navigation: one header bar, a link back to the portfolio, breadcrumbs and a footer --- */
+
+.blog-main {
+  width: min(1180px, calc(100% - 64px));
+  margin: 112px auto 0;
+  padding-bottom: 40px;
+}
+
+.blog-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+.blog-portfolio-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 46px;
+  padding: 0 18px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper-glass);
+  box-shadow: 0 18px 40px rgba(20, 20, 20, 0.08);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.blog-portfolio-link:hover,
+.blog-portfolio-link:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.blog-portfolio-link:active {
+  transform: scale(0.97);
+}
+
+.blog-breadcrumbs {
+  max-width: 920px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.blog-breadcrumbs a {
+  text-underline-offset: 3px;
+}
+
+.blog-breadcrumbs a:hover,
+.blog-breadcrumbs a:focus-visible {
+  color: var(--ink);
+}
+
+.blog-breadcrumbs-current {
+  max-width: 34ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.blog-footer {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 22px 0 36px;
+  border-top: 2px solid var(--ink);
+}
+
+.blog-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.blog-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+
+.blog-footer a {
+  color: var(--ink);
+  text-underline-offset: 4px;
+}
+
+@media only screen and (max-width: 800px) {
+  .blog-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 12px;
+  }
+
+  .blog-top-nav {
+    order: 3;
+    flex: 1 0 100%;
+  }
+
+  .blog-portfolio-link {
+    height: 42px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .blog-header-actions .theme-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .blog-main,
+  .blog-footer {
+    width: calc(100% - 40px);
+  }
+
+  .blog-main {
+    margin: 28px auto 0;
+    padding-bottom: 96px;
+  }
+
+  .blog-breadcrumbs-current {
+    max-width: 22ch;
+  }
+}
+
+@media print {
+  .blog-footer,
+  .blog-breadcrumbs {
+    display: none !important;
+  }
+}
+
+/* Keep the footer links clear of the floating back-to-top button. */
+.blog-footer-inner {
+  padding-right: 64px;
+}
+
+@media only screen and (max-width: 800px) {
+  .blog-footer-inner {
+    padding-right: 0;
+    padding-bottom: 56px;
   }
 }
