@@ -266,20 +266,16 @@ export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, cer
     
     // Update counter
     if (certCounter) {
-      certCounter.textContent = `${allCerts.length} certificate${allCerts.length !== 1 ? 's' : ''} · Page ${certCurrentPage} of ${totalPages}`
+      certCounter.innerHTML = `<strong>Page ${certCurrentPage} of ${totalPages}</strong><span>${allCerts.length} certificate${allCerts.length !== 1 ? 's' : ''}</span>`
     }
     
     // Update button states
     if (certPrevBtn) {
       certPrevBtn.disabled = certCurrentPage === 1
-      certPrevBtn.style.opacity = certCurrentPage === 1 ? '0.5' : '1'
-      certPrevBtn.style.cursor = certCurrentPage === 1 ? 'not-allowed' : 'pointer'
     }
     
     if (certNextBtn) {
       certNextBtn.disabled = certCurrentPage === totalPages
-      certNextBtn.style.opacity = certCurrentPage === totalPages ? '0.5' : '1'
-      certNextBtn.style.cursor = certCurrentPage === totalPages ? 'not-allowed' : 'pointer'
     }
   }, animate ? 150 : 200)
 }

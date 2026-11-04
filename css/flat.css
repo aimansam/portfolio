@@ -15,13 +15,13 @@ html body :is(
 html body :is(
   .about-hero-action, .story-chapter-media span, .about-profile-status, .about-story-chip,
   .page-about .about-story-chip, .about-skill-filter, .project-tool-chip, a.button,
-  .filter-button, .project-tag, .nav-icon-label, .about-certificate-nav
+  .filter-button, .project-tag, .nav-icon-label, .about-certificate-nav, .about-cert-nav-btn
 ) {
   border-radius: 6px;
 }
 
 /* Icon-only buttons stay round */
-html body :is(a.icon-link, .hero-social-link, .back-to-top, .about-cert-nav-btn) {
+html body :is(a.icon-link, .hero-social-link, .back-to-top) {
   border-radius: 50%;
 }
 
@@ -702,4 +702,54 @@ html body .projects-container {
   html body .projects-container {
     margin-inline: -12px;
   }
+}
+
+/* ===== Certificate pager: Prev and Next at the ends, page info in the middle ===== */
+
+html body .about-cert-pagination {
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 18px;
+}
+
+html body .about-cert-nav-btn {
+  height: 40px;
+  padding: 0 16px;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+html body .about-cert-nav-btn:focus-visible {
+  outline: 3px solid #0055cc;
+  outline-offset: 3px;
+}
+
+html body .about-cert-nav-btn:disabled {
+  border-color: rgba(20, 20, 20, 0.28);
+  color: rgba(20, 20, 20, 0.38);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+html body .about-cert-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  text-align: center;
+}
+
+.about-cert-counter strong {
+  color: #141414;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.about-cert-counter span {
+  color: rgba(20, 20, 20, 0.62);
+  font-size: 12px;
+  font-weight: 600;
 }
