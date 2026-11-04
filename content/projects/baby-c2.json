@@ -26,7 +26,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/jebat",
   "description": "An authorized lab research project examining command-channel abuse, packaging trade-offs, and defensive visibility in a controlled environment.",
-  "headerImage": "../assets/images/projects/jebat/jebat.webp",
+  "headerImage": "../assets/images/projects/jebat/cover.webp",
   "sections": [
     {
       "title": "Responsible Scope",

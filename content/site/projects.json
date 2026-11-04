@@ -73,7 +73,7 @@
       {
         "id": "oxblood-drill",
         "category": "infrastructure",
-        "image": "./assets/images/projects/oxblood/oxblood.webp",
+        "image": "./assets/images/projects/oxblood/cover.webp",
         "tags": [
           "Cyber Range",
           "Proxmox",
@@ -94,7 +94,7 @@
       {
         "id": "web-vuln-scanner",
         "category": "web",
-        "image": "./assets/images/projects/durian/durian.webp",
+        "image": "./assets/images/projects/durian/cover.webp",
         "tags": [
           "Web Security",
           "Python",
@@ -136,7 +136,7 @@
       {
         "id": "baby-c2",
         "category": "research",
-        "image": "./assets/images/projects/jebat/jebat.webp",
+        "image": "./assets/images/projects/jebat/cover.webp",
         "tags": [
           "Authorized Research",
           "Detection",

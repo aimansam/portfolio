@@ -26,7 +26,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/OXBLOOD-DRILL",
   "description": "A Proxmox-backed cyber drill platform for managing repeatable red-team and blue-team exercises, scenario definitions, telemetry, and operational reporting.",
-  "headerImage": "../assets/images/projects/oxblood/oxblood.webp",
+  "headerImage": "../assets/images/projects/oxblood/cover.webp",
   "sections": [
     {
       "title": "What I Built",

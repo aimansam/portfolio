@@ -26,7 +26,7 @@
   ],
   "githubUrl": "https://github.com/aimansam/durian",
   "description": "A modular Python scanner for authorized web assessments, covering discovery, common vulnerability checks, session handling, and report generation.",
-  "headerImage": "../assets/images/projects/durian/durian.webp",
+  "headerImage": "../assets/images/projects/durian/cover.webp",
   "sections": [
     {
       "title": "What I Built",
