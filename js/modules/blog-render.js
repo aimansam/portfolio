@@ -29,7 +29,7 @@ export const tagHref = (tag) => `${blogRoot}tags/${slugify(tag)}/`;
 export const postMeta = (post) => `${formatDate(post.date)} · ${readMinutes(post.body)} min read`;
 
 const POSTS_ON_HOME = 10;
-const TAGS_ON_HOME = 10;
+const TAGS_ON_HOME = 6;
 
 // Categories with counts, biggest first.
 const categoryCounts = (posts) => {
@@ -49,14 +49,12 @@ export const archiveHeader = (title, intro = '') => `
   </header>
 `;
 
-// Horizontal card: cover (or a patterned fallback showing the category) beside the text.
+// Horizontal card: a wide cover beside the text. Posts without a cover are text only.
 export const postCard = (post) => {
   const category = (post.categories || [])[0] || 'Research';
   return `
-  <a class="blog-post-card" href="${postHref(post)}">
-    <span class="blog-post-card-media${post.cover?.image ? '' : ' is-fallback'}">
-      ${post.cover?.image ? `<img src="${escapeHtml(post.cover.image)}" alt="" loading="lazy">` : `<span>${escapeHtml(category)}</span>`}
-    </span>
+  <a class="blog-post-card${post.cover?.image ? '' : ' is-text-only'}" href="${postHref(post)}">
+    ${post.cover?.image ? `<span class="blog-post-card-media"><img src="${escapeHtml(post.cover.image)}" alt="" loading="lazy"></span>` : ''}
     <span class="blog-post-card-body">
       ${post.status ? `<span class="blog-status">${escapeHtml(post.status)}</span>` : ''}
       <span class="blog-post-card-meta">${escapeHtml(category)} · ${escapeHtml(formatDate(post.date))} · ${readMinutes(post.body)} min</span>
@@ -73,9 +71,8 @@ const postCards = (posts) => (posts.length
 
 const sidebar = (posts, activeCategory = '') => {
   const categories = categoryCounts(posts);
-  const topTags = countTerms(posts, 'tags')
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .slice(0, TAGS_ON_HOME);
+  const allTags = countTerms(posts, 'tags').sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const topTags = allTags.slice(0, TAGS_ON_HOME);
   return `
   <aside class="blog-sidebar" aria-label="Blog sidebar">
     <section class="blog-side-card">
@@ -97,6 +94,7 @@ const sidebar = (posts, activeCategory = '') => {
     <section class="blog-side-card">
       <h2 class="blog-section-title">Tags</h2>
       <div class="blog-tag-cloud">${topTags.map(([tag, count]) => `<a class="project-tag" href="${tagHref(tag)}">${escapeHtml(tag)} <span>${count}</span></a>`).join('')}</div>
+      ${allTags.length > topTags.length ? `<a class="blog-side-link" href="/tags/">All ${allTags.length} tags &rarr;</a>` : ''}
     </section>` : ''}
     <a class="blog-more" href="/archive/">Browse the archive <img src="/assets/icons/arrow-right.svg" alt="" class="right-arrow-icon"></a>
   </aside>
