@@ -1005,3 +1005,26 @@ html body .about-cert-counter {
   .page-title { animation: title-rise 800ms var(--ease-out) 120ms both; }
   .page-intro { animation: rise-in 700ms var(--ease-out) 380ms both; }
 }
+
+/* Gallery filter: the grid fades out, then the new photos pop in one after another. */
+.gallery-count {
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted, #5c5c5c);
+  min-height: 1.3em;
+}
+
+@keyframes gallery-pop {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-masonry { transition: opacity 150ms ease-out; }
+  .gallery-masonry.is-leaving { opacity: 0; }
+  .gallery-masonry.is-refreshing .gallery-masonry-item:nth-child(n) {
+    opacity: 0;
+    animation: gallery-pop var(--dur-slow) var(--ease-out) calc(var(--i, 0) * 55ms) both;
+  }
+}

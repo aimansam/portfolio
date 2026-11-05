@@ -288,20 +288,23 @@ export const applyGalleryContent = (content) => {
   if (!Array.isArray(content.gallery?.items) || !content.gallery.items.length || !galleryList) return
 
   const items = content.gallery.items
+  const galleryCount = document.getElementById('gallery-count')
   const renderItems = (list) => {
-    galleryList.innerHTML = list.map(item => {
+    if (galleryCount) galleryCount.textContent = `${list.length} ${list.length === 1 ? 'photo' : 'photos'}`
+    galleryList.innerHTML = list.map((item, index) => {
       const media = item.type === 'video'
         ? `<video class="gallery-masonry-video" controls preload="none"${item.poster ? ` poster="${escapeHtml(item.poster)}"` : ''} playsinline aria-label="${escapeHtml(item.alt || 'Gallery video')}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video>`
         : `<div class="gallery-masonry-card" role="button" tabindex="0" aria-label="View ${escapeHtml(item.alt || 'image')} in lightbox" data-lightbox="${escapeHtml(item.image)}" data-lightbox-title="${escapeHtml(item.alt || '')}">
             <div class="gallery-image-wrapper"><img src="${escapeHtml(item.thumb || item.image)}"${item.thumb ? ` srcset="${escapeHtml(item.thumb)} 640w, ${escapeHtml(item.image)} 1600w" sizes="(max-width: 800px) 90vw, 400px"` : ''} alt="${escapeHtml(item.alt || 'Gallery image')}" class="gallery-masonry-image" loading="lazy" decoding="async"></div>
           </div>`
-      return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}">${media}</div>`
+      return `<div class="gallery-masonry-item${item.type === 'video' ? ' gallery-masonry-item-video' : ''}" style="--i:${Math.min(index, 11)}">${media}</div>`
     }).join('')
   }
   renderItems(items)
 
   // Filters: only shown when the photos carry categories. Each click re-renders the grid so the layout rhythm stays intact.
   const filters = Array.isArray(content.gallery.filters) ? content.gallery.filters : []
+  let swapTimer
   if (galleryFilters && filters.length > 1) {
     galleryFilters.innerHTML = filters.map((f, i) => `<button class="filter-button${i === 0 ? ' is-active' : ''}" type="button" data-gallery-filter="${escapeHtml(f.id)}" aria-pressed="${i === 0}">${escapeHtml(f.label)}</button>`).join('')
     galleryFilters.addEventListener('click', (event) => {
@@ -313,7 +316,18 @@ export const applyGalleryContent = (content) => {
         b.classList.toggle('is-active', active)
         b.setAttribute('aria-pressed', String(active))
       })
-      renderItems(id === 'all' ? items : items.filter(item => item.category === id))
+      const next = id === 'all' ? items : items.filter(item => item.category === id)
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (still) { renderItems(next); return }
+      // Fade the grid out, swap the photos, then let them pop in one after another.
+      clearTimeout(swapTimer)
+      galleryList.classList.remove('is-refreshing')
+      galleryList.classList.add('is-leaving')
+      swapTimer = setTimeout(() => {
+        renderItems(next)
+        galleryList.classList.remove('is-leaving')
+        galleryList.classList.add('is-refreshing')
+      }, 160)
     })
   }
 }
