@@ -1028,3 +1028,6 @@ html body .about-cert-counter {
     animation: gallery-pop var(--dur-slow) var(--ease-out) calc(var(--i, 0) * 55ms) both;
   }
 }
+
+/* Reserve room for the grid while photos load so the footer does not jump. */
+#gallery-list { min-height: 80vh; }
