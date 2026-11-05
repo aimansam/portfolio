@@ -46,7 +46,7 @@
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53.webp",
-        "alt": "Name placard on a table at the UM Cybersecurity Summit",
+        "alt": "Name placard on a table at a CTF event",
         "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-00-53-640.webp",
         "category": "competitions"
       },
@@ -214,15 +214,9 @@
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00.webp",
-        "alt": "Four organizers posing together in an atrium",
+        "alt": "Four people posing at a booth in an atrium",
         "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-03-00-640.webp",
         "category": "competitions"
-      },
-      {
-        "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02.webp",
-        "alt": "DIV:IDE Academy poster for the web exploitation session on 7 March 2026",
-        "thumb": "./assets/images/gallery/dump/photo_2026-09-22_14-03-02-640.webp",
-        "category": "workshops"
       },
       {
         "image": "./assets/images/gallery/dump/photo_2026-09-22_14-03-05.webp",
@@ -234,7 +228,7 @@
         "type": "video",
         "video": "./assets/images/gallery/dump/video_2026-09-22_14-02-22.mp4",
         "poster": "./assets/images/gallery/dump/video_2026-09-22_14-02-22-poster.webp",
-        "alt": "Short video from a CTF event, September 2026",
+        "alt": "Video of the 1st Runner Up RM1,500 announcement on stage",
         "category": "competitions"
       }
     ],
