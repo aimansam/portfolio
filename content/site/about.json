@@ -1,7 +1,7 @@
 {
   "about": {
-    "title": "Foundations built through practice.",
-    "lookingLabel": "Looking For",
+    "title": "Learned by doing.",
+    "lookingLabel": "Looking for",
     "roles": [
       "Penetration Tester",
       "Red Team Operator",
@@ -50,17 +50,17 @@
         "imageAlt": "Current security direction"
       }
     ],
-    "intro": "Final-year Computer Science (Cybersecurity) student at Universiti Tenaga Nasional, specializing in penetration testing and red team operations. I earned my CEH certification before the age of 20, went on to CPTS, and have built my skills through labs, competitions, and practical security work.",
+    "intro": "Final-year CS (Cybersecurity) student at Universiti Tenaga Nasional, into pentesting and red team ops. CEH before 20, then CPTS. The rest came from labs, CTFs and breaking my own stuff.",
     "points": [
-      "Web and Active Directory: SQL injection, LFI and IDOR, plus pass-the-hash, Kerberoasting and domain privilege escalation, practiced in my own lab.",
-      "Vulnerability assessment with OpenVAS and Nessus, and privilege escalation and lateral movement across Windows and Unix.",
-      "Top 1% on TryHackMe (44th in Malaysia), 2nd at the UM Attack & Defense CTF, and 3rd of 50 at Bingo CTF.",
-      "Built CTF infrastructure on GCP and Cloudflare with GitHub CI/CD: 9 web challenges and a Boot2Root machine.",
-      "Now adding detection engineering (SIEM and EDR) to pair offensive skills with defensive visibility."
+      "Web and Active Directory: SQLi, LFI, IDOR, pass-the-hash, Kerberoasting and domain privesc, all practiced in my own lab.",
+      "Vulnerability assessment with OpenVAS and Nessus, plus privesc and lateral movement across Windows and Unix.",
+      "Top 1% on TryHackMe (44th in Malaysia), 2nd at the UM Attack & Defense CTF, 3rd of 50 at Bingo CTF.",
+      "Built CTF infra on GCP and Cloudflare with GitHub CI/CD: 9 web challenges and a Boot2Root box.",
+      "Next up: detection engineering (SIEM and EDR), so the offense comes with defensive eyes."
     ]
   },
   "skills": {
-    "title": "Applied security and development skills.",
+    "title": "What I work with.",
     "filters": [
       {
         "id": "all",
@@ -232,7 +232,7 @@
     ]
   },
   "stats": {
-    "heading": "Highlights",
+    "heading": "Receipts",
     "items": [
       {
         "step": "01",

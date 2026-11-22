@@ -1,13 +1,13 @@
 {
   "hero": {
-    "title": "Aiman Sam.",
-    "intro": "Penetration tester focused on red team work. Final-year cybersecurity student, CPTS and CEH certified, top 1% on TryHackMe, a CTF challenge creator, and a zero day collector.",
+    "title": "Aiman Sam, zero day collector.",
+    "intro": "Pentesting and red team. Final year, CPTS and CEH, top 1% on TryHackMe. I build CTF challenges and write up what I break.",
     "primaryAction": {
-      "label": "View projects",
+      "label": "See the work",
       "href": "#my-work-section"
     },
     "secondaryAction": {
-      "label": "Download resume",
+      "label": "Resume",
       "href": "./assets/resume/Resume.pdf",
       "download": "Aiman_Sam_Resume.pdf"
     },
@@ -58,6 +58,6 @@
         "height": 50
       }
     ],
-    "availability": "Final-year student, open to graduate roles in red team and penetration testing."
+    "availability": "Open to graduate roles in red team and pentesting."
   }
 }

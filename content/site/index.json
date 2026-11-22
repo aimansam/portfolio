@@ -118,7 +118,7 @@
     ]
   },
   "featuredResearch": {
-    "label": "Featured research",
+    "label": "Latest find",
     "title": "Escalating to SYSTEM through Steam: exploiting SteamClientService's forgotten symlink handler",
     "summary": "Any local user can talk to Steam's SYSTEM service and create arbitrary symlinks anywhere on the filesystem. Chain that with a phantom DLL hijack and you get full code execution as NT AUTHORITY\\SYSTEM from a standard user account. Reported to Valve via HackerOne — severity confirmed High (8.8).",
     "tags": [
@@ -131,7 +131,7 @@
     "hrefLabel": "Read the writeup"
   },
   "featuredProjects": {
-    "heading": "Selected projects",
+    "heading": "Things I built",
     "viewAllHref": "./projects.html",
     "viewAllLabel": "All projects",
     "ids": [
@@ -141,12 +141,12 @@
     ]
   },
   "latestPosts": {
-    "heading": "Latest from Pwn Diary",
+    "heading": "Fresh from Pwn Diary",
     "viewAllLabel": "All posts"
   },
   "contact": {
     "title": "Let's talk",
-    "text": "I'm looking for graduate roles in red team and penetration testing. Email is the fastest way to reach me.",
+    "text": "Looking for graduate roles in red team and pentesting. Email is the fastest way in.",
     "email": "aimansammrsm@gmail.com",
     "actions": [
       {
