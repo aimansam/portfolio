@@ -2,7 +2,7 @@
   "hero": {
     "title": "Aiman Sam",
     "tagline": "0 day collector",
-    "intro": "Pentesting and red team. Final year, CPTS and CEH, top 1% on TryHackMe. I build CTF challenges and write up what I break.",
+    "intro": "Final-year pentester and red teamer. CPTS and CEH, top 1% on TryHackMe.",
     "primaryAction": {
       "label": "See the work",
       "href": "#my-work-section"

@@ -1060,3 +1060,34 @@ html body .home-card-image {
 html body .home-card > :not(.home-card-image) {
   padding-inline: 8px;
 }
+
+/* ===== Home intro: one line, then availability, then buttons and icons on a single row ===== */
+
+html body #hero-intro {
+  max-width: none;
+}
+
+html body .hero-top-content {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+
+html body .hero-top-content > .header-text,
+html body .hero-top-content > .hero-availability {
+  flex: 0 0 100%;
+}
+
+html body .hero-top-content > .header-text {
+  gap: 6px;
+}
+
+html body .hero-top-content .hero-actions {
+  width: auto;
+  margin-top: 4px;
+}
+
+html body .hero-top-content .hero-socials {
+  margin-top: 4px;
+}
