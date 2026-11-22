@@ -1091,3 +1091,49 @@ html body .hero-top-content .hero-actions {
 html body .hero-top-content .hero-socials {
   margin-top: 4px;
 }
+
+/* ===== Home layout: sticky profile on the left, work on the right (wide screens only) ===== */
+
+@media only screen and (min-width: 901px) {
+  html body #main-content:has(> #portfolio-header) {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    align-items: start;
+    gap: 0 72px;
+    width: min(var(--ed-wide), calc(100% - 64px));
+    margin-top: 104px;
+  }
+
+  html body:has(#portfolio-header) .site-header {
+    padding: 0 max(28px, calc((100% - var(--ed-wide)) / 2));
+  }
+
+  html body:has(#portfolio-header) #footer {
+    width: min(var(--ed-wide), calc(100% - 64px));
+  }
+
+  /* Rows below the profile have no gap of their own, so each section carries its own bottom margin. */
+  html body #main-content:has(> #portfolio-header) > :not(#portfolio-header) {
+    grid-column: 2;
+    margin-bottom: 72px;
+  }
+
+  html body #main-content:has(> #portfolio-header) > #portfolio-header {
+    position: sticky;
+    top: 96px;
+    grid-column: 1;
+    grid-row: 1 / span 8;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  html body #portfolio-header-visual,
+  html body .portfolio-header-image {
+    width: 112px;
+    height: 112px;
+  }
+
+  html body .hero-top-content .hero-actions {
+    flex-wrap: wrap;
+  }
+}
