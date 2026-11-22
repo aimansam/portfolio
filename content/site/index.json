@@ -127,7 +127,7 @@
       "DLL hijack",
       "HackerOne"
     ],
-    "image": "./assets/images/featured/steam-lpe-entities.webp",
+    "image": "./assets/images/featured/steam-lpe-wide.webp",
     "href": "https://pwn.aimansam.my/posts/steam-lpe-symlink-system/",
     "hrefLabel": "Read the writeup"
   },

@@ -1200,7 +1200,7 @@ html body .hero-top-content {
   }
 }
 
-/* Featured research: text on the left, a small thumbnail on the right. */
+/* Featured research: compact text. */
 html body .home-research {
   padding: 24px;
 }
@@ -1227,26 +1227,19 @@ html body .home-research-tags {
   gap: 6px;
 }
 
-@media only screen and (min-width: 701px) {
-  html body .home-research:has(.home-research-media) {
-    grid-template-columns: minmax(0, 1fr) 300px;
-    gap: 28px;
-    align-items: start;
-  }
+/* The picture goes on top, the full width of the card, so its labels stay readable. */
+html body .home-research {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
 
-  html body .home-research:not(:has(.home-research-media)) {
-    grid-template-columns: minmax(0, 1fr);
-  }
+html body .home-research-media {
+  order: -1;
+}
 
-  html body .home-research-media {
-    order: 2;
-    align-self: start;
-  }
-
-  html body .home-research-media img {
-    aspect-ratio: 1400 / 735;
-    object-fit: cover;
-  }
+html body .home-research-media img {
+  aspect-ratio: auto;
+  object-fit: contain;
 }
 
 /* Section headings and spacing. */
