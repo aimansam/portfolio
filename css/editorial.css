@@ -1323,3 +1323,109 @@ html body .home-row-summary {
     height: 88px;
   }
 }
+
+/* ===== About: sticky profile sidebar on the left, content on the right ===== */
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+@media only screen and (min-width: 801px) {
+  html body #main-content:has(> #about-section) {
+    width: min(var(--ed-wide), calc(100% - 64px));
+    margin-top: 96px;
+  }
+
+  html body:has(#about-section) .site-header {
+    padding: 0 max(28px, calc((100% - var(--ed-wide)) / 2));
+  }
+
+  html body:has(#about-section) #footer {
+    width: min(var(--ed-wide), calc(100% - 64px));
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  .about-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 72px;
+    align-items: start;
+  }
+
+  .about-sidebar {
+    position: sticky;
+    top: 84px;
+  }
+
+  html body.page-about .about-sidebar .about-profile-card {
+    width: 100%;
+  }
+}
+
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+html body.page-about .about-sidebar .about-profile-card {
+  width: min(100%, 240px);
+  height: auto;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+}
+
+html body.page-about .about-sidebar .about-profile-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center 25%;
+}
+
+.about-sidebar-name {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.about-sidebar-tagline {
+  margin: -6px 0 0;
+  color: var(--ed-accent);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.about-sidebar-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.about-sidebar-links a {
+  color: var(--ed-ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--ed-line);
+  text-underline-offset: 4px;
+}
+
+.about-sidebar-links a:hover,
+.about-sidebar-links a:focus-visible {
+  text-decoration-color: var(--ed-accent);
+}
+
+/* The story card's header only holds the heading now. */
+html body.page-about .about-story-header {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+html body.page-about .about-section-content {
+  gap: 48px;
+}

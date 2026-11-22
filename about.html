@@ -66,58 +66,72 @@
 		<main id="main-content">
 			<div id="about-section">
 				<header class="page-header">
-				<span class="page-kicker">Profile</span>
-				<h1 class="page-title">About</h1>
-				<p class="page-intro">Who I am, what I've built, where I'm headed.</p>
-			</header>
-				<div class="about-section-content">
-					<article class="about-card about-card-story">
-						<div class="about-story-header">
-							<div class="about-story-heading">
-								<span class="about-card-eyebrow">About Me</span>
-								<h2 class="about-card-title" id="about-title">Loading...</h2>
-							</div>
-							<figure class="about-profile-card">
-								<img src="./assets/images/me/aimansamformal.webp" class="about-profile-image" alt="Portrait of Aiman Sam">
-							</figure>
-						</div>
+					<span class="page-kicker">Profile</span>
+					<h1 class="page-title">About</h1>
+					<p class="page-intro">Who I am, what I've built, where I'm headed.</p>
+				</header>
+
+				<div class="about-layout">
+					<aside class="about-sidebar" aria-label="Profile">
+						<figure class="about-profile-card">
+							<img src="./assets/images/me/aimansamformal.webp" class="about-profile-image" alt="Portrait of Aiman Sam">
+						</figure>
+						<h2 class="about-sidebar-name">Aiman Sam</h2>
+						<p class="about-sidebar-tagline">0 day collector</p>
 						<div class="about-story-roles">
 							<span class="about-story-label" id="about-looking-label">Looking for</span>
 							<div class="about-story-visual" id="about-role-list" aria-label="Positions I am looking for">
 								<!-- Roles injected by js/main.js -->
 							</div>
 						</div>
-						<div class="body-text about-copy" id="about-intro">Loading...</div>
-						<ul class="about-points body-text" id="about-points" aria-label="About me summary">
-							<!-- Points injected by js/main.js -->
-						</ul>
-					</article>
+						<nav class="about-sidebar-links" aria-label="Contact links">
+							<a href="mailto:aimansammrsm@gmail.com">Email</a>
+							<a href="https://github.com/aimansam" target="_blank" rel="noopener noreferrer">GitHub</a>
+							<a href="https://www.linkedin.com/in/aimansam" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+							<a href="./assets/resume/Resume.pdf" download="Aiman_Sam_Resume.pdf">Resume</a>
+						</nav>
+					</aside>
 
-					<article class="about-card">
-						<span class="about-card-eyebrow">Skills</span>
-						<h2 class="about-card-title about-card-title-compact" id="skills-title">Loading...</h2>
-						<div class="about-skill-filters" id="skills-filter-list" aria-label="Skill category filters">
-							<!-- Filters injected by js/main.js -->
+					<div class="about-section-content">
+						<article class="about-card about-card-story">
+							<div class="about-story-header">
+								<div class="about-story-heading">
+									<span class="about-card-eyebrow">About Me</span>
+									<h2 class="about-card-title" id="about-title">Loading...</h2>
+								</div>
+							</div>
+							<div class="body-text about-copy" id="about-intro">Loading...</div>
+							<ul class="about-points body-text" id="about-points" aria-label="About me summary">
+								<!-- Points injected by js/main.js -->
+							</ul>
+						</article>
+
+						<article class="about-card">
+							<span class="about-card-eyebrow">Skills</span>
+							<h2 class="about-card-title about-card-title-compact" id="skills-title">Loading...</h2>
+							<div class="about-skill-filters" id="skills-filter-list" aria-label="Skill category filters">
+								<!-- Filters injected by js/main.js -->
+							</div>
+							<div class="about-skill-pages" id="skills-page-list" aria-label="Hiring-focused skills from resume">
+								<!-- Pages injected by js/main.js -->
+							</div>
+						</article>
+
+						<article class="about-card">
+							<span class="about-card-eyebrow">Certificates</span>
+							<h2 class="about-card-title about-card-title-compact" id="certs-title">Loading...</h2>
+							<ul class="about-cert-list" id="cert-list">
+								<!-- Certificates injected by js/main.js -->
+							</ul>
+						</article>
+
+						<div id="stats-summary-section">
+							<span class="subheader-text" id="stats-heading">Loading...</span>
+							<div id="stats-diagram" aria-label="Career highlights and quick stats">
+								<!-- Stats injected by js/main.js -->
+							</div>
 						</div>
-						<div class="about-skill-pages" id="skills-page-list" aria-label="Hiring-focused skills from resume">
-							<!-- Pages injected by js/main.js -->
-						</div>
-					</article>
-
-					<article class="about-card">
-						<span class="about-card-eyebrow">Certificates</span>
-						<h2 class="about-card-title about-card-title-compact" id="certs-title">Loading...</h2>
-						<ul class="about-cert-list" id="cert-list">
-							<!-- Certificates injected by js/main.js -->
-						</ul>
-					</article>
-				</div>
-			</div>
-
-			<div id="stats-summary-section">
-				<span class="subheader-text" id="stats-heading">Loading...</span>
-				<div id="stats-diagram" aria-label="Career highlights and quick stats">
-					<!-- Stats injected by js/main.js -->
+					</div>
 				</div>
 			</div>
 		</main>
