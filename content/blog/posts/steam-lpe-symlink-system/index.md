@@ -411,6 +411,7 @@ The fix is straightforward because the security pattern already exists in the sa
 | 2026-11-21 | Vulnerability discovered and confirmed |
 | 2026-11-21 | PoC developed and tested (fully unprivileged chain) |
 | 2026-11-21 | Reported to Valve via HackerOne |
+| 2026-11-23 | Writeup published |
 
 ## Conclusion
 
