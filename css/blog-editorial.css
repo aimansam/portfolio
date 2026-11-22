@@ -1,0 +1,318 @@
+/* Blog look that matches the portfolio: warm paper, Inter, hairline rules, one restrained red accent.
+   Loaded after blog.css and only overrides it (colours through its variables, shapes and type through "html body" selectors).
+   Delete this file, its <link> in scripts/build-blog.js and its copy step to get the previous blog look back. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #1a1917;
+  --paper: #fbfaf7;
+  --paper-glass: rgba(251, 250, 247, 0.94);
+  --soft: #f3f0ea;
+  --soft-2: #ece8e0;
+  --muted: #6b665f;
+  --faint: #8a847b;
+  --code-bg: #1a1917;
+  --code-fg: #f2efe9;
+  --bl-line: #e4dfd6;
+  --bl-accent: #b3261e;
+  --bl-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* typography.css colours the logo cursor with this; the blog does not load the portfolio's tokens.css. */
+  --accent-text: #b3261e;
+}
+
+html[data-theme="dark"] {
+  --ink: #f2efe9;
+  --paper: #151412;
+  --paper-glass: rgba(21, 20, 18, 0.94);
+  --soft: #1e1c19;
+  --soft-2: #2a2723;
+  --muted: #a8a29a;
+  --faint: #8a847b;
+  --code-bg: #0e0d0c;
+  --code-fg: #f2efe9;
+  --bl-line: #2e2b27;
+  --bl-accent: #ff7a6b;
+  --accent-text: #ff7a6b;
+}
+
+html body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--bl-sans);
+  line-height: 1.65;
+}
+
+/* ===== Header ===== */
+
+html body .blog-header {
+  height: 68px;
+  border-bottom: 1px solid transparent;
+  background: var(--paper-glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+html body .blog-header.is-scrolled {
+  border-bottom-color: var(--bl-line);
+}
+
+html body .blog-brand .nav-title {
+  font-family: var(--bl-sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+html body .blog-brand-label {
+  border-left: 1px solid var(--bl-line);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+html body .blog-top-nav a {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body .blog-top-nav a:is(:hover, :focus-visible, .is-active) {
+  color: var(--ink);
+}
+
+html body .blog-top-nav a::after {
+  height: 1px;
+  background: var(--bl-accent);
+}
+
+html body .blog-header-actions .theme-toggle {
+  border: 1px solid var(--bl-line);
+}
+
+/* ===== Page and post headings ===== */
+
+html body .blog-kicker {
+  color: var(--bl-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+html body :is(.blog-page-header h1, .blog-post-header h1, .blog-loading h1, .blog-home-title) {
+  font-family: var(--bl-sans);
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+html body :is(.blog-page-header p, .blog-index-head p, .blog-post-header p, .blog-loading p) {
+  color: var(--muted);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ===== Post list: ruled rows ===== */
+
+html body .blog-rows {
+  border-top: 1px solid var(--ink);
+}
+
+html body .blog-rows-year {
+  color: var(--bl-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+html body .blog-row {
+  grid-template-columns: 104px minmax(0, 1fr) auto;
+  padding: 22px 8px;
+  border-bottom-color: var(--bl-line);
+}
+
+html body .blog-row-date {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html body .blog-row-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+html body .blog-row:hover .blog-row-title,
+html body .blog-row:focus-visible .blog-row-title {
+  text-decoration-color: var(--bl-accent);
+  text-decoration-thickness: 1px;
+}
+
+html body .blog-row-summary {
+  color: var(--muted);
+}
+
+html body .blog-row-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html body .blog-row-cat {
+  padding: 3px 10px;
+  border: 1px solid var(--bl-line);
+  color: var(--muted);
+}
+
+/* ===== Tags, buttons, notes ===== */
+
+html body .project-tag {
+  border: 1px solid var(--bl-line);
+  color: var(--muted);
+  font-weight: 500;
+}
+
+html body .blog-tag-cloud .project-tag:is(:hover, :focus-visible) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html body .blog-button {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body .blog-button:is(:hover, :active, :focus-visible) {
+  transform: none;
+  box-shadow: none;
+}
+
+html body .blog-note {
+  border: 1px solid var(--bl-line);
+  border-radius: 6px;
+  background: var(--soft);
+  box-shadow: none;
+}
+
+html body .blog-note p {
+  font-size: 16px;
+}
+
+/* ===== Footer ===== */
+
+html body .blog-footer {
+  border-top: 1px solid var(--bl-line);
+}
+
+html body .blog-footer-inner {
+  font-weight: 400;
+}
+
+/* ===== Post page ===== */
+
+html body .blog-post-header {
+  border-bottom: 1px solid var(--bl-line);
+}
+
+html body .blog-post-content {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+html body .blog-post-content :is(h2, h3, h4) {
+  font-family: var(--bl-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+html body .blog-post-content h2 {
+  margin: 44px 0 12px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+html body .blog-post-content h3 {
+  margin: 32px 0 10px;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+html body .blog-post-content a {
+  text-decoration-color: var(--bl-accent);
+}
+
+html body .blog-post-cover img,
+html body .blog-post-content img {
+  border: 1px solid var(--bl-line);
+  border-radius: 6px;
+}
+
+html body .blog-post-content code {
+  border-radius: 4px;
+}
+
+html body .blog-post-content pre {
+  border: 1px solid var(--bl-line);
+  border-radius: 8px;
+}
+
+html body .blog-post-content blockquote {
+  border-left: 3px solid var(--bl-accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--soft);
+  font-weight: 400;
+}
+
+html body .blog-post-content :is(th, td) {
+  border: 1px solid var(--bl-line);
+}
+
+html body .blog-toc {
+  border: 1px solid var(--bl-line);
+  border-radius: 6px;
+}
+
+html body .blog-toc summary {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+html body .blog-post-nav-link {
+  border: 1px solid var(--bl-line);
+  border-radius: 6px;
+}
+
+html body .blog-related h2 {
+  font-family: var(--bl-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+html body .blog-progress {
+  height: 3px;
+}
+
+html body .blog-progress span {
+  background: var(--bl-accent);
+}

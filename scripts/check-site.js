@@ -58,7 +58,7 @@ posts.forEach((post) => {
   // The old portfolio.aimansam.my/blog/... address keeps a redirect page.
   if (!exists(path.join(ROOT, 'blog/posts', post.slug, 'index.html'))) problems.push(`blog/posts/${post.slug}/index.html (redirect page) missing (run npm run build)`);
 });
-['index.html', 'sitemap.xml', 'robots.txt', '404.html', '_headers', 'css/blog.css', 'js/blog.js', 'content/blog/posts.json', 'assets/icons/arrow-right.svg'].forEach((name) => {
+['index.html', 'sitemap.xml', 'robots.txt', '404.html', '_headers', 'css/blog.css', 'css/blog-editorial.css', 'assets/fonts/inter-latin-wght.woff2', 'js/blog.js', 'content/blog/posts.json', 'assets/icons/arrow-right.svg'].forEach((name) => {
   if (!exists(path.join(ROOT, 'dist/blog', name))) problems.push(`dist/blog/${name} missing (run npm run build)`);
 });
 ['index.html', 'sitemap.xml'].forEach((name) => {

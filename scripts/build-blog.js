@@ -29,6 +29,7 @@ const BLOG_SHELL = `<!doctype html>
     <link rel="stylesheet" href="/css/typography.css">
     <link rel="stylesheet" href="/css/utilities.css">
     <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="/css/blog-editorial.css">
   </head>
   <body>
     <a class="skip-to-content" href="#blog-app">Skip to main content</a>
@@ -125,7 +126,8 @@ const copy = (from, to) => {
   ensureDir(path.dirname(path.join(BLOG_DIR, to)));
   fs.cpSync(path.join(ROOT, from), path.join(BLOG_DIR, to), { recursive: true });
 };
-['typography.css', 'utilities.css', 'blog.css'].forEach((name) => copy(`css/${name}`, `css/${name}`));
+['typography.css', 'utilities.css', 'blog.css', 'blog-editorial.css'].forEach((name) => copy(`css/${name}`, `css/${name}`));
+copy('assets/fonts/inter-latin-wght.woff2', 'assets/fonts/inter-latin-wght.woff2');
 copy('js', 'js');
 copy('assets/icons', 'assets/icons');
 ['favicon.svg', 'favicon-64.png', 'apple-touch-icon.png'].forEach((name) => copy(`assets/images/zx10r/${name}`, `assets/images/zx10r/${name}`));
