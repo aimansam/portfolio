@@ -1,13 +1,20 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
 }
 
 .nav-title {
   display: inline-flex;
   align-items: baseline;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: 30px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 /* The logo: the wordmark followed by a red terminal cursor (the same shape as in the loader and the favicon). */
@@ -17,7 +24,7 @@ body {
   width: 0.5em;
   height: 0.13em;
   margin-left: 0.12em;
-  background-color: #d9291c;
+  background-color: var(--accent-text);
 }
 
 .nav-title-link:hover .nav-title::after,
@@ -55,14 +62,19 @@ body {
 
 .main-title {
   margin: 0;
-  font-size: 40px;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
   font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
 .subheader-text {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 20px;
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .body-text {
@@ -113,18 +125,7 @@ body {
   -webkit-box-orient: vertical;
 }
 
-@media only screen and (max-width: 1000px) {
-  .main-title {
-    font-size: 34px;
-  }
-}
-
 @media only screen and (max-width: 600px) {
-  .main-title {
-    font-size: 30px;
-    line-height: 1.1;
-  }
-
   .subheader-text {
     font-size: 18px;
   }

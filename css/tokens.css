@@ -1,0 +1,63 @@
+/* Design tokens for the portfolio: colour, type, shape, depth, focus.
+   Motion tokens (--ease-*, --dur-*) stay in utilities.css because the blog shares them. */
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../assets/fonts/space-grotesk-latin-wght.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../assets/fonts/jetbrains-mono-latin-wght.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Colour. The accent is the logo's terminal-cursor red, turned up.
+     --accent is for fills and large display type (ink on it is about 5.6:1).
+     --accent-text is for small text on white (about 4.9:1). */
+  --ink: #141414;
+  --paper: #ffffff;
+  --accent: #ff3b1f;
+  --accent-text: #d9291c;
+  --muted: #55555a;       /* 7.6:1 on white */
+  --line: #e3e3e3;
+  --soft: #f6f6f4;
+  --focus: #0055cc;
+
+  /* Type */
+  --font-display: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --fs-hero: clamp(3.25rem, 12.5vw, 9.5rem);
+  --fs-title: clamp(2rem, 5vw, 4rem);
+  --fs-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  /* Shape: two radii only. Icon buttons stay round. */
+  --r-card: 12px;
+  --r-chip: 6px;
+
+  /* Borders and depth: flat, with a hard offset shadow on hover. */
+  --border: 2px solid var(--ink);
+  --lift: 5px 5px 0 var(--ink);
+  --lift-accent: 6px 6px 0 var(--accent);
+
+  /* Layout */
+  --page-width: 1120px;
+  --gutter: 32px;
+}
+
+/* One focus ring for every interactive element. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}

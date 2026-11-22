@@ -7,7 +7,7 @@
   left: 16px;
   z-index: 10000;
   padding: 12px 24px;
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
   font-size: 14px;
   font-weight: 700;
@@ -18,7 +18,7 @@
 
 .skip-to-content:focus {
   top: 0;
-  outline: 2px solid #141414;
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 
@@ -70,15 +70,14 @@
 a.icon-link {
   width: 42px;
   height: 42px;
-  border: 2px solid #141414;
+  border: 2px solid var(--ink);
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #141414;
+  color: var(--ink);
   text-decoration: none;
   background-color: white;
-  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -86,8 +85,7 @@ a.icon-link:hover,
 a.icon-link:active,
 a.icon-link:focus-visible {
   cursor: pointer;
-  background-color: #141414;
-  box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
+  background-color: var(--ink);
 }
 
 a.icon-link:hover .footer-icon,
@@ -119,8 +117,8 @@ a.icon-link:focus-visible .footer-icon {
 
 a.button {
   padding: 8px 16px;
-  border: 3px solid #141414;
-  border-radius: 50px;
+  border: 3px solid var(--ink);
+  border-radius: var(--r-chip);
   color: black;
   text-decoration: none;
   width: fit-content;
@@ -133,25 +131,22 @@ a.button {
 a.button:hover {
   text-decoration: none;
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
   cursor: pointer;
 }
 
 a.button:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 a.button:active {
   text-decoration: none;
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 a.button:not(.button-contrast):hover,
 a.button:not(.button-contrast):active,
 a.button:not(.button-contrast):focus-visible {
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
 }
 
@@ -162,28 +157,27 @@ a.button:not(.button-contrast):focus-visible .right-arrow-icon {
 }
 
 a.button.button-contrast {
-  background-color: #141414;
-  border-color: #141414;
+  background-color: var(--ink);
+  border-color: var(--ink);
   color: white;
-  box-shadow: 0 10px 24px rgba(20, 20, 20, 0.18);
 }
 
 a.button.button-contrast:hover {
   background-color: white;
-  border-color: #141414;
-  color: #141414;
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 a.button.button-contrast:focus-visible {
   background-color: white;
-  border-color: #141414;
-  color: #141414;
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 a.button.button-contrast:active {
   background-color: white;
-  border-color: #141414;
-  color: #141414;
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 .button-contrast-icon {
@@ -199,23 +193,21 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .hero-social-link {
   width: 42px;
   height: 42px;
-  border: 2px solid #141414;
+  border: 2px solid var(--ink);
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #141414;
+  color: var(--ink);
   background-color: white;
-  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .hero-social-link:hover,
 .hero-social-link:active,
 .hero-social-link:focus-visible {
-  background-color: #141414;
-  box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
+  background-color: var(--ink);
 }
 
 .hero-social-link:hover .hero-social-icon,
@@ -232,15 +224,14 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .hero-badge-link:active,
 .hero-badge-link:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 .filter-button {
   padding: 8px 14px;
-  border: 2px solid #141414;
-  border-radius: 999px;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-chip);
   background-color: white;
-  color: #141414;
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -258,26 +249,24 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .filter-button:hover,
 .filter-button:active,
 .filter-button:focus-visible {
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
-  box-shadow: 0 12px 24px rgba(20, 20, 20, 0.12);
 }
 
 .filter-button.is-active {
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
 }
 
 .filter-button.is-active:hover,
 .filter-button.is-active:active {
   background-color: #333333;
-  box-shadow: 0 12px 24px rgba(20, 20, 20, 0.18);
 }
 
 .project-tag {
   padding: 4px 10px;
-  border: 1px solid #141414;
-  border-radius: 999px;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-chip);
   font-size: 12px;
   font-weight: 700;
 }
@@ -426,10 +415,10 @@ a.no-underline:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #141414;
+  border: 2px solid var(--ink);
   border-radius: 50%;
   background-color: #ffffff;
-  color: #141414;
+  color: var(--ink);
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
@@ -440,7 +429,7 @@ a.no-underline:hover {
 }
 
 .back-to-top:focus-visible {
-  outline: 3px solid #0055cc;
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -451,10 +440,9 @@ a.no-underline:hover {
 }
 
 .back-to-top:hover {
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.18);
 }
 
 /* --- Reduced Motion --- */

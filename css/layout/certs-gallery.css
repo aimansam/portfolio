@@ -9,78 +9,7 @@
 }
 
 .about-card-skills {
-  border-top: 3px solid #2563eb;
-}
-
-.about-evidence-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.about-evidence-note {
-  color: #64748b;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.about-evidence-bars {
-  display: grid;
-  gap: 18px;
-  max-width: 900px;
-}
-
-.about-evidence-bar {
-  display: grid;
-  gap: 8px;
-}
-
-.about-evidence-bar > div:first-child {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.about-evidence-bar strong {
-  color: #0f172a;
-  font-size: 14px;
-}
-
-.about-evidence-bar span {
-  color: #64748b;
-  font-size: 11px;
-  text-align: right;
-}
-
-.about-evidence-track {
-  width: 100%;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #e2e8f0;
-}
-
-.about-evidence-track span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #2563eb, #60a5fa);
-}
-
-@media only screen and (max-width: 600px) {
-  .about-evidence-bar > div:first-child {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .about-evidence-bar span {
-    text-align: left;
-  }
+  border-top: 3px solid var(--accent-text);
 }
 
 .about-card-skills .about-skill-page {
@@ -88,16 +17,15 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  box-shadow: none;
 }
 
 .about-card-skills .about-pill {
-  border-color: #d9dee7;
+  border-color: var(--ink);
   background: #f8fafc;
 }
 
 .about-card-certificates {
-  border-top: 3px solid #0f172a;
+  border-top: 3px solid var(--ink);
 }
 
 .about-card-certificates .about-cert-masonry {
@@ -106,8 +34,7 @@
 }
 
 .about-card-certificates .about-cert-masonry-card {
-  border-color: #d9dee7;
-  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+  border-color: var(--ink);
 }
 
 @media only screen and (max-width: 1000px) {
@@ -145,10 +72,10 @@
   display: inline-flex;
   align-items: center;
   padding: 8px 16px;
-  border: 2px solid #141414;
-  border-radius: 999px;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-chip);
   background-color: white;
-  color: #141414;
+  color: var(--ink);
   font: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -159,9 +86,8 @@
 
 .about-cert-nav-btn:hover:not(:disabled),
 .about-cert-nav-btn:active:not(:disabled) {
-  background-color: #141414;
+  background-color: var(--ink);
   color: white;
-  box-shadow: 0 8px 16px rgba(20, 20, 20, 0.12);
 }
 
 .about-cert-nav-btn:disabled {
@@ -172,7 +98,7 @@
 .about-cert-counter {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(20, 20, 20, 0.68);
+  color: var(--muted);
   min-width: 120px;
   text-align: center;
 }
@@ -194,8 +120,7 @@
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  border: 2px solid #141414;
-  box-shadow: 0 8px 24px rgba(20, 20, 20, 0.08);
+  border: 2px solid var(--ink);
   aspect-ratio: 4/3;
   opacity: 0;
   animation: gallery-fade-in var(--dur-slow) var(--ease-out) forwards;
@@ -257,7 +182,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: #0f172a;
+  background: var(--ink);
 }
 
 /* Gallery bento layout */
@@ -286,8 +211,8 @@
 .gallery-masonry-item-video {
   grid-column: span 2;
   grid-row: span 2;
-  border-color: #2563eb;
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.18);
+  border-color: var(--accent-text);
+  box-shadow: var(--lift);
 }
 
 @media only screen and (max-width: 800px) {
