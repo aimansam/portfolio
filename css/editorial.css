@@ -1294,3 +1294,32 @@ html body .home-row-title {
 html body .home-row-summary {
   font-size: 14px;
 }
+
+/* ===== Portrait: full width of the sidebar on wide screens, larger on phones ===== */
+
+@media only screen and (min-width: 901px) {
+  html body #portfolio-header-visual {
+    width: 100%;
+    height: auto;
+  }
+
+  html body .portfolio-header-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-position: center 25%;
+    border-radius: 8px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  html body #portfolio-header {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  html body #portfolio-header-visual,
+  html body .portfolio-header-image {
+    width: 88px;
+    height: 88px;
+  }
+}
