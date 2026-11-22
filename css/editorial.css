@@ -1446,3 +1446,61 @@ html body.page-about .about-section-content {
     border-radius: 50%;
   }
 }
+
+/* ===== About polish: small circular portrait, compact roles, readable line length ===== */
+
+html body.page-about .about-sidebar .about-profile-card {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+html body.page-about .about-sidebar .about-profile-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-position: center 18%;
+}
+
+/* Roles: one wrapping line of text separated by dots instead of a stack of pills. */
+html body.page-about .about-sidebar .about-story-visual {
+  display: block;
+  line-height: 1.7;
+}
+
+html body.page-about .about-sidebar .about-story-chip {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ed-text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body.page-about .about-sidebar .about-story-chip:not(:last-child)::after {
+  content: "\00b7";
+  margin: 0 8px;
+  color: var(--ed-muted);
+}
+
+html body.page-about .about-sidebar {
+  gap: 12px;
+}
+
+/* Bio and bullets: a comfortable measure, and no leftover rounded border above the sections. */
+html body.page-about .about-card-story :is(.about-copy, .about-points) {
+  max-width: 64ch;
+}
+
+html body.page-about .about-card:not(.about-card-story) {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html body.page-about .about-skill-pages,
+html body.page-about .about-skill-page {
+  max-width: 68ch;
+}
