@@ -223,9 +223,9 @@ export const createFeaturedResearchMarkup = (item) => `
       ${item.secondaryHref ? `<a class="home-section-link" href="${escapeHtml(item.secondaryHref)}">${escapeHtml(item.secondaryLabel)} &rarr;</a>` : ''}
     </div>
   </div>
-  <a class="home-research-media" href="${escapeHtml(item.href)}" tabindex="-1" aria-hidden="true">
+  ${item.image ? `<a class="home-research-media" href="${escapeHtml(item.href)}" tabindex="-1" aria-hidden="true">
     <img src="${escapeHtml(resolvePortfolioUrl(item.image))}" alt="" loading="lazy" decoding="async">
-  </a>
+  </a>` : ''}
 `
 
 export const createContactMarkup = (contact) => `
