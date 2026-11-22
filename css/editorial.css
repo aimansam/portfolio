@@ -1,4 +1,4 @@
-/* Editorial look: warm paper, serif headings, hairline rules, one restrained red accent.
+/* Clean professional look: warm paper, Inter throughout, modest type sizes, hairline rules, one restrained red accent.
    Loaded after flat.css and only overrides it; delete this file (and its <link> and CSS_FILES entry) to get the flat look back.
    Selectors start with "html body" (and "body.page-about" where older rules are more specific) so they win. */
 
@@ -10,7 +10,6 @@
   --ed-line: #e4dfd6;
   --ed-soft: #f3f0ea;
   --ed-accent: #b3261e;    /* 6.4:1 on the paper colour */
-  --ed-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --ed-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --ed-wide: 1080px;
   --ed-read: 760px;
@@ -28,13 +27,13 @@ html body {
 
 html body :is(h1, h2, h3, .main-title, .page-title, .subheader-text, .home-card-title, .home-row-title, .home-research-title, .home-contact-title, .project-title, .about-card-title) {
   color: var(--ed-ink);
-  font-family: var(--ed-serif);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 html body .body-text {
-  font-size: 16.5px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
 }
@@ -78,10 +77,10 @@ html body .site-header.is-scrolled {
 }
 
 html body .nav-title {
-  font-family: var(--ed-serif);
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-family: var(--ed-sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 html body .site-nav-link {
@@ -226,7 +225,7 @@ html body :is(.filter-button, .about-skill-filter):is(:hover, :focus-visible, :a
 /* ===== Page column ===== */
 
 html body #main-content {
-  gap: clamp(72px, 9vw, 112px);
+  gap: clamp(56px, 7vw, 80px);
 }
 
 @media only screen and (min-width: 801px) {
@@ -239,7 +238,7 @@ html body #main-content {
 /* ===== Home hero: text on the left, portrait on the right ===== */
 
 html body #portfolio-header {
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
   align-items: center;
   gap: clamp(32px, 6vw, 88px);
 }
@@ -257,7 +256,7 @@ html body #portfolio-header-visual {
 }
 
 html body .hero-top-content {
-  gap: 24px;
+  gap: 16px;
 }
 
 html body #hero-title {
@@ -265,11 +264,19 @@ html body #hero-title {
   width: auto;
   margin: 0;
   padding: 0;
-  font-size: clamp(2.5rem, 5.6vw, 4.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   white-space: normal;
   animation: none;
+}
+
+html body .hero-tagline {
+  margin: 0;
+  color: var(--ed-accent);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 html body #hero-title::after {
@@ -277,10 +284,10 @@ html body #hero-title::after {
 }
 
 html body #hero-intro {
-  max-width: 46ch;
+  max-width: 52ch;
   color: var(--ed-text);
-  font-size: 19px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
 }
 
 html body .hero-availability {
@@ -334,9 +341,9 @@ html body .home-section-head {
 }
 
 html body .home-section-head h2.subheader-text {
-  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 html body .home-section-link {
@@ -363,10 +370,10 @@ html body .home-proof-item:first-child {
 }
 
 html body .home-proof-item .stat-value {
-  font-family: var(--ed-serif);
-  font-size: clamp(2.25rem, 4.2vw, 3rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
+  font-family: var(--ed-sans);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 html body .home-proof-label {
@@ -386,14 +393,14 @@ html body .home-research {
 }
 
 html body .home-research-title {
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
 }
 
 html body .home-research-summary {
   color: var(--ed-text);
-  font-size: 16.5px;
+  font-size: 16px;
   line-height: 1.7;
 }
 
@@ -421,9 +428,9 @@ html body .home-card:focus-visible {
 }
 
 html body .home-card-title {
-  font-size: 1.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 html body .home-card-text {
@@ -467,8 +474,8 @@ html body .home-row-date {
 }
 
 html body .home-row-title {
-  font-size: 1.375rem;
-  line-height: 1.25;
+  font-size: 1.0625rem;
+  line-height: 1.35;
 }
 
 html body .home-row:hover .home-row-title,
@@ -484,7 +491,7 @@ html body .home-row-summary {
 
 /* Closing contact block: dark, with a big serif line. */
 html body .home-contact {
-  padding: clamp(32px, 6vw, 72px);
+  padding: clamp(28px, 4vw, 44px);
   border-radius: 6px;
   background: var(--ed-ink);
   color: var(--ed-paper);
@@ -492,14 +499,14 @@ html body .home-contact {
 
 html body .home-contact-title {
   color: var(--ed-paper);
-  font-size: clamp(2.25rem, 5vw, 3.75rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 html body .home-contact-lead {
   color: rgba(251, 250, 247, 0.8);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 html body .home-contact-email {
@@ -546,15 +553,15 @@ html body .page-header::after {
 }
 
 html body .page-title {
-  font-size: clamp(2.5rem, 5.6vw, 4.25rem);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 html body .page-intro {
-  max-width: 58ch;
+  max-width: 60ch;
   color: var(--ed-text);
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.6;
 }
 
@@ -593,8 +600,8 @@ html body .project-card .project-card-actions {
 }
 
 html body .project-card .project-title {
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: 1.125rem;
+  line-height: 1.3;
 }
 
 html body .project-card .project-card-text {
@@ -645,14 +652,14 @@ html body #project-header {
 }
 
 html body #project-header .main-title {
-  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 html body .project-lead {
   color: var(--ed-text);
-  font-size: 19px;
+  font-size: 17px;
   line-height: 1.6;
 }
 
@@ -684,8 +691,8 @@ html body .project-details-content {
 }
 
 html body .project-details-content .subheader-text {
-  font-size: clamp(1.5rem, 2.6vw, 1.875rem);
-  line-height: 1.2;
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
 
 html body .project-details-content :is(p, li) {
@@ -751,16 +758,16 @@ html body.page-about .about-card-story::after {
 html body.page-about .about-card .about-card-title,
 html body.page-about .about-card .about-card-title-compact {
   max-width: none;
-  font-size: clamp(1.5rem, 2.8vw, 1.875rem);
-  letter-spacing: -0.015em;
-  line-height: 1.2;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 html body.page-about .about-card-story .about-card-title {
-  max-width: 16ch;
-  font-size: clamp(2rem, 4.4vw, 2.875rem);
-  letter-spacing: -0.025em;
-  line-height: 1.08;
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 2.8vw, 1.875rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 /* Story: heading on the left, portrait on the right. */
@@ -820,7 +827,7 @@ html body.page-about .about-story-chip {
 
 html body.page-about .about-card-story :is(.about-copy, .about-points) {
   color: var(--ed-text);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.75;
 }
 
@@ -883,10 +890,10 @@ html body.page-about .about-skill-page .about-pill {
 
 .about-cert-row-name {
   color: var(--ed-ink);
-  font-family: var(--ed-serif);
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: var(--ed-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 .about-cert-row-meta {
@@ -912,9 +919,9 @@ html body.page-about #stats-summary-section {
 }
 
 html body.page-about #stats-heading {
-  font-size: clamp(1.5rem, 2.8vw, 1.875rem);
-  letter-spacing: -0.015em;
-  line-height: 1.2;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 html body.page-about #stats-diagram {
@@ -923,17 +930,17 @@ html body.page-about #stats-diagram {
 
 .about-stat-item {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-columns: 120px minmax(0, 1fr);
   gap: 24px;
   align-items: baseline;
 }
 
 .about-stat-value {
   color: var(--ed-ink);
-  font-family: var(--ed-serif);
-  font-size: 1.75rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-family: var(--ed-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1.1;
 }
 

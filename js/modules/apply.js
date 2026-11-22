@@ -45,6 +45,8 @@ export const applyHeroContent = (content) => {
   const heroBadgeLinks = document.getElementById('hero-badge-links')
 
   if (content.hero?.title) heroTitle.textContent = content.hero.title
+  const heroTagline = document.getElementById('hero-tagline')
+  if (content.hero?.tagline && heroTagline) heroTagline.textContent = content.hero.tagline
   // The typing animation steps once per letter (see #hero-title in css/flat.css).
   heroTitle.style.setProperty('--hero-chars', String(heroTitle.textContent.trim().length))
   const heroAvailability = document.getElementById('hero-availability-text')

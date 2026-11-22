@@ -1,6 +1,7 @@
 {
   "hero": {
-    "title": "Aiman Sam, zero day collector.",
+    "title": "Aiman Sam",
+    "tagline": "0 day collector",
     "intro": "Pentesting and red team. Final year, CPTS and CEH, top 1% on TryHackMe. I build CTF challenges and write up what I break.",
     "primaryAction": {
       "label": "See the work",

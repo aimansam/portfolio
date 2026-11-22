@@ -1,15 +1,7 @@
 /* Shared values for the portfolio stylesheets.
    Motion tokens (--ease-*, --dur-*) live in utilities.css because the blog shares them. */
 
-/* Self-hosted variable fonts for the editorial look (OFL): Newsreader for headings, Inter for text. */
-@font-face {
-  font-family: "Newsreader";
-  src: url("../assets/fonts/newsreader-latin-wght.woff2") format("woff2");
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* Self-hosted variable font (OFL) for the whole site. */
 @font-face {
   font-family: "Inter";
   src: url("../assets/fonts/inter-latin-wght.woff2") format("woff2");
