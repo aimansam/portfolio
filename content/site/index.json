@@ -137,7 +137,8 @@
     "ids": [
       "oxblood-drill",
       "web-vuln-scanner",
-      "divide-ctf-recipe"
+      "divide-ctf-recipe",
+      "baby-c2"
     ]
   },
   "latestPosts": {

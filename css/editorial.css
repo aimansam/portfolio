@@ -962,3 +962,101 @@ html body.page-about #stats-diagram {
     gap: 4px;
   }
 }
+
+/* ===== Home layout: short intro, then the work ===== */
+
+/* The stats strip, the badges and the big contact block are not on the home page (the footer has the email and links). */
+html body :is(#home-proof, #home-contact, .hero-badges) {
+  display: none;
+}
+
+@media only screen and (min-width: 801px) {
+  html body #main-content:has(> #portfolio-header) {
+    width: min(920px, calc(100% - 64px));
+    margin-top: 96px;
+  }
+
+  html body:has(#portfolio-header) .site-header {
+    padding: 0 max(28px, calc((100% - 920px) / 2));
+  }
+
+  html body:has(#portfolio-header) #footer {
+    width: min(920px, calc(100% - 64px));
+  }
+}
+
+/* Intro: small round portrait on the left, name, tagline and one short paragraph beside it. */
+html body #portfolio-header {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+html body #portfolio-header-visual {
+  order: 1;
+  width: 72px;
+}
+
+html body #portfolio-header-text-container {
+  order: 2;
+  width: auto;
+}
+
+html body .portfolio-header-image {
+  width: 72px;
+  max-width: none;
+  height: 72px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+html body .hero-image-caption {
+  display: none;
+}
+
+html body #hero-intro {
+  max-width: 60ch;
+}
+
+html body .hero-actions a.button {
+  padding: 10px 20px;
+}
+
+@media only screen and (max-width: 800px) {
+  html body #portfolio-header {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  html body #portfolio-header-visual,
+  html body .portfolio-header-image {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* Work first: projects as a 2 x 2 grid with a cover image on each card. */
+@media only screen and (min-width: 701px) {
+  html body .home-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+html body .home-card {
+  padding: 16px 16px 22px;
+}
+
+html body .home-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 8px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+html body .home-card > :not(.home-card-image) {
+  padding-inline: 8px;
+}

@@ -191,6 +191,7 @@ export const createHomeProjectMarkup = (project) => {
   const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : ''
   return `
   <a class="home-card" href="${escapeHtml(resolvePortfolioUrl(project.href))}"${attrs}>
+    ${project.image ? `<img class="home-card-image" src="${escapeHtml(resolvePortfolioUrl(project.image))}" alt="" loading="lazy" decoding="async">` : ''}
     <span class="home-card-tags">${escapeHtml((project.tags || []).slice(0, 2).join(' · '))}</span>
     <span class="home-card-title">${escapeHtml(project.title)}</span>
     <span class="home-card-text">${escapeHtml(project.summary)}</span>
