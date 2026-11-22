@@ -1429,3 +1429,20 @@ html body.page-about .about-story-header {
 html body.page-about .about-section-content {
   gap: 48px;
 }
+
+/* ===== Home portrait: a 160px circle in the sidebar ===== */
+
+@media only screen and (min-width: 901px) {
+  html body #portfolio-header-visual {
+    width: 160px;
+    height: 160px;
+  }
+
+  html body .portfolio-header-image {
+    width: 160px;
+    height: 160px;
+    aspect-ratio: 1;
+    object-position: center 22%;
+    border-radius: 50%;
+  }
+}
