@@ -1508,17 +1508,17 @@ html body.page-about .about-skill-page {
 /* ===== Projects list: ruled rows with a thumbnail ===== */
 
 @media only screen and (min-width: 801px) {
-  html body .projects-container {
+  html body.page-projects .projects-container {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
     border-top: 1px solid var(--ed-ink);
   }
 
-  html body .projects-container .project-card:nth-child(n) {
+  html body.page-projects .projects-container .project-card:nth-child(n) {
     grid-column: auto;
   }
 
-  html body .project-card:not(.is-hidden) {
+  html body.page-projects .project-card:not(.is-hidden) {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr) auto;
     align-items: center;
@@ -1533,41 +1533,41 @@ html body.page-about .about-skill-page {
     transform: none;
   }
 
-  html body .project-card:not(.is-hidden):is(:hover, :active, :focus-within) {
+  html body.page-projects .project-card:not(.is-hidden):is(:hover, :active, :focus-within) {
     background: var(--ed-soft);
     border-color: var(--ed-line);
     box-shadow: none;
     transform: none;
   }
 
-  html body .project-card .project-image {
+  html body.page-projects .project-card .project-image {
     width: 200px;
     height: 128px;
     border-radius: 6px;
     transform: none;
   }
 
-  html body .project-card:hover .project-image,
-  html body .project-card:focus-within .project-image {
+  html body.page-projects .project-card:hover .project-image,
+  html body.page-projects .project-card:focus-within .project-image {
     transform: none;
   }
 
-  html body .project-card .project-card-text-container {
+  html body.page-projects .project-card .project-card-text-container {
     gap: 8px;
     padding: 0;
   }
 
-  html body .project-card .project-card-actions {
+  html body.page-projects .project-card .project-card-actions {
     padding: 0;
     flex-direction: column;
     align-items: flex-end;
   }
 
-  html body .project-card .project-card-tools {
+  html body.page-projects .project-card .project-card-tools {
     display: none;
   }
 
-  html body .project-card .project-card-text {
+  html body.page-projects .project-card .project-card-text {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
@@ -1575,7 +1575,7 @@ html body.page-about .about-skill-page {
   }
 }
 
-html body .project-card .project-title {
+html body.page-projects .project-card .project-title {
   font-size: 1.125rem;
 }
 
