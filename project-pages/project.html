@@ -70,20 +70,27 @@
 					<h1 class="main-title" id="project-main-title">Project Name</h1>
 					<div class="body-text project-lead" id="project-main-desc">Loading description...</div>
 					<div class="project-tag-list" id="project-focus-list"></div>
-					<div class="project-fact-grid" id="project-fact-grid"></div>
-					<div class="project-link-list" id="project-link-list"></div>
 				</div>
 				<img class="project-header-image" id="project-header-image" src="" alt="Project header">
 			</div>
 
-			<div id="project-details-container">
-				<!-- Sections will be injected here -->
-			</div>
+			<div class="project-layout">
+				<aside class="project-sidebar" aria-label="Project facts and links">
+					<div class="project-fact-grid" id="project-fact-grid"></div>
+					<div class="project-link-list" id="project-link-list"></div>
+				</aside>
 
-			<div id="project-gallery" hidden>
-				<h2 class="subheader-text">Gallery / Notes</h2>
-				<div class="project-gallery-content" id="project-gallery-grid">
-					<!-- Gallery items will be injected here -->
+				<div class="project-body">
+					<div id="project-details-container">
+						<!-- Sections will be injected here -->
+					</div>
+
+					<div id="project-gallery" hidden>
+						<h2 class="subheader-text">Gallery / Notes</h2>
+						<div class="project-gallery-content" id="project-gallery-grid">
+							<!-- Gallery items will be injected here -->
+						</div>
+					</div>
 				</div>
 			</div>
 		</main>

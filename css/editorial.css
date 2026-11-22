@@ -1504,3 +1504,146 @@ html body.page-about .about-skill-pages,
 html body.page-about .about-skill-page {
   max-width: 68ch;
 }
+
+/* ===== Projects list: ruled rows with a thumbnail ===== */
+
+@media only screen and (min-width: 801px) {
+  html body .projects-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ed-ink);
+  }
+
+  html body .projects-container .project-card:nth-child(n) {
+    grid-column: auto;
+  }
+
+  html body .project-card:not(.is-hidden) {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 28px;
+    padding: 22px 8px;
+    border: 0;
+    border-bottom: 1px solid var(--ed-line);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+    transform: none;
+  }
+
+  html body .project-card:not(.is-hidden):is(:hover, :active, :focus-within) {
+    background: var(--ed-soft);
+    border-color: var(--ed-line);
+    box-shadow: none;
+    transform: none;
+  }
+
+  html body .project-card .project-image {
+    width: 200px;
+    height: 128px;
+    border-radius: 6px;
+    transform: none;
+  }
+
+  html body .project-card:hover .project-image,
+  html body .project-card:focus-within .project-image {
+    transform: none;
+  }
+
+  html body .project-card .project-card-text-container {
+    gap: 8px;
+    padding: 0;
+  }
+
+  html body .project-card .project-card-actions {
+    padding: 0;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  html body .project-card .project-card-tools {
+    display: none;
+  }
+
+  html body .project-card .project-card-text {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+html body .project-card .project-title {
+  font-size: 1.125rem;
+}
+
+/* ===== Case-study page: title and image on top, facts sidebar beside the details ===== */
+
+html body #main-content:has(> #project-header) {
+  gap: 32px;
+}
+
+html body #project-header {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  align-items: center;
+  padding-bottom: 40px;
+}
+
+html body .project-header-image {
+  aspect-ratio: 16 / 10;
+  max-height: 280px;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 800px) {
+  html body #project-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+
+.project-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+html body .project-sidebar .project-fact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 20px;
+  margin: 0;
+}
+
+html body .project-sidebar .project-link-list {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+@media only screen and (min-width: 901px) {
+  .project-layout {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .project-sidebar {
+    position: sticky;
+    top: 84px;
+  }
+
+  html body .project-sidebar .project-fact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html body .project-body .project-details-content:first-child {
+    padding-top: 0;
+  }
+}
