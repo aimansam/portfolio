@@ -119,20 +119,16 @@
   },
   "featuredResearch": {
     "label": "Featured research",
-    "title": "Fake High Court summons on WhatsApp: analyzing a ValleyRAT-style loader",
-    "summary": "A WhatsApp message posing as the Kuala Lumpur High Court delivered an ISO that hides shellcode in the pixels of a bitmap. Full attack chain, MITRE ATT&CK mapping, detections and IOCs.",
+    "title": "Escalating to SYSTEM through Steam: exploiting SteamClientService's forgotten symlink handler",
+    "summary": "Any local user can talk to Steam's SYSTEM service and create arbitrary symlinks anywhere on the filesystem. Chain that with a phantom DLL hijack and you get full code execution as NT AUTHORITY\\SYSTEM from a standard user account. Reported to Valve via HackerOne — severity confirmed High (8.8).",
     "tags": [
-      "Malware analysis",
-      "DLL sideloading",
-      "MITRE ATT&CK",
-      "IOCs"
+      "Privilege escalation",
+      "Windows",
+      "DLL hijack",
+      "HackerOne"
     ],
-    "image": "./assets/images/featured/payload-was-a-picture.webp",
-    "imageAlt": "Title card: The payload was a picture. A 61 by 61 pixel bitmap next to its red channel, with entropy 5.2 against 7.9 and 2,381 bytes of shellcode.",
-    "href": "https://pwn.aimansam.my/posts/fake-court-summons-valleyrat/",
-    "hrefLabel": "Read the analysis",
-    "secondaryHref": "https://pwn.aimansam.my/posts/triaging-fake-court-summons-malware/",
-    "secondaryLabel": "How I triaged it"
+    "href": "https://pwn.aimansam.my/posts/steam-lpe-symlink-system/",
+    "hrefLabel": "Read the writeup"
   },
   "featuredProjects": {
     "heading": "Selected projects",
