@@ -200,7 +200,7 @@ portfolio/
 │   ├── tokens.css              # Colour and focus-ring tokens
 │   ├── typography.css, utilities.css
 │   ├── flat.css                # The flat look, header, home sections (portfolio)
-│   ├── lowkey.css              # The lowkey layer on top of flat.css; delete it to get the flat look back
+│   ├── editorial.css           # The editorial layer on top of flat.css; delete it to get the flat look back
 │   └── blog.css                # Blog styles
 ├── js/
 │   ├── main.js, blog.js        # Portfolio and blog entry points

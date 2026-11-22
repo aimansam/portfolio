@@ -18,7 +18,7 @@ const SITE_IMAGE = `${SITE}/assets/images/me/og-image.jpg`;
 
 // All portfolio stylesheets in the order the pages load them, merged into one file so a visit makes
 // one render-blocking request instead of ten. Runs here (CI and Docker only); source pages keep the separate files.
-const CSS_FILES = ['tokens', 'layout/base', 'layout/home', 'layout/about', 'layout/projects', 'layout/responsive', 'layout/certs-gallery', 'layout/about-story', 'typography', 'utilities', 'flat', 'lowkey'];
+const CSS_FILES = ['tokens', 'layout/base', 'layout/home', 'layout/about', 'layout/projects', 'layout/responsive', 'layout/certs-gallery', 'layout/about-story', 'typography', 'utilities', 'flat', 'editorial'];
 let bundleVersion = '';
 const bundleCss = () => {
   const css = CSS_FILES

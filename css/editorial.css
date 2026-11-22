@@ -1,0 +1,957 @@
+/* Editorial look: warm paper, serif headings, hairline rules, one restrained red accent.
+   Loaded after flat.css and only overrides it; delete this file (and its <link> and CSS_FILES entry) to get the flat look back.
+   Selectors start with "html body" (and "body.page-about" where older rules are more specific) so they win. */
+
+:root {
+  --ed-paper: #fbfaf7;
+  --ed-ink: #1a1917;
+  --ed-text: #3b3834;
+  --ed-muted: #6b665f;     /* 5.4:1 on the paper colour */
+  --ed-line: #e4dfd6;
+  --ed-soft: #f3f0ea;
+  --ed-accent: #b3261e;    /* 6.4:1 on the paper colour */
+  --ed-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --ed-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ed-wide: 1080px;
+  --ed-read: 760px;
+}
+
+/* ===== Base ===== */
+
+html body {
+  background: var(--ed-paper);
+  color: var(--ed-text);
+  font-family: var(--ed-sans);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+html body :is(h1, h2, h3, .main-title, .page-title, .subheader-text, .home-card-title, .home-row-title, .home-research-title, .home-contact-title, .project-title, .about-card-title) {
+  color: var(--ed-ink);
+  font-family: var(--ed-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+html body .body-text {
+  font-size: 16.5px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+html body ::selection {
+  background: #ecd9d6;
+  color: var(--ed-ink);
+}
+
+/* Small uppercase labels, used for every kicker and eyebrow. */
+html body :is(.page-kicker, .project-eyebrow, .about-card-eyebrow, .home-research-label, .home-card-tags, .project-fact-label, .about-story-label, .home-row-tag) {
+  color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ===== Header and footer ===== */
+
+html body .site-header {
+  background: rgba(251, 250, 247, 0.92);
+}
+
+html body .site-header.is-scrolled {
+  border-bottom-color: var(--ed-line);
+}
+
+@media only screen and (min-width: 801px) {
+  html body .site-header {
+    height: 68px;
+    padding: 0 max(28px, calc((100% - var(--ed-wide)) / 2));
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  html body .site-header {
+    border-bottom-color: var(--ed-line);
+  }
+}
+
+html body .nav-title {
+  font-family: var(--ed-serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+html body .site-nav-link {
+  color: var(--ed-muted);
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body .site-nav-link:is(:hover, :focus-visible, .is-active) {
+  color: var(--ed-ink);
+}
+
+html body .site-nav-link::after {
+  height: 1px;
+  background: var(--ed-accent);
+}
+
+html body #footer {
+  border-top: 1px solid var(--ed-line);
+}
+
+html body .footer-copy {
+  color: var(--ed-muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* ===== Buttons: small and squared; solid ink or outlined ===== */
+
+html body a.button {
+  padding: 11px 20px;
+  border: 1px solid var(--ed-ink);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+html body a.button:hover,
+html body a.button:focus-visible,
+html body a.button:active {
+  transform: none;
+}
+
+html body a.button .button-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body a.button .right-arrow-icon {
+  display: none;
+}
+
+/* The filled buttons (header, featured research) stay solid ink. */
+html body a.button.button-contrast {
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+html body a.button.button-contrast:is(:hover, :focus-visible, :active) {
+  background: transparent;
+  color: var(--ed-ink);
+}
+
+html body a.button:not(.button-contrast):is(:hover, :focus-visible, :active) {
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+html body .site-header .nav-cta {
+  height: auto;
+  padding: 9px 18px;
+}
+
+/* Hero: "See the work" is the solid one, "Resume" the outlined one. */
+html body .hero-actions a.button {
+  padding: 13px 24px;
+}
+
+html body a.button#my-work-link {
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+html body a.button#my-work-link:is(:hover, :focus-visible, :active) {
+  background: transparent;
+  color: var(--ed-ink);
+}
+
+html body a.button#hero-secondary-action-link {
+  background: transparent;
+  color: var(--ed-ink);
+}
+
+html body a.button#hero-secondary-action-link:is(:hover, :focus-visible, :active) {
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+/* Round icon links (hero socials, footer): hairline circle that fills on hover. */
+html body :is(a.icon-link, .hero-social-link) {
+  border: 1px solid var(--ed-line);
+  background: transparent;
+}
+
+html body :is(a.icon-link, .hero-social-link):is(:hover, :focus-visible, :active) {
+  border-color: var(--ed-ink);
+}
+
+/* Tags and chips: hairline pills. */
+html body :is(.project-tag, .project-tool-chip) {
+  padding: 5px 12px;
+  border: 1px solid var(--ed-line);
+  border-radius: 999px;
+  background: var(--ed-paper);
+  color: var(--ed-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* Filters: outlined pills; the active one is solid ink. */
+html body :is(.filter-button, .about-skill-filter) {
+  padding: 8px 18px;
+  border: 1px solid var(--ed-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ed-text);
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+html body :is(.filter-button, .about-skill-filter):is(:hover, :focus-visible, :active, .is-active) {
+  border-color: var(--ed-ink);
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+/* ===== Page column ===== */
+
+html body #main-content {
+  gap: clamp(72px, 9vw, 112px);
+}
+
+@media only screen and (min-width: 801px) {
+  html body #main-content {
+    width: min(var(--ed-wide), calc(100% - 64px));
+    margin-top: 112px;
+  }
+}
+
+/* ===== Home hero: text on the left, portrait on the right ===== */
+
+html body #portfolio-header {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 88px);
+}
+
+html body #portfolio-header-text-container {
+  order: 1;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+html body #portfolio-header-visual {
+  order: 2;
+}
+
+html body .hero-top-content {
+  gap: 24px;
+}
+
+html body #hero-title {
+  display: block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-size: clamp(2.5rem, 5.6vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  white-space: normal;
+  animation: none;
+}
+
+html body #hero-title::after {
+  display: none;
+}
+
+html body #hero-intro {
+  max-width: 46ch;
+  color: var(--ed-text);
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+html body .hero-availability {
+  color: var(--ed-muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+html body .hero-actions {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+html body .portfolio-header-image {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 6px;
+}
+
+html body .hero-image-caption {
+  color: var(--ed-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+html body .hero-badges {
+  margin-top: 8px;
+}
+
+@media only screen and (max-width: 800px) {
+  html body #portfolio-header {
+    gap: 32px;
+  }
+
+  html body .portfolio-header-image {
+    max-width: 420px;
+  }
+}
+
+/* ===== Home sections ===== */
+
+html body .home-section {
+  gap: 28px;
+}
+
+html body .home-section-head {
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ed-ink);
+}
+
+html body .home-section-head h2.subheader-text {
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+html body .home-section-link {
+  color: var(--ed-accent);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+/* Proof strip */
+html body .home-proof {
+  border-top: 1px solid var(--ed-ink);
+  border-bottom: 1px solid var(--ed-line);
+}
+
+html body .home-proof-item {
+  padding: 30px 24px;
+  border-left-color: var(--ed-line);
+}
+
+html body .home-proof-item:first-child {
+  padding-left: 0;
+}
+
+html body .home-proof-item .stat-value {
+  font-family: var(--ed-serif);
+  font-size: clamp(2.25rem, 4.2vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+html body .home-proof-label {
+  margin-top: 8px;
+  color: var(--ed-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* Featured research */
+html body .home-research {
+  gap: clamp(28px, 5vw, 56px);
+  padding: clamp(24px, 4vw, 48px);
+  border: 0;
+  border-radius: 6px;
+  background: var(--ed-soft);
+}
+
+html body .home-research-title {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+html body .home-research-summary {
+  color: var(--ed-text);
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+
+html body .home-research-media {
+  border: 1px solid var(--ed-line);
+  border-radius: 6px;
+}
+
+/* Selected projects */
+html body .home-card {
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid var(--ed-line);
+  border-radius: 6px;
+  background: var(--ed-paper);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+html body .home-card:hover,
+html body .home-card:focus-visible {
+  border-color: var(--ed-ink);
+  background: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 32px -22px rgba(26, 25, 23, 0.4);
+}
+
+html body .home-card-title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+html body .home-card-text {
+  color: var(--ed-text);
+  font-size: 15px;
+}
+
+html body .home-card-tools {
+  color: var(--ed-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+html body .home-card-more {
+  color: var(--ed-accent);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Latest posts */
+html body .home-post-list {
+  border-top: 0;
+}
+
+html body .home-row {
+  padding: 24px 8px;
+  border-bottom: 1px solid var(--ed-line);
+}
+
+html body .home-row:hover,
+html body .home-row:focus-visible {
+  background: var(--ed-soft);
+}
+
+html body .home-row-date {
+  color: var(--ed-muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html body .home-row-title {
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+html body .home-row:hover .home-row-title,
+html body .home-row:focus-visible .home-row-title {
+  text-decoration-color: var(--ed-accent);
+  text-decoration-thickness: 1px;
+}
+
+html body .home-row-summary {
+  color: var(--ed-text);
+  font-size: 15px;
+}
+
+/* Closing contact block: dark, with a big serif line. */
+html body .home-contact {
+  padding: clamp(32px, 6vw, 72px);
+  border-radius: 6px;
+  background: var(--ed-ink);
+  color: var(--ed-paper);
+}
+
+html body .home-contact-title {
+  color: var(--ed-paper);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+html body .home-contact-lead {
+  color: rgba(251, 250, 247, 0.8);
+  font-size: 17px;
+}
+
+html body .home-contact-email {
+  color: rgba(251, 250, 247, 0.6);
+  font-weight: 400;
+}
+
+html body .home-contact-button {
+  height: 46px;
+  border: 1px solid rgba(251, 250, 247, 0.55);
+  border-radius: 4px;
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body .home-contact-button.is-primary {
+  border-color: var(--ed-paper);
+  background: var(--ed-paper);
+  color: var(--ed-ink);
+}
+
+html body .home-contact-button:is(:hover, :focus-visible):not(.is-primary) {
+  border-color: var(--ed-paper);
+  background: var(--ed-paper);
+  color: var(--ed-ink);
+}
+
+html body .home-contact-button.is-primary:is(:hover, :focus-visible) {
+  background: transparent;
+  color: var(--ed-paper);
+}
+
+/* ===== Inner page headers ===== */
+
+html body .page-header {
+  gap: 14px;
+  padding-bottom: 36px;
+}
+
+html body .page-header::after {
+  height: 1px;
+  background: var(--ed-ink);
+}
+
+html body .page-title {
+  font-size: clamp(2.5rem, 5.6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+html body .page-intro {
+  max-width: 58ch;
+  color: var(--ed-text);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* ===== Projects page ===== */
+
+html body .project-card {
+  gap: 22px;
+  padding: 0;
+  border: 1px solid var(--ed-line);
+  border-radius: 6px;
+  background: var(--ed-paper);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+html body .project-card:hover,
+html body .project-card:active,
+html body .project-card:focus-within {
+  border-color: var(--ed-ink);
+  background: #fff;
+  box-shadow: 0 20px 36px -24px rgba(26, 25, 23, 0.4);
+  transform: translateY(-3px);
+}
+
+html body .project-card .project-image {
+  height: 220px;
+  border-radius: 0;
+}
+
+html body .project-card :is(.project-card-text-container, .project-card-actions) {
+  padding-inline: 24px;
+}
+
+html body .project-card .project-card-actions {
+  padding-bottom: 24px;
+}
+
+html body .project-card .project-title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+html body .project-card .project-card-text {
+  color: var(--ed-text);
+  font-size: 15px;
+}
+
+html body .project-card .project-github-link:hover {
+  background: var(--ed-soft);
+}
+
+html body .projects-container {
+  margin-inline: 0;
+}
+
+/* ===== Gallery ===== */
+
+html body :is(.gallery-masonry-item, .gallery-masonry-card, .gallery-image-wrapper) {
+  border-radius: 6px;
+}
+
+html body .gallery-count {
+  color: var(--ed-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* ===== Project case-study pages ===== */
+
+html body .project-back-link {
+  color: var(--ed-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html body .project-back-link:is(:hover, :focus-visible) {
+  color: var(--ed-ink);
+}
+
+html body #project-header {
+  gap: clamp(28px, 5vw, 64px);
+  padding: 0 0 48px;
+  border: 0;
+  border-bottom: 1px solid var(--ed-line);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html body #project-header .main-title {
+  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+html body .project-lead {
+  color: var(--ed-text);
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+html body .project-header-image {
+  border-radius: 6px;
+}
+
+html body .project-fact {
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid var(--ed-line);
+  border-radius: 0;
+  background: none;
+}
+
+html body .project-fact-label {
+  font-size: 11px;
+}
+
+html body .project-fact-value {
+  color: var(--ed-ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+html body .project-details-content {
+  padding: 40px 0;
+  border-bottom-color: var(--ed-line);
+}
+
+html body .project-details-content .subheader-text {
+  font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+  line-height: 1.2;
+}
+
+html body .project-details-content :is(p, li) {
+  max-width: 68ch;
+}
+
+html body .project-figure img {
+  border: 1px solid var(--ed-line);
+  border-radius: 6px;
+}
+
+html body .project-figure figcaption {
+  color: var(--ed-muted);
+  font-size: 13px;
+}
+
+/* ===== About: a reading column with serif section titles ===== */
+
+@media only screen and (min-width: 801px) {
+  html body #main-content:has(> #about-section) {
+    width: min(var(--ed-read), calc(100% - 64px));
+  }
+
+  html body:has(#about-section) .site-header {
+    padding: 0 max(28px, calc((100% - var(--ed-read)) / 2));
+  }
+
+  html body:has(#about-section) #footer {
+    width: min(var(--ed-read), calc(100% - 64px));
+  }
+}
+
+html body.page-about #about-section {
+  gap: 40px;
+}
+
+html body.page-about .about-section-content {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 64px;
+}
+
+html body.page-about :is(.about-card, .about-card-story) {
+  grid-row: auto;
+  min-height: 0;
+  gap: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html body.page-about .about-card:not(.about-card-story) {
+  padding-top: 40px;
+  border-top: 1px solid var(--ed-line);
+}
+
+html body.page-about .about-card-story::before,
+html body.page-about .about-card-story::after {
+  display: none;
+}
+
+html body.page-about .about-card .about-card-title,
+html body.page-about .about-card .about-card-title-compact {
+  max-width: none;
+  font-size: clamp(1.5rem, 2.8vw, 1.875rem);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+html body.page-about .about-card-story .about-card-title {
+  max-width: 16ch;
+  font-size: clamp(2rem, 4.4vw, 2.875rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+/* Story: heading on the left, portrait on the right. */
+html body.page-about .about-story-header {
+  grid-template-columns: minmax(0, 1fr) 168px;
+  align-items: start;
+  gap: 32px;
+}
+
+html body.page-about .about-profile-card {
+  width: 168px;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--ed-line);
+  border-radius: 6px;
+  background: var(--ed-soft);
+  overflow: hidden;
+  box-shadow: none;
+}
+
+html body.page-about .about-profile-image {
+  width: 100%;
+  border-radius: 0;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 800px) {
+  html body.page-about .about-story-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html body.page-about .about-profile-card {
+    order: -1;
+    width: 132px;
+  }
+}
+
+html body.page-about .about-story-roles {
+  gap: 10px;
+}
+
+html body.page-about .about-story-chip {
+  min-height: 0;
+  padding: 6px 14px;
+  border: 1px solid var(--ed-line);
+  border-radius: 999px;
+  background: var(--ed-paper);
+  box-shadow: none;
+  color: var(--ed-ink);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html body.page-about .about-card-story :is(.about-copy, .about-points) {
+  color: var(--ed-text);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+html body.page-about .about-points {
+  gap: 12px;
+}
+
+html body.page-about .about-points li::marker {
+  color: var(--ed-accent);
+}
+
+/* Skills */
+html body.page-about .about-skill-page {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html body.page-about .about-skill-page .about-pill {
+  padding: 7px 14px 7px 10px;
+  border: 1px solid var(--ed-line);
+  border-radius: 999px;
+  background: var(--ed-paper);
+  color: var(--ed-ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Certificates and highlights: ruled text lists. */
+.about-cert-list,
+.about-stat-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-cert-row,
+.about-stat-item {
+  padding: 18px 0;
+}
+
+.about-cert-row + .about-cert-row,
+.about-stat-item + .about-stat-item {
+  border-top: 1px solid var(--ed-line);
+}
+
+.about-cert-row {
+  display: grid;
+  gap: 4px;
+}
+
+.about-cert-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-cert-row-name {
+  color: var(--ed-ink);
+  font-family: var(--ed-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.about-cert-row-meta {
+  color: var(--ed-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.about-cert-row-note,
+.about-stat-note {
+  color: var(--ed-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+html body.page-about #stats-summary-section {
+  gap: 12px;
+  padding-top: 40px;
+  border-top: 1px solid var(--ed-line);
+}
+
+html body.page-about #stats-heading {
+  font-size: clamp(1.5rem, 2.8vw, 1.875rem);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+html body.page-about #stats-diagram {
+  gap: 0;
+}
+
+.about-stat-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  align-items: baseline;
+}
+
+.about-stat-value {
+  color: var(--ed-ink);
+  font-family: var(--ed-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.about-stat-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.about-stat-label {
+  color: var(--ed-ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 700px) {
+  .about-stat-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}
