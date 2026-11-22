@@ -1,0 +1,1039 @@
+/* Flat look, shared with the blog: squared tags and buttons, softly rounded cards, no drop shadows.
+   Loaded after every other portfolio stylesheet, so it only needs to override shapes and shadows. */
+
+/* Cards and panels */
+html body :is(
+  .about-card,
+  .page-about .about-card,
+  .page-about .story-chapters,
+  .project-card,
+  .page-projects .project-card:nth-child(4n + 4),
+  #project-header,
+  .stat-node,
+  .about-card-story .about-profile-card
+) {
+  border-radius: 14px;
+}
+
+/* Tags, chips, filters and text buttons */
+html body :is(
+  .about-hero-action,
+  .story-chapter-media span,
+  .about-profile-status,
+  .about-story-chip,
+  .page-about .about-story-chip,
+  .about-skill-filter,
+  .project-tool-chip,
+  a.button,
+  .filter-button,
+  .project-tag,
+  .about-certificate-nav,
+  .about-cert-nav-btn
+) {
+  border-radius: 6px;
+}
+
+/* Icon-only buttons stay round */
+html body :is(a.icon-link, .hero-social-link, .back-to-top) {
+  border-radius: 50%;
+}
+
+/* No drop shadows, including on hover and focus */
+html body :is(
+  .about-card,
+  .about-card-story,
+  .about-profile-card,
+  .about-card-story .about-profile-card,
+  .page-about .about-profile-card,
+  .page-about .about-card,
+  .page-about .story-chapters,
+  .about-skill-page,
+  .page-about .about-skill-page,
+  .about-cert-masonry-card,
+  .about-card-certificates .about-cert-masonry-card,
+  .gallery-masonry-item,
+  .project-card,
+  #project-header,
+  .stat-node,
+  .story-chapter-media,
+  .about-story-chip,
+  .page-about .about-story-chip,
+  .about-skill-filter,
+  .about-certificate-nav,
+  .about-cert-nav-btn,
+  a.icon-link,
+  a.button,
+  .hero-social-link,
+  .hero-badge-link,
+  .filter-button,
+  .back-to-top
+),
+  html body :is(
+  .about-card,
+  .project-card,
+  .stat-node,
+  .about-cert-masonry-card,
+  .story-chapter-media,
+  a.icon-link,
+  a.button,
+  .hero-social-link,
+  .hero-badge-link,
+  .filter-button,
+  .back-to-top,
+  .about-skill-filter,
+  .about-certificate-nav,
+  .about-cert-nav-btn
+):is(:hover,
+  :focus-visible,
+  :focus-within,
+  :active) {
+  box-shadow: none;
+}
+
+/* ===== Site header: one flat bar (logo, links, Let's talk), the same pattern as the blog ===== */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 72px;
+  padding: 0 max(28px, calc((100% - 1120px) / 2));
+  border-bottom: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: border-color 180ms ease;
+  /* The header stays put while the page content cross-fades. */
+  view-transition-name: site-nav;
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: var(--ink);
+}
+
+.site-header .nav-title-link {
+  margin-right: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.site-nav-link {
+  position: relative;
+  padding: 6px 0;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.site-nav-link:hover::after,
+.site-nav-link:focus-visible::after,
+.site-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.site-nav-link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+html body .site-header .nav-cta {
+  margin: 0;
+  padding: 0 16px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header .nav-cta .button-text {
+  font-size: 14px;
+}
+
+/* Without the left rail, the page content is centered under the header. */
+html body #main-content {
+  width: min(1120px, calc(100% - 64px));
+  margin: 120px auto 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    flex-wrap: wrap;
+    height: auto;
+    gap: 6px 12px;
+    padding: 12px 20px 0;
+    border-bottom-color: var(--ink);
+  }
+
+  .site-nav {
+    order: 3;
+    flex: 1 0 100%;
+    gap: 24px;
+    margin: 0 -20px;
+    padding: 4px 20px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav-link {
+    flex: none;
+    font-size: 15px;
+  }
+
+  .site-nav-link::after {
+    bottom: 0;
+  }
+
+  html body #main-content {
+    width: calc(100% - 40px);
+    margin: 28px auto 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  html body #main-content {
+    width: calc(100% - 24px);
+    margin-top: 24px;
+  }
+}
+
+/* The footer shares the header's and the content's edges. */
+html body #footer {
+  width: min(1120px, calc(100% - 64px));
+  margin: 24px auto 0;
+  padding: 24px 0 36px;
+  border-top: 2px solid var(--ink);
+}
+
+@media only screen and (max-width: 800px) {
+  html body #footer {
+    width: calc(100% - 40px);
+    padding: 20px 0 32px;
+  }
+}
+
+/* ===== Home page: hero extras, proof strip, featured research, selected projects, latest posts ===== */
+
+.hero-availability {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 4px;
+  color: rgba(20, 20, 20, 0.78);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: normal;
+}
+
+.hero-availability-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #1a9a47;
+  box-shadow: 0 0 0 4px rgba(26, 154, 71, 0.16);
+}
+
+/* Proof strip */
+.home-proof {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.home-proof[hidden],
+.home-research[hidden],
+.home-section[hidden] {
+  display: none;
+}
+
+.home-proof-item {
+  padding: 22px 20px;
+  border-left: 1px solid #e3e3e3;
+}
+
+.home-proof-item:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.home-proof-item .stat-value {
+  font-size: 32px;
+  letter-spacing: -0.01em;
+}
+
+.home-proof-label {
+  margin-top: 8px;
+  color: rgba(20, 20, 20, 0.72);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* Featured research */
+.home-research {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 36px;
+  align-items: center;
+  padding: 28px;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: #f7f7f7;
+}
+
+.home-research-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  white-space: normal;
+}
+
+.home-research-label {
+  color: rgba(20, 20, 20, 0.7);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-research-title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.home-research-summary {
+  margin: 0;
+  color: rgba(20, 20, 20, 0.8);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.home-research-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-research-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  margin-top: 6px;
+}
+
+.home-research-media {
+  display: block;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.home-research-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Section headings with a link on the right */
+.home-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.home-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.home-section-link {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  text-underline-offset: 5px;
+  white-space: nowrap;
+}
+
+.home-section-link:hover,
+.home-section-link:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* Selected projects */
+.home-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: normal;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.home-card:hover,
+.home-card:focus-visible {
+  background: #f7f7f7;
+  transform: translateY(-2px);
+}
+
+.home-card:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.home-card-tags {
+  color: rgba(20, 20, 20, 0.7);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.home-card-text {
+  color: rgba(20, 20, 20, 0.8);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.home-card-tools {
+  margin-top: auto;
+  padding-top: 6px;
+  color: rgba(20, 20, 20, 0.62);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.home-card-more {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Latest posts */
+.home-post-list {
+  border-top: 2px solid var(--ink);
+}
+
+.home-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) auto;
+  gap: 24px;
+  padding: 18px 8px;
+  border-bottom: 1px solid #e3e3e3;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: normal;
+  transition: background-color 150ms ease;
+}
+
+.home-row:hover,
+.home-row:focus-visible {
+  background: #f7f7f7;
+}
+
+.home-row:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.home-row-date {
+  padding-top: 4px;
+  color: rgba(20, 20, 20, 0.7);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.home-row-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.home-row:hover .home-row-title,
+.home-row:focus-visible .home-row-title {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.home-row-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(20, 20, 20, 0.72);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.home-row-tag {
+  padding-top: 4px;
+  color: rgba(20, 20, 20, 0.62);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 1000px) {
+  .home-proof {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-proof-item:nth-child(3n + 1) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .home-proof-item:nth-child(n + 4) {
+    border-top: 1px solid #e3e3e3;
+  }
+
+  .home-research {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .home-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .home-proof {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-proof-item,
+  .home-proof-item:nth-child(3n + 1) {
+    padding: 16px 14px;
+    border-left: 1px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+  }
+
+  .home-proof-item:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .home-proof-item:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  .home-research {
+    padding: 18px;
+  }
+
+  .home-research-title {
+    font-size: 23px;
+  }
+
+  .home-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 16px 4px;
+  }
+
+  .home-row-tag {
+    padding-top: 0;
+  }
+
+  .home-section-head {
+    align-items: center;
+  }
+}
+
+.home-row-date {
+  white-space: nowrap;
+}
+
+.home-proof-item .stat-value {
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 700px) {
+  .home-proof-item .stat-value {
+    font-size: 26px;
+  }
+}
+
+/* ===== Project case studies: figures and bullet lists ===== */
+
+#project-gallery[hidden] {
+  display: none;
+}
+
+.project-figure {
+  margin: 22px 0 6px;
+}
+
+.project-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: zoom-in;
+}
+
+.project-figure figcaption {
+  margin-top: 10px;
+  color: rgba(20, 20, 20, 0.68);
+  font-size: 14px;
+}
+
+.project-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding-left: 1.2rem;
+}
+
+.project-list li {
+  line-height: 1.6;
+}
+
+@media only screen and (max-width: 800px) {
+  /* Project header: one column on phones (it used to stay two squeezed columns). */
+  html body #project-header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  /* Diagrams keep a readable size and scroll sideways inside their own box; tap one to open it full size. */
+  .project-figure {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .project-figure img {
+    width: 680px;
+    max-width: none;
+  }
+
+  .project-figure figcaption {
+    position: sticky;
+    left: 0;
+    width: calc(100vw - 64px);
+  }
+}
+
+/* ===== Page headers (About, Projects, Gallery): label, large title, one-line intro, rule ===== */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 26px;
+  position: relative;
+  white-space: normal;
+}
+
+/* The rule under the header; it draws in left to right on load. */
+.page-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--ink);
+  transform-origin: left;
+}
+
+.page-kicker {
+  color: rgba(20, 20, 20, 0.66);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.page-intro {
+  max-width: 62ch;
+  margin: 2px 0 0;
+  color: rgba(20, 20, 20, 0.75);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+@media only screen and (max-width: 800px) {
+  .page-header {
+    gap: 8px;
+    padding-bottom: 20px;
+  }
+
+  .page-title {
+    font-size: 34px;
+  }
+
+  .page-intro {
+    font-size: 16px;
+  }
+}
+
+/* Project cards carry 20px of invisible padding; pull the grid out so the images line up with the page title. */
+html body .projects-container {
+  margin-inline: -20px;
+}
+
+@media only screen and (max-width: 600px) {
+  html body .projects-container {
+    margin-inline: -12px;
+  }
+}
+
+/* ===== Certificate pager: Prev and Next at the ends, page info in the middle ===== */
+
+html body .about-cert-pagination {
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 18px;
+}
+
+html body .about-cert-nav-btn {
+  height: 40px;
+  padding: 0 16px;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+html body .about-cert-nav-btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+html body .about-cert-nav-btn:disabled {
+  border-color: rgba(20, 20, 20, 0.28);
+  color: rgba(20, 20, 20, 0.38);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+html body .about-cert-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  text-align: center;
+}
+
+.about-cert-counter strong {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.about-cert-counter span {
+  color: rgba(20, 20, 20, 0.62);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ===== Home: closing "let's talk" panel ===== */
+
+.home-contact[hidden] {
+  display: none;
+}
+
+.home-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 40px 44px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: #ffffff;
+  white-space: normal;
+}
+
+.home-contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 560px;
+}
+
+.home-contact-title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.home-contact-lead {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.home-contact-email {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.home-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.home-contact-button {
+  display: inline-flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 22px;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.home-contact-button.is-primary,
+.home-contact-button:hover,
+.home-contact-button:focus-visible {
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.home-contact-button.is-primary:hover,
+.home-contact-button.is-primary:focus-visible {
+  background: transparent;
+  color: #ffffff;
+}
+
+.home-contact-button:focus-visible {
+  outline: 3px solid #7db4ff;
+  outline-offset: 3px;
+}
+
+.home-contact-button:active {
+  transform: scale(0.97);
+}
+
+@media only screen and (max-width: 800px) {
+  .home-contact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px 22px;
+  }
+
+  .home-contact-title {
+    font-size: 29px;
+  }
+
+  .home-contact-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ===== Motion v2, phase 1: typed hero, page headers ===== */
+
+@keyframes hero-type {
+  from { clip-path: inset(-10% 100% -30% 0); }
+  to { clip-path: inset(-10% -2% -30% 0); }
+}
+
+@keyframes hero-cursor-move {
+  from { left: 0; }
+  to { left: calc(100% - 0.7em); }
+}
+
+@keyframes hero-cursor-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes hero-cursor-out {
+  to { opacity: 0; }
+}
+
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes title-rise {
+  from { opacity: 0; transform: translateY(0.5em); clip-path: inset(0 0 70% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(-10% -5% -30% -5%); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The title is in the page from the start (search engines and screen readers read it); it is only revealed letter by letter. */
+  #hero-title {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    align-self: flex-start;
+    padding-right: 0.7em;
+    margin-right: -0.7em;
+    white-space: nowrap;
+    animation: hero-type 750ms steps(var(--hero-chars, 10), end) 150ms both;
+  }
+
+  #hero-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0.14em;
+    left: 0;
+    width: 0.5em;
+    height: 0.13em;
+    background: var(--accent-text);
+    animation:
+      hero-cursor-move 750ms steps(var(--hero-chars, 10), end) 150ms both,
+      hero-cursor-blink 840ms steps(1, end) 900ms 3,
+      hero-cursor-out 300ms ease 3450ms forwards;
+  }
+
+  /* The title stays on one line, so the smallest phones scale it down instead of letting it overflow. */
+  @media only screen and (max-width: 420px) {
+    #hero-title { font-size: 7.4vw; }
+  }
+
+  /* The rest of the hero follows once the title has typed. */
+  .hero-top-content > .header-text { animation: none; }
+  #hero-intro { animation: rise-in 600ms var(--ease-out) 800ms both; }
+  .hero-top-content > :nth-child(2) { animation-delay: 900ms; }
+  .hero-top-content > :nth-child(3) { animation-delay: 1000ms; }
+  .hero-top-content > :nth-child(4) { animation-delay: 1100ms; }
+
+  .page-header::after { animation: rule-draw 900ms var(--ease-out) 250ms both; }
+  .page-kicker { animation: slide-in 600ms var(--ease-out) 60ms both; }
+  .page-title { animation: title-rise 800ms var(--ease-out) 120ms both; }
+  .page-intro { animation: rise-in 700ms var(--ease-out) 380ms both; }
+}
+
+/* Gallery filter: the grid fades out, then the new photos pop in one after another. */
+.gallery-count {
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted, #5c5c5c);
+  min-height: 1.3em;
+}
+
+@keyframes gallery-pop {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-masonry { transition: opacity 150ms ease-out; }
+  .gallery-masonry.is-leaving { opacity: 0; }
+  .gallery-masonry.is-refreshing .gallery-masonry-item:nth-child(n) {
+    opacity: 0;
+    animation: gallery-pop var(--dur-slow) var(--ease-out) calc(var(--i, 0) * 55ms) both;
+  }
+}
+
+/* Reserve room for the grid while photos load so the footer does not jump. */
+#gallery-list { min-height: 80vh; }
+
+/* Touch targets: filters and icon buttons reach 44px on phones. */
+@media only screen and (max-width: 800px) {
+  .filter-button,
+  .about-skill-filter {
+    min-height: 44px;
+  }
+
+  a.icon-link,
+  .hero-social-link {
+    width: 44px;
+    height: 44px;
+  }
+}

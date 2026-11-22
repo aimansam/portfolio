@@ -78,6 +78,7 @@ a.icon-link {
   color: var(--ink);
   text-decoration: none;
   background-color: white;
+  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -86,6 +87,7 @@ a.icon-link:active,
 a.icon-link:focus-visible {
   cursor: pointer;
   background-color: var(--ink);
+  box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
 }
 
 a.icon-link:hover .footer-icon,
@@ -118,7 +120,7 @@ a.icon-link:focus-visible .footer-icon {
 a.button {
   padding: 8px 16px;
   border: 3px solid var(--ink);
-  border-radius: var(--r-chip);
+  border-radius: 50px;
   color: black;
   text-decoration: none;
   width: fit-content;
@@ -131,16 +133,19 @@ a.button {
 a.button:hover {
   text-decoration: none;
   transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
   cursor: pointer;
 }
 
 a.button:focus-visible {
   transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 a.button:active {
   text-decoration: none;
   transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 a.button:not(.button-contrast):hover,
@@ -160,6 +165,7 @@ a.button.button-contrast {
   background-color: var(--ink);
   border-color: var(--ink);
   color: white;
+  box-shadow: 0 10px 24px rgba(20, 20, 20, 0.18);
 }
 
 a.button.button-contrast:hover {
@@ -201,6 +207,7 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
   text-decoration: none;
   color: var(--ink);
   background-color: white;
+  box-shadow: 0 0 0 rgba(20, 20, 20, 0);
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -208,6 +215,7 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .hero-social-link:active,
 .hero-social-link:focus-visible {
   background-color: var(--ink);
+  box-shadow: 0 14px 26px rgba(20, 20, 20, 0.16);
 }
 
 .hero-social-link:hover .hero-social-icon,
@@ -224,12 +232,13 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .hero-badge-link:active,
 .hero-badge-link:focus-visible {
   transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(20, 20, 20, 0.14);
 }
 
 .filter-button {
   padding: 8px 14px;
   border: 2px solid var(--ink);
-  border-radius: var(--r-chip);
+  border-radius: 999px;
   background-color: white;
   color: var(--ink);
   display: inline-flex;
@@ -251,6 +260,7 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .filter-button:focus-visible {
   background-color: var(--ink);
   color: white;
+  box-shadow: 0 12px 24px rgba(20, 20, 20, 0.12);
 }
 
 .filter-button.is-active {
@@ -261,12 +271,13 @@ a.button.button-contrast:focus-visible .button-contrast-icon {
 .filter-button.is-active:hover,
 .filter-button.is-active:active {
   background-color: #333333;
+  box-shadow: 0 12px 24px rgba(20, 20, 20, 0.18);
 }
 
 .project-tag {
   padding: 4px 10px;
   border: 1px solid var(--ink);
-  border-radius: var(--r-chip);
+  border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
 }
@@ -443,6 +454,7 @@ a.no-underline:hover {
   background-color: var(--ink);
   color: white;
   transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.18);
 }
 
 /* --- Reduced Motion --- */

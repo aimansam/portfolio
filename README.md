@@ -197,9 +197,9 @@ portfolio/
 │   └── blog/posts/<slug>/      # index.md + images for each post
 ├── css/
 │   ├── layout/                 # Page styles, loaded in order
-│   ├── tokens.css              # Design tokens (colour, type, radii, depth, focus) and self-hosted fonts
+│   ├── tokens.css              # Colour and focus-ring tokens
 │   ├── typography.css, utilities.css
-│   ├── theme.css               # The loud theme: header, hero, home sections, page headers (portfolio)
+│   ├── flat.css                # The flat look, header, home sections (portfolio)
 │   └── blog.css                # Blog styles
 ├── js/
 │   ├── main.js, blog.js        # Portfolio and blog entry points
