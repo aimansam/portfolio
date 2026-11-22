@@ -35,17 +35,18 @@ export const createHeroBadgeMarkup = (item) => `
   </a>
 `;
 
-export const createStatsRow = (items, isCompact) => `
-  <div class="stats-row ${isCompact ? 'stats-row-compact' : ''}">
+export const createStatsListMarkup = (items) => `
+  <ul class="about-stat-list">
     ${items.map(item => `
-      <div class="stat-node">
-        <span class="stat-step">${item.step}</span>
-        <span class="stat-value">${item.value}</span>
-        <span class="stat-label">${item.label}</span>
-        <div class="body-text stat-note">${item.note}</div>
-      </div>
+      <li class="about-stat-item">
+        <strong class="about-stat-value">${escapeHtml(item.value)}</strong>
+        <div class="about-stat-copy">
+          <span class="about-stat-label">${escapeHtml(item.label)}</span>
+          <small class="about-stat-note">${escapeHtml(item.note)}</small>
+        </div>
+      </li>
     `).join('')}
-  </div>
+  </ul>
 `;
 
 export const createCareerTimelineMarkup = (items) => `
@@ -236,3 +237,13 @@ export const createContactMarkup = (contact) => `
     ${(contact.actions || []).map((action) => `<a class="home-contact-button${action.primary ? ' is-primary' : ''}" href="${escapeHtml(resolvePortfolioUrl(action.href))}"${action.external ? ' target="_blank" rel="noopener noreferrer"' : ''}${action.download ? ` download="${escapeHtml(action.download)}"` : ''}>${escapeHtml(action.label)}</a>`).join('')}
   </div>
 `
+
+export const createCertificateRowMarkup = (cert) => `
+  <li class="about-cert-row">
+    <div class="about-cert-row-head">
+      <span class="about-cert-row-name">${escapeHtml(cert.name)}</span>
+      <span class="about-cert-row-meta">${escapeHtml([cert.code, cert.meta].filter(Boolean).join(' \u00b7 '))}</span>
+    </div>
+    <span class="about-cert-row-note">${escapeHtml(cert.note)}</span>
+  </li>
+`;

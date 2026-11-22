@@ -49,7 +49,7 @@ html body .site-header.is-scrolled {
     padding: 0 max(24px, calc((100% - 1120px) / 2));
   }
 
-  html body:has(#portfolio-header) .site-header {
+  html body:has(#portfolio-header, #about-section) .site-header {
     padding: 0 max(24px, calc((100% - var(--lk-col)) / 2));
   }
 }
@@ -169,7 +169,7 @@ html body #main-content:has(> #portfolio-header) {
   }
 }
 
-html body:has(#portfolio-header) #footer {
+html body:has(#portfolio-header, #about-section) #footer {
   width: min(var(--lk-col), calc(100% - 48px));
 }
 
@@ -183,7 +183,7 @@ html body .footer-copy {
   font-weight: 400;
 }
 
-/* Hero: small portrait, a name, one paragraph, a few links. */
+/* Hero: portrait, a name, one paragraph, a few links. */
 html body #portfolio-header {
   display: flex;
   flex-direction: column;
@@ -192,13 +192,13 @@ html body #portfolio-header {
 }
 
 html body #portfolio-header-visual {
-  width: 72px;
+  width: 144px;
   gap: 0;
 }
 
 html body .portfolio-header-image {
-  width: 72px;
-  height: 72px;
+  width: 144px;
+  height: 144px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -511,5 +511,284 @@ html body :is(.filter-button, .about-skill-filter):not(.lk):is(:hover, :active, 
   html body :is(a.icon-link, .hero-social-link):not(.lk) {
     width: 44px;
     height: 44px;
+  }
+}
+
+/* ===== About: the same short text column, sections separated by hairlines ===== */
+
+html body #main-content:has(> #about-section) {
+  width: min(var(--lk-col), calc(100% - 48px));
+  margin-top: 112px;
+  gap: 48px;
+}
+
+@media only screen and (max-width: 800px) {
+  html body #main-content:has(> #about-section) {
+    margin-top: 32px;
+    gap: 40px;
+  }
+}
+
+html body.page-about #about-section {
+  gap: 40px;
+}
+
+html body.page-about .about-section-content {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 44px;
+}
+
+/* Sections are plain blocks: no boxes, a hairline above all but the first. */
+html body.page-about :is(.about-card, .about-card-story) {
+  grid-row: auto;
+  min-height: 0;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html body.page-about .about-card:not(.about-card-story) {
+  padding-top: 28px;
+  border-top: 1px solid var(--lk-line);
+}
+
+html body.page-about .about-card .about-card-eyebrow,
+html body.page-about #stats-heading {
+  color: var(--lk-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html body.page-about .about-card .about-card-title,
+html body.page-about .about-card .about-card-title-compact {
+  max-width: none;
+  color: var(--lk-text);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* Story: round portrait above the title, roles as one line, then the text. */
+html body.page-about .about-story-header {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+html body.page-about .about-profile-card {
+  width: 144px;
+  max-width: none;
+  height: 144px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  justify-self: start;
+}
+
+html body.page-about .about-profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+html body.page-about .about-story-roles {
+  gap: 4px;
+}
+
+html body.page-about .about-story-label {
+  color: var(--lk-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+html body.page-about .about-story-visual {
+  gap: 2px 0;
+}
+
+html body.page-about .about-story-chip:not(.lk) {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--lk-text);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html body.page-about .about-story-chip:not(:last-child)::after {
+  content: "\00b7";
+  margin: 0 10px;
+  color: var(--lk-muted);
+}
+
+html body.page-about .about-card-story :is(.about-copy, .about-points) {
+  color: var(--lk-text);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Skills: text tabs and a comma-separated list instead of pills. */
+html body.page-about .about-skill-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+html body.page-about .about-skill-filter:not(.lk) {
+  min-height: 0;
+  padding: 0 0 3px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--lk-muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+html body.page-about .about-skill-filter:not(.lk):is(:hover, :active, :focus-visible, .is-active) {
+  border-bottom-color: var(--lk-text);
+  background: none;
+  color: var(--lk-text);
+}
+
+html body.page-about .about-skill-page {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html body.page-about .about-pill-list {
+  display: block;
+  line-height: 1.9;
+}
+
+html body.page-about .about-skill-page .about-pill {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: inherit;
+  animation: none;
+}
+
+html body.page-about .about-skill-page .about-pill :is(i, svg) {
+  display: none;
+}
+
+html body.page-about .about-skill-page .about-pill:not(:last-child)::after {
+  content: ", ";
+}
+
+/* Certificates and highlights: ruled text lists. */
+.about-cert-list,
+.about-stat-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-cert-row,
+.about-stat-item {
+  padding: 12px 0;
+}
+
+.about-cert-row + .about-cert-row,
+.about-stat-item + .about-stat-item {
+  border-top: 1px solid var(--lk-line);
+}
+
+.about-cert-row {
+  display: grid;
+  gap: 2px;
+}
+
+.about-cert-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.about-cert-row-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.about-cert-row-meta {
+  color: var(--lk-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.about-cert-row-note,
+.about-stat-note {
+  color: var(--lk-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+html body.page-about #stats-summary-section {
+  gap: 12px;
+  padding-top: 28px;
+  border-top: 1px solid var(--lk-line);
+}
+
+html body.page-about #stats-diagram {
+  gap: 0;
+}
+
+.about-stat-item {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.about-stat-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.about-stat-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.about-stat-label {
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 700px) {
+  .about-stat-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
+/* Skill tabs keep a 44px touch target on phones. */
+@media only screen and (max-width: 800px) {
+  html body.page-about .about-skill-filter:not(.lk) {
+    min-height: 44px;
   }
 }

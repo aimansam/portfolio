@@ -1,9 +1,8 @@
 /** Applies loaded JSON content to the page DOM. */
 import { escapeHtml, resolvePortfolioUrl, resolveContentAsset } from './utils.js'
 import { isProjectPath, getProjectId } from './content.js'
-import { prefersReducedMotion } from './motion.js'
 import {
-  createStructuredData, createCareerTimelineMarkup, createStatsRow,
+  createStructuredData, createCareerTimelineMarkup, createStatsListMarkup, createCertificateRowMarkup,
   createSkillFilterMarkup, createSkillPageMarkup, createProjectMarkup,
   createBlogPreviewMarkup, createNavItemMarkup, createFooterLinkMarkup,
   createProofMarkup, createHomeProjectMarkup, createHomePostMarkup, createFeaturedResearchMarkup, createContactMarkup,
@@ -78,11 +77,7 @@ export const applyStatsContent = (content) => {
       statsDiagram.innerHTML = createCareerTimelineMarkup(content.stats.items)
       return
     }
-    const groups = []
-    for (let index = 0; index < content.stats.items.length; index += 4) {
-      groups.push(content.stats.items.slice(index, index + 4))
-    }
-    statsDiagram.innerHTML = groups.map((group, index) => createStatsRow(group, index > 0)).join('')
+    statsDiagram.innerHTML = createStatsListMarkup(content.stats.items)
   }
 }
 
@@ -179,107 +174,14 @@ export const applySkillsContent = (content) => {
   }
 }
 
-// Certificate pagination state
-let certCurrentPage = 1
-export const certPerPage = 3
-
 export const applyCertificatesContent = (content) => {
-  // Apply to masonry grid with pagination (right column below skills)
   const certsTitle = document.getElementById('certs-title')
-  if (certsTitle && content.certificates?.title) {
-    certsTitle.textContent = content.certificates.title
-  }
-  
+  if (certsTitle && content.certificates?.title) certsTitle.textContent = content.certificates.title
+
   const certList = document.getElementById('cert-list')
-  const certCounter = document.getElementById('cert-counter')
-  const certPrevBtn = document.querySelector('[data-cert-prev]')
-  const certNextBtn = document.querySelector('[data-cert-next]')
-  
   if (certList && Array.isArray(content.certificates?.items) && content.certificates.items.length) {
-    const allCerts = content.certificates.items
-    const totalPages = Math.ceil(allCerts.length / certPerPage)
-    
-    // Store all certs on the element for pagination
-    certList.dataset.totalCerts = allCerts.length
-    certList.dataset.totalPages = totalPages
-    
-    // Render current page
-    renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn)
-    
-    // Setup pagination event listeners
-    if (certPrevBtn) {
-      certPrevBtn.addEventListener('click', () => {
-        if (certCurrentPage > 1) {
-          certCurrentPage--
-          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn, -1)
-        }
-      })
-    }
-    
-    if (certNextBtn) {
-      certNextBtn.addEventListener('click', () => {
-        if (certCurrentPage < totalPages) {
-          certCurrentPage++
-          renderCertPage(allCerts, certList, certCounter, certPrevBtn, certNextBtn, 1)
-        }
-      })
-    }
+    certList.innerHTML = content.certificates.items.map(createCertificateRowMarkup).join('')
   }
-}
-
-// direction: 1 when moving forward, -1 when moving back, 0 for the first render.
-export const renderCertPage = (allCerts, certList, certCounter, certPrevBtn, certNextBtn, direction = 0) => {
-  const totalPages = Math.ceil(allCerts.length / certPerPage)
-  const startIdx = (certCurrentPage - 1) * certPerPage
-  const endIdx = Math.min(startIdx + certPerPage, allCerts.length)
-  const pageCerts = allCerts.slice(startIdx, endIdx)
-  
-  // The old page slides out against the direction of travel, the new one slides in.
-  const animate = direction !== 0 && !prefersReducedMotion()
-  certList.style.transition = 'opacity 150ms ease, transform 150ms ease'
-  certList.style.opacity = '0'
-  if (animate) certList.style.transform = `translateX(${-direction * 24}px)`
-
-  setTimeout(() => {
-    certList.innerHTML = pageCerts.map(cert => `
-      <div class="about-cert-masonry-item">
-        <div class="about-cert-masonry-card">
-          <div class="about-cert-image-wrapper">
-            <img src="${escapeHtml(cert.image || './assets/images/me/aimansamformal.webp')}" alt="${escapeHtml(cert.name)}" class="about-cert-masonry-image" loading="lazy" decoding="async">
-          </div>
-          <div class="about-cert-overlay">
-            <div class="about-cert-overlay-content">
-              <span class="about-cert-overlay-name">${escapeHtml(cert.name)}</span>
-              <span class="about-cert-overlay-note">${escapeHtml(cert.note)}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('')
-    
-    if (animate) {
-      certList.style.transition = 'none'
-      certList.style.transform = `translateX(${direction * 24}px)`
-      void certList.offsetWidth
-      certList.style.transition = 'opacity 250ms ease, transform 250ms cubic-bezier(0.22, 1, 0.36, 1)'
-    }
-    certList.style.opacity = '1'
-    certList.style.transform = 'none'
-    
-    // Update counter
-    if (certCounter) {
-      certCounter.innerHTML = `<strong>Page ${certCurrentPage} of ${totalPages}</strong><span>${allCerts.length} certificate${allCerts.length !== 1 ? 's' : ''}</span>`
-    }
-    
-    // Update button states
-    if (certPrevBtn) {
-      certPrevBtn.disabled = certCurrentPage === 1
-    }
-    
-    if (certNextBtn) {
-      certNextBtn.disabled = certCurrentPage === totalPages
-    }
-  }, animate ? 150 : 200)
 }
 
 export const applyGalleryContent = (content) => {
