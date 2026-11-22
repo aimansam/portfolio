@@ -382,6 +382,8 @@ From an unprivileged local user to `NT AUTHORITY\SYSTEM`, in a single script, wi
 
 ## Why This Matters
 
+Steam is not a niche tool. As of late 2026, Valve reports over 130 million monthly active users, with a record-breaking peak of over 40 million concurrent users. Steam is installed on the vast majority of gaming PCs worldwide, and the Steam Client Service runs as `NT AUTHORITY\SYSTEM` on every one of them. It cannot be disabled without breaking game installations and updates. That makes any vulnerability in this service a potential entry point on an enormous number of machines.
+
 This vulnerability sits at an interesting intersection:
 
 **Massive attack surface.** Steam is installed on over a hundred million Windows machines. The vulnerable service runs as SYSTEM by default and can't be disabled without breaking Steam.
@@ -411,7 +413,16 @@ The fix is straightforward because the security pattern already exists in the sa
 | 2026-11-21 | Vulnerability discovered and confirmed |
 | 2026-11-21 | PoC developed and tested (fully unprivileged chain) |
 | 2026-11-21 | Reported to Valve via HackerOne |
+| 2026-11-23 | Report closed as Duplicate — severity confirmed High (8.8) |
 | 2026-11-23 | Writeup published |
+
+![HackerOne report #4228375, closed as Duplicate](hackerone-report-id.png)
+
+![Duplicate severity: High (8.8)](hackerone-severity.png)
+
+The report was closed as a **duplicate**, meaning Valve had already received a report for this same vulnerability class from another researcher. The severity was confirmed as **High (8.8)**, which aligns with the CVSS assessment: local access, low complexity, no privileges beyond a standard user account, and full impact on confidentiality, integrity and availability.
+
+A duplicate closure does not mean the bug is fixed — it means Valve is already tracking it. The fact that multiple researchers independently found the same vulnerability underscores how discoverable this attack surface is.
 
 ## Conclusion
 
