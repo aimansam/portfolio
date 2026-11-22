@@ -170,7 +170,7 @@ An arbitrary symlink creation primitive is powerful, but it needs a second step 
 
 A phantom DLL is a DLL that a Windows service tries to load via `LoadLibrary`, but the file doesn't exist on a default installation. The load fails silently and the service continues running. But if you can place a DLL at that path, the service loads your code instead -- at whatever privilege level the service runs as.
 
-The `wlbsctrl.dll` / IKEEXT combination is well-documented in the Windows privilege escalation community -- it appears in most privesc checklists (see [HackTricks: DLL Hijacking](https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/dll-hijacking.html)) and has been written about by multiple researchers over the years. I didn't discover it through original research; I used a known technique as the second stage of a new primitive.
+The `wlbsctrl.dll` / IKEEXT combination is well-documented in the Windows privilege escalation community -- it appears in most privesc checklists (see [HackTricks: DLL Hijacking](https://hacktricks.wiki/windows-hardening/windows-local-privilege-escalation/dll-hijacking/)) and has been written about by multiple researchers over the years. I didn't discover it through original research; I used a known technique as the second stage of a new primitive.
 
 If you wanted to find phantom DLLs yourself, the tool is Process Monitor (ProcMon). Set up three filters:
 
