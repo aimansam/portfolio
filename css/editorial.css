@@ -1229,7 +1229,7 @@ html body .home-research-tags {
 
 @media only screen and (min-width: 701px) {
   html body .home-research:has(.home-research-media) {
-    grid-template-columns: minmax(0, 1fr) 200px;
+    grid-template-columns: minmax(0, 1fr) 300px;
     gap: 28px;
     align-items: start;
   }
@@ -1244,7 +1244,7 @@ html body .home-research-tags {
   }
 
   html body .home-research-media img {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1400 / 735;
     object-fit: cover;
   }
 }
