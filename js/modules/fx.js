@@ -4,13 +4,14 @@
  * and none of it changes what screen readers or search engines see (the real text stays in the page).
  */
 import { prefersReducedMotion } from './motion.js'
+import { resolvePortfolioUrl } from './utils.js'
 
 const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#$%&*+<>/\\=?'
 const randomGlyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
 
 // Replaces an element's text with a scrambled copy that decodes left to right.
 // The final text stays in a visually hidden span so assistive technology reads it normally.
-export const scrambleText = (element, { duration = 950, caret = false } = {}) => {
+export const scrambleText = (element, { duration = 2000, caret = false } = {}) => {
   const final = (element.dataset.fxText || element.textContent || '').trim()
   if (!final || element.dataset.fxRunning === '1') return
   element.dataset.fxText = final
@@ -64,12 +65,12 @@ export const scrambleText = (element, { duration = 950, caret = false } = {}) =>
 
 const initScramble = () => {
   const onLoad = [
-    ['#hero-title', { caret: true }],
-    ['#hero-tagline', { delay: 250 }],
-    ['.page-title', { caret: true }],
-    ['#project-main-title', { caret: true }],
-    ['.about-sidebar-name', {}],
-    ['.about-sidebar-tagline', { delay: 250 }]
+    ['#hero-title', { caret: true, delay: 700 }],
+    ['#hero-tagline', { delay: 1900 }],
+    ['.page-title', { caret: true, delay: 400 }],
+    ['#project-main-title', { caret: true, delay: 400 }],
+    ['.about-sidebar-name', { delay: 500 }],
+    ['.about-sidebar-tagline', { delay: 1500 }]
   ]
   onLoad.forEach(([selector, options]) => {
     const element = document.querySelector(selector)
@@ -80,7 +81,7 @@ const initScramble = () => {
   // Hovering any of these decodes them again.
   const onHover = '#hero-title, #hero-tagline, .page-title, .about-sidebar-name, .about-sidebar-tagline, .nav-title, .home-section-head h2'
   document.querySelectorAll(onHover).forEach((element) => {
-    element.addEventListener('pointerenter', () => scrambleText(element, { duration: 600 }))
+    element.addEventListener('pointerenter', () => scrambleText(element, { duration: 1100 }))
   })
 }
 
@@ -129,7 +130,7 @@ const initCodeRain = () => {
     const count = Math.floor(width / SIZE)
     columns = Array.from({ length: count }, () => ({
       row: -Math.random() * (height / SIZE),
-      speed: 0.18 + Math.random() * 0.4,
+      speed: 0.06 + Math.random() * 0.14,
       active: Math.random() < 0.38
     }))
     ctx.font = `${SIZE - 2}px monospace`
@@ -160,7 +161,7 @@ const initCodeRain = () => {
       }
       if (head - TRAIL > rows) {
         drop.row = -Math.random() * 20
-        drop.speed = 0.18 + Math.random() * 0.4
+        drop.speed = 0.06 + Math.random() * 0.14
       }
     })
   }
@@ -174,9 +175,197 @@ const initCodeRain = () => {
   requestAnimationFrame(draw)
 }
 
+const FINE_POINTER = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches
+
+// Page wipe: a red panel sweeps up over the page on a same-site link click, and away again on the next page
+// (the next page's head script adds `fx-arrive` when it sees the flag set here).
+const initWipe = () => {
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    const link = event.target.closest?.('a[href]')
+    if (!link || (link.target && link.target !== '_self') || link.hasAttribute('download')) return
+    const url = new URL(link.href, window.location.href)
+    if (!/^https?:$/.test(url.protocol) || url.origin !== window.location.origin) return
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return
+    event.preventDefault()
+    try { window.sessionStorage.setItem('fx-wipe', '1') } catch { /* storage unavailable */ }
+    document.documentElement.classList.add('fx-leaving')
+    window.setTimeout(() => { window.location.href = url.href }, 560)
+  })
+  // Coming back with the browser's back button can restore the page mid-wipe.
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) document.documentElement.classList.remove('fx-leaving')
+  })
+}
+
+// A slow loop of skills across the page, built from the same content file the About page uses.
+const initTicker = async () => {
+  const anchor = document.getElementById('footer')
+  if (!anchor || !(document.getElementById('portfolio-header') || document.getElementById('about-section'))) return
+  let names = []
+  try {
+    const response = await fetch(resolvePortfolioUrl('./content/site/about.json'))
+    const data = await response.json()
+    names = [...new Set((data.skills?.pages || []).flatMap((page) => (page.skills || []).map((skill) => skill.name)))]
+  } catch { return }
+  if (names.length < 4) return
+
+  const ticker = document.createElement('section')
+  ticker.className = 'fx-ticker'
+  ticker.setAttribute('aria-hidden', 'true')
+  const track = document.createElement('div')
+  track.className = 'fx-ticker-track'
+  for (let copy = 0; copy < 2; copy += 1) {
+    const group = document.createElement('span')
+    group.className = 'fx-ticker-group'
+    for (let repeat = 0; repeat < 2; repeat += 1) {
+      names.forEach((name) => {
+        const item = document.createElement('span')
+        item.className = 'fx-ticker-item'
+        item.textContent = name
+        group.append(item)
+      })
+    }
+    track.append(group)
+  }
+  ticker.append(track)
+  anchor.before(ticker)
+}
+
+// ---- Parts that use GSAP (loaded only when needed) ----
+
+const loadScript = (src) => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = src
+  script.async = true
+  script.onload = resolve
+  script.onerror = reject
+  document.head.append(script)
+})
+
+const withTimeout = (promise, ms) => Promise.race([
+  promise,
+  new Promise((_, reject) => window.setTimeout(() => reject(new Error('timeout')), ms))
+])
+
+const loadGsap = async () => {
+  try {
+    if (!window.gsap) await withTimeout(loadScript(resolvePortfolioUrl('./assets/vendor/gsap/gsap.min.js')), 6000)
+    if (!window.ScrollTrigger) await withTimeout(loadScript(resolvePortfolioUrl('./assets/vendor/gsap/ScrollTrigger.min.js')), 6000)
+    window.gsap.registerPlugin(window.ScrollTrigger)
+    return window.gsap
+  } catch {
+    return null
+  }
+}
+
+// A red bar along the top fills as you scroll down the page.
+const initProgress = (gsap) => {
+  const bar = document.createElement('div')
+  bar.className = 'fx-progress'
+  bar.setAttribute('aria-hidden', 'true')
+  document.body.append(bar)
+  gsap.to(bar, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } })
+}
+
+// Images drift at a different speed from the page.
+const initParallax = (gsap) => {
+  document.querySelectorAll('.home-research-media img').forEach((image) => {
+    gsap.fromTo(image, { scale: 1.08, yPercent: -4 }, {
+      yPercent: 4,
+      ease: 'none',
+      scrollTrigger: { trigger: image.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+    })
+  })
+  document.querySelectorAll('.project-header-image').forEach((image) => {
+    gsap.fromTo(image, { y: -14 }, {
+      y: 14,
+      ease: 'none',
+      scrollTrigger: { trigger: image, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+    })
+  })
+}
+
+// Buttons and icon links lean toward the pointer as it comes near.
+const initMagnets = (gsap) => {
+  if (!FINE_POINTER()) return
+  const items = [...document.querySelectorAll('a.button, .hero-social-link, a.icon-link, .about-sidebar-links a, .site-header .nav-cta')]
+    .map((element) => ({
+      element,
+      x: gsap.quickTo(element, 'x', { duration: 0.7, ease: 'power3.out' }),
+      y: gsap.quickTo(element, 'y', { duration: 0.7, ease: 'power3.out' })
+    }))
+  if (!items.length) return
+  let frame = 0
+  let pointerX = 0
+  let pointerY = 0
+  const update = () => {
+    frame = 0
+    items.forEach((item) => {
+      const rect = item.element.getBoundingClientRect()
+      const dx = pointerX - (rect.left + rect.width / 2)
+      const dy = pointerY - (rect.top + rect.height / 2)
+      const reach = Math.max(rect.width, rect.height) / 2 + 70
+      if (Math.hypot(dx, dy) < reach) {
+        item.x(dx * 0.28)
+        item.y(dy * 0.28)
+      } else {
+        item.x(0)
+        item.y(0)
+      }
+    })
+  }
+  window.addEventListener('pointermove', (event) => {
+    pointerX = event.clientX
+    pointerY = event.clientY
+    if (!frame) frame = window.requestAnimationFrame(update)
+  }, { passive: true })
+}
+
+// A red ring follows the mouse with a little lag and swells over anything clickable.
+const initCursor = (gsap) => {
+  if (!FINE_POINTER()) return
+  const ring = document.createElement('div')
+  ring.className = 'fx-cursor'
+  ring.setAttribute('aria-hidden', 'true')
+  document.body.append(ring)
+  gsap.set(ring, { xPercent: -50, yPercent: -50, x: -100, y: -100 })
+  const moveX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3.out' })
+  const moveY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' })
+  window.addEventListener('pointermove', (event) => {
+    moveX(event.clientX)
+    moveY(event.clientY)
+    ring.classList.add('is-visible')
+  }, { passive: true })
+  document.addEventListener('pointerover', (event) => {
+    ring.classList.toggle('is-active', Boolean(event.target.closest?.('a, button, [role="button"]')))
+  })
+  document.addEventListener('pointerdown', () => ring.classList.add('is-down'))
+  document.addEventListener('pointerup', () => ring.classList.remove('is-down'))
+  document.documentElement.addEventListener('mouseleave', () => ring.classList.remove('is-visible'))
+}
+
+const safely = (label, task) => {
+  try {
+    const result = task()
+    if (result?.catch) result.catch((error) => console.warn(`fx: ${label} failed`, error))
+  } catch (error) {
+    console.warn(`fx: ${label} failed`, error)
+  }
+}
+
 export const initFx = () => {
   if (prefersReducedMotion()) return
-  initScramble()
-  initTilt()
-  initCodeRain()
+  safely('scramble', initScramble)
+  safely('tilt', initTilt)
+  safely('code rain', initCodeRain)
+  safely('wipe', initWipe)
+  safely('ticker', initTicker)
+  loadGsap().then((gsap) => {
+    if (!gsap) return
+    safely('progress', () => initProgress(gsap))
+    safely('parallax', () => initParallax(gsap))
+    safely('magnets', () => initMagnets(gsap))
+    safely('cursor', () => initCursor(gsap))
+  })
 }
