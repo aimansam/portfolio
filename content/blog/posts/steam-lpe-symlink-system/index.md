@@ -5,6 +5,7 @@ draft: false
 tags: [windows, privilege-escalation, dll-hijack, reverse-engineering, steam, hackerone]
 categories: [Research]
 summary: "Any local user can talk to Steam's SYSTEM service and create arbitrary symlinks anywhere on the filesystem. Chain that with a phantom DLL hijack and you get full SYSTEM code execution from a standard user account — no admin required."
+cover: system-shell-proof.png
 ---
 
 ## Introduction
@@ -379,6 +380,8 @@ nt authority\system
 ```
 
 From an unprivileged local user to `NT AUTHORITY\SYSTEM`, in a single script, with zero admin privileges at any step.
+
+![PoC terminal output: the SYSTEM shell confirms "nt authority\system"](system-shell-proof.png)
 
 ## Why This Matters
 
