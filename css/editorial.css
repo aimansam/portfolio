@@ -2330,3 +2330,8 @@ html body :is(.portfolio-header-image, .about-sidebar .about-profile-card) {
   outline: 1px solid var(--ed-ink);
   outline-offset: 4px;
 }
+
+/* About heading "Collects bugs like stamps." in the accent colour. */
+html body.page-about #about-title {
+  color: var(--ed-accent);
+}
