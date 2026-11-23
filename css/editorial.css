@@ -1460,7 +1460,7 @@ html body.page-about .about-sidebar .about-profile-image {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  object-position: center 18%;
+  object-position: center 22%;
 }
 
 /* Roles: one wrapping line of text separated by dots instead of a stack of pills. */
@@ -1761,7 +1761,7 @@ html body .project-sidebar .project-link-list {
     opacity: 0.8;
   }
 
-  /* Buttons: a red fill sweeps in from the left on hover and focus, and they squash when pressed. */
+  /* Buttons: a red fill sweeps in from the left on hover and focus. They never move. */
   html body a.button {
     position: relative;
     overflow: hidden;
@@ -1786,9 +1786,6 @@ html body .project-sidebar .project-link-list {
     color: #fff;
   }
 
-  html body a.button:active {
-    transform: scale(0.95);
-  }
 
   /* Cards: lift, glow red and tilt toward the pointer. */
   html body .home-card.fx-tilt {
@@ -2334,4 +2331,10 @@ html body :is(.portfolio-header-image, .about-sidebar .about-profile-card) {
 /* About heading "Collects bugs like stamps." in the accent colour. */
 html body.page-about #about-title {
   color: var(--ed-accent);
+}
+
+/* Buttons do not move: no press squash on the contact button either. */
+html body :is(a.button, .home-contact-button, .filter-button, .about-skill-filter, a.icon-link, .theme-toggle, .back-to-top, .blog-button, .blog-filter):active {
+  transform: none;
+  scale: none;
 }

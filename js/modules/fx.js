@@ -328,42 +328,6 @@ const initParallax = (gsap) => {
   })
 }
 
-// Buttons and icon links lean toward the pointer as it comes near.
-const initMagnets = (gsap) => {
-  if (!FINE_POINTER()) return
-  const items = [...document.querySelectorAll('a.button, .hero-social-link, a.icon-link, .about-sidebar-links a, .site-header .nav-cta')]
-    .map((element) => ({
-      element,
-      x: gsap.quickTo(element, 'x', { duration: 0.7, ease: 'power3.out' }),
-      y: gsap.quickTo(element, 'y', { duration: 0.7, ease: 'power3.out' })
-    }))
-  if (!items.length) return
-  let frame = 0
-  let pointerX = 0
-  let pointerY = 0
-  const update = () => {
-    frame = 0
-    items.forEach((item) => {
-      const rect = item.element.getBoundingClientRect()
-      const dx = pointerX - (rect.left + rect.width / 2)
-      const dy = pointerY - (rect.top + rect.height / 2)
-      const reach = Math.max(rect.width, rect.height) / 2 + 90
-      if (Math.hypot(dx, dy) < reach) {
-        item.x(dx * 0.38)
-        item.y(dy * 0.38)
-      } else {
-        item.x(0)
-        item.y(0)
-      }
-    })
-  }
-  window.addEventListener('pointermove', (event) => {
-    pointerX = event.clientX
-    pointerY = event.clientY
-    if (!frame) frame = window.requestAnimationFrame(update)
-  }, { passive: true })
-}
-
 // Cursor labels: pointing at a card or a row shows what clicking it does.
 const CURSOR_LABELS = [
   ['.home-card, .project-card', 'View'],
@@ -493,7 +457,6 @@ export const initFx = (ready = Promise.resolve()) => {
     if (!gsap) return
     safely('progress', () => initProgress(gsap))
     safely('parallax', () => initParallax(gsap))
-    safely('magnets', () => initMagnets(gsap))
     safely('cursor', () => initCursor(gsap))
     // These measure the page, so they wait for the intro to finish and for the ticker to exist.
     Promise.all([ready, tickerBuilt]).then(() => {
