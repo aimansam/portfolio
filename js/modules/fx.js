@@ -108,6 +108,10 @@ const initTilt = () => {
 
 // A backdrop of falling code that is only faintly there until the pointer comes near, then lights up in a
 // spotlight around it (cells inside it also flicker). About 24 fps, paused when the tab is hidden, off on small screens.
+// Where the cursor ring is right now (it glides behind the pointer). The code-rain spotlight follows this,
+// so the two move as one. Until the ring exists it stays unset and the spotlight uses the raw pointer.
+export const cursorTrail = { x: 0, y: 0, live: false }
+
 const initCodeRain = () => {
   if (window.innerWidth < 700 || navigator.connection?.saveData) return
   const canvas = document.createElement('canvas')
@@ -167,16 +171,19 @@ const initCodeRain = () => {
     ctx.clearRect(0, 0, width, height)
     const rows = height / SIZE
     // The spotlight: a field of code that fades in around the pointer, on top of the falling drops.
-    if (pointerX > -999) {
-      const first = Math.max(0, Math.floor((pointerX - RADIUS) / SIZE))
-      const lastColumn = Math.min(columns.length - 1, Math.ceil((pointerX + RADIUS) / SIZE))
-      const firstRow = Math.max(0, Math.floor((pointerY - RADIUS) / SIZE))
-      const lastRow = Math.min(Math.ceil(rows), Math.ceil((pointerY + RADIUS) / SIZE))
+    const hasPointer = pointerX > -999
+    const spotX = cursorTrail.live ? cursorTrail.x : pointerX
+    const spotY = cursorTrail.live ? cursorTrail.y : pointerY
+    if (hasPointer) {
+      const first = Math.max(0, Math.floor((spotX - RADIUS) / SIZE))
+      const lastColumn = Math.min(columns.length - 1, Math.ceil((spotX + RADIUS) / SIZE))
+      const firstRow = Math.max(0, Math.floor((spotY - RADIUS) / SIZE))
+      const lastRow = Math.min(Math.ceil(rows), Math.ceil((spotY + RADIUS) / SIZE))
       for (let column = first; column <= lastColumn; column += 1) {
         for (let row = firstRow; row <= lastRow; row += 1) {
           const x = column * SIZE
           const y = row * SIZE
-          const near = 1 - Math.hypot(x + SIZE / 2 - pointerX, y - SIZE / 2 - pointerY) / RADIUS
+          const near = 1 - Math.hypot(x + SIZE / 2 - spotX, y - SIZE / 2 - spotY) / RADIUS
           if (near <= 0) continue
           ctx.fillStyle = `rgba(179, 38, 30, ${(near * near * 0.46).toFixed(3)})`
           ctx.fillText(glyphAt(column, row, (frame >> 3) + ((column * 7 + row * 3) % 5)), x, y)
@@ -192,7 +199,7 @@ const initCodeRain = () => {
         const row = head - k
         if (row < 0 || row > rows) continue
         const y = row * SIZE
-        const near = Math.max(0, 1 - Math.hypot(x + SIZE / 2 - pointerX, y - pointerY) / RADIUS)
+        const near = Math.max(0, 1 - Math.hypot(x + SIZE / 2 - spotX, y - spotY) / RADIUS)
         const light = AMBIENT + (1 - AMBIENT) * near * near
         const alpha = (k === 0 ? 0.95 : (1 - k / TRAIL) * 0.6) * light
         if (alpha < 0.012) continue
@@ -354,7 +361,14 @@ const initCursor = (gsap) => {
   const moveY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' })
   const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'none' })
   const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'none' })
+  gsap.ticker.add(() => {
+    cursorTrail.x = Number(gsap.getProperty(ring, 'x'))
+    cursorTrail.y = Number(gsap.getProperty(ring, 'y'))
+    cursorTrail.live = true
+  })
   window.addEventListener('pointermove', (event) => {
+    // The first move starts the ring at the pointer instead of gliding in from the corner.
+    if (!ring.classList.contains('is-visible')) gsap.set([ring, dot], { x: event.clientX, y: event.clientY })
     moveX(event.clientX)
     moveY(event.clientY)
     dotX(event.clientX)
