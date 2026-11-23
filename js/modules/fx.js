@@ -342,53 +342,47 @@ const CURSOR_LABELS = [
   ['.gallery-masonry-item', 'Open']
 ]
 
-// A red ring follows the mouse with a little lag, swells over anything clickable and names cards and rows.
+const ARROW = '<svg class="fx-cursor-arrow" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M3.5 2.2 20 12.4l-7.3 1.7 4 7.4-3.1 1.6-4-7.5-5.6 5.1z" stroke-linejoin="round"/></svg>'
+
+// The pointer is replaced by an arrow in the site's colours. It turns red over anything clickable, wears a small
+// label over cards and rows, and steps aside over text fields (which keep the native I-beam). The native cursor
+// is only hidden once this has run (`fx-cursor-on`), so nothing is lost if the script fails.
 const initCursor = (gsap) => {
   if (!FINE_POINTER()) return
-  const ring = document.createElement('div')
-  ring.className = 'fx-cursor'
-  ring.setAttribute('aria-hidden', 'true')
-  const label = document.createElement('span')
-  label.className = 'fx-cursor-label'
-  ring.append(label)
-  document.body.append(ring)
-  const dot = document.createElement('div')
-  dot.className = 'fx-cursor-dot'
-  dot.setAttribute('aria-hidden', 'true')
-  document.body.append(dot)
-  gsap.set([ring, dot], { xPercent: -50, yPercent: -50, x: -100, y: -100 })
-  const moveX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3.out' })
-  const moveY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' })
-  const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'none' })
-  const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'none' })
+  const cursor = document.createElement('div')
+  cursor.className = 'fx-cursor'
+  cursor.setAttribute('aria-hidden', 'true')
+  cursor.innerHTML = `${ARROW}<span class="fx-cursor-label"></span>`
+  const label = cursor.querySelector('.fx-cursor-label')
+  document.body.append(cursor)
+  gsap.set(cursor, { x: -100, y: -100 })
+  const moveX = gsap.quickTo(cursor, 'x', { duration: 0.14, ease: 'power2.out' })
+  const moveY = gsap.quickTo(cursor, 'y', { duration: 0.14, ease: 'power2.out' })
+  // The code-rain spotlight follows the same position.
   gsap.ticker.add(() => {
-    cursorTrail.x = Number(gsap.getProperty(ring, 'x'))
-    cursorTrail.y = Number(gsap.getProperty(ring, 'y'))
+    cursorTrail.x = Number(gsap.getProperty(cursor, 'x'))
+    cursorTrail.y = Number(gsap.getProperty(cursor, 'y'))
     cursorTrail.live = true
   })
+  document.documentElement.classList.add('fx-cursor-on')
   window.addEventListener('pointermove', (event) => {
-    // The first move starts the ring at the pointer instead of gliding in from the corner.
-    if (!ring.classList.contains('is-visible')) gsap.set([ring, dot], { x: event.clientX, y: event.clientY })
+    // The first move starts the arrow at the pointer instead of gliding in from the corner.
+    if (!cursor.classList.contains('is-visible')) gsap.set(cursor, { x: event.clientX, y: event.clientY })
     moveX(event.clientX)
     moveY(event.clientY)
-    dotX(event.clientX)
-    dotY(event.clientY)
-    ring.classList.add('is-visible')
-    dot.classList.add('is-visible')
+    cursor.classList.add('is-visible')
   }, { passive: true })
   document.addEventListener('pointerover', (event) => {
     const target = event.target
+    const typing = Boolean(target.closest?.('input, textarea, select, [contenteditable="true"]'))
+    document.documentElement.classList.toggle('fx-cursor-native', typing)
     const match = CURSOR_LABELS.find(([selector]) => target.closest?.(selector))
     label.textContent = match ? match[1] : ''
-    ring.classList.toggle('has-label', Boolean(match))
-    ring.classList.toggle('is-active', !match && Boolean(target.closest?.('a, button, [role="button"]')))
+    cursor.classList.toggle('has-label', Boolean(match))
+    cursor.classList.toggle('is-active', !match && Boolean(target.closest?.('a, button, [role="button"]')))
+    cursor.classList.toggle('on-button', Boolean(target.closest?.('a.button, button, .filter-button, .about-skill-filter')))
   })
-  document.addEventListener('pointerdown', () => ring.classList.add('is-down'))
-  document.addEventListener('pointerup', () => ring.classList.remove('is-down'))
-  document.documentElement.addEventListener('mouseleave', () => {
-    ring.classList.remove('is-visible')
-    dot.classList.remove('is-visible')
-  })
+  document.documentElement.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'))
 }
 
 // Headings decode as they scroll into view, and section rules draw in from the left.

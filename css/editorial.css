@@ -2027,80 +2027,75 @@ html body .project-sidebar .project-link-list {
     pointer-events: none;
   }
 
-  /* Cursor: a trailing ring plus a dot; over cards and rows the ring fills red and names the action. */
+  /* Cursor: an arrow in the site's colours. Red over anything clickable; a small label chip over cards and rows. */
+  html.fx-cursor-on:not(.fx-cursor-native),
+  html.fx-cursor-on:not(.fx-cursor-native) * {
+    cursor: none !important;
+  }
+
   .fx-cursor {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid var(--ed-accent);
-    border-radius: 50%;
+    width: 0;
+    height: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 300ms ease, width 350ms var(--ease-out), height 350ms var(--ease-out), background-color 300ms ease;
+    transition: opacity 200ms ease;
   }
 
   .fx-cursor.is-visible {
     opacity: 1;
   }
 
-  .fx-cursor.is-active {
-    width: 68px;
-    height: 68px;
-    background: rgba(179, 38, 30, 0.12);
+  html.fx-cursor-native .fx-cursor {
+    opacity: 0;
   }
 
-  .fx-cursor.has-label {
-    width: 86px;
-    height: 86px;
-    border-color: transparent;
-    background: rgba(179, 38, 30, 0.94);
+  .fx-cursor-arrow {
+    display: block;
+    margin: -2px 0 0 -3px;
+    fill: var(--ed-ink);
+    stroke: var(--ed-paper);
+    stroke-width: 1.6;
+    filter: drop-shadow(0 1px 2px rgba(26, 25, 23, 0.25));
+    transition: fill 180ms ease;
   }
 
-  .fx-cursor.is-down {
-    width: 22px;
-    height: 22px;
+  .fx-cursor.is-active .fx-cursor-arrow,
+  .fx-cursor.has-label .fx-cursor-arrow {
+    fill: var(--ed-accent);
+  }
+
+  /* Over a filled button the arrow turns white with an ink outline, so it reads on red and on ink. */
+  .fx-cursor.on-button .fx-cursor-arrow {
+    fill: #fff;
+    stroke: var(--ed-ink);
   }
 
   .fx-cursor-label {
+    position: absolute;
+    top: 22px;
+    left: 16px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--ed-accent);
     color: #fff;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
     text-transform: uppercase;
+    white-space: nowrap;
     opacity: 0;
-    transition: opacity 200ms ease;
+    transform: translateY(-4px);
+    transition: opacity 180ms ease, transform 180ms var(--ease-out);
   }
 
   .fx-cursor.has-label .fx-cursor-label {
     opacity: 1;
-  }
-
-  .fx-cursor-dot {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100002;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--ed-accent);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 200ms ease;
-  }
-
-  .fx-cursor-dot.is-visible {
-    opacity: 1;
-  }
-
-  .fx-cursor.has-label ~ .fx-cursor-dot {
-    opacity: 0;
+    transform: none;
   }
 
   /* Page wipe: a red panel and then an ink panel sweep up over the page, and peel away on the next one. */
