@@ -1,6 +1,6 @@
 /**
  * Effects for the portfolio, themed as an intrusion: text that scrambles and decodes, a falling-code backdrop
- * that lights up around the pointer, cards and the portrait that tilt toward it, headings that decode and
+ * that lights up around the pointer, cards that tilt toward it, headings that decode and
  * rules that draw in as you scroll, a skills ticker driven by scroll speed, and a two-layer page wipe.
  * All of it is skipped for visitors who prefer reduced motion, and none of it changes what screen readers
  * or search engines see (the real text stays in the page).
@@ -413,25 +413,6 @@ const initCursor = (gsap) => {
   })
 }
 
-// The portrait turns in 3D to follow the pointer while it is over the page.
-const initPortraitTilt = (gsap) => {
-  if (!FINE_POINTER()) return
-  const targets = [...document.querySelectorAll('#portfolio-header-visual, .about-sidebar .about-profile-card')]
-  targets.forEach((target) => {
-    // Explicit values stop GSAP from reading (and keeping) the transform of the CSS entrance animation that is still running.
-    gsap.set(target, { transformPerspective: 700, transformOrigin: '50% 50%', scale: 1, rotation: 0, rotationX: 0, rotationY: 0, x: 0, y: 0 })
-    const rotateY = gsap.quickTo(target, 'rotationY', { duration: 0.9, ease: 'power3.out' })
-    const rotateX = gsap.quickTo(target, 'rotationX', { duration: 0.9, ease: 'power3.out' })
-    window.addEventListener('pointermove', (event) => {
-      const rect = target.getBoundingClientRect()
-      const dx = (event.clientX - (rect.left + rect.width / 2)) / window.innerWidth
-      const dy = (event.clientY - (rect.top + rect.height / 2)) / window.innerHeight
-      rotateY(Math.max(-1, Math.min(1, dx * 2.2)) * 22)
-      rotateX(Math.max(-1, Math.min(1, dy * 2.2)) * -18)
-    }, { passive: true })
-  })
-}
-
 // Headings decode as they scroll into view, and section rules draw in from the left.
 const initScrollText = (gsap) => {
   const headings = document.querySelectorAll('.home-section-head h2, .home-research-title, .home-contact-title, .about-card-title, .project-body h2')
@@ -514,7 +495,6 @@ export const initFx = (ready = Promise.resolve()) => {
     safely('parallax', () => initParallax(gsap))
     safely('magnets', () => initMagnets(gsap))
     safely('cursor', () => initCursor(gsap))
-    safely('portrait tilt', () => initPortraitTilt(gsap))
     // These measure the page, so they wait for the intro to finish and for the ticker to exist.
     Promise.all([ready, tickerBuilt]).then(() => {
       safely('scroll text', () => initScrollText(gsap))
