@@ -66,7 +66,7 @@
 </script>
     <!-- SEO:END -->
 
-    <script>try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r&&sessionStorage.getItem("fx-wipe")==="1")document.documentElement.classList.add("fx-arrive");sessionStorage.removeItem("fx-wipe")}catch(e){}</script>
+    <script>try{var r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r&&sessionStorage.getItem("fx-wipe")==="1")document.documentElement.classList.add("fx-arrive");sessionStorage.removeItem("fx-wipe");var d=document.documentElement;if(!r&&!location.hash&&!d.classList.contains("fx-arrive")){d.classList.add("fx-boot","skip-loader");setTimeout(function(){d.classList.remove("fx-boot")},6000)}}catch(e){}</script>
     <link rel="stylesheet" href="./css/tokens.css">
     <link rel="stylesheet" href="./css/layout/base.css?v=20261102">
     <link rel="stylesheet" href="./css/layout/home.css?v=20261102">

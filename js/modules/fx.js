@@ -1,7 +1,9 @@
 /**
- * Loud effects for the portfolio: text that scrambles and decodes, cards that tilt toward the pointer,
- * and a faint falling-code backdrop. All of it is skipped for visitors who prefer reduced motion,
- * and none of it changes what screen readers or search engines see (the real text stays in the page).
+ * Effects for the portfolio, themed as an intrusion: text that scrambles and decodes, a falling-code backdrop
+ * that lights up around the pointer, cards and the portrait that tilt toward it, headings that decode and
+ * rules that draw in as you scroll, a skills ticker driven by scroll speed, and a two-layer page wipe.
+ * All of it is skipped for visitors who prefer reduced motion, and none of it changes what screen readers
+ * or search engines see (the real text stays in the page).
  */
 import { prefersReducedMotion } from './motion.js'
 import { resolvePortfolioUrl } from './utils.js'
@@ -65,12 +67,12 @@ export const scrambleText = (element, { duration = 2000, caret = false } = {}) =
 
 const initScramble = () => {
   const onLoad = [
-    ['#hero-title', { caret: true, delay: 700 }],
-    ['#hero-tagline', { delay: 1900 }],
-    ['.page-title', { caret: true, delay: 400 }],
-    ['#project-main-title', { caret: true, delay: 400 }],
-    ['.about-sidebar-name', { delay: 500 }],
-    ['.about-sidebar-tagline', { delay: 1500 }]
+    ['#hero-title', { caret: true, delay: 300 }],
+    ['#hero-tagline', { delay: 1100 }],
+    ['.page-title', { caret: true, delay: 250 }],
+    ['#project-main-title', { caret: true, delay: 250 }],
+    ['.about-sidebar-name', { delay: 300 }],
+    ['.about-sidebar-tagline', { delay: 1000 }]
   ]
   onLoad.forEach(([selector, options]) => {
     const element = document.querySelector(selector)
@@ -104,7 +106,8 @@ const initTilt = () => {
   })
 }
 
-// A faint backdrop of falling code. Drawn at about 24 fps, paused when the tab is hidden, off on small screens.
+// A backdrop of falling code that is only faintly there until the pointer comes near, then lights up in a
+// spotlight around it (cells inside it also flicker). About 24 fps, paused when the tab is hidden, off on small screens.
 const initCodeRain = () => {
   if (window.innerWidth < 700 || navigator.connection?.saveData) return
   const canvas = document.createElement('canvas')
@@ -118,11 +121,15 @@ const initCodeRain = () => {
   }
 
   const SIZE = 16
-  const TRAIL = 13
+  const TRAIL = 14
+  const RADIUS = 260
+  const AMBIENT = 0.2
   const CHARS = '01{}[]<>/\\$#%&=+*;:ABCDEF'
   let columns = []
   let width = 0
   let height = 0
+  let pointerX = -9999
+  let pointerY = -9999
 
   const resize = () => {
     width = canvas.width = window.innerWidth
@@ -130,38 +137,71 @@ const initCodeRain = () => {
     const count = Math.floor(width / SIZE)
     columns = Array.from({ length: count }, () => ({
       row: -Math.random() * (height / SIZE),
-      speed: 0.06 + Math.random() * 0.14,
-      active: Math.random() < 0.38
+      speed: 0.08 + Math.random() * 0.18,
+      active: Math.random() < 0.62
     }))
     ctx.font = `${SIZE - 2}px monospace`
   }
 
-  // The same cell always shows the same character, so the trail does not flicker.
-  const glyphAt = (column, row) => CHARS[(column * 31 + row * 17 + (column ^ row)) % CHARS.length]
+  // The same cell always shows the same character, so the trail does not flicker (except in the spotlight).
+  const glyphAt = (column, row, shift) => CHARS[(column * 31 + row * 17 + (column ^ row) + shift) % CHARS.length]
+
+  window.addEventListener('pointermove', (event) => {
+    pointerX = event.clientX
+    pointerY = event.clientY
+  }, { passive: true })
+  document.documentElement.addEventListener('mouseleave', () => {
+    pointerX = -9999
+    pointerY = -9999
+  })
 
   let last = 0
+  let frame = 0
   let running = true
   const draw = (now) => {
     if (!running) return
     requestAnimationFrame(draw)
     if (now - last < 1000 / 24) return
     last = now
+    frame += 1
     ctx.clearRect(0, 0, width, height)
     const rows = height / SIZE
+    // The spotlight: a field of code that fades in around the pointer, on top of the falling drops.
+    if (pointerX > -999) {
+      const first = Math.max(0, Math.floor((pointerX - RADIUS) / SIZE))
+      const lastColumn = Math.min(columns.length - 1, Math.ceil((pointerX + RADIUS) / SIZE))
+      const firstRow = Math.max(0, Math.floor((pointerY - RADIUS) / SIZE))
+      const lastRow = Math.min(Math.ceil(rows), Math.ceil((pointerY + RADIUS) / SIZE))
+      for (let column = first; column <= lastColumn; column += 1) {
+        for (let row = firstRow; row <= lastRow; row += 1) {
+          const x = column * SIZE
+          const y = row * SIZE
+          const near = 1 - Math.hypot(x + SIZE / 2 - pointerX, y - SIZE / 2 - pointerY) / RADIUS
+          if (near <= 0) continue
+          ctx.fillStyle = `rgba(179, 38, 30, ${(near * near * 0.46).toFixed(3)})`
+          ctx.fillText(glyphAt(column, row, (frame >> 3) + ((column * 7 + row * 3) % 5)), x, y)
+        }
+      }
+    }
     columns.forEach((drop, column) => {
       if (!drop.active) return
       drop.row += drop.speed
       const head = Math.floor(drop.row)
+      const x = column * SIZE
       for (let k = 0; k < TRAIL; k += 1) {
         const row = head - k
         if (row < 0 || row > rows) continue
-        const alpha = k === 0 ? 0.95 : (1 - k / TRAIL) * 0.55
-        ctx.fillStyle = `rgba(179, 38, 30, ${alpha.toFixed(3)})`
-        ctx.fillText(glyphAt(column, row), column * SIZE, row * SIZE)
+        const y = row * SIZE
+        const near = Math.max(0, 1 - Math.hypot(x + SIZE / 2 - pointerX, y - pointerY) / RADIUS)
+        const light = AMBIENT + (1 - AMBIENT) * near * near
+        const alpha = (k === 0 ? 0.95 : (1 - k / TRAIL) * 0.6) * light
+        if (alpha < 0.012) continue
+        ctx.fillStyle = k === 0 && near > 0.35 ? `rgba(255, 96, 80, ${alpha.toFixed(3)})` : `rgba(179, 38, 30, ${alpha.toFixed(3)})`
+        ctx.fillText(glyphAt(column, row, near > 0.15 ? frame >> 2 : 0), x, y)
       }
       if (head - TRAIL > rows) {
         drop.row = -Math.random() * 20
-        drop.speed = 0.06 + Math.random() * 0.14
+        drop.speed = 0.08 + Math.random() * 0.18
       }
     })
   }
@@ -177,7 +217,7 @@ const initCodeRain = () => {
 
 const FINE_POINTER = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
-// Page wipe: a red panel sweeps up over the page on a same-site link click, and away again on the next page
+// Page wipe: a red panel and then an ink panel sweep up over the page on a same-site link click, and away again on the next page
 // (the next page's head script adds `fx-arrive` when it sees the flag set here).
 const initWipe = () => {
   document.addEventListener('click', (event) => {
@@ -190,7 +230,7 @@ const initWipe = () => {
     event.preventDefault()
     try { window.sessionStorage.setItem('fx-wipe', '1') } catch { /* storage unavailable */ }
     document.documentElement.classList.add('fx-leaving')
-    window.setTimeout(() => { window.location.href = url.href }, 560)
+    window.setTimeout(() => { window.location.href = url.href }, 700)
   })
   // Coming back with the browser's back button can restore the page mid-wipe.
   window.addEventListener('pageshow', (event) => {
@@ -213,22 +253,24 @@ const initTicker = async () => {
   const ticker = document.createElement('section')
   ticker.className = 'fx-ticker'
   ticker.setAttribute('aria-hidden', 'true')
-  const track = document.createElement('div')
-  track.className = 'fx-ticker-track'
-  for (let copy = 0; copy < 2; copy += 1) {
-    const group = document.createElement('span')
-    group.className = 'fx-ticker-group'
-    for (let repeat = 0; repeat < 2; repeat += 1) {
-      names.forEach((name) => {
-        const item = document.createElement('span')
-        item.className = 'fx-ticker-item'
-        item.textContent = name
-        group.append(item)
-      })
+  ;[names, [...names].reverse()].forEach((list, index) => {
+    const track = document.createElement('div')
+    track.className = `fx-ticker-track${index ? ' is-reverse' : ''}`
+    for (let copy = 0; copy < 2; copy += 1) {
+      const group = document.createElement('span')
+      group.className = 'fx-ticker-group'
+      for (let repeat = 0; repeat < 2; repeat += 1) {
+        list.forEach((name) => {
+          const item = document.createElement('span')
+          item.className = 'fx-ticker-item'
+          item.textContent = name
+          group.append(item)
+        })
+      }
+      track.append(group)
     }
-    track.append(group)
-  }
-  ticker.append(track)
+    ticker.append(track)
+  })
   anchor.before(ticker)
 }
 
@@ -305,10 +347,10 @@ const initMagnets = (gsap) => {
       const rect = item.element.getBoundingClientRect()
       const dx = pointerX - (rect.left + rect.width / 2)
       const dy = pointerY - (rect.top + rect.height / 2)
-      const reach = Math.max(rect.width, rect.height) / 2 + 70
+      const reach = Math.max(rect.width, rect.height) / 2 + 90
       if (Math.hypot(dx, dy) < reach) {
-        item.x(dx * 0.28)
-        item.y(dy * 0.28)
+        item.x(dx * 0.38)
+        item.y(dy * 0.38)
       } else {
         item.x(0)
         item.y(0)
@@ -322,27 +364,131 @@ const initMagnets = (gsap) => {
   }, { passive: true })
 }
 
-// A red ring follows the mouse with a little lag and swells over anything clickable.
+// Cursor labels: pointing at a card or a row shows what clicking it does.
+const CURSOR_LABELS = [
+  ['.home-card, .project-card', 'View'],
+  ['.home-row, .blog-preview-card, .home-research a', 'Read'],
+  ['.gallery-masonry-item', 'Open']
+]
+
+// A red ring follows the mouse with a little lag, swells over anything clickable and names cards and rows.
 const initCursor = (gsap) => {
   if (!FINE_POINTER()) return
   const ring = document.createElement('div')
   ring.className = 'fx-cursor'
   ring.setAttribute('aria-hidden', 'true')
+  const label = document.createElement('span')
+  label.className = 'fx-cursor-label'
+  ring.append(label)
   document.body.append(ring)
-  gsap.set(ring, { xPercent: -50, yPercent: -50, x: -100, y: -100 })
+  const dot = document.createElement('div')
+  dot.className = 'fx-cursor-dot'
+  dot.setAttribute('aria-hidden', 'true')
+  document.body.append(dot)
+  gsap.set([ring, dot], { xPercent: -50, yPercent: -50, x: -100, y: -100 })
   const moveX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3.out' })
   const moveY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' })
+  const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'none' })
+  const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'none' })
   window.addEventListener('pointermove', (event) => {
     moveX(event.clientX)
     moveY(event.clientY)
+    dotX(event.clientX)
+    dotY(event.clientY)
     ring.classList.add('is-visible')
+    dot.classList.add('is-visible')
   }, { passive: true })
   document.addEventListener('pointerover', (event) => {
-    ring.classList.toggle('is-active', Boolean(event.target.closest?.('a, button, [role="button"]')))
+    const target = event.target
+    const match = CURSOR_LABELS.find(([selector]) => target.closest?.(selector))
+    label.textContent = match ? match[1] : ''
+    ring.classList.toggle('has-label', Boolean(match))
+    ring.classList.toggle('is-active', !match && Boolean(target.closest?.('a, button, [role="button"]')))
   })
   document.addEventListener('pointerdown', () => ring.classList.add('is-down'))
   document.addEventListener('pointerup', () => ring.classList.remove('is-down'))
-  document.documentElement.addEventListener('mouseleave', () => ring.classList.remove('is-visible'))
+  document.documentElement.addEventListener('mouseleave', () => {
+    ring.classList.remove('is-visible')
+    dot.classList.remove('is-visible')
+  })
+}
+
+// The portrait turns in 3D to follow the pointer while it is over the page.
+const initPortraitTilt = (gsap) => {
+  if (!FINE_POINTER()) return
+  const targets = [...document.querySelectorAll('#portfolio-header-visual, .about-sidebar .about-profile-card')]
+  targets.forEach((target) => {
+    // Explicit values stop GSAP from reading (and keeping) the transform of the CSS entrance animation that is still running.
+    gsap.set(target, { transformPerspective: 700, transformOrigin: '50% 50%', scale: 1, rotation: 0, rotationX: 0, rotationY: 0, x: 0, y: 0 })
+    const rotateY = gsap.quickTo(target, 'rotationY', { duration: 0.9, ease: 'power3.out' })
+    const rotateX = gsap.quickTo(target, 'rotationX', { duration: 0.9, ease: 'power3.out' })
+    window.addEventListener('pointermove', (event) => {
+      const rect = target.getBoundingClientRect()
+      const dx = (event.clientX - (rect.left + rect.width / 2)) / window.innerWidth
+      const dy = (event.clientY - (rect.top + rect.height / 2)) / window.innerHeight
+      rotateY(Math.max(-1, Math.min(1, dx * 2.2)) * 22)
+      rotateX(Math.max(-1, Math.min(1, dy * 2.2)) * -18)
+    }, { passive: true })
+  })
+}
+
+// Headings decode as they scroll into view, and section rules draw in from the left.
+const initScrollText = (gsap) => {
+  const headings = document.querySelectorAll('.home-section-head h2, .home-research-title, .home-contact-title, .about-card-title, .project-body h2')
+  headings.forEach((heading) => {
+    if (heading.children.length || heading.dataset.fxRunning) return
+    window.ScrollTrigger.create({
+      trigger: heading,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => scrambleText(heading, { duration: 1000 })
+    })
+  })
+  document.querySelectorAll('.home-section-head').forEach((head) => {
+    head.classList.add('fx-line')
+    window.ScrollTrigger.create({
+      trigger: head,
+      start: 'top 92%',
+      once: true,
+      onEnter: () => head.classList.add('fx-drawn')
+    })
+  })
+}
+
+// The skills ticker runs on scroll speed: it speeds up and skews while you scroll, and its two rows pull in opposite directions.
+const initTickerMotion = (gsap) => {
+  const tracks = [...document.querySelectorAll('.fx-ticker-track')]
+  if (!tracks.length) return
+  const state = tracks.map((track, index) => ({
+    track,
+    direction: index % 2 ? 1 : -1,
+    x: 0,
+    base: index % 2 ? 38 : 52,
+    setSkew: gsap.quickTo(track, 'skewX', { duration: 0.5, ease: 'power3.out' })
+  }))
+  state.forEach(({ track }) => track.classList.add('is-driven'))
+  let boost = 0
+  let push = 1
+  window.ScrollTrigger.create({
+    onUpdate: (self) => {
+      boost = Math.max(boost, Math.abs(self.getVelocity()))
+      push = self.direction
+    }
+  })
+  gsap.ticker.add((_time, delta) => {
+    const seconds = Math.min(delta, 100) / 1000
+    boost *= 0.94
+    const skew = Math.max(-10, Math.min(10, (boost / 160) * push))
+    state.forEach((row) => {
+      const half = row.track.scrollWidth / 2
+      if (!half) return
+      row.x += row.direction * (row.base + boost * 0.55) * seconds
+      if (row.x <= -half) row.x += half
+      if (row.x >= 0) row.x -= half
+      gsap.set(row.track, { x: row.x })
+      row.setSkew(skew * row.direction)
+    })
+  })
 }
 
 const safely = (label, task) => {
@@ -354,18 +500,25 @@ const safely = (label, task) => {
   }
 }
 
-export const initFx = () => {
+export const initFx = (ready = Promise.resolve()) => {
   if (prefersReducedMotion()) return
-  safely('scramble', initScramble)
   safely('tilt', initTilt)
   safely('code rain', initCodeRain)
   safely('wipe', initWipe)
-  safely('ticker', initTicker)
+  const tickerBuilt = Promise.resolve().then(initTicker).catch((error) => console.warn('fx: ticker failed', error))
+  // The home intro (js/modules/boot.js) decides when the page's own entrance starts; the text decodes then.
+  ready.then(() => safely('scramble', initScramble))
   loadGsap().then((gsap) => {
     if (!gsap) return
     safely('progress', () => initProgress(gsap))
     safely('parallax', () => initParallax(gsap))
     safely('magnets', () => initMagnets(gsap))
     safely('cursor', () => initCursor(gsap))
+    safely('portrait tilt', () => initPortraitTilt(gsap))
+    // These measure the page, so they wait for the intro to finish and for the ticker to exist.
+    Promise.all([ready, tickerBuilt]).then(() => {
+      safely('scroll text', () => initScrollText(gsap))
+      safely('ticker motion', () => initTickerMotion(gsap))
+    })
   })
 }

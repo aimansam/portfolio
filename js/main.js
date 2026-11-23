@@ -7,6 +7,7 @@ import { loadPageContent } from './modules/content.js'
 import { initLightbox, initBackToTop, initAnalytics } from './modules/ui.js'
 import { initReveal, initCountUp, initImageFade } from './modules/motion.js'
 import { initFx } from './modules/fx.js'
+import { runBoot } from './modules/boot.js'
 
 const hideLoader = (delay) => {
   document.body.classList.remove('is-loading')
@@ -68,6 +69,9 @@ const IMAGE_FADE = '.gallery-masonry-image, .project-image, .about-cert-masonry-
 // The full-screen loader is for a visitor's first page only; <head> reads this flag.
 try { window.sessionStorage.setItem('zx10r-seen', '1') } catch { /* storage unavailable */ }
 
+// Home page only: the terminal intro starts straight away; the page's own entrance waits for it.
+const bootDone = runBoot()
+
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     hideLoader(500)
@@ -84,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initImageFade(IMAGE_FADE)
     initReveal(REVEAL_GROUPS)
     initCountUp('.stat-value')
-    initFx()
+    initFx(bootDone)
     initLightbox()
     initBackToTop()
     initAnalytics(finalContent.site?.analyticsId)

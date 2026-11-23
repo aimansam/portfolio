@@ -1723,8 +1723,8 @@ html body .project-sidebar .project-link-list {
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(179, 38, 30, 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(179, 38, 30, 0.07) 1px, transparent 1px);
+      linear-gradient(rgba(179, 38, 30, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(179, 38, 30, 0.1) 1px, transparent 1px);
     background-size: 64px 64px;
     -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 20%, transparent 88%);
     mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 20%, transparent 88%);
@@ -1740,18 +1740,20 @@ html body .project-sidebar .project-link-list {
     z-index: 15;
     height: 3px;
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(179, 38, 30, 0.4), transparent);
-    animation: fx-scan 18s linear infinite;
+    background: linear-gradient(90deg, transparent, rgba(179, 38, 30, 0.55), transparent);
+    animation: fx-scan 12s linear infinite;
   }
 
+  /* Above the content (so the spotlight shows over cards too), multiplied so text stays readable; below the header. */
   .fx-rain {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 3;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    opacity: 0.17;
+    mix-blend-mode: multiply;
+    opacity: 0.8;
   }
 
   /* Buttons: a red fill sweeps in from the left on hover and focus, and they squash when pressed. */
@@ -1880,59 +1882,117 @@ html body .project-sidebar .project-link-list {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Home entrance, one thing after another: portrait pops in, the name decodes, the tagline decodes,
-     then the intro, the availability line, the buttons and the icons rise in. */
+  /* Home entrance, one thing after another: the portrait pops in, the name decodes, the tagline decodes,
+     then the intro, the availability line, the buttons and the icons rise in. On the home page the terminal
+     intro (fx-boot) holds all of this paused until it splits open. */
   html body #portfolio-header-visual,
   html body.page-about .about-sidebar .about-profile-card {
-    animation: fx-pop 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) 150ms both;
+    animation: fx-pop 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) 250ms backwards;
   }
 
   html body #hero-title {
-    animation: fx-show 1ms linear 700ms both;
+    animation: fx-show 1ms linear 300ms both;
   }
 
   html body #hero-tagline {
-    animation: fx-show 1ms linear 1900ms both;
+    animation: fx-show 1ms linear 1100ms both;
   }
 
   html body .about-sidebar-name {
-    animation: fx-show 1ms linear 500ms both;
+    animation: fx-show 1ms linear 300ms both;
   }
 
   html body .about-sidebar-tagline {
-    animation: fx-show 1ms linear 1500ms both;
+    animation: fx-show 1ms linear 1000ms both;
   }
 
   html body #hero-intro {
-    animation: rise-in 900ms var(--ease-out) 2600ms both;
+    animation: rise-in 800ms var(--ease-out) 1600ms both;
   }
 
   html body .hero-top-content > .hero-availability {
-    animation: rise-in 800ms var(--ease-out) 3000ms both;
+    animation: rise-in 700ms var(--ease-out) 1900ms both;
   }
 
   html body .hero-top-content > .hero-actions {
-    animation: rise-in 800ms var(--ease-out) 3250ms both;
+    animation: rise-in 700ms var(--ease-out) 2100ms both;
   }
 
   html body .hero-top-content > .hero-socials {
-    animation: rise-in 800ms var(--ease-out) 3500ms both;
+    animation: rise-in 700ms var(--ease-out) 2300ms both;
   }
 
-  /* Scroll reveals: a longer slide, a slower fade and wider gaps between items in a row. */
+  html.fx-boot body :is(#portfolio-header-visual, #hero-title, #hero-tagline, #hero-intro, .hero-top-content > *) {
+    animation-play-state: paused;
+  }
+
+  /* Scroll reveals: a long slide with a blur that sharpens, cards flying in from alternate sides. */
   html body {
-    --reveal-distance: 48px;
+    --reveal-distance: 72px;
   }
 
   html body [data-reveal] {
     transition:
       opacity 1000ms var(--ease-out),
-      transform 1000ms var(--ease-out);
+      transform 1000ms var(--ease-out),
+      filter 900ms var(--ease-out);
     transition-delay: calc(var(--reveal-delay, 0ms) * 2);
   }
 
-  /* Skills ticker */
+  html body [data-reveal]:not(.is-revealed) {
+    filter: blur(8px);
+    transform: translateY(var(--reveal-distance)) scale(0.97);
+  }
+
+  html body [data-reveal="fade"]:not(.is-revealed) {
+    filter: none;
+    transform: none;
+  }
+
+  /* Only where the cards sit in two columns, and the page never scrolls sideways while they fly in. */
+  html body {
+    overflow-x: clip;
+  }
+
+  @media (min-width: 901px) {
+    html body .home-card[data-reveal]:not(.is-revealed):nth-child(odd) {
+      transform: translate(-40px, 56px) rotate(-2deg) scale(0.96);
+    }
+
+    html body .home-card[data-reveal]:not(.is-revealed):nth-child(even) {
+      transform: translate(40px, 56px) rotate(2deg) scale(0.96);
+    }
+  }
+
+  /* Section rules draw in from the left behind a short red lead. */
+  html body .home-section-head.fx-line {
+    position: relative;
+    border-bottom-color: transparent;
+  }
+
+  html body .home-section-head.fx-line::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--ed-accent) 0 56px, var(--ed-ink) 56px);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1300ms cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  html body .home-section-head.fx-drawn::after {
+    transform: scaleX(1);
+  }
+
+  /* Skills ticker: two rows pulling in opposite directions (the script drives them from scroll speed;
+     the CSS animation is the fallback if GSAP does not load). */
   .fx-ticker {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     width: 100%;
     margin: 72px 0 24px;
     overflow: hidden;
@@ -1945,11 +2005,21 @@ html body .project-sidebar .project-link-list {
   .fx-ticker-track {
     display: flex;
     width: max-content;
-    padding: 16px 0;
-    animation: fx-marquee 90s linear infinite;
+    padding: 10px 0;
+    animation: fx-marquee 60s linear infinite;
   }
 
-  .fx-ticker:hover .fx-ticker-track {
+  .fx-ticker-track.is-reverse {
+    animation-direction: reverse;
+    animation-duration: 80s;
+  }
+
+  .fx-ticker-track.is-driven {
+    animation: none;
+    will-change: transform;
+  }
+
+  .fx-ticker:hover .fx-ticker-track:not(.is-driven) {
     animation-play-state: paused;
   }
 
@@ -1960,18 +2030,24 @@ html body .project-sidebar .project-link-list {
 
   .fx-ticker-item {
     flex: none;
-    color: var(--ed-muted);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    color: var(--ed-ink);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  .is-reverse .fx-ticker-item {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ed-muted);
   }
 
   .fx-ticker-item::after {
     content: "/";
     margin: 0 28px;
     color: var(--ed-accent);
+    -webkit-text-stroke: 0;
   }
 
   /* Scroll progress bar */
@@ -1988,19 +2064,22 @@ html body .project-sidebar .project-link-list {
     pointer-events: none;
   }
 
-  /* Cursor ring */
+  /* Cursor: a trailing ring plus a dot; over cards and rows the ring fills red and names the action. */
   .fx-cursor {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 34px;
     height: 34px;
     border: 1.5px solid var(--ed-accent);
     border-radius: 50%;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 300ms ease, width 300ms ease, height 300ms ease, background-color 300ms ease;
+    transition: opacity 300ms ease, width 350ms var(--ease-out), height 350ms var(--ease-out), background-color 300ms ease;
   }
 
   .fx-cursor.is-visible {
@@ -2013,31 +2092,267 @@ html body .project-sidebar .project-link-list {
     background: rgba(179, 38, 30, 0.12);
   }
 
+  .fx-cursor.has-label {
+    width: 86px;
+    height: 86px;
+    border-color: transparent;
+    background: rgba(179, 38, 30, 0.94);
+  }
+
   .fx-cursor.is-down {
     width: 22px;
     height: 22px;
   }
 
-  /* Page wipe: the red panel sweeps up to cover the page, and away again on the next one. */
-  html.fx-leaving::after {
+  .fx-cursor-label {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .fx-cursor.has-label .fx-cursor-label {
+    opacity: 1;
+  }
+
+  .fx-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100002;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ed-accent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+
+  .fx-cursor-dot.is-visible {
+    opacity: 1;
+  }
+
+  .fx-cursor.has-label ~ .fx-cursor-dot {
+    opacity: 0;
+  }
+
+  /* Page wipe: a red panel and then an ink panel sweep up over the page, and peel away on the next one. */
+  html.fx-leaving::before,
+  html.fx-leaving::after,
+  html.fx-arrive::before,
+  html.fx-arrive::after {
     content: "";
     position: fixed;
     inset: 0;
+    pointer-events: none;
+  }
+
+  html.fx-leaving::before {
     z-index: 100000;
     background: var(--ed-accent);
     transform-origin: bottom;
-    pointer-events: none;
-    animation: fx-wipe-in 560ms cubic-bezier(0.77, 0, 0.18, 1) forwards;
+    animation: fx-wipe-in 520ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  html.fx-leaving::after {
+    z-index: 100001;
+    background: #141311;
+    transform-origin: bottom;
+    animation: fx-wipe-in 520ms cubic-bezier(0.77, 0, 0.18, 1) 160ms both;
   }
 
   html.fx-arrive::before {
-    content: "";
-    position: fixed;
-    inset: 0;
     z-index: 100000;
     background: var(--ed-accent);
     transform-origin: top;
-    pointer-events: none;
-    animation: fx-wipe-away 900ms cubic-bezier(0.77, 0, 0.18, 1) 80ms forwards;
+    animation: fx-wipe-away 700ms cubic-bezier(0.77, 0, 0.18, 1) 260ms forwards;
   }
+
+  html.fx-arrive::after {
+    z-index: 100001;
+    background: #141311;
+    transform-origin: top;
+    animation: fx-wipe-away 700ms cubic-bezier(0.77, 0, 0.18, 1) 80ms forwards;
+  }
+
+  /* ===== Home intro: a terminal login that splits open (js/modules/boot.js). ===== */
+
+  html.fx-boot {
+    overflow: hidden;
+  }
+
+  html.fx-boot::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100002;
+    background: #141311;
+  }
+
+  .fx-term {
+    position: fixed;
+    inset: 0;
+    z-index: 100003;
+    color: #e9e4da;
+    font: 17px/1.8 ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    cursor: pointer;
+  }
+
+  .fx-term.is-leaving {
+    pointer-events: none;
+  }
+
+  .fx-term-half {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 50.5%;
+    background: #141311;
+    transition: transform 850ms cubic-bezier(0.77, 0, 0.18, 1) 230ms;
+  }
+
+  .fx-term-top {
+    top: 0;
+  }
+
+  .fx-term-bottom {
+    bottom: 0;
+  }
+
+  .fx-term.is-leaving .fx-term-top {
+    transform: translateY(-101%);
+  }
+
+  .fx-term.is-leaving .fx-term-bottom {
+    transform: translateY(101%);
+  }
+
+  /* A faint CRT scan texture over everything. */
+  .fx-term::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px);
+    transition: opacity 250ms ease;
+  }
+
+  .fx-term-screen {
+    position: absolute;
+    top: calc(50% - 160px);
+    left: max(24px, calc(50% - 340px));
+    width: min(680px, calc(100% - 48px));
+    transition: opacity 200ms ease;
+  }
+
+  .fx-term.is-leaving :is(.fx-term-screen, .fx-term-hint),
+  .fx-term.is-leaving::after {
+    opacity: 0;
+  }
+
+  .fx-term-line {
+    min-height: 1.75em;
+    white-space: pre-wrap;
+  }
+
+  .fx-term-prompt {
+    color: #ff6b5c;
+  }
+
+  .fx-term-line.is-dim {
+    color: #7d776e;
+  }
+
+  .fx-term-line.is-hot {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .fx-term-caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 2px;
+    background: #ff6b5c;
+    vertical-align: text-bottom;
+    animation: fx-blink 700ms steps(1, end) infinite;
+  }
+
+  .fx-term-bar {
+    display: inline-block;
+    width: min(260px, 52vw);
+    height: 10px;
+    border: 1px solid #5b564e;
+    vertical-align: middle;
+  }
+
+  .fx-term-bar-fill {
+    display: block;
+    height: 100%;
+    background: #ff6b5c;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 60ms linear;
+  }
+
+  .fx-term-pct {
+    margin-left: 12px;
+    color: #a8a29a;
+  }
+
+  .fx-term-granted {
+    margin-top: 14px;
+    color: #ff6b5c;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-shadow: 0 0 18px rgba(255, 107, 92, 0.65);
+    animation: fx-flicker 420ms steps(1, end) both;
+  }
+
+  .fx-term-seam {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: #ff6b5c;
+    box-shadow: 0 0 22px 2px rgba(255, 107, 92, 0.7);
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .fx-term.is-leaving .fx-term-seam {
+    animation: fx-seam 950ms cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+
+  .fx-term-hint {
+    position: absolute;
+    right: 24px;
+    bottom: 20px;
+    color: #6b665f;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: opacity 200ms ease;
+  }
+}
+
+@keyframes fx-flicker {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  35% { opacity: 0.2; }
+  55% { opacity: 1; }
+  70% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes fx-seam {
+  0% { opacity: 1; transform: scaleX(0); }
+  26% { opacity: 1; transform: scaleX(1); }
+  70% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(1); }
 }
