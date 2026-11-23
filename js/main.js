@@ -6,6 +6,7 @@ import { applyPortfolioContent } from './modules/apply.js'
 import { loadPageContent } from './modules/content.js'
 import { initLightbox, initBackToTop, initAnalytics } from './modules/ui.js'
 import { initReveal, initCountUp, initImageFade } from './modules/motion.js'
+import { initFx } from './modules/fx.js'
 
 const hideLoader = (delay) => {
   document.body.classList.remove('is-loading')
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initImageFade(IMAGE_FADE)
     initReveal(REVEAL_GROUPS)
     initCountUp('.stat-value')
+    initFx()
     initLightbox()
     initBackToTop()
     initAnalytics(finalContent.site?.analyticsId)
